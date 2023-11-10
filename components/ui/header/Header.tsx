@@ -14,7 +14,7 @@ export default function Header() {
 		<>
 			<div className={styles.Header}>
 				<div className={styles.Left}>
-					<Image src='../../logo/logo.svg' alt='' width={45} height={50} />
+					<Image src='../../logo/logo.svg' alt='logo' width={45} height={50} />
 				</div>
 
 				<div className={styles.Center}></div>
@@ -29,7 +29,7 @@ export default function Header() {
 					<BellRing />
 					<Image
 						src='../../../social/avatar.svg'
-						alt=''
+						alt='avatar'
 						width={50}
 						height={50}
 					/>
