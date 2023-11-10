@@ -2,4 +2,105 @@
 
 .Header {
 	display: flex;
+	width: 100%;
+	height: 60px;
+	background-color: #0f172a;
+	justify-content: center;
+	border-bottom: solid;
+	border-width: 1px;
+	border-color: #3375d6;
+
+	.HeaderContainer {
+		width: 1200px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.Left {
+			width: 25%;
+			display: flex;
+			align-items: center;
+			justify-content: left;
+		}
+
+		.Center {
+			width: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: space-evenly;
+		}
+		/* .Center:hover {
+			color: #3375d6;
+		} */
+
+		.Right {
+			width: 25%;
+			display: flex;
+			align-items: center;
+			justify-content: right;
+
+			.CreatePost {
+				padding: 12px 18px;
+				border-radius: 8px;
+				background-color: #3375d6;
+				text-transform: uppercase;
+				font-weight: 700;
+				font-family: Montserrat;
+				font-size: medium;
+				border: none;
+			}
+			.CreatePost:hover {
+				background-color: #3367b5;
+				cursor: pointer;
+			}
+
+			.notifications_link {
+				margin: 6px 20px 0 20px;
+
+				.notifications_number {
+					color: white;
+					position: absolute;
+					font-size: larger;
+					background-color: rgb(170, 0, 0);
+					border-radius: 8px;
+					padding: 0 4px 0 4px;
+					margin: -9px 0 0 -12px;
+				}
+				.notifications_number:hover {
+					color: white;
+				}
+			}
+			.notifications_link:hover {
+				color: #3375d6;
+			}
+
+			.Avatar {
+				perspective: 1000px;
+
+				.AvatarInner {
+					border-radius: 9999px;
+					width: 38px;
+					height: 38px;
+					border-color: #d2d2d2;
+					border-style: solid;
+					border-width: 2px;
+
+					.AvatarFrame {
+						background-image: url('../../../public/social/avatar.svg');
+						background-size: cover;
+						background-repeat: no-repeat;
+						border-radius: 100%;
+						width: 100%;
+						height: 100%;
+						display: inline-block;
+					}
+				}
+				.AvatarInner:hover {
+					border-color: #3375d6;
+					border-width: 2px;
+					cursor: pointer;
+				}
+			}
+		}
+	}
 }
