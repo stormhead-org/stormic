@@ -16,13 +16,16 @@ export default function Header() {
 			<header className={styles.Header}>
 				<div className={styles.HeaderContainer}>
 					<div className={styles.Left}>
-						<Image
-							src='../../logo/logo.svg'
-							priority
-							alt='logo'
-							width={40}
-							height={50}
-						/>
+						<Link href='/'>
+							<Image
+								className={styles.Logo}
+								src='../../logo/logo.svg'
+								priority
+								alt='logo'
+								width={40}
+								height={50}
+							/>
+						</Link>
 					</div>
 
 					<div className={styles.Center}>

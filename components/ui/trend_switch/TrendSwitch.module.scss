@@ -1,0 +1,16 @@
+@import '../../../styles/media';
+
+.TrendSwitch {
+	display: flex;
+	width: 100%;
+
+	.TrendFrame {
+		display: flex;
+		width: 100%;
+		justify-content: space-evenly;
+		background-color: #1e293b;
+		border-radius: 12px;
+		border: none;
+		padding: 4px;
+	}
+}

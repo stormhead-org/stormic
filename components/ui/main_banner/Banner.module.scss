@@ -1,0 +1,48 @@
+@import '../../../styles/media';
+
+.Banner {
+	width: 600px;
+	.BannerFrame {
+		background-image: url('../../../public/banner/banner.jpg');
+		background-repeat: no-repeat;
+		background-position: center;
+		text-align: center;
+		width: 100%;
+		color: white;
+		text-transform: uppercase;
+		font-weight: 900;
+		font-size: x-large;
+		padding: 2.5vw 0 2.5vw 0;
+		border-radius: 10px;
+		margin-bottom: 2vw;
+	}
+	.Search {
+		/* margin-top: 1vw; */
+		display: flex;
+		justify-content: center;
+		width: 100%;
+
+		.SearchFrame {
+			display: flex;
+			position: absolute;
+			background-color: #1e293b;
+			border-radius: 10px;
+			top: 12.5vw;
+			.Icon {
+				color: white;
+				margin: 4px 0 0 4px;
+			}
+			.Input {
+				font-family: Montserrat;
+				color: white;
+				font-weight: 600;
+				padding: 0 10px 0 10px;
+				height: 2.5vw;
+				width: 350px;
+				border-radius: 10px;
+				border-style: none;
+				background-color: #1e293b;
+			}
+		}
+	}
+}

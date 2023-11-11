@@ -21,6 +21,10 @@
 			display: flex;
 			align-items: center;
 			justify-content: left;
+
+			.Logo:hover {
+				filter: saturate(200%);
+			}
 		}
 
 		.Center {
@@ -28,10 +32,8 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-evenly;
+			color: white;
 		}
-		/* .Center:hover {
-			color: #3375d6;
-		} */
 
 		.Right {
 			width: 25%;
@@ -43,11 +45,12 @@
 				padding: 12px 18px;
 				border-radius: 8px;
 				background-color: #3375d6;
-				text-transform: uppercase;
-				font-weight: 700;
+				/* text-transform: uppercase; */
+				font-weight: 600;
 				font-family: Montserrat;
 				font-size: medium;
 				border: none;
+				color: white;
 			}
 			.CreatePost:hover {
 				background-color: #3367b5;
@@ -56,6 +59,7 @@
 
 			.notifications_link {
 				margin: 6px 20px 0 20px;
+				color: white;
 
 				.notifications_number {
 					color: white;
