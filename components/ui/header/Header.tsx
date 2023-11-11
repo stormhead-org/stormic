@@ -1,11 +1,12 @@
 import {
-	BellRing,
-	BookMarked,
-	Component,
-	Flame,
-	MessagesSquare,
-	User2
-} from 'lucide-react'
+	Bell,
+	LightBulb,
+	Megaphone,
+	PageFacingUp,
+	Rocket,
+	VictoryHand,
+	WaxingCrescentMoon
+} from 'fluent-emoji'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './Header.module.scss'
@@ -16,7 +17,7 @@ export default function Header() {
 			<header className={styles.Header}>
 				<div className={styles.HeaderContainer}>
 					<div className={styles.Left}>
-						<Link href='/'>
+						<Link href='/' aria-label='Главная'>
 							<Image
 								className={styles.Logo}
 								src='../../logo/logo.svg'
@@ -29,34 +30,53 @@ export default function Header() {
 					</div>
 
 					<div className={styles.Center}>
-						<Link href='/wiki'>
-							<BookMarked />
-						</Link>
-						<Link href='/groups'>
-							<Component />
-						</Link>
-						<Link href='/users'>
-							<User2 />
-						</Link>
-						<Link href='/community'>
-							<MessagesSquare />
-						</Link>
-						<Link href='/about'>
-							<Flame />
-						</Link>
+						<div className={styles.ItemHeaderMenu}>
+							<Link href='/wiki' aria-label='Руководства'>
+								<PageFacingUp width={24} />
+							</Link>
+						</div>
+						<div className={styles.ItemHeaderMenu}>
+							<Link href='/groups' aria-label='Сообщества'>
+								<Rocket width={24} />
+							</Link>
+						</div>
+						<div className={styles.ItemHeaderMenu}>
+							<Link href='/users' aria-label='Участники'>
+								<VictoryHand width={24} />
+							</Link>
+						</div>
+						<div className={styles.ItemHeaderMenu}>
+							<Link href='/community' aria-label='Общение'>
+								<Megaphone width={24} />
+							</Link>
+						</div>
+						<div className={styles.ItemHeaderMenu}>
+							<Link href='/about' aria-label='О Нас'>
+								<LightBulb width={24} />
+							</Link>
+						</div>
 					</div>
 
 					<div className={styles.Right}>
-						<button className={styles.CreatePost}>Новый пост</button>
-
-						<a
-							href='/notifications'
-							className={styles.notifications_link}
-							aria-label='Уведомления'
-						>
-							<BellRing />
-							<span className={styles.notifications_number}>8</span>
-						</a>
+						<div className={styles.ItemHeaderMenu}>
+							<Link
+								className={styles.ThemeSwitch}
+								href='/#'
+								aria-label='Темная тема'
+							>
+								<WaxingCrescentMoon width={24} />
+							</Link>
+						</div>
+						<div className={styles.ItemHeaderMenu}>
+							<a
+								href='/notifications'
+								className={styles.notifications_link}
+								aria-label='Уведомления'
+							>
+								<Bell width={24} />
+								<span className={styles.notifications_number}>8</span>
+							</a>
+						</div>
 
 						<div className={styles.Avatar}>
 							<div className={styles.AvatarInner}>

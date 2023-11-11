@@ -1,0 +1,99 @@
+@import '../../../styles/media';
+
+.LeftSidebar {
+	.SidebarFrame {
+		.SocialBlock {
+			margin: 1rem 0 2rem 0;
+			.SocialFrame {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin: 0 0.8rem;
+				.ItemSocial {
+					padding: 0.4rem 0.4rem 0 0.4rem;
+				}
+				.ItemSocial:hover {
+					background-color: #233550;
+					border-radius: 0.4rem;
+					cursor: pointer;
+					color: #3375d6;
+				}
+			}
+		}
+
+		.CreatePost {
+			display: flex;
+			justify-content: center;
+			.CreatePostButton {
+				padding: 1rem 4rem;
+				margin: 0 0.8rem;
+				border-radius: 0.6rem;
+				background-color: #3375d6;
+				font-weight: 600;
+				font-family: Montserrat;
+				font-size: medium;
+				border: none;
+				color: white;
+				/* background-color: transparent; */
+				text-align: center;
+			}
+			.CreatePostButton:hover {
+				background-color: #3367b5;
+				cursor: pointer;
+			}
+		}
+
+		.MenuBlock {
+			.MenuFrame {
+				margin-top: 1rem;
+				.LeftSideDiv {
+					display: flex;
+					align-items: center;
+					.Icon {
+						padding: 0 0.8rem;
+						margin-bottom: -0.25rem;
+					}
+					.LeftSideButton {
+						background-color: transparent;
+						font-family: Montserrat;
+						font-size: large;
+						font-weight: 600;
+						border: none;
+						border-radius: 0.6rem;
+						padding: 0.94rem 0 0.94rem 0;
+						cursor: pointer;
+
+						align-items: flex-start;
+						text-align: start;
+						> a {
+							color: white;
+						}
+						> a:hover {
+							color: white;
+						}
+					}
+				}
+				.LeftSideDiv:hover {
+					background-color: #233550;
+					border-radius: 0.6rem;
+					color: #3375d6;
+					> Link:hover {
+						color: white;
+					}
+				}
+			}
+		}
+
+		.AboutContainer {
+			position: fixed;
+			bottom: 1rem;
+			width: 17rem;
+			margin: 0 0.8rem;
+			.ShortAbout {
+				> p {
+					font-size: small;
+				}
+			}
+		}
+	}
+}

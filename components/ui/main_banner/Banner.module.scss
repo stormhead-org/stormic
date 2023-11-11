@@ -1,9 +1,10 @@
 @import '../../../styles/media';
 
 .Banner {
-	width: 600px;
+	width: 100%;
 	.BannerFrame {
 		background-image: url('../../../public/banner/banner.jpg');
+		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
 		text-align: center;
@@ -12,9 +13,9 @@
 		text-transform: uppercase;
 		font-weight: 900;
 		font-size: x-large;
-		padding: 2.5vw 0 2.5vw 0;
-		border-radius: 10px;
-		margin-bottom: 2vw;
+		padding: 2.5rem 0 2.5rem 0;
+		border-radius: 0.6rem;
+		margin-bottom: 2rem;
 	}
 	.Search {
 		/* margin-top: 1vw; */
@@ -26,8 +27,8 @@
 			display: flex;
 			position: absolute;
 			background-color: #1e293b;
-			border-radius: 10px;
-			top: 12.5vw;
+			border-radius: 0.6rem;
+			top: 11.8rem;
 			.Icon {
 				color: white;
 				margin: 4px 0 0 4px;
@@ -36,10 +37,10 @@
 				font-family: Montserrat;
 				color: white;
 				font-weight: 600;
-				padding: 0 10px 0 10px;
-				height: 2.5vw;
+				padding: 0 0.6rem 0 0.6rem;
+				height: 2.5rem;
 				width: 350px;
-				border-radius: 10px;
+				border-radius: 0.6rem;
 				border-style: none;
 				background-color: #1e293b;
 			}
