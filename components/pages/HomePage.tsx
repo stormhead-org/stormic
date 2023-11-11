@@ -1,4 +1,5 @@
 import Header from '../ui/header/Header'
+import NavBar from '../ui/left_nav_bar/NavBar'
 import Banner from '../ui/main_banner/Banner'
 import TrendSwitch from '../ui/trend_switch/TrendSwitch'
 import styles from './HomePage.module.scss'
@@ -10,7 +11,7 @@ export default function HomePage() {
 			<div className={styles.Container}>
 				<div className={styles.MainContainer}>
 					<div className={styles.LeftSide}>
-						<p>левый</p>
+						<NavBar />
 					</div>
 
 					<div className={styles.CenterBlock}>
