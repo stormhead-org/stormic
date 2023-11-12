@@ -17,7 +17,7 @@
    Это frontend-репозиторий проекта. <a href='https://github.com/nimscore/mustel'>Backend-репозиторий</a>.
    <br/>
    <br/>
-   Сейчас проект находится в самом начале разработки. На данный момент, backend реализован на Nest.JS. Однако, в будущем планируется перенос на <strong>Ruby on Rails</strong> или <strong>RUST</strong>.
+   Сейчас проект находится в самом начале разработки. На данный момент, <strong>backend</strong> реализован на <strong>Nest.JS</strong>. Однако, в будущем планируется перенос на <strong>Ruby on Rails</strong> или <strong>RUST</strong>.
   </p>
   <p align="center">
   Контакты для связи:
