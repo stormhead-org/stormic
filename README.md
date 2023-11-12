@@ -12,7 +12,7 @@
   <br/>
   <br/>
   <p align="center">
-  Это мой небольшой пет-проект, который я делаю в свободное время.
+  <strong>Mustel</strong> - мой небольшой пет-проект, который я делаю в свободное время.
    <br/>
    Это frontend-репозиторий проекта. <a href='https://github.com/nimscore/mustel'>Backend-репозиторий</a>.
    <br/>
