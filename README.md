@@ -5,7 +5,11 @@
   <br/>
   <br/>
    <p align="center">
-   <strong>Mustel</strong> - это скрипт сообщества мультиблогов с открытым исходным кодом. Написан на <strong>Next.JS</strong> с использованием <strong>TypeScript</strong>. Помимо стандартного функционала мультиблогов, <strong>Mustel</strong> впитал все лучшее, что нам дает опыт общения в Discord, а так же поддерживает написание полноценных, объемных руководств в формате <strong>Wiki</strong>, а не обычного поста.
+   <strong>Mustel</strong> - это скрипт сообщества мультиблогов с открытым исходным кодом. Написан на <strong>Next.JS</strong> с использованием <strong>TypeScript</strong>.
+   <br/>
+   Помимо стандартного функционала мультиблогов, <strong>Mustel</strong> впитал все лучшее, что нам дает опыт общения в <strong>Discord</strong>, а так же поддерживает написание полноценных, объемных руководств в формате <strong>Wiki</strong>, а не обычного поста.
+   <br/>
+   Для написания руководств и постов используется великолепный <strong>Editor.JS</strong> в качестве редактора.
   </p>
   <br/>
   <img src="https://cdn.discordapp.com/attachments/625424257672937472/1173345925603807324/firsttest.png?ex=65639e8c&is=6551298c&hm=aae86fc0dfce8dcd6dff56e660a2760b529e717c1f63b2a0e0b1ee0bc53f92ab&">
