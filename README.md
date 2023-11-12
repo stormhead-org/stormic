@@ -14,7 +14,7 @@
   <p align="center">
   <strong>Mustel</strong> - мой небольшой пет-проект, который я делаю в свободное время.
    <br/>
-   Это frontend-репозиторий проекта. <a href='https://github.com/nimscore/mustel'>Backend-репозиторий</a>.
+   Это <strong>frontend-репозиторий</strong> проекта. <strong><a href='https://github.com/nimscore/mustel'>Backend-репозиторий</a></strong>.
    <br/>
    <br/>
    Сейчас проект находится в самом начале разработки. На данный момент, <strong>backend</strong> реализован на <strong>Nest.JS</strong>. Однако, в будущем планируется перенос на <strong>Ruby on Rails</strong> или <strong>RUST</strong>.
