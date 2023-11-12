@@ -22,7 +22,7 @@
   <p align="center">
   Контакты для связи:
   <br/>
-  <a href='https://discord.com/users/.nims/'>Discord</a> <a href='https://sudoers.pro/@nims'>Mastodon</a>
+  <a href='https://discord.com/users/.nims/'>Discord</a> | <a href='https://sudoers.pro/@nims'>Mastodon</a>
   </p>
 </div>
 <br>
