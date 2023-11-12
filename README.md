@@ -9,6 +9,8 @@
   <br/>
   <p align="center">
   Это мой небольшой пет-проект, который я делаю в свободное время.
+   <br/>
+   Этот frontend репозиторий проекта. <a href='https://github.com/nimscore/mustel'>Backend репозиторий</a>.
   </p>
   <p align="center">
   Контакты для связи:
