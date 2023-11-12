@@ -73,6 +73,17 @@
 	}
 }
 
+h1 {
+	color: #c9cccf;
+	font-size: xx-large;
+}
+
+h2,
+h3 {
+	color: #c9cccf;
+	font-size: x-large;
+}
+
 * {
 	box-sizing: border-box;
 	padding: 0;
@@ -82,7 +93,8 @@
 html,
 body {
 	max-width: 100vw;
-	overflow-x: hidden;
+	max-height: 100vh;
+	overflow: hidden;
 }
 
 body {
@@ -91,9 +103,9 @@ body {
 }
 
 p {
-	color: #fff;
+	color: #c4c7ca;
 	font-family: Montserrat;
-	font-size: large;
+	font-size: medium;
 }
 
 a {
@@ -102,12 +114,12 @@ a {
 	color: #3375d6;
 }
 
-button:hover {
-	background-color: #233550;
+a:hover {
+	color: #3367b5;
 }
 
-a:hover {
-	color: #3375d6;
+button:hover {
+	background-color: #233550;
 }
 
 @media (prefers-color-scheme: dark) {

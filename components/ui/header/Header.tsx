@@ -1,20 +1,21 @@
 import {
-	Bell,
 	LightBulb,
 	Megaphone,
 	PageFacingUp,
 	Rocket,
-	VictoryHand,
-	WaxingCrescentMoon
+	VictoryHand
 } from 'fluent-emoji'
 import Image from 'next/image'
 import Link from 'next/link'
+import Avatar from '../avatar/Avatar'
+import NotificationsBell from '../notifications_bell/NotificationsBell'
+import ThemeSwitch from '../theme_switch/ThemeSwitch'
 import styles from './Header.module.scss'
 
 export default function Header() {
 	return (
 		<>
-			<header className={styles.Header}>
+			<div className={styles.Header}>
 				<div className={styles.HeaderContainer}>
 					<div className={styles.Left}>
 						<Link href='/' aria-label='Главная'>
@@ -58,43 +59,12 @@ export default function Header() {
 					</div>
 
 					<div className={styles.Right}>
-						<div className={styles.ItemHeaderMenu}>
-							<Link
-								className={styles.ThemeSwitch}
-								href='/#'
-								aria-label='Темная тема'
-							>
-								<WaxingCrescentMoon width={24} />
-							</Link>
-						</div>
-						<div className={styles.ItemHeaderMenu}>
-							<a
-								href='/notifications'
-								className={styles.notifications_link}
-								aria-label='Уведомления'
-							>
-								<Bell width={24} />
-								<span className={styles.notifications_number}>8</span>
-							</a>
-						</div>
-
-						<div className={styles.Avatar}>
-							<div className={styles.AvatarInner}>
-								<div className={styles.AvatarFrame}>
-									{/* <Image
-										src='../../social/avatar.svg'
-										priority
-										alt='avatar'
-										width={50}
-										height={50}
-									/> */}
-								</div>
-							</div>
-							<div className={styles.UserMenuDropdown}></div>
-						</div>
+						<ThemeSwitch />
+						<NotificationsBell />
+						<Avatar />
 					</div>
 				</div>
-			</header>
+			</div>
 		</>
 	)
 }

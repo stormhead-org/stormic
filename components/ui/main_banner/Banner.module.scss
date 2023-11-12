@@ -12,23 +12,19 @@
 		color: white;
 		text-transform: uppercase;
 		font-weight: 900;
-		font-size: x-large;
-		padding: 2.5rem 0 2.5rem 0;
+		padding: 2.7rem 0 2.7rem 0;
 		border-radius: 0.6rem;
-		margin-bottom: 2rem;
 	}
 	.Search {
-		/* margin-top: 1vw; */
 		display: flex;
 		justify-content: center;
 		width: 100%;
 
 		.SearchFrame {
 			display: flex;
-			position: absolute;
 			background-color: #1e293b;
 			border-radius: 0.6rem;
-			top: 11.8rem;
+			margin-top: -1.4rem;
 			.Icon {
 				color: white;
 				margin: 4px 0 0 4px;
@@ -43,6 +39,10 @@
 				border-radius: 0.6rem;
 				border-style: none;
 				background-color: #1e293b;
+			}
+			.Input:focus {
+				outline: none;
+				background-color: #233550;
 			}
 		}
 	}

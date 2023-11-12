@@ -5,7 +5,7 @@ export default function Banner() {
 		<>
 			<div className={styles.Banner}>
 				<div className={styles.BannerFrame}>
-					<h2>Mustel</h2>
+					<h1>Mustel</h1>
 				</div>
 				<div className={styles.Search}>
 					<div className={styles.SearchFrame}>

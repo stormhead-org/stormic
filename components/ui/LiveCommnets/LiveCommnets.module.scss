@@ -1,0 +1,14 @@
+@import '../../../styles/media';
+
+.LiveCommnets {
+	width: 100%;
+	margin-left: 1rem;
+	.LiveCommnetsFrame {
+		.Header {
+			> p {
+				font-size: large;
+				font-weight: 600;
+			}
+		}
+	}
+}
