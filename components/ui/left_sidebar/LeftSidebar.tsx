@@ -103,7 +103,11 @@ export default function LeftSidebar() {
 						</div>
 					</div>
 					<div className={styles.CreatePost}>
-						<button className={styles.CreatePostButton}>Новый пост</button>
+						<button className={styles.CreatePostButton}>
+							<Link className={styles.CreatePostLink} href='/write'>
+								Новый пост
+							</Link>
+						</button>
 					</div>
 				</div>
 			</div>

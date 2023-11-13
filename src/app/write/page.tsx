@@ -1,10 +1,11 @@
-import MainLayout from '../../../components/ui/MainLayout/MainLayout'
+import { NextPage } from 'next'
+import MainLayout from '../../../components/ui/CustomLayouts/MainLayout/MainLayout'
 import styles from './page.module.scss'
 
-export default function write() {
+const WritePage: NextPage = () => {
 	return (
 		<>
-			<MainLayout>
+			<MainLayout hideLeftSideBar hideRightSideBar>
 				<div className={styles.WritePage}>
 					<div className={styles.WritePageFrame}>
 						<div className={styles.TopRow}>
@@ -12,10 +13,14 @@ export default function write() {
 								<input placeholder='Заголовок' />
 							</div>
 						</div>
-						<div className={styles.BotRow}></div>
+						<div className={styles.BotRow}>
+							<div className={styles.NewPostBody}></div>
+						</div>
 					</div>
 				</div>
 			</MainLayout>
 		</>
 	)
 }
+
+export default WritePage

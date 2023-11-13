@@ -72,16 +72,21 @@
 				margin: 0 0.8rem;
 				border-radius: 0.6rem;
 				background-color: #3375d6;
-				font-weight: 600;
-				font-family: Montserrat;
-				font-size: medium;
 				border: none;
-				color: #c9cccf;
-				text-align: center;
+				.CreatePostLink {
+					font-weight: 600;
+					font-family: Montserrat;
+					font-size: medium;
+					text-align: center;
+					color: #c9cccf;
+				}
 			}
 			.CreatePostButton:hover {
 				background-color: #3367b5;
 				cursor: pointer;
+				.CreatePostLink {
+					color: #c9cccf;
+				}
 			}
 		}
 	}

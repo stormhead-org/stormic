@@ -1,4 +1,4 @@
-import MainLayout from '../../components/ui/MainLayout/MainLayout'
+import MainLayout from '../../components/ui/CustomLayouts/MainLayout/MainLayout'
 import Banner from '../../components/ui/main_banner/Banner'
 import Post from '../../components/ui/post/post_body/Post'
 import TrendSwitch from '../../components/ui/trend_switch/TrendSwitch'

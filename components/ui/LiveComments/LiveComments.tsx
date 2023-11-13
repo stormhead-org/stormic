@@ -1,5 +1,5 @@
 import LiveCommentItem from './LiveCommentItem/LiveCommentItem'
-import styles from './LiveCommnets.module.scss'
+import styles from './LiveComments.module.scss'
 
 export default function LiveCommnets() {
 	return (

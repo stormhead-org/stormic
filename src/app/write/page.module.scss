@@ -1,1 +1,9 @@
 @import '../../../styles/media';
+
+.WritePage {
+	.WritePageFrame {
+		width: 100vw;
+		height: 100vh;
+		background-color: rgb(var(--bg));
+	}
+}
