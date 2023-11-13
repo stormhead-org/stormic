@@ -1,4 +1,3 @@
-import { Bookmark, Fire, HighVoltage, RedCircle, Rocket } from 'fluent-emoji'
 import {
 	Atom,
 	Facebook,
@@ -7,6 +6,7 @@ import {
 	Twitch,
 	Twitter
 } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from './LeftSidebar.module.scss'
 
@@ -18,7 +18,12 @@ export default function LeftSidebar() {
 					<div className={styles.LeftSideDiv}>
 						<div className={styles.Icon}>
 							{/* <Zap size={20} /> */}
-							<HighVoltage width={24} />
+							<Image
+								src='../../../icons/zap.svg'
+								alt='Популярное'
+								height={24}
+								width={24}
+							/>
 						</div>
 						<button className={styles.LeftSideButton}>
 							<Link href='/#'>Популярное</Link>
@@ -27,19 +32,34 @@ export default function LeftSidebar() {
 
 					<div className={styles.LeftSideDiv}>
 						<div className={styles.Icon}>
-							<Fire width={24} />
+							<Image
+								src='../../../icons/fire.svg'
+								alt='Свежее'
+								height={24}
+								width={24}
+							/>
 						</div>
 						<button className={styles.LeftSideButton}>
 							<Link href='/#'>Свежее</Link>
 						</button>
 						<div className={styles.IconDot}>
-							<RedCircle width={12} />
+							<Image
+								src='../../../icons/dot.svg'
+								alt='Уведомление поста'
+								height={12}
+								width={12}
+							/>
 						</div>
 					</div>
 
 					<div className={styles.LeftSideDiv}>
 						<div className={styles.Icon}>
-							<Bookmark width={24} />
+							<Image
+								src='../../../icons/bookmark.svg'
+								alt='Избранное'
+								height={24}
+								width={24}
+							/>
 						</div>
 						<button className={styles.LeftSideButton}>
 							<Link href='/#'>Избранное</Link>
@@ -48,7 +68,12 @@ export default function LeftSidebar() {
 
 					<div className={styles.LeftSideDiv}>
 						<div className={styles.Icon}>
-							<Rocket width={24} />
+							<Image
+								src='../../../icons/rocket.svg'
+								alt='Мои сообщества'
+								height={24}
+								width={24}
+							/>
 						</div>
 						<button className={styles.LeftSideButton}>
 							<Link href='/#'>Мои сообщества</Link>

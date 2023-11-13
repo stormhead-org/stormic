@@ -1,4 +1,4 @@
-import { Bookmark } from 'fluent-emoji'
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from './NavMenu.module.scss'
 
@@ -11,7 +11,12 @@ export default function NavBar() {
 						<div className={styles.MenuFrame}>
 							<div className={styles.LeftSideDiv}>
 								<div className={styles.Icon}>
-									<Bookmark width={24} />
+									<Image
+										src='../../../icons/bookmark.svg'
+										alt='Навигация'
+										height={24}
+										width={24}
+									/>
 								</div>
 								<button className={styles.LeftSideButton}>
 									<Link href='/#'>Self-Host</Link>
@@ -19,7 +24,12 @@ export default function NavBar() {
 							</div>
 							<div className={styles.LeftSideDiv}>
 								<div className={styles.Icon}>
-									<Bookmark width={24} />
+									<Image
+										src='../../../icons/bookmark.svg'
+										alt='Навигация'
+										height={24}
+										width={24}
+									/>
 								</div>
 								<button className={styles.LeftSideButton}>
 									<Link href='/#'>Mustel Admin Doc</Link>
@@ -27,7 +37,12 @@ export default function NavBar() {
 							</div>
 							<div className={styles.LeftSideDiv}>
 								<div className={styles.Icon}>
-									<Bookmark width={24} />
+									<Image
+										src='../../../icons/bookmark.svg'
+										alt='Навигация'
+										height={24}
+										width={24}
+									/>
 								</div>
 								<button className={styles.LeftSideButton}>
 									<Link href='/#'>Контакты</Link>
@@ -35,7 +50,12 @@ export default function NavBar() {
 							</div>
 							<div className={styles.LeftSideDiv}>
 								<div className={styles.Icon}>
-									<Bookmark width={24} />
+									<Image
+										src='../../../icons/bookmark.svg'
+										alt='Навигация'
+										height={24}
+										width={24}
+									/>
 								</div>
 								<button className={styles.LeftSideButton}>
 									<Link href='/#'>FAQ</Link>

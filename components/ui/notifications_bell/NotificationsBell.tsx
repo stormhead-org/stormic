@@ -1,4 +1,4 @@
-import { Bell } from 'fluent-emoji'
+import Image from 'next/image'
 import styles from './NotificationsBell.module.scss'
 
 export default function NotificationsBell() {
@@ -10,7 +10,12 @@ export default function NotificationsBell() {
 					className={styles.notifications_link}
 					aria-label='Уведомления'
 				>
-					<Bell width={24} />
+					<Image
+						src='../../../icons/bell.svg'
+						alt='Уведомления'
+						height={24}
+						width={24}
+					/>
 					<span className={styles.notifications_number}>8</span>
 				</a>
 			</div>

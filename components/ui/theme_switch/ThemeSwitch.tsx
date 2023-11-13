@@ -1,4 +1,4 @@
-import { WaxingCrescentMoon } from 'fluent-emoji'
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from './ThemeSwitch.module.scss'
 
@@ -7,7 +7,12 @@ export default function ThemeSwitch() {
 		<>
 			<div className={styles.ItemHeaderMenu}>
 				<Link className={styles.ThemeSwitch} href='/#' aria-label='Темная тема'>
-					<WaxingCrescentMoon width={24} />
+					<Image
+						src='../../../icons/darktheme.svg'
+						alt='Тёмная тема'
+						height={24}
+						width={24}
+					/>
 				</Link>
 			</div>
 		</>
