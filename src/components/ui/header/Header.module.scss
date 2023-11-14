@@ -4,13 +4,14 @@
 	display: flex;
 	width: 100%;
 	height: 4rem;
-	background-color: #0f172a;
+	background-color: rgb(var(--bg-color-body));
 	justify-content: center;
 	border-bottom: solid;
 	border-width: 0.1rem;
 	border-color: rgb(var(--a-color));
 
 	.HeaderContainer {
+		margin: 0 2.8rem;
 		width: 1200px;
 		display: flex;
 		justify-content: space-between;
@@ -33,7 +34,7 @@
 			align-items: center;
 			justify-content: space-evenly;
 			.ItemHeaderMenu {
-				padding: 0.6rem 0.8rem;
+				padding: 0.4rem 0.7rem;
 			}
 			.ItemHeaderMenu:hover {
 				background-color: rgb(var(--bg-color-ui-item));
