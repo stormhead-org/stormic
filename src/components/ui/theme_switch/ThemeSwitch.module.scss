@@ -1,0 +1,13 @@
+@import '../../../../styles/media';
+
+.ItemHeaderMenu {
+	padding: 0.6rem 0.8rem 0.4rem 0.8rem;
+	.ThemeSwitch {
+		/* margin-top: 0.35rem; */
+	}
+}
+.ItemHeaderMenu:hover {
+	background-color: rgb(var(--bg-color-ui-item));
+	border-radius: 0.4rem;
+	cursor: pointer;
+}

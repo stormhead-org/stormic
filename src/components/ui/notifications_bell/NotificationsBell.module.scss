@@ -1,0 +1,22 @@
+@import '../../../../styles/media';
+
+.ItemHeaderMenu {
+	padding: 0.6rem 0.8rem 0.4rem 0.8rem;
+	margin-right: 0.8rem;
+	.notifications_link {
+		.notifications_number {
+			color: rgb(var(--txt-color-headers));
+			position: absolute;
+			font-size: larger;
+			background-color: rgb(var(--notification-color-red));
+			border-radius: 0.6rem;
+			padding: 0 0.3rem 0 0.3rem;
+			margin: -0.4rem 0 0 -0.8rem;
+		}
+	}
+}
+.ItemHeaderMenu:hover {
+	background-color: rgb(var(--bg-color-ui-item));
+	border-radius: 0.4rem;
+	cursor: pointer;
+}

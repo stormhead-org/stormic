@@ -1,0 +1,151 @@
+@import '../../../../../styles/media';
+
+.PostDownMenu {
+	.PostDownMenuFrame {
+		.DownMenuTopBar {
+			display: flex;
+			width: 100%;
+			align-items: center;
+
+			.View {
+				display: flex;
+				margin-right: 2rem;
+				align-items: center;
+				> p {
+					color: #8b9192;
+				}
+
+				.ViewCount {
+					margin-right: 0.2rem;
+					font-weight: 600;
+				}
+			}
+			.Open {
+				display: flex;
+				align-items: center;
+				> p {
+					color: #8b9192;
+				}
+				.OpenCount {
+					margin-right: 0.2rem;
+					font-weight: 600;
+				}
+			}
+		}
+		.DownMenuBotBar {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 1rem;
+			align-items: center;
+			.BotBarLeft {
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+
+				.Likes {
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
+					margin-right: 1rem;
+					> p {
+						color: #8b9192;
+						font-weight: 600;
+					}
+					.LikesButton {
+						padding: 0.4rem 0.4rem 0.2rem 0.4rem;
+						background-color: transparent;
+						border: none;
+						cursor: pointer;
+						margin-right: 0.4rem;
+						color: #8b9192;
+					}
+					.LikesButton:hover {
+						background-color: #ff00001f;
+						border-radius: 9999px;
+						color: #f00;
+					}
+				}
+
+				.Comments {
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
+					margin-right: 1rem;
+					> p {
+						color: #8b9192;
+						font-weight: 600;
+					}
+					.CommentsButton {
+						padding: 0.4rem 0.4rem 0.2rem 0.4rem;
+						background-color: transparent;
+						border: none;
+						cursor: pointer;
+						margin-right: 0.4rem;
+						color: #8b9192;
+					}
+					.CommentsButton:hover {
+						background-color: #ff00001f;
+						border-radius: 9999px;
+						color: #f00;
+					}
+				}
+
+				.Bookmarks {
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
+					margin-right: 1rem;
+					> p {
+						color: #8b9192;
+						font-weight: 600;
+					}
+					.BookmarksButton {
+						padding: 0.4rem 0.4rem 0.2rem 0.4rem;
+						background-color: transparent;
+						border: none;
+						cursor: pointer;
+						margin-right: 0.4rem;
+						color: #8b9192;
+					}
+					.BookmarksButton:hover {
+						background-color: #ff00001f;
+						border-radius: 9999px;
+						color: #f00;
+					}
+				}
+
+				.ShareButton {
+					padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+					background-color: transparent;
+					border: none;
+					cursor: pointer;
+					margin-right: 0.4rem;
+					color: #8b9192;
+				}
+				.ShareButton:hover {
+					background-color: #ff00001f;
+					border-radius: 9999px;
+					color: #f00;
+				}
+			}
+			.BotBarRight {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				.DownButton {
+					padding: 0.4rem 0.4rem 0.2rem 0.3rem;
+					background-color: transparent;
+					border: none;
+					cursor: pointer;
+					margin-right: 0.4rem;
+					color: #8b9192;
+				}
+				.DownButton:hover {
+					background-color: #ff00001f;
+					border-radius: 9999px;
+					color: #f00;
+				}
+			}
+		}
+	}
+}

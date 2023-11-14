@@ -1,8 +1,7 @@
-import { NextPage } from 'next'
-import MainLayout from '../../../components/ui/CustomLayouts/MainLayout/MainLayout'
+import MainLayout from '../../components/ui/custom_layouts/main_layout/MainLayout'
 import styles from './page.module.scss'
 
-const WritePage: NextPage = () => {
+export default function WritePage() {
 	return (
 		<>
 			<MainLayout hideLeftSideBar hideRightSideBar>
@@ -22,5 +21,3 @@ const WritePage: NextPage = () => {
 		</>
 	)
 }
-
-export default WritePage

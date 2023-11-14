@@ -1,0 +1,47 @@
+@import '../../../../styles/media';
+
+.NavBar {
+	.NavBarFrame {
+		.MenuBlock {
+			.MenuFrame {
+				margin-top: 1rem;
+				.MenuBlockItem {
+					display: flex;
+					align-items: center;
+					.Icon {
+						padding: 0 0.8rem;
+						margin-bottom: -0.25rem;
+					}
+					.LeftSideButton {
+						background-color: transparent;
+						/* font-family: Montserrat; */
+						font-size: large;
+						font-weight: 600;
+						border: none;
+						border-radius: 0.6rem;
+						padding: 0.96rem 0 0.96rem 0;
+						cursor: pointer;
+						align-items: flex-start;
+						text-align: start;
+						> a {
+							color: rgb(var(--txt-color));
+						}
+					}
+				}
+				.MenuBlockItem:hover {
+					background-color: rgb(var(--bg-color-ui-item));
+					border-radius: 0.6rem;
+				}
+			}
+		}
+
+		.AboutContainer {
+			margin: 1rem 0 4rem 0;
+			.ShortAbout {
+				> p {
+					font-size: small;
+				}
+			}
+		}
+	}
+}

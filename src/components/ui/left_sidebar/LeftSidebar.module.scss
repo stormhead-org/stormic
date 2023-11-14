@@ -1,0 +1,86 @@
+@import '../../../../styles/media';
+
+.LeftSidebar {
+	width: 100%;
+	.LeftSidebarFrame {
+		.MenuBlockItem {
+			display: flex;
+			align-items: center;
+			.Icon {
+				padding: 0 0.8rem;
+				margin-bottom: -0.25rem;
+			}
+			.IconDot {
+				padding-left: 8rem;
+				margin-bottom: -0.1rem;
+			}
+			.LeftSideButton {
+				background-color: transparent;
+				/* font-family: Montserrat; */
+				font-size: large;
+				font-weight: 600;
+				border: none;
+				border-radius: 0.6rem;
+				padding: 0.96rem 0 0.96rem 0;
+				cursor: pointer;
+
+				align-items: flex-start;
+				text-align: start;
+				> a {
+					color: rgb(var(--txt-color));
+				}
+				> a:hover {
+					color: rgb(var(--txt-color));
+				}
+			}
+		}
+
+		.MenuBlockItem:hover {
+			background-color: rgb(var(--bg-color-ui-item));
+			border-radius: 0.6rem;
+		}
+
+		.SocialBlock {
+			margin: 1rem 0 2rem 0;
+			.SocialFrame {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin: 0 0.8rem;
+				.ItemSocial {
+					padding: 0.4rem 0.4rem 0.1rem 0.4rem;
+					color: rgb(var(--txt-color));
+				}
+				.ItemSocial:hover {
+					background-color: rgb(var(--bg-color-ui-item));
+					border-radius: 0.6rem;
+					cursor: pointer;
+					color: rgb(var(--a-color));
+				}
+			}
+		}
+
+		.CreatePost {
+			display: flex;
+			justify-content: center;
+			.CreatePostButton {
+				padding: 1rem 4rem;
+				margin: 0 0.8rem;
+				border-radius: 0.6rem;
+				background-color: rgb(var(--a-color));
+				border: none;
+				.CreatePostLink {
+					font-weight: 600;
+					/* font-family: Montserrat; */
+					font-size: medium;
+					text-align: center;
+					color: rgb(var(--txt-color));
+				}
+			}
+			.CreatePostButton:hover {
+				background-color: rgb(var(--a-color-hover));
+				cursor: pointer;
+			}
+		}
+	}
+}

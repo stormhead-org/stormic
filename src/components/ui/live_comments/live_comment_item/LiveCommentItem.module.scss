@@ -1,0 +1,54 @@
+@import '../../../../../styles/media';
+
+.LiveCommentItem {
+	margin-top: 2rem;
+	.CommentTopBar {
+		display: flex;
+
+		.LeftSideBar {
+			display: flex;
+		}
+
+		.RightSideBar {
+			padding-left: 0.4rem;
+			width: 100%;
+			text-align: left;
+
+			.TopBarAuthor {
+				display: flex;
+
+				.CommentAuthorLink {
+					color: rgb(var(--txt-color));
+					font-weight: 600;
+					margin-right: 0.4rem;
+				}
+
+				.CommentAuthorLink:hover {
+					color: rgb(var(--a-color-hover-dark));
+				}
+
+				> p {
+					font-size: small;
+				}
+			}
+
+			.CommentLocate {
+				font-size: small;
+				font-weight: 500;
+				color: rgb(var(--txt-color));
+			}
+			.CommentLocate:hover {
+				color: rgb(var(--a-color-hover-dark));
+			}
+		}
+	}
+	.CommentContent {
+		margin-top: 0.4rem;
+		.CommentTxtContent {
+			color: rgb(var(--txt-color));
+		}
+		.CommentTxtContent:hover {
+			color: rgb(var(--a-color-hover-dark));
+		}
+	}
+}

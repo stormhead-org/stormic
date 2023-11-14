@@ -1,0 +1,50 @@
+@import '../../../../styles/media';
+
+.Banner {
+	width: 100%;
+	.BannerFrame {
+		background-image: url('../../../../public/banner/banner.jpg');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		text-align: center;
+		width: 100%;
+		color: rgb(var(--txt-color-headers));
+		text-transform: uppercase;
+		font-weight: 900;
+		padding: 2.7rem 0 2.7rem 0;
+		border-radius: 0.6rem;
+	}
+	.Search {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+
+		.SearchFrame {
+			display: flex;
+			background-color: rgb(var(--bg-color-card));
+			border-radius: 0.6rem;
+			margin-top: -1.4rem;
+			.Icon {
+				margin: 4px 0 0 4px;
+			}
+			.Input {
+				/* font-family: Montserrat; */
+				color: rgb(var(--txt-color));
+				font-weight: 600;
+				padding: 0 0.6rem 0 0.6rem;
+				height: 2.5rem;
+				width: 350px;
+				border-radius: 0.6rem;
+				border-style: solid;
+				border-width: 0.1rem;
+				border-color: rgb(var(--bg-color-ui-item));
+				background-color: rgb(var(--bg-color-card));
+			}
+			.Input:focus {
+				outline: none;
+				background-color: rgb(var(--bg-color-ui-item));
+			}
+		}
+	}
+}

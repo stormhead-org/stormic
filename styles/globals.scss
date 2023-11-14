@@ -1,6 +1,6 @@
 :root {
-	--max-width: 1100px;
-	--border-radius: 12px;
+	/* --max-width: 100%;
+	--border-radius: 0.6rem;
 	--font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
 		'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
 		'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
@@ -17,6 +17,7 @@
 		#0071ff33 160deg,
 		transparent 360deg
 	);
+
 	--secondary-glow: radial-gradient(
 		rgba(255, 255, 255, 1),
 		rgba(255, 255, 255, 0)
@@ -37,51 +38,29 @@
 	--callout-rgb: 238, 240, 241;
 	--callout-border-rgb: 172, 175, 176;
 	--card-rgb: 180, 185, 188;
-	--card-border-rgb: 131, 134, 135;
-	--bg: 4, 134, 235;
+	--card-border-rgb: 131, 134, 135; */
+
+	--bg-color-body: 15, 23, 42;
+	--bg-color-card: 30, 41, 59;
+	--bg-color-ui-item: 35, 53, 80;
+	--txt-color: 196, 199, 202;
+	--txt-color-headers: 201, 204, 207;
+	--a-color: 51, 117, 214;
+	--a-color-hover: 51, 103, 181;
+	--a-color-hover-dark: 139, 145, 146;
+	--notification-color-red: 170, 0, 0;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--foreground-rgb: 255, 255, 255;
-		--background-start-rgb: 0, 0, 0;
-		--background-end-rgb: 0, 0, 0;
-
-		--primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-		--secondary-glow: linear-gradient(
-			to bottom right,
-			rgba(1, 65, 255, 0),
-			rgba(1, 65, 255, 0),
-			rgba(1, 65, 255, 0.3)
-		);
-
-		--tile-start-rgb: 2, 13, 46;
-		--tile-end-rgb: 2, 5, 19;
-		--tile-border: conic-gradient(
-			#ffffff80,
-			#ffffff40,
-			#ffffff30,
-			#ffffff20,
-			#ffffff10,
-			#ffffff10,
-			#ffffff80
-		);
-
-		--callout-rgb: 20, 20, 20;
-		--callout-border-rgb: 108, 108, 108;
-		--card-rgb: 100, 100, 100;
-		--card-border-rgb: 200, 200, 200;
-	}
-}
+/* @media (prefers-color-scheme: dark) {} */
 
 h1 {
-	color: #c9cccf;
+	color: rdb(var(--txt-color-headers));
 	font-size: xx-large;
 }
 
 h2,
 h3 {
-	color: #c9cccf;
+	color: rgb(var(--txt-color-headers));
 	font-size: x-large;
 }
 
@@ -100,27 +79,26 @@ body {
 
 body {
 	color: rgb(var(--foreground-rgb));
-	background-color: #0f172a;
+	background-color: rgb(var(--bg-color-body));
 }
 
 p {
-	color: #c4c7ca;
-	font-family: Montserrat;
+	color: rgb(var(--txt-color));
 	font-size: medium;
 }
 
 a {
 	color: inherit;
 	text-decoration: none;
-	color: #3375d6;
+	color: rgb(var(--a-color));
 }
 
 a:hover {
-	color: #3367b5;
+	color: rgb(var(--a-color-hover));
 }
 
 button:hover {
-	background-color: #233550;
+	background-color: rgb(var(--bg-color-ui-item));
 }
 
 @media (prefers-color-scheme: dark) {

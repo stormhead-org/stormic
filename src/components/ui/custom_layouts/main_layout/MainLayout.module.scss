@@ -1,0 +1,42 @@
+@import '../../../../../styles/media';
+
+.Container {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+
+	.MainContainer {
+		width: 1200px;
+		display: flex;
+		justify-content: center;
+
+		.LeftSide {
+			width: 25%;
+			margin: 1rem 1rem 0 0;
+			height: 100vh-5vh;
+			overflow-y: scroll;
+		}
+		.LeftSide::-webkit-scrollbar {
+			display: none;
+		}
+
+		.CenterBlock {
+			width: 50%;
+			height: 100vh-5vh;
+			overflow-y: scroll;
+		}
+		.CenterBlock::-webkit-scrollbar {
+			display: none;
+		}
+
+		.RightSide {
+			width: 25%;
+			margin: 1rem 0 0 1rem;
+			height: 100vh-5vh;
+			overflow-y: scroll;
+		}
+		.RightSide::-webkit-scrollbar {
+			display: none;
+		}
+	}
+}
