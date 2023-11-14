@@ -1,15 +1,18 @@
-import EditorJS from '@editorjs/editorjs'
-import React from 'react'
+import dynamic from 'next/dynamic'
 import MainLayout from '../../components/ui/custom_layouts/main_layout/MainLayout'
 import styles from './page.module.scss'
 
-export default function WritePage() {
-	React.useEffect(() => {
-		const editor = new EditorJS({
-			holder: 'editor'
-		})
-	}, [])
+const Editor = dynamic(
+	() =>
+		import('../../components/pages/write/editor/Editor').then(m => m.Editor),
+	{ ssr: false }
+)
 
+interface WriteFormPropsHeader {
+	title?: string
+}
+
+const WritePage: React.FC<WriteFormPropsHeader> = ({ title }) => {
 	return (
 		<>
 			<MainLayout
@@ -20,8 +23,12 @@ export default function WritePage() {
 				<div className={styles.WritePage}>
 					<div className={styles.WritePageFrame}>
 						<div className={styles.TopRow}>
-							<input className={styles.NewPostName} placeholder='Заголовок' />
-							<div id='editor' />
+							<input
+								className={styles.NewPostName}
+								placeholder='Заголовок'
+								defaultValue={title}
+							/>
+							<div className={styles.Editor}>{/* <Editor /> */}</div>
 						</div>
 						<div className={styles.BotRow}>
 							<input
@@ -35,3 +42,5 @@ export default function WritePage() {
 		</>
 	)
 }
+
+export default WritePage
