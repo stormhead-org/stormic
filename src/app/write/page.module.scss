@@ -2,8 +2,35 @@
 
 .WritePage {
 	.WritePageFrame {
-		width: 100vw;
-		height: 100vh;
-		background-color: rgb(var(--bg));
+		.TopRow {
+			.NewPostName {
+				width: 100%;
+				border: none;
+				background-color: transparent;
+				font-size: x-large;
+				text-align: left;
+				font-weight: 600;
+				color: rgb(var(--txt-color));
+				margin: 1rem 0;
+				word-wrap: break-word;
+			}
+			.NewPostName:focus {
+				outline: none;
+			}
+		}
+		.BotRow {
+			.NewPostBody {
+				width: 100%;
+				border: none;
+				background-color: transparent;
+				font-size: medium;
+				text-align: left;
+				color: rgb(var(--txt-color));
+				word-wrap: break-word;
+			}
+			.NewPostBody:focus {
+				outline: none;
+			}
+		}
 	}
 }

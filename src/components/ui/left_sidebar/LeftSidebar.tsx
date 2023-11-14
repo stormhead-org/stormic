@@ -17,7 +17,6 @@ export default function LeftSidebar() {
 				<div className={styles.LeftSidebarFrame}>
 					<div className={styles.MenuBlockItem}>
 						<div className={styles.Icon}>
-							{/* <Zap size={20} /> */}
 							<Image
 								src='../../../icons/zap.svg'
 								alt='Популярное'
@@ -46,8 +45,8 @@ export default function LeftSidebar() {
 							<Image
 								src='../../../icons/dot.svg'
 								alt='Уведомление поста'
-								height={12}
-								width={12}
+								height={6}
+								width={6}
 							/>
 						</div>
 					</div>
@@ -103,11 +102,9 @@ export default function LeftSidebar() {
 						</div>
 					</div>
 					<div className={styles.CreatePost}>
-						<button className={styles.CreatePostButton}>
-							<Link className={styles.CreatePostLink} href='/write'>
-								Новый пост
-							</Link>
-						</button>
+						<Link className={styles.CreatePostLink} href='/write'>
+							<button className={styles.CreatePostButton}>Новый пост</button>
+						</Link>
 					</div>
 				</div>
 			</div>

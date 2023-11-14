@@ -97,8 +97,21 @@ a:hover {
 	color: rgb(var(--a-color-hover));
 }
 
+button {
+	text-align: center;
+	color: rgb(var(--txt-color));
+	border: none;
+	background-color: rgb(var(--bg-color-card));
+	border-radius: 0.6rem;
+}
+
 button:hover {
 	background-color: rgb(var(--bg-color-ui-item));
+	cursor: pointer;
+}
+
+.WriteLayoutSettings {
+	background-color: rgb(var(--bg-color-card));
 }
 
 @media (prefers-color-scheme: dark) {

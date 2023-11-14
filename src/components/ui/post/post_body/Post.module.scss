@@ -64,16 +64,15 @@
 				}
 			}
 		}
-		.PostContentBar {
-			.PostName {
-				.PostNameH3 {
+		.PostBody {
+			.PostContent {
+				.PostName {
 					margin: 0.8rem 0;
 				}
-			}
-			.PostTxt {
 				.PostTxtPreview {
 				}
 			}
+
 			.PostImgPreview {
 				height: 24rem;
 				background-image: url('../../../../../public/post/blackhole.jpg');

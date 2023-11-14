@@ -11,19 +11,18 @@
 				margin-bottom: -0.25rem;
 			}
 			.IconDot {
-				padding-left: 8rem;
-				margin-bottom: -0.1rem;
+				margin-left: -2.5rem;
+				pointer-events: none;
 			}
 			.LeftSideButton {
 				background-color: transparent;
-				/* font-family: Montserrat; */
 				font-size: large;
 				font-weight: 600;
 				border: none;
 				border-radius: 0.6rem;
-				padding: 0.96rem 0 0.96rem 0;
+				width: 16rem;
+				height: 3.24rem;
 				cursor: pointer;
-
 				align-items: flex-start;
 				text-align: start;
 				> a {
@@ -63,23 +62,18 @@
 		.CreatePost {
 			display: flex;
 			justify-content: center;
-			.CreatePostButton {
-				padding: 1rem 4rem;
-				margin: 0 0.8rem;
-				border-radius: 0.6rem;
-				background-color: rgb(var(--a-color));
-				border: none;
-				.CreatePostLink {
+
+			.CreatePostLink {
+				.CreatePostButton {
+					width: 14rem;
+					height: 3rem;
+					margin: 0 0.8rem;
 					font-weight: 600;
-					/* font-family: Montserrat; */
 					font-size: medium;
-					text-align: center;
-					color: rgb(var(--txt-color));
+					border-width: 0.1rem;
+					border-color: rgb(var(--bg-color-ui-item));
+					border-style: solid;
 				}
-			}
-			.CreatePostButton:hover {
-				background-color: rgb(var(--a-color-hover));
-				cursor: pointer;
 			}
 		}
 	}

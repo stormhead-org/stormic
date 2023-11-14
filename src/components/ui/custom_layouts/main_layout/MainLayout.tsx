@@ -7,16 +7,18 @@ import styles from './MainLayout.module.scss'
 export default function MainLayout({
 	children,
 	hideLeftSideBar,
-	hideRightSideBar
+	hideRightSideBar,
+	className
 }: {
 	children: React.ReactNode
 	hideLeftSideBar?: boolean
 	hideRightSideBar?: boolean
+	className?: string
 }) {
 	return (
 		<>
 			<Header />
-			<div className={styles.Container}>
+			<div className={`${styles.Container} ${className}`}>
 				<div className={styles.MainContainer}>
 					{!hideLeftSideBar && (
 						<div className={styles.LeftSide}>

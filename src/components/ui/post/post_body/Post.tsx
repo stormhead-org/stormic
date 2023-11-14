@@ -27,20 +27,18 @@ export default function Post() {
 							</button>
 						</div>
 					</div>
-					<div className={styles.PostContentBar}>
-						<Link className={styles.PostName} href='/#'>
-							<h3 className={styles.PostNameH3}>
+					<div className={styles.PostBody}>
+						<Link className={styles.PostContent} href='/#'>
+							<h3 className={styles.PostName}>
 								Сколько научных открытий было сделано во время съемок
 								Интерстеллара
 							</h3>
-						</Link>
-						<div className={styles.PostTxt}>
 							<p className={styles.PostTxtPreview}>
 								Фильм Кристофера Нолана «Интерстеллар» многие называют самым
 								научным в современной кинофантастике, но и претензии ему
 								предъявляют по всей строгости.
 							</p>
-						</div>
+						</Link>
 						<div className={styles.PostImgPreview}></div>
 					</div>
 					<PostDownMenu />
