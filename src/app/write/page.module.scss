@@ -11,11 +11,15 @@
 				text-align: left;
 				font-weight: 600;
 				color: rgb(var(--txt-color));
-				margin: 1rem 0;
+				margin: 2rem 0 1rem 0;
 				word-wrap: break-word;
 			}
 			.NewPostName:focus {
 				outline: none;
+			}
+			.Editor {
+				color: rgb(var(--txt-color));
+				font-size: 1.2rem;
 			}
 		}
 		.BotRow {
