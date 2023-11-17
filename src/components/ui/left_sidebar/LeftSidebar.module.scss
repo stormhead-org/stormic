@@ -1,5 +1,13 @@
 @import '../../../../styles/media';
 
+.LeftSideMenuItem {
+	background-color: blue;
+}
+
+.activeItemMenu {
+	background-color: white;
+}
+
 .LeftSidebar {
 	width: 100%;
 	.LeftSidebarFrame {

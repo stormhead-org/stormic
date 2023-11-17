@@ -1,11 +1,13 @@
+'use client'
+
 import Code from '@editorjs/code'
 import EditorJS from '@editorjs/editorjs'
 import Header from '@editorjs/header'
-import React, { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
-const Editor: React.FC = () => {
+export default function Editor() {
 	const editorRef = useRef<EditorJS | null>(null)
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!editorRef.current?.isReady) {
 			const editor = new EditorJS({
 				holder: 'editor',
@@ -66,5 +68,3 @@ const Editor: React.FC = () => {
 		/>
 	)
 }
-
-export default Editor
