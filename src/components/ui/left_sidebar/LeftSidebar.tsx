@@ -23,7 +23,7 @@ const LeftSideMenu = [
 		text: 'Свежее',
 		icon: <Flame size={22} />,
 		path: '/new',
-		dot: <Dot size={22} />
+		dot: <Dot size={32} />
 	},
 	{ text: 'Моя лента', icon: <CheckCheck size={22} />, path: '/my' },
 	{ text: 'Закладки', icon: <BookmarkCheck size={22} />, path: '/bookmarks' }

@@ -33,7 +33,10 @@
 }
 
 .IconItemMenuDot {
-	color: red;
+	color: rgb(var(--notification-color-red));
+	/* margin-bottom: -0.3rem; */
+	margin: -1rem 0 -1.2rem 0;
+	margin-left: 8rem;
 }
 
 .IconItemSocialMenu {

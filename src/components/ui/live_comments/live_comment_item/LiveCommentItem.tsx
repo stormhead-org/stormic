@@ -2,7 +2,26 @@ import Link from 'next/link'
 import Avatar from '../../avatar/Avatar'
 import styles from './LiveCommentItem.module.scss'
 
-export default function LiveCommentItem() {
+interface CommentItemProps {
+	id: number
+	user: {
+		id: number
+		fullname: string
+		avatarUrl: string
+	}
+	text: string
+	post: {
+		id: number
+		title: string
+	}
+}
+
+export const LiveCommentItem: React.FC<CommentItemProps> = ({
+	id,
+	user,
+	text,
+	post
+}) => {
 	return (
 		<>
 			<div className={styles.LiveCommentItem}>
@@ -12,22 +31,27 @@ export default function LiveCommentItem() {
 					</div>
 					<div className={styles.RightSideBar}>
 						<div className={styles.TopBarAuthor}>
-							<Link className={styles.CommentAuthorLink} href='/#'>
-								Nims
+							<Link
+								className={styles.CommentAuthorLink}
+								href={`/u/${user.fullname}`}
+							>
+								<b>{user.fullname}</b>
 							</Link>
 							<p>в посте</p>
 						</div>
-						<Link className={styles.CommentLocate} href='/#'>
-							Сколько научных открытий...
+						<Link className={styles.CommentLocate} href={`/${post.id}`}>
+							<span className={styles.postTitle}>{post.title}</span>
 						</Link>
 					</div>
 				</div>
 				<div className={styles.CommentContent}>
-					<Link className={styles.CommentTxtContent} href='/#'>
-						Нолан точно гений. Однако, все еще не такой гений как Габэн!
+					<Link className={styles.CommentTxtContent} href={`/${id}`}>
+						{text}
 					</Link>
 				</div>
 			</div>
 		</>
 	)
 }
+
+export default LiveCommentItem
