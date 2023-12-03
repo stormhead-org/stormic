@@ -1,5 +1,5 @@
-import MainLayout from '@/components/ui/custom_layouts/main_layout/MainLayout'
 import Link from 'next/link'
+import MainLayout from './(routing)/(default)/layout'
 
 export default function NotFound() {
 	return (

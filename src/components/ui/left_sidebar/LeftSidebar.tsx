@@ -30,12 +30,12 @@ const LeftSideMenu = [
 ]
 
 const LeftSocialMenu = [
-	{ icon: <Twitter size={24} />, path: '/' },
-	{ icon: <Facebook size={24} />, path: '/' },
-	{ icon: <Github size={24} />, path: '/' },
-	{ icon: <Instagram size={24} />, path: '/' },
-	{ icon: <Twitch size={24} />, path: '/' },
-	{ icon: <Atom size={24} />, path: '/' }
+	{ icon: <Twitter size={24} />, path: '/placeholder#1' },
+	{ icon: <Facebook size={24} />, path: '/placeholder#2' },
+	{ icon: <Github size={24} />, path: '/placeholder#3' },
+	{ icon: <Instagram size={24} />, path: '/placeholder#4' },
+	{ icon: <Twitch size={24} />, path: '/placeholder#5' },
+	{ icon: <Atom size={24} />, path: '/placeholder#6' }
 ]
 
 export default function LeftSideBar() {

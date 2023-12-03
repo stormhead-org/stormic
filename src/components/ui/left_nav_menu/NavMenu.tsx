@@ -9,15 +9,19 @@ const LeftSideCustomMenu = [
 	{
 		text: 'Self-Host',
 		icon: <BookmarkCheck size={24} />,
-		path: '/placeholder'
+		path: '/placeholder#1'
 	},
 	{
 		text: 'Mustel Admin Doc',
 		icon: <BookmarkCheck size={24} />,
-		path: '/placeholder'
+		path: '/placeholder#2'
 	},
-	{ text: 'Контакты', icon: <BookmarkCheck size={24} />, path: '/placeholder' },
-	{ text: 'FAQ', icon: <BookmarkCheck size={24} />, path: '/placeholder' }
+	{
+		text: 'Контакты',
+		icon: <BookmarkCheck size={24} />,
+		path: '/placeholder#3'
+	},
+	{ text: 'FAQ', icon: <BookmarkCheck size={24} />, path: '/placeholder#4' }
 ]
 
 export default function NavBar() {

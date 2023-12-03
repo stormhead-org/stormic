@@ -1,4 +1,4 @@
-import MainLayout from '@/components/ui/custom_layouts/main_layout/MainLayout'
+import MainLayout from './(routing)/(default)/layout'
 
 export default function Loading() {
 	return (

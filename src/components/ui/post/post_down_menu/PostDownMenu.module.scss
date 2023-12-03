@@ -9,7 +9,6 @@
 
 			.View {
 				display: flex;
-				margin-right: 2rem;
 				align-items: center;
 				> p {
 					color: #8b9192;
@@ -23,12 +22,27 @@
 			}
 			.Open {
 				display: flex;
+				margin-left: 1rem;
 				align-items: center;
 				> p {
 					color: #8b9192;
 					font-size: small;
 				}
 				.OpenCount {
+					margin-right: 0.2rem;
+					font-weight: 600;
+				}
+			}
+
+			.Repost {
+				display: flex;
+				margin-left: 1rem;
+				align-items: center;
+				> p {
+					color: #8b9192;
+					font-size: small;
+				}
+				.RepostCount {
 					margin-right: 0.2rem;
 					font-weight: 600;
 				}

@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic'
-import MainLayout from '../../components/ui/custom_layouts/main_layout/MainLayout'
+import MainLayout from '../../../../components/ui/custom_layouts/main_layout/MainLayout'
 import styles from './page.module.scss'
 
 const EditorJS = dynamic(
-	() => import('../../components/pages/write/editor/Editor'),
+	() => import('../../../../components/pages/write/editor/Editor'),
 	{ ssr: false }
 )
 

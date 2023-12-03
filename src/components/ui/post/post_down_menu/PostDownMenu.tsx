@@ -15,6 +15,10 @@ export default function PostDownMenu() {
 							<p className={styles.OpenCount}>3.5к</p>
 							<p>открытий</p>
 						</div>
+						<div className={styles.Repost}>
+							<p className={styles.RepostCount}>87</p>
+							<p>репостов</p>
+						</div>
 					</div>
 					<div className={styles.DownMenuBotBar}>
 						<div className={styles.BotBarLeft}>
