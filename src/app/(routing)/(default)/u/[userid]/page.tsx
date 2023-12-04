@@ -1,8 +1,9 @@
-// 'use client'
-
-// import { useRouter } from 'next/navigation'
+import styles from './idUser.module.scss'
 
 export default function Page() {
-	// const router = useRouter()
-	return <p>Post: 312</p>
+	return (
+		<>
+			<div className={styles.UserPage}>das</div>
+		</>
+	)
 }
