@@ -14,14 +14,19 @@ class FetchClient {
 }
 
 export default function RootLayout({
-	children
+	children,
+	login
 }: {
 	children: React.ReactNode
+	login: React.ReactNode
 }) {
 	return (
 		<>
 			<html lang='ru'>
-				<body className={montserrat.className}>{children}</body>
+				<body className={montserrat.className}>
+					{children}
+					{login}
+				</body>
 			</html>
 		</>
 	)

@@ -5,4 +5,9 @@ const nextConfig = {
 	}
 }
 
-module.exports = nextConfig
+module.exports = {
+	reactStrictMode: true,
+	images: {
+		domains: ['leonardo.osnova.io', 'cdn.discordapp.com']
+	}
+}

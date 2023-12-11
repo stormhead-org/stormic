@@ -1,5 +1,11 @@
 import styles from './Avatar.module.scss'
 
+interface AvatarItemProps {
+	user: {
+		avatarUrl: string
+	}
+}
+
 export default function Avatar() {
 	return (
 		<>
@@ -7,12 +13,11 @@ export default function Avatar() {
 				<div className={styles.AvatarInner}>
 					<div className={styles.AvatarFrame}>
 						{/* <Image
-										src='../../social/avatar.svg'
-										priority
-										alt='avatar'
-										width={50}
-										height={50}
-									/> */}
+							src='../../../../public/social/avatar.svg'
+							alt='avatar'
+							width={50}
+							height={50}
+						/> */}
 					</div>
 				</div>
 				<div className={styles.UserMenuDropdown}></div>
