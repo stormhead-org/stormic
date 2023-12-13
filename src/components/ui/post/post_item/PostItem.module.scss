@@ -133,6 +133,7 @@
 				.View {
 					display: flex;
 					align-items: center;
+					cursor: default;
 					> p {
 						color: #8b9192;
 						font-size: small;
@@ -147,6 +148,7 @@
 					display: flex;
 					margin-left: 1rem;
 					align-items: center;
+					cursor: default;
 					> p {
 						color: #8b9192;
 						font-size: small;
@@ -161,6 +163,7 @@
 					display: flex;
 					margin-left: 1rem;
 					align-items: center;
+					cursor: default;
 					> p {
 						color: #8b9192;
 						font-size: small;
@@ -186,22 +189,29 @@
 						justify-content: flex-start;
 						align-items: center;
 						margin-right: 1rem;
-						> p {
-							color: #8b9192;
-							font-weight: 600;
-						}
 						.LikesButton {
 							padding: 0.4rem 0.4rem 0.2rem 0.4rem;
 							background-color: transparent;
+							color: rgb(var(--a-color-hover-dark));
 							border: none;
-							cursor: pointer;
 							margin-right: 0.4rem;
-							color: #8b9192;
 						}
-						.LikesButton:hover {
-							background-color: #ff00001f;
+
+						.LikesCount {
+							color: rgb(var(--a-color-hover-dark));
+							font-weight: 600;
+						}
+					}
+
+					.Likes:hover {
+						cursor: pointer;
+						.LikesButton {
+							background-color: rgb(var(--bg-color-ui-item));
 							border-radius: 9999px;
-							color: #f00;
+							color: rgb(var(--a-color));
+						}
+						.LikesCount {
+							color: rgb(var(--a-color));
 						}
 					}
 
@@ -210,22 +220,29 @@
 						justify-content: flex-start;
 						align-items: center;
 						margin-right: 1rem;
-						> p {
-							color: #8b9192;
-							font-weight: 600;
-						}
 						.CommentsButton {
 							padding: 0.4rem 0.4rem 0.2rem 0.4rem;
 							background-color: transparent;
+							color: rgb(var(--a-color-hover-dark));
 							border: none;
-							cursor: pointer;
 							margin-right: 0.4rem;
-							color: #8b9192;
 						}
-						.CommentsButton:hover {
-							background-color: #ff00001f;
+
+						.CommentsCount {
+							color: rgb(var(--a-color-hover-dark));
+							font-weight: 600;
+						}
+					}
+
+					.Comments:hover {
+						cursor: pointer;
+						.CommentsButton {
+							background-color: rgb(var(--bg-color-ui-item));
 							border-radius: 9999px;
-							color: #f00;
+							color: rgb(var(--a-color));
+						}
+						.CommentsCount {
+							color: rgb(var(--a-color));
 						}
 					}
 
@@ -234,37 +251,43 @@
 						justify-content: flex-start;
 						align-items: center;
 						margin-right: 1rem;
-						> p {
-							color: #8b9192;
-							font-weight: 600;
-						}
 						.BookmarksButton {
 							padding: 0.4rem 0.4rem 0.2rem 0.4rem;
 							background-color: transparent;
+							color: rgb(var(--a-color-hover-dark));
 							border: none;
-							cursor: pointer;
 							margin-right: 0.4rem;
-							color: #8b9192;
 						}
-						.BookmarksButton:hover {
-							background-color: #ff00001f;
+
+						.BookmarksCount {
+							color: rgb(var(--a-color-hover-dark));
+							font-weight: 600;
+						}
+					}
+
+					.Bookmarks:hover {
+						cursor: pointer;
+						.BookmarksButton {
+							background-color: rgb(var(--bg-color-ui-item));
 							border-radius: 9999px;
-							color: #f00;
+							color: rgb(var(--a-color));
+						}
+						.BookmarksCount {
+							color: rgb(var(--a-color));
 						}
 					}
 
 					.ShareButton {
-						padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+						padding: 0.4rem 0.4rem 0.2rem 0.4rem;
 						background-color: transparent;
+						color: rgb(var(--a-color-hover-dark));
 						border: none;
-						cursor: pointer;
 						margin-right: 0.4rem;
-						color: #8b9192;
 					}
 					.ShareButton:hover {
-						background-color: #ff00001f;
+						background-color: rgb(var(--bg-color-ui-item));
 						border-radius: 9999px;
-						color: #f00;
+						color: rgb(var(--a-color));
 					}
 				}
 				.BotBarRight {
@@ -272,17 +295,16 @@
 					justify-content: flex-end;
 					align-items: center;
 					.DownButton {
-						padding: 0.4rem 0.4rem 0.2rem 0.3rem;
+						padding: 0.4rem 0.4rem 0.2rem 0.4rem;
 						background-color: transparent;
+						color: rgb(var(--a-color-hover-dark));
 						border: none;
-						cursor: pointer;
 						margin-right: 0.4rem;
-						color: #8b9192;
 					}
 					.DownButton:hover {
-						background-color: #ff00001f;
+						background-color: rgb(var(--bg-color-ui-item));
 						border-radius: 9999px;
-						color: #f00;
+						color: rgb(var(--a-color));
 					}
 				}
 			}

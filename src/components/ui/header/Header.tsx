@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import LoginButton from '../login/LoginButton'
-import NotificationsBell from '../notifications_bell/NotificationsBell'
+import LoginButton from '../login_button/LoginButton'
+import ModalLogin from '../modals/login/ModalLogin'
 import ThemeSwitch from '../theme_switch/ThemeSwitch'
 import styles from './Header.module.scss'
 
@@ -78,8 +78,9 @@ export default function Header() {
 
 					<div className={styles.Right}>
 						<ThemeSwitch />
-						<NotificationsBell />
+						{/* <NotificationsBell /> */}
 						{/* <Avatar /> */}
+						<ModalLogin />
 						<LoginButton />
 					</div>
 				</div>

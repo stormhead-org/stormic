@@ -1,0 +1,29 @@
+@import '../../../../styles/media';
+
+.ButtonLogin {
+	display: flex;
+	height: 2.5rem;
+	width: 5rem;
+	align-items: center;
+	justify-content: center;
+	line-height: 1.5rem;
+	border: 0.1rem;
+	border-radius: 0.6rem;
+	border-color: rgb(var(--bg-color-ui-item));
+	border-style: solid;
+	background-color: rgb(var(--bg-color-card));
+	margin-left: 1rem;
+	color: rgb(var(--txt-color-headers));
+	font-weight: 600;
+	font-size: medium;
+}
+
+.ButtonLogin:hover {
+	background-color: rgb(var(--bg-color-ui-item));
+}
+
+@media (min-width: 640px) {
+	.ButtonLogin {
+		gap: 0.5rem;
+	}
+}
