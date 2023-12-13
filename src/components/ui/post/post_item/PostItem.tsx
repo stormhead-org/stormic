@@ -106,6 +106,7 @@ export const PostItem: React.FC<PostItemProps> = ({
 							alt='PostPreview'
 							width={1920}
 							height={1080}
+							style={{ objectFit: 'cover' }}
 						/>
 					</Link>
 				</div>

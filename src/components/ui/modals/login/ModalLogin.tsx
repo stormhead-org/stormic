@@ -1,18 +1,46 @@
-import Modal from '../modal_item/Modal'
-import ModalClose from '../modal_item/modals_close/ModalClose'
+'use client'
+
+import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useRef } from 'react'
+import ModalLoginData from '../../../../../data.js'
 import styles from './ModalLogin.module.scss'
 
 export default function ModalLogin() {
-	return (
-		<>
-			<Modal>
-				<div className={styles.ModalLogin}>
-					<div className={styles.FrameLeft}></div>
-					<div className={styles.FrameRight}>
-						<ModalClose />
+	const ModalLoginSrc = ModalLoginData
+	const searchParams = useSearchParams()
+	const dialogRef = useRef<null | HTMLDialogElement>(null)
+	const showDialog = searchParams.get('modal')
+
+	useEffect(() => {
+		if (showDialog === 'auth') {
+			dialogRef.current?.showModal()
+		}
+	}, [showDialog])
+
+	const dialog: JSX.Element | null =
+		showDialog === 'auth' ? (
+			<dialog ref={dialogRef} className={styles.Modal}>
+				{ModalLoginSrc.environment.media.project.map(obj => (
+					<div key={obj.selfProject.bannerImg}>
+						<div className={styles.ModalLogin}>
+							<div className={styles.FrameLeft}>
+								<Image
+									className={styles.BannerItemFrame}
+									src={obj.selfProject.bannerImg}
+									alt='BannerImg'
+									width={1920}
+									height={1080}
+									style={{ objectFit: 'cover' }}
+									priority={true}
+								/>
+							</div>
+							<div className={styles.FrameRight}></div>
+						</div>
 					</div>
-				</div>
-			</Modal>
-		</>
-	)
+				))}
+			</dialog>
+		) : null
+
+	return dialog
 }

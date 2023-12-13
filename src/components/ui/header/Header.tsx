@@ -1,26 +1,32 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import SiteLogoData from '../../../../data.js'
 import LoginButton from '../login_button/LoginButton'
-import ModalLogin from '../modals/login/ModalLogin'
 import ThemeSwitch from '../theme_switch/ThemeSwitch'
 import styles from './Header.module.scss'
 
 export default function Header() {
+	const SiteLogoSrc = SiteLogoData
 	return (
 		<>
 			<div className={styles.Header}>
 				<div className={styles.HeaderContainer}>
 					<div className={styles.Left}>
-						<Link href='/' aria-label='Главная'>
-							<Image
-								className={styles.Logo}
-								src='../../../icons/fire.svg'
-								priority
-								alt='Лого'
-								width={50}
-								height={50}
-							/>
-						</Link>
+						{SiteLogoSrc.environment.media.project.map(obj => (
+							<div key={obj.selfProject.SiteLogo}>
+								<Link href='/' aria-label='Home'>
+									<Image
+										className={styles.Logo}
+										src={obj.selfProject.SiteLogo}
+										priority
+										alt='SiteLogo'
+										width={44}
+										height={44}
+										style={{ objectFit: 'contain' }}
+									/>
+								</Link>
+							</div>
+						))}
 					</div>
 
 					<div className={styles.Center}>
@@ -80,7 +86,6 @@ export default function Header() {
 						<ThemeSwitch />
 						{/* <NotificationsBell /> */}
 						{/* <Avatar /> */}
-						<ModalLogin />
 						<LoginButton />
 					</div>
 				</div>
