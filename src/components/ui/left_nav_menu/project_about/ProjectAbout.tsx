@@ -6,21 +6,21 @@ export default function ProjectAbout() {
 	const SiteUrlEnv = process.env.SITE_URL as string
 	return (
 		<>
-			{ProjectSrc.environment.media.project.map(obj => (
-				<div key={obj.mustelProject.projectVersion} {...obj}>
-					<div className={styles.ProjectAbout}>
+			<div className={styles.ProjectAbout}>
+				{ProjectSrc.environment.media.project.map(obj => (
+					<div key={obj.mustelproject.projectversion}>
 						<p>
-							{obj.selfProject.siteUrl}: <a href='/about'>О проекте</a> |{' '}
+							{obj.selfproject.siteurl}: <a href='/about'>О проекте</a> |{' '}
 							<a href='/rules'>Правила</a> |
 							<br />
 							<a href='/privacy-policy'>Политика конфиденциальности</a>
 							<br />
 							<br />
-							{obj.mustelProject.projectName}:{' '}
+							{obj.mustelproject.projectname}:{' '}
 							<a href='https://mustel.ru/about'>О проекте</a> |{' '}
 							<a href='/keyboard-shortcuts'>Сочетания клавиш</a> |{' '}
 							<a href='https://github.com/nimscore/mustel-ui'>Исходный код</a> |{' '}
-							{obj.mustelProject.projectVersion}
+							{obj.mustelproject.projectversion}
 							<br />
 							<br />
 							Сделано с любовью и <a href='https://nextjs.org'>NextJS</a>
@@ -28,8 +28,8 @@ export default function ProjectAbout() {
 							Сообщество <a href='https://mustel.ru'>Mustel</a> © 2023 - 2024
 						</p>
 					</div>
-				</div>
-			))}
+				))}
+			</div>
 		</>
 	)
 }

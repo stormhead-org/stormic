@@ -12,21 +12,21 @@ export default function Header() {
 			<div className={styles.Header}>
 				<div className={styles.HeaderContainer}>
 					<div className={styles.Left}>
-						{SiteLogoSrc.environment.media.project.map(obj => (
-							<div key={obj.selfProject.SiteLogo}>
-								<Link href='/' aria-label='Home'>
+						<Link href='/' aria-label='Home'>
+							{SiteLogoSrc.environment.media.project.map(obj => (
+								<div key={obj.selfproject.sitelogo}>
 									<Image
 										className={styles.Logo}
-										src={obj.selfProject.SiteLogo}
+										src={obj.selfproject.sitelogo}
 										priority
 										alt='SiteLogo'
 										width={44}
 										height={44}
 										style={{ objectFit: 'contain' }}
 									/>
-								</Link>
-							</div>
-						))}
+								</div>
+							))}
+						</Link>
 					</div>
 
 					<div className={styles.Center}>

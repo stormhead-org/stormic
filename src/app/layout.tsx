@@ -10,9 +10,11 @@ export const metadata: Metadata = {
 	description: 'Единое решение для Ваших сообществ!'
 }
 
-class FetchClient {
-	private LANG = process.env.LANG as string
-}
+// class FetchClient {
+// 	private LANG = process.env.LANG as string
+// }
+const SITE_LANG = process.env.LANG as string
+// console.log(SITE_LANG)
 
 export default function RootLayout({
 	children,

@@ -26,19 +26,19 @@ module.exports = {
 		media: {
 			project: [
 				{
-					selfProject: {
-						communityName: 'mustel',
-						siteUrl: 'mustel.ru',
-						SiteLogo:
+					selfproject: {
+						communityname: 'mustel',
+						siteurl: 'mustel.ru',
+						sitelogo:
 							'https://cdn.discordapp.com/attachments/868472815022657536/1184536486436163727/fire.svg',
-						bannerImg:
+						bannerimg:
 							'https://cdn.discordapp.com/attachments/868472815022657536/1184446941384413254/banner.jpg?ex=658c012c&is=65798c2c&hm=c8b53e0602bd92d2fb51658517ed1208302b16d5a2c2e769ac2e89773a835eb6&',
-						loginModalImg:
+						loginmodalimg:
 							'https://cdn.discordapp.com/attachments/868472815022657536/1184446941384413254/banner.jpg?ex=658c012c&is=65798c2c&hm=c8b53e0602bd92d2fb51658517ed1208302b16d5a2c2e769ac2e89773a835eb6&'
 					},
-					mustelProject: {
-						projectVersion: 'v0.0.1-alpha',
-						projectName: 'Mustel'
+					mustelproject: {
+						projectversion: 'v0.0.1-alpha',
+						projectname: 'Mustel'
 					},
 					createdAt: new Date().toString()
 				}

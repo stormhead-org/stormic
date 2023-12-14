@@ -21,13 +21,13 @@ export default function ModalLogin() {
 	const dialog: JSX.Element | null =
 		showDialog === 'auth' ? (
 			<dialog ref={dialogRef} className={styles.Modal}>
-				{ModalLoginSrc.environment.media.project.map(obj => (
-					<div key={obj.selfProject.bannerImg}>
-						<div className={styles.ModalLogin}>
-							<div className={styles.FrameLeft}>
+				<div className={styles.ModalLogin}>
+					<div className={styles.FrameLeft}>
+						{ModalLoginSrc.environment.media.project.map(obj => (
+							<div key={obj.selfproject.bannerimg}>
 								<Image
 									className={styles.BannerItemFrame}
-									src={obj.selfProject.bannerImg}
+									src={obj.selfproject.bannerimg}
 									alt='BannerImg'
 									width={1920}
 									height={1080}
@@ -35,10 +35,10 @@ export default function ModalLogin() {
 									priority={true}
 								/>
 							</div>
-							<div className={styles.FrameRight}></div>
-						</div>
+						))}
 					</div>
-				))}
+					<div className={styles.FrameRight}></div>
+				</div>
 			</dialog>
 		) : null
 
