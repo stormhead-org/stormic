@@ -51,18 +51,36 @@
 			.ModalClose {
 				display: flex;
 				justify-content: flex-end;
-				.ButtonClose {
+				.ButtonModal {
 					margin: 1rem;
 					background-color: transparent;
 					border-radius: 9999px;
 					padding: 0.1rem 0.2rem;
 					color: rgb(var(--txt-color));
 				}
-				.ButtonClose:hover {
+				.ButtonModal:hover {
 					background-color: rgb(var(--bg-color-ui-item));
 					color: rgb(var(--a-color));
 				}
-				.ButtonClose:focus {
+				.ButtonModal:focus {
+					outline: none;
+				}
+			}
+			.ModalMenu {
+				display: flex;
+				justify-content: space-between;
+				.ButtonModal {
+					margin: 1rem;
+					background-color: transparent;
+					border-radius: 9999px;
+					padding: 0.1rem 0.2rem;
+					color: rgb(var(--txt-color));
+				}
+				.ButtonModal:hover {
+					background-color: rgb(var(--bg-color-ui-item));
+					color: rgb(var(--a-color));
+				}
+				.ButtonModal:focus {
 					outline: none;
 				}
 			}
@@ -77,6 +95,8 @@
 					.LoginTxt {
 						margin-bottom: 1rem;
 						text-align: center;
+						min-height: 2.4rem;
+						font-weight: 600;
 						.TxtOut {
 						}
 						.TxtIn {
@@ -91,6 +111,26 @@
 							.LoginButtonImg {
 								position: absolute;
 								margin: 0.8rem;
+							}
+							.LoginInput {
+								color: rgb(var(--txt-color));
+								height: 3rem;
+								width: 20rem;
+								align-items: center;
+								justify-content: center;
+								padding: 0 0.6rem;
+								line-height: 1.5rem;
+								border: 0.1rem;
+								border-radius: 0.6rem;
+								border-color: rgb(var(--bg-color-ui-item));
+								border-style: solid;
+								background-color: rgb(var(--bg-color-card));
+								margin-bottom: 1rem;
+								font-weight: 600;
+								font-size: medium;
+							}
+							.LoginInput:focus {
+								outline: none;
 							}
 							.LoginButton {
 								height: 3rem;
@@ -121,6 +161,7 @@
 
 						.RegUrl {
 							text-align: center;
+							margin-top: 1rem;
 						}
 					}
 				}

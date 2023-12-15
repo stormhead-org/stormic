@@ -15,7 +15,7 @@ export default function ModalLogin() {
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 	const showDialog = searchParams.get('modal')
 	const [formType, setFormType] = React.useState<
-		'main' | 'email' | 'registration' | 'frgtpwd'
+		'main' | 'email' | 'registration' | 'registrationemail' | 'frgtpwd'
 	>('main')
 
 	useEffect(() => {
@@ -65,7 +65,7 @@ export default function ModalLogin() {
 							<>
 								<div className={styles.ModalClose}>
 									<button
-										className={styles.ButtonClose}
+										className={styles.ButtonModal}
 										type='button'
 										onClick={() => {
 											router.back()
@@ -124,21 +124,26 @@ export default function ModalLogin() {
 								</div>
 								<div className={styles.LoginPrivacy}>
 									<p>
+										<Link href='/#'></Link>
 										Авторизуясь, Вы соглашаетесь с{' '}
-										<a>правилами пользования сайтом</a> и даете согласие на
-										обработку <a>персональных данных</a>
+										<Link href='/#'>правилами пользования сайтом</Link> и даете
+										согласие на обработку{' '}
+										<Link href='/#'>персональных данных</Link>
 									</p>
 								</div>
 							</>
 						)}
 						{formType === 'email' && (
 							<>
-								<div className={styles.ModalClose}>
-									<button onClick={() => setFormType('main')}>
+								<div className={styles.ModalMenu}>
+									<button
+										className={styles.ButtonModal}
+										onClick={() => setFormType('main')}
+									>
 										<ChevronLeft />
 									</button>
 									<button
-										className={styles.ButtonClose}
+										className={styles.ButtonModal}
 										type='button'
 										onClick={() => {
 											router.back()
@@ -166,13 +171,14 @@ export default function ModalLogin() {
 										<div className={styles.LoginButtons}>
 											<div className={styles.LoginButtonFrame}>
 												<input
-													className={styles.LoginButton}
+													className={styles.LoginInput}
+													type='text'
 													placeholder='Почта'
 												/>
 											</div>
 											<div className={styles.LoginButtonFrame}>
 												<input
-													className={styles.LoginButton}
+													className={styles.LoginInput}
 													placeholder='Пароль'
 													type='password'
 												/>
@@ -195,9 +201,210 @@ export default function ModalLogin() {
 								</div>
 								<div className={styles.LoginPrivacy}>
 									<p>
+										<Link href='/#'></Link>
 										Авторизуясь, Вы соглашаетесь с{' '}
-										<a>правилами пользования сайтом</a> и даете согласие на
-										обработку <a>персональных данных</a>
+										<Link href='/#'>правилами пользования сайтом</Link> и даете
+										согласие на обработку{' '}
+										<Link href='/#'>персональных данных</Link>
+									</p>
+								</div>
+							</>
+						)}
+						{formType === 'registration' && (
+							<>
+								<div className={styles.ModalMenu}>
+									<button
+										className={styles.ButtonModal}
+										onClick={() => setFormType('main')}
+									>
+										<ChevronLeft />
+									</button>
+									<button
+										className={styles.ButtonModal}
+										type='button'
+										onClick={() => {
+											router.back()
+											setFormType('main')
+										}}
+									>
+										<X />
+									</button>
+								</div>
+								<div className={styles.LoginBlock}>
+									<div className={styles.LoginBlockFrame}>
+										<div className={styles.LoginTxt}>
+											<p className={styles.TxtOut}>Регистрация</p>
+										</div>
+										<div className={styles.LoginButtons}>
+											<div className={styles.LoginButtonFrame}>
+												<div className={styles.LoginButtonImg}>
+													<Github />
+												</div>
+												<button className={styles.LoginButton}>
+													Продолжить с Google
+												</button>
+											</div>
+											<div className={styles.LoginButtonFrame}>
+												<div className={styles.LoginButtonImg}>
+													<Github />
+												</div>
+												<button className={styles.LoginButton}>
+													Продолжить с Apple
+												</button>
+											</div>
+											<div className={styles.LoginButtonFrame}>
+												<div className={styles.LoginButtonImg}>
+													<Github />
+												</div>
+												<button
+													onClick={() => setFormType('registrationemail')}
+													className={styles.LoginButton}
+												>
+													Почта
+												</button>
+											</div>
+											<div className={styles.RegUrl}>
+												<p>
+													Есть аккаунт?{' '}
+													<Link href='' onClick={() => setFormType('main')}>
+														Войти
+													</Link>
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className={styles.LoginPrivacy}>
+									<p>
+										<Link href='/#'></Link>
+										Регистрируясь, Вы соглашаетесь с{' '}
+										<Link href='/#'>правилами пользования сайтом</Link> и даете
+										согласие на обработку{' '}
+										<Link href='/#'>персональных данных</Link>
+									</p>
+								</div>
+							</>
+						)}
+						{formType === 'registrationemail' && (
+							<>
+								<div className={styles.ModalMenu}>
+									<button
+										className={styles.ButtonModal}
+										onClick={() => setFormType('registration')}
+									>
+										<ChevronLeft />
+									</button>
+									<button
+										className={styles.ButtonModal}
+										type='button'
+										onClick={() => {
+											router.back()
+											setFormType('main')
+										}}
+									>
+										<X />
+									</button>
+								</div>
+								<div className={styles.LoginBlock}>
+									<div className={styles.LoginBlockFrame}>
+										<div className={styles.LoginTxt}>
+											<p className={styles.TxtOut}>Регистрация</p>
+										</div>
+										<div className={styles.LoginButtons}>
+											<div className={styles.LoginButtonFrame}>
+												<input
+													className={styles.LoginInput}
+													type='text'
+													placeholder='Имя или название'
+												/>
+											</div>
+											<div className={styles.LoginButtonFrame}>
+												<input
+													className={styles.LoginInput}
+													type='text'
+													placeholder='Почта'
+												/>
+											</div>
+											<div className={styles.LoginButtonFrame}>
+												<input
+													className={styles.LoginInput}
+													placeholder='Пароль'
+													type='password'
+												/>
+											</div>
+											<div className={styles.LoginButtonFrame}>
+												<button
+													onClick={() => setFormType('email')}
+													className={styles.LoginButton}
+												>
+													Зарегистрироваться
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className={styles.LoginPrivacy}>
+									<p>
+										<Link href='/#'></Link>
+										Регистрируясь, Вы соглашаетесь с{' '}
+										<Link href='/#'>правилами пользования сайтом</Link> и даете
+										согласие на обработку{' '}
+										<Link href='/#'>персональных данных</Link>
+									</p>
+								</div>
+							</>
+						)}
+						{formType === 'frgtpwd' && (
+							<>
+								<div className={styles.ModalMenu}>
+									<button
+										className={styles.ButtonModal}
+										onClick={() => setFormType('email')}
+									>
+										<ChevronLeft />
+									</button>
+									<button
+										className={styles.ButtonModal}
+										type='button'
+										onClick={() => {
+											router.back()
+											setFormType('main')
+										}}
+									>
+										<X />
+									</button>
+								</div>
+								<div className={styles.LoginBlock}>
+									<div className={styles.LoginBlockFrame}>
+										<div className={styles.LoginTxt}>
+											<p className={styles.TxtOut}>Восстановить пароль</p>
+										</div>
+										<div className={styles.LoginButtons}>
+											<div className={styles.LoginButtonFrame}>
+												<input
+													className={styles.LoginInput}
+													placeholder='Почта'
+													type='text'
+												/>
+											</div>
+											<div className={styles.LoginButtonFrame}>
+												<button
+													onClick={() => setFormType('email')}
+													className={styles.LoginButton}
+												>
+													Восстановить
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div className={styles.LoginPrivacy}>
+									<p>
+										<Link href='/#'></Link>
+										Авторизуясь, Вы соглашаетесь с{' '}
+										<Link href='/#'>правилами пользования сайтом</Link> и даете
+										согласие на обработку{' '}
+										<Link href='/#'>персональных данных</Link>
 									</p>
 								</div>
 							</>
