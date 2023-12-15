@@ -1,27 +1,4 @@
 module.exports = {
-	// environment: {
-	// 	media: [
-	// 		{
-	// 			project: {
-	// 				selfProject: {
-	// 					communityName: 'mustel',
-	// 					siteUrl: 'mustel.ru',
-	// 					SiteLogo:
-	// 						'https://cdn.discordapp.com/attachments/868472815022657536/1184536486436163727/fire.svg',
-	// 					bannerImg:
-	// 						'https://cdn.discordapp.com/attachments/868472815022657536/1184446941384413254/banner.jpg?ex=658c012c&is=65798c2c&hm=c8b53e0602bd92d2fb51658517ed1208302b16d5a2c2e769ac2e89773a835eb6&',
-	// 					loginModalImg:
-	// 						'https://cdn.discordapp.com/attachments/868472815022657536/1184446941384413254/banner.jpg?ex=658c012c&is=65798c2c&hm=c8b53e0602bd92d2fb51658517ed1208302b16d5a2c2e769ac2e89773a835eb6&'
-	// 				},
-	// 				mustelProject: {
-	// 					projectVersion: 'v0.0.1-alpha',
-	// 					projectName: 'Mustel'
-	// 				}
-	// 			},
-	// 			createdAt: new Date().toString()
-	// 		}
-	// 	]
-	// },
 	environment: {
 		media: {
 			project: [

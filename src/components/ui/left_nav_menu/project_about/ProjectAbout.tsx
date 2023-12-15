@@ -9,7 +9,7 @@ export default function ProjectAbout() {
 			<div className={styles.ProjectAbout}>
 				{ProjectSrc.environment.media.project.map(obj => (
 					<div key={obj.mustelproject.projectversion}>
-						<p>
+						<p className={styles.AboutTxt}>
 							{obj.selfproject.siteurl}: <a href='/about'>О проекте</a> |{' '}
 							<a href='/rules'>Правила</a> |
 							<br />

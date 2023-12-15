@@ -1,14 +1,15 @@
 @import '../../../../../styles/media';
 
 .Modal {
-	position: absolute;
+	/* position: absolute; */
 	display: flex;
-	top: 0;
+	/* top: 0;
 	bottom: 0;
 	left: 0;
-	right: 0;
+	right: 0; */
 	min-height: 100%;
 	min-width: 100%;
+	overflow: hidden;
 	animation: 0.2s ease;
 	justify-content: center;
 	align-items: center;
@@ -16,6 +17,123 @@
 	-webkit-backdrop-filter: blur(14px);
 	backdrop-filter: blur(14px);
 	border: none;
+	.ModalLogin {
+		display: flex;
+		width: 44rem;
+		height: 40rem;
+		background-color: rgb(var(--bg-color-body));
+		border-radius: 0.6rem;
+		.FrameLeft {
+			width: 40%;
+			.ModalLogoImg {
+				position: absolute;
+				margin: 1rem;
+				.ModalLogoImgSrc {
+				}
+			}
+			.ModalLogoImg:hover {
+				filter: saturate(200%);
+			}
+			.ModalBannerImg {
+				height: 80rem;
+
+				.ModalBannerImgSrc {
+					border-radius: 0.6rem 0 0 0.6rem;
+					height: 40rem;
+					width: 100%;
+				}
+			}
+		}
+		.FrameRight {
+			width: 60%;
+			border-radius: 0 0.6rem 0.6rem 0;
+			height: 100%;
+			.ModalClose {
+				display: flex;
+				justify-content: flex-end;
+				.ButtonClose {
+					margin: 1rem;
+					background-color: transparent;
+					border-radius: 9999px;
+					padding: 0.1rem 0.2rem;
+					color: rgb(var(--txt-color));
+				}
+				.ButtonClose:hover {
+					background-color: rgb(var(--bg-color-ui-item));
+					color: rgb(var(--a-color));
+				}
+				.ButtonClose:focus {
+					outline: none;
+				}
+			}
+			.LoginBlock {
+				display: flex;
+				justify-content: center;
+				height: 30rem;
+				align-items: center;
+				.LoginBlockFrame {
+					width: 20rem;
+					/* height: 100%; */
+					.LoginTxt {
+						margin-bottom: 1rem;
+						text-align: center;
+						.TxtOut {
+						}
+						.TxtIn {
+							text-transform: uppercase;
+							margin-left: 0.4rem;
+						}
+					}
+
+					.LoginButtons {
+						.LoginButtonFrame {
+							display: flex;
+							.LoginButtonImg {
+								position: absolute;
+								margin: 0.8rem;
+							}
+							.LoginButton {
+								height: 3rem;
+								width: 20rem;
+								align-items: center;
+								justify-content: center;
+								line-height: 1.5rem;
+								border: 0.1rem;
+								border-radius: 0.6rem;
+								border-color: rgb(var(--bg-color-ui-item));
+								border-style: solid;
+								background-color: rgb(var(--bg-color-card));
+								margin-bottom: 1rem;
+								color: rgb(var(--txt-color-headers));
+								font-weight: 600;
+								font-size: medium;
+							}
+
+							.LoginButton:hover {
+								background-color: rgb(var(--bg-color-ui-item));
+							}
+						}
+						.LoginButtonFrame:hover {
+							.LoginButtonImg {
+								color: rgb(var(--a-color));
+							}
+						}
+
+						.RegUrl {
+							text-align: center;
+						}
+					}
+				}
+			}
+			.LoginPrivacy {
+				margin: 1rem;
+				text-align: center;
+				> p {
+					font-size: small;
+				}
+			}
+		}
+	}
 }
 
 .Modal:focus {
