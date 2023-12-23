@@ -13,7 +13,7 @@ module.exports = {
 						loginmodalimg:
 							'https://cdn.discordapp.com/attachments/868472815022657536/1184446941384413254/banner.jpg?ex=658c012c&is=65798c2c&hm=c8b53e0602bd92d2fb51658517ed1208302b16d5a2c2e769ac2e89773a835eb6&'
 					},
-					mustelproject: {
+					fatumproject: {
 						projectversion: 'v0.0.1-alpha',
 						projectname: 'Fatum'
 					},

@@ -8,7 +8,7 @@ export default function ProjectAbout() {
 		<>
 			<div className={styles.ProjectAbout}>
 				{ProjectSrc.environment.media.project.map(obj => (
-					<div key={obj.mustelproject.projectversion}>
+					<div key={obj.fatumproject.projectversion}>
 						<p className={styles.AboutTxt}>
 							{obj.selfproject.siteurl}: <a href='/about'>О проекте</a> |{' '}
 							<a href='/rules'>Правила</a> |
@@ -16,11 +16,11 @@ export default function ProjectAbout() {
 							<a href='/privacy-policy'>Политика конфиденциальности</a>
 							<br />
 							<br />
-							{obj.mustelproject.projectname}:{' '}
+							{obj.fatumproject.projectname}:{' '}
 							<a href='https://fatum.ru/about'>О проекте</a> |{' '}
 							<a href='/keyboard-shortcuts'>Сочетания клавиш</a> |{' '}
 							<a href='https://github.com/nimscore/fatum-ui'>Исходный код</a> |{' '}
-							{obj.mustelproject.projectversion}
+							{obj.fatumproject.projectversion}
 							<br />
 							<br />
 							Сделано с любовью и <a href='https://nextjs.org'>NextJS</a>
