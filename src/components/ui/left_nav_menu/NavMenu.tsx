@@ -13,7 +13,7 @@ const LeftSideCustomMenu = [
 		path: '/placeholder#1'
 	},
 	{
-		text: 'Mustel Admin Doc',
+		text: 'Fatum Admin Doc',
 		icon: <BookmarkCheck size={24} />,
 		path: '/placeholder#2'
 	},

@@ -4,8 +4,8 @@ module.exports = {
 			project: [
 				{
 					selfproject: {
-						communityname: 'mustel',
-						siteurl: 'mustel.ru',
+						communityname: 'fatum',
+						siteurl: 'fatum.ru',
 						sitelogo:
 							'https://cdn.discordapp.com/attachments/868472815022657536/1184536486436163727/fire.svg',
 						bannerimg:
@@ -15,7 +15,7 @@ module.exports = {
 					},
 					mustelproject: {
 						projectversion: 'v0.0.1-alpha',
-						projectname: 'Mustel'
+						projectname: 'Fatum'
 					},
 					createdAt: new Date().toString()
 				}

@@ -6,7 +6,7 @@ import ModalLogin from '../components/ui/modals/login/ModalLogin'
 const montserrat = Montserrat({ subsets: ['cyrillic', 'latin'] })
 
 export const metadata: Metadata = {
-	title: 'Mustel',
+	title: 'Fatum',
 	description: 'Единое решение для Ваших сообществ!'
 }
 

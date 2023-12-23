@@ -17,15 +17,15 @@ export default function ProjectAbout() {
 							<br />
 							<br />
 							{obj.mustelproject.projectname}:{' '}
-							<a href='https://mustel.ru/about'>О проекте</a> |{' '}
+							<a href='https://fatum.ru/about'>О проекте</a> |{' '}
 							<a href='/keyboard-shortcuts'>Сочетания клавиш</a> |{' '}
-							<a href='https://github.com/nimscore/mustel-ui'>Исходный код</a> |{' '}
+							<a href='https://github.com/nimscore/fatum-ui'>Исходный код</a> |{' '}
 							{obj.mustelproject.projectversion}
 							<br />
 							<br />
 							Сделано с любовью и <a href='https://nextjs.org'>NextJS</a>
 							<br />
-							Сообщество <a href='https://mustel.ru'>Mustel</a> © 2023 - 2024
+							Сообщество <a href='https://fatum.ru'>Fatum</a> © 2023 - 2024
 						</p>
 					</div>
 				))}
