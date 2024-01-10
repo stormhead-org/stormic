@@ -1,5 +1,6 @@
 import { ChevronLeft, X } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import styles from '../ModalLogin.module.scss'
 
@@ -14,6 +15,7 @@ export const EmailLoginForm: React.FC<LoginFormProps> = ({
 	onOpenMain,
 	onOpenFrgtpwd
 }) => {
+	const router = useRouter()
 	return (
 		<>
 			<div className={styles.ModalMenu}>
@@ -24,9 +26,8 @@ export const EmailLoginForm: React.FC<LoginFormProps> = ({
 					className={styles.ButtonModal}
 					type='button'
 					onClick={() => {
-						{
-							onOpenMain
-						}
+						onOpenMain()
+						router.back()
 					}}
 				>
 					<X />

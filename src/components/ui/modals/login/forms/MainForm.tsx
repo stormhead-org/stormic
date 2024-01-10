@@ -1,25 +1,24 @@
-import { ChevronLeft, Github, X } from 'lucide-react'
+import { Github, X } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import styles from '../ModalLogin.module.scss'
 
 interface LoginFormProps {
-	onOpenRegistrationEmail: () => void
+	onOpenRegister: () => void
 	onOpenMain: () => void
+	onOpenEmail: () => void
 }
 
-export const RegistrationLoginForm: React.FC<LoginFormProps> = ({
-	onOpenRegistrationEmail,
-	onOpenMain
+export const MainLoginForm: React.FC<LoginFormProps> = ({
+	onOpenRegister,
+	onOpenMain,
+	onOpenEmail
 }) => {
 	const router = useRouter()
 	return (
 		<>
-			<div className={styles.ModalMenu}>
-				<button className={styles.ButtonModal} onClick={onOpenMain}>
-					<ChevronLeft />
-				</button>
+			<div className={styles.ModalClose}>
 				<button
 					className={styles.ButtonModal}
 					type='button'
@@ -34,7 +33,7 @@ export const RegistrationLoginForm: React.FC<LoginFormProps> = ({
 			<div className={styles.LoginBlock}>
 				<div className={styles.LoginBlockFrame}>
 					<div className={styles.LoginTxt}>
-						<p className={styles.TxtOut}>Регистрация</p>
+						<p className={styles.TxtOut}>Вход в аккаунт</p>
 					</div>
 					<div className={styles.LoginButtons}>
 						<div className={styles.LoginButtonFrame}>
@@ -55,18 +54,15 @@ export const RegistrationLoginForm: React.FC<LoginFormProps> = ({
 							<div className={styles.LoginButtonImg}>
 								<Github />
 							</div>
-							<button
-								onClick={onOpenRegistrationEmail}
-								className={styles.LoginButton}
-							>
+							<button onClick={onOpenEmail} className={styles.LoginButton}>
 								Почта
 							</button>
 						</div>
 						<div className={styles.RegUrl}>
 							<p>
-								Есть аккаунт?{' '}
-								<Link href='' onClick={onOpenMain}>
-									Войти
+								Нет аккаунта?{' '}
+								<Link href='' onClick={onOpenRegister}>
+									Регистрация
 								</Link>
 							</p>
 						</div>
@@ -76,7 +72,7 @@ export const RegistrationLoginForm: React.FC<LoginFormProps> = ({
 			<div className={styles.LoginPrivacy}>
 				<p>
 					<Link href='/#'></Link>
-					Регистрируясь, Вы соглашаетесь с{' '}
+					Авторизуясь, Вы соглашаетесь с{' '}
 					<Link href='/#'>правилами пользования сайтом</Link> и даете согласие
 					на обработку <Link href='/#'>персональных данных</Link>
 				</p>
