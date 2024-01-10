@@ -1,16 +1,11 @@
 'use client'
 
 import { BookmarkCheck } from 'lucide-react'
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import GitHubButton from 'react-github-btn'
 import styles from './NavMenu.module.scss'
 import ProjectAbout from './project_about/ProjectAbout'
-
-type Repo = {
-	name: string
-	stargazers_count: number
-}
 
 const LeftSideCustomMenu = [
 	{
@@ -31,17 +26,7 @@ const LeftSideCustomMenu = [
 	{ text: 'FAQ', icon: <BookmarkCheck size={24} />, path: '/placeholder_4' }
 ]
 
-export const getStaticProps = (async context => {
-	const res = await fetch('https://api.github.com/repos/nimscore/fatum-ui')
-	const repo = await res.json()
-	return { props: { repo } }
-}) satisfies GetStaticProps<{
-	repo: Repo
-}>
-
-export default function NavBar({
-	repo
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function NavBar() {
 	const router = useRouter()
 	const pathname = usePathname()
 
@@ -72,7 +57,28 @@ export default function NavBar({
 				</div>
 				<div className={styles.AboutContainer}>
 					<ProjectAbout />
-					{/* <p>{repo.stargazers_count}</p> */}
+					<br />
+					<div className={styles.GitHubBtn}>
+						<GitHubButton
+							href='https://github.com/sponsors/nimscore'
+							data-color-scheme='no-preference: dark; light: dark; dark: dark;'
+							data-icon='octicon-heart'
+							data-size='large'
+							aria-label='Sponsor @nimscore on GitHub'
+						>
+							Поддержка
+						</GitHubButton>
+						<GitHubButton
+							href='https://github.com/nimscore/fatum-ui'
+							data-color-scheme='no-preference: dark; light: dark; dark: dark;'
+							data-icon='octicon-star'
+							data-size='large'
+							data-show-count='true'
+							aria-label='Star nimscore/fatum-ui on GitHub'
+						>
+							GitHub
+						</GitHubButton>
+					</div>
 				</div>
 			</div>
 		</>
