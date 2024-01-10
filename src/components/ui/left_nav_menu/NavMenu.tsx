@@ -1,31 +1,47 @@
 'use client'
 
 import { BookmarkCheck } from 'lucide-react'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import styles from './NavMenu.module.scss'
 import ProjectAbout from './project_about/ProjectAbout'
 
+type Repo = {
+	name: string
+	stargazers_count: number
+}
+
 const LeftSideCustomMenu = [
 	{
 		text: 'Self-Host',
 		icon: <BookmarkCheck size={24} />,
-		path: '/placeholder#1'
+		path: '/placeholder_1'
 	},
 	{
 		text: 'Fatum Admin Doc',
 		icon: <BookmarkCheck size={24} />,
-		path: '/placeholder#2'
+		path: '/placeholder_2'
 	},
 	{
 		text: 'Контакты',
 		icon: <BookmarkCheck size={24} />,
-		path: '/placeholder#3'
+		path: '/placeholder_3'
 	},
-	{ text: 'FAQ', icon: <BookmarkCheck size={24} />, path: '/placeholder#4' }
+	{ text: 'FAQ', icon: <BookmarkCheck size={24} />, path: '/placeholder_4' }
 ]
 
-export default function NavBar() {
+export const getStaticProps = (async context => {
+	const res = await fetch('https://api.github.com/repos/nimscore/fatum-ui')
+	const repo = await res.json()
+	return { props: { repo } }
+}) satisfies GetStaticProps<{
+	repo: Repo
+}>
+
+export default function NavBar({
+	repo
+}: InferGetStaticPropsType<typeof getStaticProps>) {
 	const router = useRouter()
 	const pathname = usePathname()
 
@@ -56,6 +72,7 @@ export default function NavBar() {
 				</div>
 				<div className={styles.AboutContainer}>
 					<ProjectAbout />
+					{/* <p>{repo.stargazers_count}</p> */}
 				</div>
 			</div>
 		</>
