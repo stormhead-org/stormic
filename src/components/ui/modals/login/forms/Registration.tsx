@@ -45,12 +45,14 @@ export const RegistrationLoginForm: React.FC<LoginFormProps> = ({
 								Продолжить с Google
 							</button>
 						</div>
+						<div className={styles.ErrorsMsgFrame} />
 						<div className={styles.LoginButtonFrame}>
 							<div className={styles.LoginButtonImg}>
 								<Github />
 							</div>
 							<button className={styles.LoginButton}>Продолжить с Apple</button>
 						</div>
+						<div className={styles.ErrorsMsgFrame} />
 						<div className={styles.LoginButtonFrame}>
 							<div className={styles.LoginButtonImg}>
 								<Github />
@@ -62,6 +64,7 @@ export const RegistrationLoginForm: React.FC<LoginFormProps> = ({
 								Почта
 							</button>
 						</div>
+						<div className={styles.ErrorsMsgFrame} />
 						<div className={styles.RegUrl}>
 							<p>
 								Есть аккаунт?{' '}

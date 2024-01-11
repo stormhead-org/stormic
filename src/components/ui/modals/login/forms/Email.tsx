@@ -4,8 +4,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 // import React from 'react'
 import * as React from 'react'
-import { useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { LoginFormSchema } from '../../../../../../utils/validations'
+import { FormField } from '../../form_fild/FormField'
 import styles from '../ModalLogin.module.scss'
 
 interface LoginFormProps {
@@ -21,7 +22,7 @@ export const EmailLoginForm: React.FC<LoginFormProps> = ({
 }) => {
 	const router = useRouter()
 	const form = useForm({
-		mode: 'onSubmit',
+		mode: 'onChange',
 		resolver: yupResolver(LoginFormSchema)
 	})
 
@@ -30,79 +31,78 @@ export const EmailLoginForm: React.FC<LoginFormProps> = ({
 	// console.log(form.formState.errors)
 	return (
 		<>
-			<form onSubmit={onSubmit}>
-				<div className={styles.ModalMenu}>
-					<button className={styles.ButtonModal} onClick={onOpenMain}>
-						<ChevronLeft />
-					</button>
-					<button
-						className={styles.ButtonModal}
-						type='button'
-						onClick={() => {
-							onOpenMain()
-							router.back()
-						}}
-					>
-						<X />
-					</button>
-				</div>
-				<div className={styles.LoginBlock}>
-					<div className={styles.LoginBlockFrame}>
-						<div className={styles.LoginTxt}>
-							<p className={styles.TxtOut}>
-								Войти через почту
-								<br />
-								или{' '}
-								<Link href='' onClick={onOpenRegister}>
-									зарегистрироваться
-								</Link>
-							</p>
-						</div>
-						<div className={styles.LoginButtons}>
-							<div className={styles.LoginButtonFrame}>
-								<input
-									className={styles.LoginInput}
-									{...form.register('email')}
-									name='email'
-									type='text'
-									placeholder='Почта'
-								/>
+			<FormProvider {...form}>
+				<form onSubmit={onSubmit}>
+					<div className={styles.ModalMenu}>
+						<button className={styles.ButtonModal} onClick={onOpenMain}>
+							<ChevronLeft />
+						</button>
+						<button
+							className={styles.ButtonModal}
+							type='button'
+							onClick={() => {
+								onOpenMain()
+								router.back()
+							}}
+						>
+							<X />
+						</button>
+					</div>
+					<div className={styles.LoginBlock}>
+						<div className={styles.LoginBlockFrame}>
+							<div className={styles.LoginTxt}>
+								<p className={styles.TxtOut}>
+									Войти через почту
+									<br />
+									или{' '}
+									<Link href='' onClick={onOpenRegister}>
+										зарегистрироваться
+									</Link>
+								</p>
 							</div>
-							<label className={styles.ErrorsMsg}>
-								{form.formState.errors.email?.message}
-							</label>
-							<div className={styles.LoginButtonFrame}>
-								<input
-									className={styles.LoginInput}
-									{...form.register('password')}
-									name='password'
-									placeholder='Пароль'
-									type='password'
-								/>
-							</div>
-							<label className={styles.ErrorsMsg}>
-								{form.formState.errors.password?.message}
-							</label>
-							<div className={styles.LoginButtonFrame}>
-								<button className={styles.LoginButton}>Войти</button>
-							</div>
-							<div className={styles.RegUrl}>
-								<Link href='' onClick={onOpenFrgtpwd}>
-									Забыли пароль?
-								</Link>
+							<div className={styles.LoginButtons}>
+								<FormField name='email' label='Почта' type='text' />
+								<div className={styles.ErrorsMsgFrame}>
+									<label className={styles.ErrorsMsg}>
+										{form.formState.errors.email?.message}
+									</label>
+								</div>
+
+								<FormField name='password' label='пароль' type='password' />
+								<div className={styles.ErrorsMsgFrame}>
+									<label className={styles.ErrorsMsg}>
+										{form.formState.errors.password?.message}
+									</label>
+								</div>
+
+								<div className={styles.LoginButtonFrame}>
+									<button
+										className={styles.LoginButton}
+										disabled={
+											!form.formState.isValid || form.formState.isSubmitting
+										}
+									>
+										Войти
+									</button>
+								</div>
+								<div className={styles.RegUrl}>
+									<Link href='' onClick={onOpenFrgtpwd}>
+										Забыли пароль?
+									</Link>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div className={styles.LoginPrivacy}>
-					<p>
-						<Link href='/#'></Link>
-						Авторизуясь, Вы соглашаетесь с{' '}
-						<Link href='/#'>правилами пользования сайтом</Link> и даете согласие
-						на обработку <Link href='/#'>персональных данных</Link>
-					</p>
-				</div>
-			</form>
+					<div className={styles.LoginPrivacy}>
+						<p>
+							<Link href='/#'></Link>
+							Авторизуясь, Вы соглашаетесь с{' '}
+							<Link href='/#'>правилами пользования сайтом</Link> и даете
+							согласие на обработку <Link href='/#'>персональных данных</Link>
+						</p>
+					</div>
+				</form>
+			</FormProvider>
 		</>
 	)
 }

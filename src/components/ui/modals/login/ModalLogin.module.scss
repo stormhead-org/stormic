@@ -1,12 +1,7 @@
 @import '../../../../../styles/media';
 
 .Modal {
-	/* position: absolute; */
 	display: flex;
-	/* top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0; */
 	min-height: 100%;
 	min-width: 100%;
 	overflow: hidden;
@@ -91,7 +86,6 @@
 				align-items: center;
 				.LoginBlockFrame {
 					width: 20rem;
-					/* height: 100%; */
 					.LoginTxt {
 						margin-bottom: 1rem;
 						text-align: center;
@@ -106,10 +100,14 @@
 					}
 
 					.LoginButtons {
-						.ErrorsMsg {
-							color: rgb(var(--notification-color-red));
-							min-height: 1rem;
+						.ErrorsMsgFrame {
+							min-height: 1.4rem;
+							.ErrorsMsg {
+								color: rgb(var(--notification-color-red));
+								font-size: small;
+							}
 						}
+
 						.LoginButtonFrame {
 							display: flex;
 							.LoginButtonImg {
@@ -129,7 +127,6 @@
 								border-color: rgb(var(--bg-color-ui-item));
 								border-style: solid;
 								background-color: rgb(var(--bg-color-card));
-								margin-bottom: 1rem;
 								font-weight: 600;
 								font-size: medium;
 							}
@@ -147,7 +144,6 @@
 								border-color: rgb(var(--bg-color-ui-item));
 								border-style: solid;
 								background-color: rgb(var(--bg-color-card));
-								margin-bottom: 1rem;
 								color: rgb(var(--txt-color-headers));
 								font-weight: 600;
 								font-size: medium;
@@ -155,6 +151,11 @@
 
 							.LoginButton:hover {
 								background-color: rgb(var(--bg-color-ui-item));
+							}
+							.LoginButton:disabled,
+							.LoginButton[disabled] {
+								background-color: rgb(var(--bg-color-body));
+								cursor: default;
 							}
 						}
 						.LoginButtonFrame:hover {

@@ -5,9 +5,10 @@ import styles from '../login/ModalLogin.module.scss'
 interface FormFieldProps {
 	name: string
 	label: string
+	type: string
 }
 
-export const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
+export const FormField: React.FC<FormFieldProps> = ({ name, label, type }) => {
 	const { register, formState } = useFormContext()
 
 	return (
@@ -17,13 +18,13 @@ export const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
 					className={styles.LoginInput}
 					{...register(name)}
 					name={name}
-					type='text'
+					type={type}
 					placeholder={label}
 				/>
 			</div>
-			<label className={styles.ErrorsMsg}>
+			{/* <label className={styles.ErrorsMsg}>
 				{formState.errors[name]?.message}
-			</label>
+			</label> */}
 		</>
 	)
 }
