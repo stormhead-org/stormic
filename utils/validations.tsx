@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const LoginSchema = yup
+export const LoginFormSchema = yup
 	.object({
 		email: yup.string().email('Неверная почта').required('Почта обязательна'),
 		password: yup
@@ -9,3 +9,10 @@ export const LoginSchema = yup
 			.required('Укажите пароль')
 	})
 	.required()
+
+export const RegisterFormSchema = yup
+	.object()
+	.shape({
+		fullName: yup.string().required('Имя или название обязательны')
+	})
+	.concat(LoginFormSchema)

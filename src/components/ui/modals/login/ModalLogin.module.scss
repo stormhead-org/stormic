@@ -106,6 +106,10 @@
 					}
 
 					.LoginButtons {
+						.ErrorsMsg {
+							color: rgb(var(--notification-color-red));
+							min-height: 1rem;
+						}
 						.LoginButtonFrame {
 							display: flex;
 							.LoginButtonImg {
