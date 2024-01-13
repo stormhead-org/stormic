@@ -59,7 +59,7 @@ export default function NavBar() {
 					<ProjectAbout />
 					<br />
 					<div className={styles.GitHubBtn}>
-						<GitHubButton
+						{/* <GitHubButton
 							href='https://github.com/nimscore'
 							data-color-scheme='no-preference: dark; light: dark; dark: dark;'
 							data-size='large'
@@ -67,7 +67,7 @@ export default function NavBar() {
 							aria-label='Follow @nimscore on GitHub'
 						>
 							nimscore
-						</GitHubButton>
+						</GitHubButton> */}
 						<GitHubButton
 							href='https://github.com/nimscore/fatum-ui'
 							data-color-scheme='no-preference: dark; light: dark; dark: dark;'

@@ -1,15 +1,23 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import SiteLogoData from '../../../../data.js'
+import { useAppSelector } from '../../../../redux/hooks'
+import { selectUserData } from '../../../../redux/slices/user'
+import Avatar from '../avatar/Avatar'
 import LoginButton from '../login_button/LoginButton'
+import ModalLogin from '../modals/login/ModalLogin'
 import ThemeSwitch from '../theme_switch/ThemeSwitch'
 import styles from './Header.module.scss'
 
-export default function Header() {
+export const Header: React.FC = () => {
+	const userData = useAppSelector(selectUserData)
 	const SiteLogoSrc = SiteLogoData
 	return (
 		<>
 			<div className={styles.Header}>
+				<ModalLogin />
 				<div className={styles.HeaderContainer}>
 					<div className={styles.Left}>
 						<Link href='/' aria-label='Home'>
@@ -84,12 +92,14 @@ export default function Header() {
 
 					<div className={styles.Right}>
 						<ThemeSwitch />
+						{userData ? <Avatar /> : <LoginButton />}
 						{/* <NotificationsBell /> */}
 						{/* <Avatar /> */}
-						<LoginButton />
 					</div>
 				</div>
 			</div>
 		</>
 	)
 }
+
+export default Header

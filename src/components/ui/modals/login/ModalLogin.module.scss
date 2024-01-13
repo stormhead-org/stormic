@@ -101,8 +101,15 @@
 
 					.LoginButtons {
 						.ErrorsMsgFrame {
-							min-height: 1.4rem;
+							min-height: 2.4rem;
+							width: 100%;
+							text-align: center;
+							align-items: center;
 							.ErrorsMsg {
+								color: rgb(var(--notification-color-red));
+								font-size: small;
+							}
+							.browserErrorMsg {
 								color: rgb(var(--notification-color-red));
 								font-size: small;
 							}

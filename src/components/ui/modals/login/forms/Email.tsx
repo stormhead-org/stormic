@@ -2,9 +2,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { ChevronLeft, X } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-// import React from 'react'
+import { setCookie } from 'nookies'
 import * as React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useAppDispatch } from '../../../../../../redux/hooks'
+import { setUserData } from '../../../../../../redux/slices/user'
+import { UserApi } from '../../../../../../utils/api/page'
+import { LoginDto } from '../../../../../../utils/api/types'
 import { LoginFormSchema } from '../../../../../../utils/validations'
 import { FormField } from '../../form_fild/FormField'
 import styles from '../ModalLogin.module.scss'
@@ -20,19 +24,36 @@ export const EmailLoginForm: React.FC<LoginFormProps> = ({
 	onOpenMain,
 	onOpenFrgtpwd
 }) => {
+	const dispatch = useAppDispatch()
+	const [errorMessage, setErrorMessage] = React.useState('')
 	const router = useRouter()
 	const form = useForm({
 		mode: 'onChange',
 		resolver: yupResolver(LoginFormSchema)
 	})
 
-	const onSubmit = form.handleSubmit(data => console.log(data))
+	const onSubmit = async (dto: LoginDto) => {
+		try {
+			const data = await UserApi.login(dto)
+			console.log(data)
+			setCookie(null, 'authToken', data.token, {
+				maxAge: 30 * 24 * 60 * 60,
+				path: ''
+			})
+			setErrorMessage('')
+			dispatch(setUserData(data))
+		} catch (err: any) {
+			console.warn('Auth Error', err)
+			if (err.response) {
+				setErrorMessage(err.response.data.message)
+			}
+		}
+	}
 
-	// console.log(form.formState.errors)
 	return (
 		<>
 			<FormProvider {...form}>
-				<form onSubmit={onSubmit}>
+				<form onSubmit={form.handleSubmit(onSubmit)}>
 					<div className={styles.ModalMenu}>
 						<button className={styles.ButtonModal} onClick={onOpenMain}>
 							<ChevronLeft />
@@ -73,6 +94,9 @@ export const EmailLoginForm: React.FC<LoginFormProps> = ({
 									<label className={styles.ErrorsMsg}>
 										{form.formState.errors.password?.message}
 									</label>
+									{errorMessage && (
+										<p className={styles.browserErrorMsg}>{errorMessage}</p>
+									)}
 								</div>
 
 								<div className={styles.LoginButtonFrame}>
