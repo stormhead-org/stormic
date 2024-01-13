@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { setCookie } from 'nookies'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useAppDispatch } from '../../../../../../redux/hooks'
+import { setUserData } from '../../../../../../redux/slices/user'
 import { UserApi } from '../../../../../../utils/api/page'
 import { CreateUserDto } from '../../../../../../utils/api/types'
 import { RegisterFormSchema } from '../../../../../../utils/validations'
@@ -20,6 +22,7 @@ export const RegistrationEmailLoginForm: React.FC<LoginFormProps> = ({
 	onOpenRegister,
 	onOpenMain
 }) => {
+	const dispatch = useAppDispatch()
 	const [errorMessage, setErrorMessage] = React.useState('')
 	const router = useRouter()
 	const form = useForm({
@@ -36,6 +39,7 @@ export const RegistrationEmailLoginForm: React.FC<LoginFormProps> = ({
 				path: ''
 			})
 			setErrorMessage('')
+			dispatch(setUserData(data))
 		} catch (err: any) {
 			console.warn('Auth Error', err)
 			if (err.response) {

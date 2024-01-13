@@ -1,4 +1,5 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
+import { createWrapper } from 'next-redux-wrapper-future'
 import { userReducer } from './slices/user'
 
 // import counterReducer from '/'
@@ -10,7 +11,9 @@ export function makeStore() {
 }
 
 export const store = makeStore()
-export type RootState = ReturnType<typeof store.getState>
+
+export type RootStore = ReturnType<typeof makeStore>
+export type RootState = ReturnType<RootStore['getState']>
 export type AppDispatch = typeof store.dispatch
 export type AppThunk<ReturnType = void> = ThunkAction<
 	ReturnType,
@@ -18,3 +21,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 	unknown,
 	Action<string>
 >
+
+export const wrapper = createWrapper<RootStore>(makeStore)
