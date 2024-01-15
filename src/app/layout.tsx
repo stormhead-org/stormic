@@ -19,11 +19,11 @@ export const metadata: Metadata = {
 function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<>
-			<html lang='ru'>
-				<body className={montserrat.className}>
-					<ReduxProvider>{children}</ReduxProvider>
-				</body>
-			</html>
+			<ReduxProvider>
+				<html lang='ru'>
+					<body className={montserrat.className}>{children}</body>
+				</html>
+			</ReduxProvider>
 		</>
 	)
 }

@@ -1,3 +1,5 @@
+// import { GetServerSideProps } from 'next'
+// import { wrapper } from '../../redux/store'
 import MainBanner from '../components/ui/banners/main_banner/MainBanner'
 import MainLayout from '../components/ui/custom_layouts/main_layout/MainLayout'
 import Post from '../components/ui/post/Post'
@@ -17,3 +19,8 @@ export default function Home() {
 		</>
 	)
 }
+
+// export const getServerSideProps: GetServerSideProps =
+// 	wrapper.getServerSideProps(store => async ctx => {
+// 		return { props: {} }
+// 	})
