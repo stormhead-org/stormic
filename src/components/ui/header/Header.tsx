@@ -1,20 +1,11 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation.js'
 import SiteLogoData from '../../../../data.js'
-import { useAppSelector } from '../../../../redux/hooks'
-import { selectUserData } from '../../../../redux/slices/user'
-import Avatar from '../avatar/Avatar'
-import LoginButton from '../login_button/LoginButton'
 import ModalLogin from '../modals/login/ModalLogin'
-import ThemeSwitch from '../theme_switch/ThemeSwitch'
 import styles from './Header.module.scss'
+import LoginUseClient from './login_client/LoginUseClient'
 
 export const Header: React.FC = () => {
-	const userData = useAppSelector(selectUserData)
-	const router = useRouter()
 	const SiteLogoSrc = SiteLogoData
 	return (
 		<>
@@ -93,11 +84,7 @@ export const Header: React.FC = () => {
 					</div>
 
 					<div className={styles.Right}>
-						<ThemeSwitch />
-						{userData ? <Avatar /> : <LoginButton />}
-						{/* <NotificationsBell /> */}
-						{/* <Avatar /> */}
-						{/* <LoginButton /> */}
+						<LoginUseClient />
 					</div>
 				</div>
 			</div>
