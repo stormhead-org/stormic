@@ -5,29 +5,7 @@
   <br/>
   <br/>
    <p align="center">
-   <strong>Fatum</strong> - это скрипт сообщества мультиблогов с открытым исходным кодом.
-  <br/>
-  <br/>
-   Написан на <strong>Next.JS</strong> с использованием <strong>TypeScript</strong>.
-  <br/>
-  <br/>
-   Помимо стандартного функционала мультиблогов, <strong>Fatuml</strong> впитал все лучшее из опыта использования <strong>Discord</strong>, а так же поддерживает написание полноценных, объемных руководств в формате <strong>Wiki</strong>.
-   <br/>
-   <br/>
-   Для написания руководств и постов используется великолепный <strong>Editor.JS</strong> в качестве редактора.
-  </p>
-  <br/>
-  <img src="https://cdn.discordapp.com/attachments/625424257672937472/1173345925603807324/firsttest.png?ex=65639e8c&is=6551298c&hm=aae86fc0dfce8dcd6dff56e660a2760b529e717c1f63b2a0e0b1ee0bc53f92ab&">
-  <br/>
-  <br/>
-  <p align="center">
-  <strong>Fatum</strong> - мой небольшой пет-проект, который я делаю в свободное время.
-   <br/>
-   Это <strong>frontend-репозиторий</strong> проекта. <strong><a href='https://github.com/nimscore/fatum'>Backend-репозиторий</a></strong>.
-   <br/>
-   <br/>
-   Сейчас проект находится в самом начале разработки. На данный момент, <strong>backend</strong> реализован на <strong>Nest.JS</strong>. Однако, в будущем планируется перенос на <strong>RUST</strong>.
-  </p>
+   <strong>Fatum-community</strong> - это временный модуль, который в дальнейшем будет слит в основной репозиторий  <strong><a href='https://github.com/nimscore/fatum-ui'>Fatum-ui</a></strong>
   <p align="center">
   Контакты для связи:
   <br/>
