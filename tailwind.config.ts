@@ -19,11 +19,20 @@ const config = {
 		},
 		extend: {
 			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				card: {
+					DEFAULT: 'hsl(var(--card))',
+					foreground: 'hsl(var(--card-foreground))',
+				},
+
+				bgColorUiItem: 'hsl(var(--bg-color-ui-item))',
+				txtColor: 'hsl(var(--txt-color))',
+				aColor: 'hsl(var(--a-color)',
+				aColorHover: 'hsl(var(--a-color-hover))',
+				aColorHoverDark: 'hsl(var(--a-color-hover-dark))',
+				notificationColorRed: 'hsl(var(--notification-color-red))',
+
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
@@ -48,10 +57,9 @@ const config = {
 					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))',
 				},
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))',
-				},
+				border: 'hsl(var(--border))',
+				input: 'hsl(var(--input))',
+				ring: 'hsl(var(--ring))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
