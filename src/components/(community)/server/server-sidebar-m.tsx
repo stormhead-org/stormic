@@ -78,7 +78,7 @@ export const ServerSidebarM = async ({ serverId }: ServerSidebarProps) => {
 
 	return (
 		<>
-			<div className='flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]'>
+			<div className='flex flex-col h-full text-primary w-full dark:bg-card bg-[#F2F3F5]'>
 				<ScrollArea className='flex-1 px-3'>
 					<div className='mt-2'>
 						<ServerSearch
@@ -122,7 +122,7 @@ export const ServerSidebarM = async ({ serverId }: ServerSidebarProps) => {
 							]}
 						/>
 					</div>
-					<Separator className='bg-zinc-200 dark:bg-zinc-700 rounded-md my-2' />
+					<Separator className='bg-zinc-200 dark:bg-bgColorUiItem rounded-md my-2' />
 					{!!members?.length && (
 						<div className='mb-2'>
 							<ServerSection

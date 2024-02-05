@@ -94,5 +94,16 @@ body,
 	}
 	body {
 		@apply bg-background text-foreground;
+		/* ::-webkit-scrollbar {
+			@apply w-2;
+		}
+
+		::-webkit-scrollbar-track {
+			@apply bg-rose-500;
+		}
+
+		::-webkit-scrollbar-thumb {
+			@apply bg-bgColorUiItem rounded-full dark:hover:bg-orange-600 transition;
+		} */
 	}
 }

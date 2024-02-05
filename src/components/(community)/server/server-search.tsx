@@ -69,7 +69,7 @@ export const ServerSearch = ({ data }: ServerSearchProps) => {
 		<>
 			<button
 				onClick={() => setOpen(true)}
-				className='group px-1 py-1 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition'
+				className='group px-1 py-1 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-bgColorUiItem transition'
 			>
 				<Search className='w-4 h-4 text-zinc-500 dark:text-zinc-400' />
 				<p className='font-semibold text-sm text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition'>

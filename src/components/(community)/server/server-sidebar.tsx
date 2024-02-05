@@ -28,7 +28,10 @@ const roleIconMap = {
 	[MemberRole.ADMIN]: <Crown className='h-4 w-4 mr-2 text-rose-500' />,
 }
 
-export const ServerSidebar = async ({ serverId, imageSrvUrl }: ServerSidebarProps) => {
+export const ServerSidebar = async ({
+	serverId,
+	imageSrvUrl,
+}: ServerSidebarProps) => {
 	const profile = await currentProfile()
 
 	if (!profile) {
@@ -79,10 +82,9 @@ export const ServerSidebar = async ({ serverId, imageSrvUrl }: ServerSidebarProp
 
 	return (
 		<>
-			<div className='flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]'>
+			<div className='flex flex-col h-full text-primary w-full dark:bg-card bg-[#F2F3F5]'>
 				<ServerHeader server={server} role={role} />
-				<div
-					className='relative aspect-video overflow-hidden flex items-center bg-rose-600 w-100% h-auto'>
+				<div className='relative aspect-video overflow-hidden flex items-center bg-rose-600 w-100% h-auto'>
 					<Image
 						className='object-cover'
 						sizes='100%'
@@ -93,7 +95,6 @@ export const ServerSidebar = async ({ serverId, imageSrvUrl }: ServerSidebarProp
 					/>
 				</div>
 				<ScrollArea className='flex-1 pt-1 px-3'>
-					
 					{!!textChannels?.length && (
 						<div className='mb-2'>
 							<ServerSection
