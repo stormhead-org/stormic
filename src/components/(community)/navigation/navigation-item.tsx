@@ -32,12 +32,18 @@ export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
 					/>
 					<div
 						className={cn(
-							'relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden',
+							'relative group flex mx-3 h-[48px] w-[48px] rounded-full group-hover:rounded-[16px] transition-all overflow-hidden dark:hover:bg-bgColorUiItem',
 							params?.serverId === id &&
-								'bg-primary/10 text-primary rounded-[16px]'
+								'bg-primary/10 dark:bg-bgColorUiItem text-primary rounded-[16px]'
 						)}
 					>
-						<Image sizes='100%' fill src={imageUrl} alt='Channel' />
+						<Image
+							sizes='100%'
+							fill
+							src={imageUrl}
+							alt='Channel'
+							className='object-cover'
+						/>
 					</div>
 				</button>
 			</ActionTooltip>
