@@ -84,7 +84,7 @@ export const ServerSidebar = async ({
 		<>
 			<div className='flex flex-col h-full text-primary w-full dark:bg-card bg-[#F2F3F5]'>
 				<ServerHeader server={server} role={role} />
-				<div className='relative aspect-video overflow-hidden flex items-center w-100% h-auto'>
+				<div className='relative aspect-video overflow-hidden flex items-center w-100% h-auto border-b-2 border-bgColorUiItem'>
 					<Image
 						className='object-cover'
 						sizes='100%'

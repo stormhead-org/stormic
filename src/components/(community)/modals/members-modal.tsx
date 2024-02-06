@@ -96,8 +96,8 @@ export const MembersModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
-			<DialogContent className='bg-white dark:bg-card text-black dark:text-zinc-200 overflow-hidden'>
-				<DialogHeader className='pt-8 px-6'>
+			<DialogContent className='bg-white text-black overflow-hidden'>
+				<DialogHeader className='pt-6 px-6'>
 					<DialogTitle className='text-2xl text-center font-bold'>
 						Управление участниками
 					</DialogTitle>
@@ -123,17 +123,14 @@ export const MembersModal = () => {
 											<DropdownMenuTrigger>
 												<MoreVertical className='h-4 w-4 text-zinc-500' />
 											</DropdownMenuTrigger>
-											<DropdownMenuContent
-												className='dark:bg-bgColorUiItem'
-												side='left'
-											>
+											<DropdownMenuContent side='left'>
 												<DropdownMenuSub>
 													<DropdownMenuSubTrigger className='flex items-center'>
 														<ShieldQuestion className='h-4 w-4 mr-2' />
 														<span>Роль</span>
 													</DropdownMenuSubTrigger>
 													<DropdownMenuPortal>
-														<DropdownMenuSubContent className='dark:bg-bgColorUiItem'>
+														<DropdownMenuSubContent>
 															<DropdownMenuItem
 																onClick={() =>
 																	onRoleChange(member.id, 'MODERATOR')

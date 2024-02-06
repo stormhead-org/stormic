@@ -72,7 +72,7 @@ export const CreateServerModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={handleClose}>
-			<DialogContent className='bg-white text-black p-0 dark:bg-card dark:text-zinc-200 overflow-hidden'>
+			<DialogContent className='bg-white text-black p-0 overflow-hidden'>
 				<DialogHeader className='pt-8 px-6'>
 					<DialogTitle className='text-2xl text-center font-bold'>
 						Создание нового сервера
@@ -137,13 +137,13 @@ export const CreateServerModal = () => {
 								name='name'
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel className='uppercase text-xs font-bold text-zinc-500 dark:bg-bgColorUiItem/60 dark:text-zinc-200'>
+										<FormLabel className='uppercase text-xs font-bold text-zinc-500 dark:text-zinc-200'>
 											Название сервера
 										</FormLabel>
 										<FormControl>
 											<Input
 												disabled={isLoading}
-												className='bg-zinc-300/50 border-0 focus-visible:ring-offset-0 dark:bg-bgColorUiItem/60 dark:text-zinc-200'
+												className='bg-zinc-300/50 border-0 focus-visible:ring-offset-0'
 												placeholder='Название сервера'
 												{...field}
 											/>
@@ -153,7 +153,7 @@ export const CreateServerModal = () => {
 								)}
 							/>
 						</div>
-						<DialogFooter className='bg-gray-100 px-6 py-4 dark:bg-bgColorUiItem'>
+						<DialogFooter className='bg-gray-100 px-6 py-4'>
 							<Button variant='primary' disabled={isLoading}>
 								Создать
 							</Button>

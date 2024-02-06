@@ -44,7 +44,7 @@ export const DeleteMessageModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
-			<DialogContent className='bg-white text-black p-0 overflow-hidden dark:bg-card dark:text-zinc-200'>
+			<DialogContent className='bg-white text-black p-0 overflow-hidden'>
 				<DialogHeader className='pt-8 px-6'>
 					<DialogTitle className='text-2xl text-center font-bold'>
 						Удалить сообщение
@@ -53,7 +53,7 @@ export const DeleteMessageModal = () => {
 						Вы уверены, что хотите удалить сообщение?
 					</DialogDescription>
 				</DialogHeader>
-				<DialogFooter className='bg-gray-100 px-6 py-4 dark:bg-bgColorUiItem'>
+				<DialogFooter className='bg-gray-100 px-6 py-4'>
 					<div className='flex items-center justify-between w-full dark:text-zinc-200'>
 						<Button disabled={isLoading} variant='ghost' onClick={onClick}>
 							Да

@@ -98,7 +98,7 @@ export const EditChannelModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={handleClose}>
-			<DialogContent className='bg-white text-black p-0 overflow-hidden dark:bg-card dark:text-zinc-200'>
+			<DialogContent className='bg-white text-black p-0 overflow-hidden'>
 				<DialogHeader className='pt-8 px-6'>
 					<DialogTitle className='text-2xl text-center font-bold'>
 						Редактор канала
@@ -118,7 +118,7 @@ export const EditChannelModal = () => {
 										<FormControl>
 											<Input
 												disabled={isLoading}
-												className='bg-zinc-300/50 border-0 outline-none dark:bg-bgColorUiItem/60 dark:text-zinc-200'
+												className='bg-zinc-300/50 border-0 outline-none'
 												placeholder='Введите название канала'
 												{...field}
 											/>
@@ -139,11 +139,11 @@ export const EditChannelModal = () => {
 											defaultValue={field.value}
 										>
 											<FormControl>
-												<SelectTrigger className='bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none dark:bg-bgColorUiItem/60 dark:text-zinc-200'>
+												<SelectTrigger className='bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none'>
 													<SelectValue placeholder='Выберите нужный тип канала' />
 												</SelectTrigger>
 											</FormControl>
-											<SelectContent className='dark:bg-bgColorUiItem'>
+											<SelectContent>
 												{Object.values(ChannelType).map(type => (
 													<SelectItem
 														key={type}
@@ -160,7 +160,7 @@ export const EditChannelModal = () => {
 								)}
 							/>
 						</div>
-						<DialogFooter className='bg-gray-100 px-6 py-4 dark:bg-bgColorUiItem'>
+						<DialogFooter className='bg-gray-100 px-6 py-4'>
 							<Button variant='primary' disabled={isLoading}>
 								Сохранить
 							</Button>

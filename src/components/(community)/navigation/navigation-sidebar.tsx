@@ -31,7 +31,7 @@ export const NavigationSideBar = async () => {
 			<div className='space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-background bg-[#E3E5E8] py-3'>
 				<NavigationAction />
 				<NavigationItemCommunity />
-				<Separator className='h-[2px] bg-zinc-300 dark:bg-bgColorUiItem/60 rounded-md w-10 mx-auto' />
+				<Separator className='h-[2px] bg-zinc-300 rounded-md w-10 mx-auto' />
 				<ScrollArea className='flex-1 w-full'>
 					{servers.map(server => (
 						<div key={server.id} className='mb-4'>
