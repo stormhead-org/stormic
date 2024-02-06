@@ -94,16 +94,16 @@ body,
 	}
 	body {
 		@apply bg-background text-foreground;
-		/* ::-webkit-scrollbar {
+		::-webkit-scrollbar {
 			@apply w-2;
 		}
 
 		::-webkit-scrollbar-track {
-			@apply bg-rose-500;
+			@apply bg-transparent;
 		}
 
 		::-webkit-scrollbar-thumb {
-			@apply bg-bgColorUiItem rounded-full dark:hover:bg-orange-600 transition;
-		} */
+			@apply bg-bgColorUiItem/60 rounded-full;
+		}
 	}
 }

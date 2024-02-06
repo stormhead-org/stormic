@@ -122,7 +122,7 @@ export const ServerSidebarM = async ({ serverId }: ServerSidebarProps) => {
 							]}
 						/>
 					</div>
-					<Separator className='bg-zinc-200 dark:bg-bgColorUiItem rounded-md my-2' />
+					<Separator className='bg-zinc-200 dark:bg-bgColorUiItem/60 rounded-md my-2' />
 					{!!members?.length && (
 						<div className='mb-2'>
 							<ServerSection

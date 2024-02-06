@@ -7,7 +7,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogTitle
+	DialogTitle,
 } from '@/components/ui/dialog'
 import { useModal } from '@/hooks/use-modal-store'
 import axios from 'axios'
@@ -29,7 +29,7 @@ export const DeleteMessageModal = () => {
 			setIsLoading(true)
 			const url = qs.stringifyUrl({
 				url: apiUrl || '',
-				query
+				query,
 			})
 
 			await axios.delete(url)
@@ -44,21 +44,21 @@ export const DeleteMessageModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
-			<DialogContent className="bg-white text-black p-0 overflow-hidden">
-				<DialogHeader className="pt-8 px-6">
-					<DialogTitle className="text-2xl text-center font-bold">
+			<DialogContent className='bg-white text-black p-0 overflow-hidden dark:bg-card dark:text-zinc-200'>
+				<DialogHeader className='pt-8 px-6'>
+					<DialogTitle className='text-2xl text-center font-bold'>
 						Удалить сообщение
 					</DialogTitle>
-					<DialogDescription className="text-center text-zinc-500">
+					<DialogDescription className='text-center text-zinc-500'>
 						Вы уверены, что хотите удалить сообщение?
 					</DialogDescription>
 				</DialogHeader>
-				<DialogFooter className="bg-gray-100 px-6 py-4">
-					<div className="flex items-center justify-between w-full">
-						<Button disabled={isLoading} variant="ghost" onClick={onClick}>
+				<DialogFooter className='bg-gray-100 px-6 py-4 dark:bg-bgColorUiItem'>
+					<div className='flex items-center justify-between w-full dark:text-zinc-200'>
+						<Button disabled={isLoading} variant='ghost' onClick={onClick}>
 							Да
 						</Button>
-						<Button disabled={isLoading} onClick={onClose} variant="primary">
+						<Button disabled={isLoading} onClick={onClose} variant='primary'>
 							Нет
 						</Button>
 					</div>

@@ -5,7 +5,7 @@ import {
 	Dialog,
 	DialogContent,
 	DialogHeader,
-	DialogTitle
+	DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -53,36 +53,41 @@ export const InviteModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
-			<DialogContent className="bg-white text-black p-0 overflow-hidden">
-				<DialogHeader className="pt-8 px-6">
-					<DialogTitle className="text-2xl text-center font-bold">
+			<DialogContent className='bg-white text-black p-0 overflow-hidden'>
+				<DialogHeader className='pt-8 px-6'>
+					<DialogTitle className='text-2xl text-center font-bold'>
 						Создать приглашение
 					</DialogTitle>
 				</DialogHeader>
-				<div className="p-6">
-					<Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+				<div className='p-6'>
+					<Label className='uppercase text-xs font-bold text-zinc-500 dark:text-zinc-200'>
 						Ссылка на приглашение
 					</Label>
-					<div className="flex items-center mt-2 gap-x-2">
+					<div className='flex items-center mt-2 gap-x-2'>
 						<Input
 							readOnly
 							disabled={isLoading}
-							className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+							className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
 							value={inviteUrl}
 						/>
-						<Button disabled={isLoading} onClick={onCopy} size="icon">
-							{copied ? <Check /> : <Copy className="w-4 h-4" />}
+						<Button
+							className='dark:bg-bgColorUiItem/60 dark:hover:bg-bgColorUiItem'
+							disabled={isLoading}
+							onClick={onCopy}
+							size='icon'
+						>
+							{copied ? <Check /> : <Copy className='w-4 h-4 text-white' />}
 						</Button>
 					</div>
 					<Button
 						onClick={onNew}
 						disabled={isLoading}
-						variant="link"
-						size="sm"
-						className="text-xs text-zinc-500 mt-4"
+						variant='link'
+						size='sm'
+						className='text-xs text-zinc-500 mt-4'
 					>
 						Создать новое приглашение
-						<RefreshCw className="w-4 h-4 ml-2" />
+						<RefreshCw className='w-4 h-4 ml-2' />
 					</Button>
 				</div>
 			</DialogContent>

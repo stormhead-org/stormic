@@ -5,7 +5,7 @@ import {
 	DialogContent,
 	DialogFooter,
 	DialogHeader,
-	DialogTitle
+	DialogTitle,
 } from '@/components/ui/dialog'
 
 import {
@@ -14,7 +14,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	FormMessage
+	FormMessage,
 } from '@/components/ui/form'
 
 import {
@@ -22,7 +22,7 @@ import {
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
-	SelectValue
+	SelectValue,
 } from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
@@ -42,12 +42,12 @@ const formSchema = z.object({
 	name: z
 		.string()
 		.min(1, {
-			message: 'Название канала - обязательно'
+			message: 'Название канала - обязательно',
 		})
-		.refine((name) => name !== 'general', {
-			message: 'Название канала не может быть "General"'
+		.refine(name => name !== 'general', {
+			message: 'Название канала не может быть "General"',
 		}),
-	type: z.nativeEnum(ChannelType)
+	type: z.nativeEnum(ChannelType),
 })
 
 // const serversType = {
@@ -70,8 +70,8 @@ export const CreateChannelModal = () => {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			name: '',
-			type: channelType || ChannelType.TEXT
-		}
+			type: channelType || ChannelType.TEXT,
+		},
 	})
 
 	useEffect(() => {
@@ -89,8 +89,8 @@ export const CreateChannelModal = () => {
 			const url = qs.stringifyUrl({
 				url: '/api/channels',
 				query: {
-					serverId: params?.serverId
-				}
+					serverId: params?.serverId,
+				},
 			})
 			await axios.post(url, values)
 
@@ -109,28 +109,28 @@ export const CreateChannelModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={handleClose}>
-			<DialogContent className="bg-white text-black p-0 overflow-hidden">
-				<DialogHeader className="pt-8 px-6">
-					<DialogTitle className="text-2xl text-center font-bold">
+			<DialogContent className='bg-white dark:bg-card text-black dark:text-zinc-200 p-0 overflow-hidden'>
+				<DialogHeader className='pt-8 px-6'>
+					<DialogTitle className='text-2xl text-center font-bold'>
 						Создать канал
 					</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-						<div className="space-y-8 px-6">
+					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+						<div className='space-y-8 px-6'>
 							<FormField
 								control={form.control}
-								name="name"
+								name='name'
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+										<FormLabel className='uppercase text-xs font-bold text-zinc-500'>
 											Название канала
 										</FormLabel>
 										<FormControl>
 											<Input
 												disabled={isLoading}
-												className="bg-zinc-300/50 border-0 focus-visible:ring-offset-0"
-												placeholder="Введите название канала"
+												className='bg-zinc-300/50 dark:bg-bgColorUiItem/60 dark:text-zinc-200 border-0 focus-visible:ring-offset-0'
+												placeholder='Введите название канала'
 												{...field}
 											/>
 										</FormControl>
@@ -140,26 +140,28 @@ export const CreateChannelModal = () => {
 							/>
 							<FormField
 								control={form.control}
-								name="type"
+								name='type'
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Тип канала</FormLabel>
+										<FormLabel className='uppercase text-xs font-bold text-zinc-500'>
+											Тип канала
+										</FormLabel>
 										<Select
 											disabled={isLoading}
 											onValueChange={field.onChange}
 											defaultValue={field.value}
 										>
 											<FormControl>
-												<SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
-													<SelectValue placeholder="Выберите нужный тип канала" />
+												<SelectTrigger className='bg-zinc-300/50 dark:bg-bgColorUiItem/60 dark:text-zinc-200 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none'>
+													<SelectValue placeholder='Выберите нужный тип канала' />
 												</SelectTrigger>
 											</FormControl>
-											<SelectContent>
-												{Object.values(ChannelType).map((type) => (
+											<SelectContent className='dark:bg-bgColorUiItem'>
+												{Object.values(ChannelType).map(type => (
 													<SelectItem
 														key={type}
 														value={type}
-														className="capitalize"
+														className='capitalize'
 													>
 														{type.toLowerCase()}
 													</SelectItem>
@@ -171,8 +173,8 @@ export const CreateChannelModal = () => {
 								)}
 							/>
 						</div>
-						<DialogFooter className="bg-gray-100 px-6 py-4">
-							<Button variant="primary" disabled={isLoading}>
+						<DialogFooter className='bg-gray-100 dark:bg-bgColorUiItem px-6 py-4'>
+							<Button variant='primary' disabled={isLoading}>
 								Создать
 							</Button>
 						</DialogFooter>

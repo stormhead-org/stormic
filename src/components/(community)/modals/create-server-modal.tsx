@@ -72,7 +72,7 @@ export const CreateServerModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={handleClose}>
-			<DialogContent className='bg-white text-black p-0 overflow-hidden'>
+			<DialogContent className='bg-white text-black p-0 dark:bg-card dark:text-zinc-200 overflow-hidden'>
 				<DialogHeader className='pt-8 px-6'>
 					<DialogTitle className='text-2xl text-center font-bold'>
 						Создание нового сервера
@@ -87,7 +87,7 @@ export const CreateServerModal = () => {
 						<div className='space-y-8 px-6'>
 							<div className='flex justify-evenly'>
 								<div className='text-center mb-2'>
-									<DialogDescription className='text-center text-zinc-500 mb-2'>
+									<DialogDescription className='text-center text-zinc-500 mb-2 dark:text-zinc-200'>
 										Логотип
 									</DialogDescription>
 									<div className='flex items-center justify-center text-center'>
@@ -109,7 +109,7 @@ export const CreateServerModal = () => {
 									</div>
 								</div>
 								<div className='text-center mb-2'>
-									<DialogDescription className='text-center text-zinc-500 mb-2'>
+									<DialogDescription className='text-center text-zinc-500 mb-2 dark:text-zinc-200'>
 										Баннер (16x9)
 									</DialogDescription>
 									<div className='flex items-center justify-center text-center'>
@@ -131,19 +131,19 @@ export const CreateServerModal = () => {
 									</div>
 								</div>
 							</div>
-							
+
 							<FormField
 								control={form.control}
 								name='name'
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'>
+										<FormLabel className='uppercase text-xs font-bold text-zinc-500 dark:bg-bgColorUiItem/60 dark:text-zinc-200'>
 											Название сервера
 										</FormLabel>
 										<FormControl>
 											<Input
 												disabled={isLoading}
-												className='bg-zinc-300/50 border-0 focus-visible:ring-offset-0'
+												className='bg-zinc-300/50 border-0 focus-visible:ring-offset-0 dark:bg-bgColorUiItem/60 dark:text-zinc-200'
 												placeholder='Название сервера'
 												{...field}
 											/>
@@ -153,7 +153,7 @@ export const CreateServerModal = () => {
 								)}
 							/>
 						</div>
-						<DialogFooter className='bg-gray-100 px-6 py-4'>
+						<DialogFooter className='bg-gray-100 px-6 py-4 dark:bg-bgColorUiItem'>
 							<Button variant='primary' disabled={isLoading}>
 								Создать
 							</Button>

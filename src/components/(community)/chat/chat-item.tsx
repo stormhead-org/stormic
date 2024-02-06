@@ -232,7 +232,7 @@ export const ChatItem = ({
 				</div>
 
 				{canDeleteMessage && (
-					<div className='hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-bgColorUiItem border rounded-sm'>
+					<div className='hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-bgColorUiItem/60 border rounded-sm'>
 						{canEditMessage && (
 							<ActionTooltip label='Редактировать'>
 								<Edit

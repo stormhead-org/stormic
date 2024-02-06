@@ -27,12 +27,12 @@ export function ModeToggle() {
 					<span className='sr-only'>Toggle theme</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align='end'>
-				<DropdownMenuItem onClick={() => setTheme('light')}>
-					Светлая
-				</DropdownMenuItem>
+			<DropdownMenuContent className='dark:bg-bgColorUiItem' align='end'>
 				<DropdownMenuItem onClick={() => setTheme('dark')}>
 					Тёмная
+				</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => setTheme('light')}>
+					Светлая
 				</DropdownMenuItem>
 				{/* <DropdownMenuItem onClick={() => setTheme('system')}>
 					Системная

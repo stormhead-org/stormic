@@ -48,7 +48,7 @@ export const DeleteChannelModal = () => {
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
-			<DialogContent className='bg-white text-black p-0 overflow-hidden'>
+			<DialogContent className='bg-white text-black p-0 overflow-hidden dark:bg-card dark:text-zinc-200'>
 				<DialogHeader className='pt-8 px-6'>
 					<DialogTitle className='text-2xl text-center font-bold'>
 						Удалить канал
@@ -64,8 +64,8 @@ export const DeleteChannelModal = () => {
 						Канал будет удален без возможности восстановления
 					</DialogDescription>
 				</DialogHeader>
-				<DialogFooter className='bg-gray-100 px-6 py-4'>
-					<div className='flex items-center justify-between w-full'>
+				<DialogFooter className='bg-gray-100 px-6 py-4 dark:bg-bgColorUiItem'>
+					<div className='flex items-center justify-between w-full dark:text-zinc-200'>
 						<Button disabled={isLoading} variant='ghost' onClick={onClick}>
 							Да
 						</Button>
