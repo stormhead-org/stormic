@@ -1,8 +1,10 @@
+import Header from '@/components/(main)/header'
+
 const SetupPage = async () => {
 	return (
 		<>
 			<div>
-				<p>Fatum Main Path</p>
+				<Header />
 			</div>
 		</>
 	)
