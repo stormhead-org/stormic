@@ -8,6 +8,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Instance {
+  id               String @id @default(uuid())
+  instanceUrl      String @db.Text
+  instanceName     String
+  instanceLogo     String @db.Text
+  instanceBanner   String @db.Text
+  instanceModalImg String @db.Text
+}
+
 model Profile {
   id       String @id @default(uuid())
   userId   String @unique

@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@aws-sdk/client-s3": "^3.507.0",
 		"@clerk/localizations": "^1.26.13",
 		"@clerk/nextjs": "^4.29.4",
 		"@emoji-mart/data": "^1.1.2",
