@@ -9,8 +9,8 @@ import { ThemeProvider } from '@/components/providers/theme-provider'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Next Auth | NextJS",
-  description: "Authentication using next-auth-v5",
+  title: "Stormic",
+  description: "Stormic opensourse community",
   icons: {
     icon: "/icon.png",
   },
