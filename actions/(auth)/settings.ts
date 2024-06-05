@@ -14,13 +14,13 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
   const user = await currentUser();
 
   if (!user) {
-    return { error: "Unauthorized!" };
+    return { error: "Не авторизован!" };
   }
 
-  const dbUser = await getUserById(user.id);
+  const dbUser = await getUserById(user.id)
 
   if (!dbUser) {
-    return { error: "Unauthorized!" };
+    return { error: "Не авторизован" };
   }
 
   if (user.isOAuth) {
