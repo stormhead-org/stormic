@@ -7,15 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Instance {
-  id               String @id @default(uuid())
-  instanceUrl      String @db.Text
-  instanceName     String
-  instanceLogo     String @db.Text
-  instanceBanner   String @db.Text
-  instanceModalImg String @db.Text
-}
-
 enum UserRole {
   ADMIN
   USER
@@ -34,19 +25,21 @@ enum ChannelType {
 }
 
 model User {
-  id                    String                 @id @default(cuid()) // community&blogs
-  //  userId                String                 @unique          //community
-  name                  String? // community&blogs
-  email                 String?                @unique // community&blogs
+  id                    String                 @id @default(cuid())
+  //
+  //  userId                String                 @unique
+  //
+  name                  String?
+  email                 String?                @unique
   emailVerified         DateTime?
-  image                 String? // community&blogs
+  image                 String?
   password              String?
   role                  UserRole               @default(USER)
   accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
-  // community
-  imageCommunity        String?
+  //
+  imageCm               String?
 
   servers  Server[]
   members  Member[]
@@ -54,7 +47,7 @@ model User {
 
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
-  // community
+  //
 }
 
 model Account {
@@ -143,12 +136,6 @@ model Member {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  messages       Message[]
-  directMessages DirectMessage[]
-
-  conversationsInitiated Conversation[] @relation("MemberOne")
-  conversationsReceived  Conversation[] @relation("MemberTwo")
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -167,67 +154,9 @@ model Channel {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  messages Message[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@index([serverId])
-}
-
-model Message {
-  id      String @id @default(uuid())
-  content String @db.Text
-
-  fileUrl String? @db.Text
-
-  memberId String
-  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
-
-  channelId String
-  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
-
-  deleted Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([channelId])
-  @@index([memberId])
-}
-
-model Conversation {
-  id String @id @default(uuid())
-
-  memberOneId String
-  memberOne   Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
-
-  memberTwoId String
-  memberTwo   Member @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
-
-  directMessages DirectMessage[]
-
-  @@unique([memberOneId, memberTwoId])
-  @@index([memberTwoId])
-}
-
-model DirectMessage {
-  id      String  @id @default(uuid())
-  content String  @db.Text
-  fileUrl String? @db.Text
-
-  memberId String
-  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
-
-  conversationId String
-  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-
-  deleted Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([memberId])
-  @@index([conversationId])
 }

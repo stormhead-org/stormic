@@ -17,7 +17,7 @@
    Для написания руководств и постов используется великолепный <strong>Editor.JS</strong> в качестве редактора.
   </p>
   <br/>
-  <img src="https://cdn.discordapp.com/attachments/592056499724091392/1247487987143671808/321545.png?ex=66603539&is=665ee3b9&hm=4fa35e1e15de134183baab5df197ccf48c927403fb7b153e55c33f25e7e0b9c7&">
+  <img src="https://cdn.discordapp.com/attachments/592056499724091392/1247487987143671808/321545.png?ex=66696fb9&is=66681e39&hm=601c9cb41ec32514ed222b99e9e9e989c85f0b097bdaec7ae7671f19b033a865&">
   <br/>
   <br/>
   <p align="center">
@@ -26,7 +26,7 @@
   <p align="center">
   Контакты для связи:
   <br/>
-  <a href='https://discord.com/users/.nims/'>Discord</a> | <a href='https://sudoers.pro/@nims'>Mastodon</a>
+  <a href='https://discord.com/users/.nims/'>Discord</a> | <a href='https://mastodon.social/@nimsi'>Mastodon</a>
   </p>
 </div>
 <br>
