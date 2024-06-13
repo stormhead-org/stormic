@@ -2,7 +2,7 @@
 import { FaUser } from "react-icons/fa";
 import { ExitIcon } from "@radix-ui/react-icons";
 
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useCurrentUser } from "@/hooks/(auth)/use-current-user";
 
 import {
   DropdownMenu,

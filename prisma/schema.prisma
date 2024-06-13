@@ -34,27 +34,32 @@ enum ChannelType {
 }
 
 model User {
-  id                    String                 @id @default(cuid()) // community&blogs
-  //  userId                String                 @unique          //community
-  name                  String? // community&blogs
-  email                 String?                @unique // community&blogs
+  id                    String                 @id @default(cuid())
+  name                  String?
+  email                 String?                @unique
   emailVerified         DateTime?
-  image                 String? // community&blogs
+  image                 String?
   password              String?
   role                  UserRole               @default(USER)
   accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
-  // community
-  imageCommunity        String?
+}
+
+model Profile {
+  id             String  @id @default(uuid())
+  userId         String  @unique
+  name           String
+  imageUrl       String  @db.Text
+  imageCommunity String?
+  email          String  @db.Text
 
   servers  Server[]
   members  Member[]
   channels Channel[]
 
   createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
-  // community
+  updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -121,8 +126,8 @@ model Server {
   imageSrvUrl String @db.Text
   inviteCode  String @unique
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   members  Member[]
   channels Channel[]
@@ -130,15 +135,15 @@ model Server {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
+  @@index([profileId])
 }
 
 model Member {
   id   String        @id @default(uuid())
   role CommunityRole @default(USER)
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
@@ -152,7 +157,7 @@ model Member {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
+  @@index([profileId])
   @@index([serverId])
 }
 
@@ -161,8 +166,8 @@ model Channel {
   name String
   type ChannelType @default(TEXT)
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
@@ -172,7 +177,7 @@ model Channel {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
+  @@index([profileId])
   @@index([serverId])
 }
 
