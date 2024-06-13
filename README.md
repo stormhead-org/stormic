@@ -17,7 +17,7 @@
    Для написания руководств и постов используется великолепный <strong>Editor.JS</strong> в качестве редактора.
   </p>
   <br/>
-  <img src="https://cdn.discordapp.com/attachments/592056499724091392/1247487987143671808/321545.png?ex=66696fb9&is=66681e39&hm=601c9cb41ec32514ed222b99e9e9e989c85f0b097bdaec7ae7671f19b033a865&">
+  <img src="/public/preview.png">
   <br/>
   <br/>
   <p align="center">
