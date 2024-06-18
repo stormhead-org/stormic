@@ -47,16 +47,17 @@ model User {
 }
 
 model Profile {
-  id             String  @id @default(uuid())
-  userId         String  @unique
-  name           String
-  imageUrl       String  @db.Text
-  imageCommunity String?
-  email          String  @db.Text
+  id       String @id @default(uuid())
+  userId   String @unique
+  name     String
+  imageUrl String @db.Text
+  // imageCommunity String?
+  // email          String  @db.Text
 
   servers  Server[]
   members  Member[]
   channels Channel[]
+  accounts Account[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -65,6 +66,7 @@ model Profile {
 model Account {
   id                String  @id @default(cuid())
   userId            String
+  profileId         String
   type              String
   provider          String
   providerAccountId String
@@ -77,6 +79,8 @@ model Account {
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
