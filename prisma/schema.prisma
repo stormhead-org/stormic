@@ -7,236 +7,217 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Instance {
-  id               String @id @default(uuid())
-  instanceUrl      String @db.Text
-  instanceName     String
-  instanceLogo     String @db.Text
-  instanceBanner   String @db.Text
-  instanceModalImg String @db.Text
-}
-
-enum UserRole {
-  ADMIN
+enum UserRoleType {
   USER
-}
-
-enum CommunityRole {
   ADMIN
-  MODERATOR
-  USER
 }
 
-enum ChannelType {
-  TEXT
-  AUDIO
-  VIDEO
+model StormicMedia {
+  id          Int     @id @default(autoincrement())
+  imageLogo   String?
+  imageAuth   String?
+  imageBanner String?
+}
+
+model HomeLeftSideMenu {
+  id      Int    @id @default(autoincrement())
+  name    String
+  pageUrl String
 }
 
 model User {
-  id                    String                 @id @default(cuid())
-  name                  String?
-  email                 String?                @unique
-  emailVerified         DateTime?
-  image                 String?
-  password              String?
-  role                  UserRole               @default(USER)
-  accounts              Account[]
-  isTwoFactorEnabled    Boolean                @default(false)
-  twoFactorConfirmation TwoFactorConfirmation?
-}
+  id Int @id @default(autoincrement())
 
-model Profile {
-  id       String @id @default(uuid())
-  userId   String @unique
-  name     String
-  imageUrl String @db.Text
-  // imageCommunity String?
-  // email          String  @db.Text
+  fullName String
+  email    String       @unique
+  imageUrl String?
+  password String
+  role     UserRoleType @default(USER)
+  verified DateTime?
 
-  servers  Server[]
-  members  Member[]
-  channels Channel[]
-  accounts Account[]
+  provider   String?
+  providerId String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  profileId         String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model VerificationToken {
-  id      String   @id @default(cuid())
-  email   String
-  token   String   @unique
-  expires DateTime
-
-  @@unique([email, token])
-}
-
-model PasswordResetToken {
-  id      String   @id @default(cuid())
-  email   String
-  token   String   @unique
-  expires DateTime
-
-  @@unique([email, token])
-}
-
-model TwoFactorToken {
-  id      String   @id @default(cuid())
-  email   String
-  token   String   @unique
-  expires DateTime
-
-  @@unique([email, token])
-}
-
-model TwoFactorConfirmation {
-  id String @id @default(cuid())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId])
-}
-
-//
-
-model Server {
-  id          String @id @default(uuid())
-  name        String
-  imageUrl    String @db.Text
-  imageSrvUrl String @db.Text
-  inviteCode  String @unique
-
-  profileId String
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-
-  members  Member[]
-  channels Channel[]
+  verificationCode VerificationCode?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId])
+  profile_picture     String?
+  bio                 String?
+  roles               UserRoleAssignment[]
+  articles            Article[]
+  comments            Comment[]
+  likes               Like[]
+  views               View[]
+  images              Image[]
+  notifications       Notification[]
+  categories          Category[]           @relation("UserCategories")
+  moderatedCategories CategoryModerator[]
 }
 
-model Member {
-  id   String        @id @default(uuid())
-  role CommunityRole @default(USER)
+model VerificationCode {
+  id Int @id @default(autoincrement())
 
-  profileId String
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
 
-  serverId String
-  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-
-  messages       Message[]
-  directMessages DirectMessage[]
-
-  conversationsInitiated Conversation[] @relation("MemberOne")
-  conversationsReceived  Conversation[] @relation("MemberTwo")
+  code String
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  @@index([profileId])
-  @@index([serverId])
+  @@unique([userId, code])
 }
 
-model Channel {
-  id   String      @id @default(uuid())
-  name String
-  type ChannelType @default(TEXT)
+model Article {
+  article_id       Int           @id @default(autoincrement())
+  title            String
+  content          String
+  author_id        Int
+  publication_date DateTime      @default(now())
+  last_edit_date   DateTime?
+  status           String
+  views_count      Int           @default(0)
+  likes_count      Int           @default(0)
+  category_id      Int
+  tags             ArticleTags[]
+  comments         Comment[]
+  likes            Like[]
+  views            View[]
+  media            Media[]
 
-  profileId String
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-
-  serverId String
-  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-
-  messages Message[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([profileId])
-  @@index([serverId])
+  author   User     @relation(fields: [author_id], references: [id])
+  category Category @relation(fields: [category_id], references: [category_id])
 }
 
-model Message {
-  id      String @id @default(uuid())
-  content String @db.Text
+model Category {
+  category_id   Int                 @id @default(autoincrement())
+  category_name String
+  articles      Article[]
+  owner_id      Int
+  moderators    CategoryModerator[]
 
-  fileUrl String? @db.Text
-
-  memberId String
-  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
-
-  channelId String
-  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
-
-  deleted Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([channelId])
-  @@index([memberId])
+  owner User @relation("UserCategories", fields: [owner_id], references: [id])
 }
 
-model Conversation {
-  id String @id @default(uuid())
+model CategoryModerator {
+  category_id Int
+  user_id     Int
 
-  memberOneId String
-  memberOne   Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [category_id], references: [category_id])
+  user     User     @relation(fields: [user_id], references: [id])
 
-  memberTwoId String
-  memberTwo   Member @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
-
-  directMessages DirectMessage[]
-
-  @@unique([memberOneId, memberTwoId])
-  @@index([memberTwoId])
+  @@id([category_id, user_id])
 }
 
-model DirectMessage {
-  id      String  @id @default(uuid())
-  content String  @db.Text
-  fileUrl String? @db.Text
+model Comment {
+  comment_id        Int      @id @default(autoincrement())
+  article_id        Int
+  author_id         Int
+  content           String
+  publication_date  DateTime @default(now())
+  parent_comment_id Int?
 
-  memberId String
-  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  article  Article   @relation(fields: [article_id], references: [article_id])
+  author   User      @relation(fields: [author_id], references: [id])
+  parent   Comment?  @relation(name: "CommentToComment", fields: [parent_comment_id], references: [comment_id])
+  children Comment[] @relation(name: "CommentToComment")
+}
 
-  conversationId String
-  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+model Tag {
+  tag_id   Int           @id @default(autoincrement())
+  tag_name String
+  articles ArticleTags[]
+}
 
-  deleted Boolean @default(false)
+model ArticleTags {
+  article_id Int
+  tag_id     Int
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  article Article @relation(fields: [article_id], references: [article_id])
+  tag     Tag     @relation(fields: [tag_id], references: [tag_id])
 
-  @@index([memberId])
-  @@index([conversationId])
+  @@id([article_id, tag_id])
+}
+
+model UserRole {
+  role_id     Int                  @id @default(autoincrement())
+  role_name   String
+  users       UserRoleAssignment[]
+  permissions RolePermission[]
+}
+
+model UserRoleAssignment {
+  user_id Int
+  role_id Int
+
+  user User     @relation(fields: [user_id], references: [id])
+  role UserRole @relation(fields: [role_id], references: [role_id])
+
+  @@id([user_id, role_id])
+}
+
+model Permission {
+  permission_id   Int              @id @default(autoincrement())
+  permission_name String
+  roles           RolePermission[]
+}
+
+model RolePermission {
+  role_id       Int
+  permission_id Int
+
+  role       UserRole   @relation(fields: [role_id], references: [role_id])
+  permission Permission @relation(fields: [permission_id], references: [permission_id])
+
+  @@id([role_id, permission_id])
+}
+
+model Like {
+  like_id    Int      @id @default(autoincrement())
+  user_id    Int
+  article_id Int
+  like_date  DateTime @default(now())
+
+  user    User    @relation(fields: [user_id], references: [id])
+  article Article @relation(fields: [article_id], references: [article_id])
+}
+
+model View {
+  view_id    Int      @id @default(autoincrement())
+  user_id    Int?
+  article_id Int
+  view_date  DateTime @default(now())
+
+  user    User?   @relation(fields: [user_id], references: [id])
+  article Article @relation(fields: [article_id], references: [article_id])
+}
+
+model Image {
+  image_id    Int      @id @default(autoincrement())
+  url         String
+  uploaded_by Int
+  upload_date DateTime @default(now())
+
+  user User @relation(fields: [uploaded_by], references: [id])
+}
+
+model Media {
+  media_id    Int      @id @default(autoincrement())
+  article_id  Int
+  media_url   String
+  media_type  String
+  upload_date DateTime @default(now())
+
+  article Article @relation(fields: [article_id], references: [article_id])
+}
+
+model Notification {
+  notification_id   Int      @id @default(autoincrement())
+  user_id           Int
+  content           String
+  notification_date DateTime @default(now())
+  read_status       Boolean  @default(false)
+
+  user User @relation(fields: [user_id], references: [id])
 }

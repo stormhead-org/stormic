@@ -1,43 +1,27 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
-import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from '@/components/providers/theme-provider'
+import { Nunito } from 'next/font/google'
 
-const inter = Inter({ subsets: ["latin"] });
+import { Providers } from '@/shared/components/providers'
+import './globals.css'
 
-export const metadata: Metadata = {
-  title: "Stormic",
-  description: "Stormic opensourse community",
-  icons: {
-    icon: "/icon.png",
-  },
-};
+const nunito = Nunito({
+	subsets: ['cyrillic'],
+	variable: '--font-nunito',
+	weight: ['400', '500', '600', '700', '800', '900'],
+})
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const session = await auth();
-
-  return (
-    <SessionProvider session={session}>
-      <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          storageKey="stormic-theme"
-        >
-          <Toaster />
-          {children}
-        </ThemeProvider>
-        </body>
-      </html>
-    </SessionProvider>
-  );
+export default function RootLayout({
+	children,
+}: Readonly<{
+	children: React.ReactNode
+}>) {
+	return (
+		<html lang='en'>
+			<head>
+				<link data-rh='true' rel='icon' href='/logo.png' />
+			</head>
+			<body className={nunito.className}>
+				<Providers>{children}</Providers>
+			</body>
+		</html>
+	)
 }
