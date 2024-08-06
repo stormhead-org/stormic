@@ -19,7 +19,7 @@ model StormicMedia {
   imageBanner String?
 }
 
-model HomeLeftSideMenu {
+model SideCustomMenu {
   id      Int    @id @default(autoincrement())
   name    String
   pageUrl String

@@ -9,5 +9,5 @@ interface Props {
 export const Notifications: React.FC<Props> = ({ className }) => {
 	const { data: session } = useSession()
 
-	return <div className={className}>{session ? <BellDot /> : ''}</div>
+	return session && <BellDot />
 }

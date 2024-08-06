@@ -1,15 +1,28 @@
-import { Container, LeftSideBar, Title } from '@/shared/components/'
-import LeftNavBar from '@/shared/components/left-nav-bar'
+import { prisma } from '@/prisma/prisma-client'
+import {
+	Container,
+	FeedUserMenu,
+	NewPostButton,
+	SideCustomMenuForm,
+	SideFooter,
+	SocialMenu,
+	Title,
+} from '@/shared/components/'
 
 export default async function Home() {
+	const menu = await prisma.sideCustomMenu.findMany()
+
 	return (
 		<>
 			<Container className='mt-4'>
 				<div className='flex gap-4'>
 					{/* Левая часть */}
 					<div className='w-[300px]'>
-						<LeftSideBar />
-						<LeftNavBar />
+						<FeedUserMenu />
+						<SocialMenu className='my-2' />
+						<NewPostButton className='my-4' />
+						<SideCustomMenuForm className='mt-4' data={menu} />
+						<SideFooter className='my-4' />
 					</div>
 
 					{/* Центральная часть */}
