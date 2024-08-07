@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/shared/lib/utils'
-import { Article } from '@prisma/client'
+import { Post } from '@prisma/client'
 import { Search } from 'lucide-react'
 import React from 'react'
 import { useClickAway } from 'react-use'
@@ -13,7 +13,7 @@ interface Props {
 export const SearchInput: React.FC<Props> = ({ className }) => {
 	const [searchQuery, setSearchQuery] = React.useState('')
 	const [focused, setFocused] = React.useState(false)
-	const [article, setArticle] = React.useState<Article[]>([])
+	const [post, setPost] = React.useState<Post[]>([])
 	const ref = React.useRef(null)
 
 	useClickAway(ref, () => {
@@ -23,8 +23,8 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
 	// useDebounce(
 	// 	async () => {
 	// 		try {
-	// 			const response = await Api.article.search(searchQuery)
-	// 			setArticle(response)
+	// 			const response = await Api.post.search(searchQuery)
+	// 			setPost(response)
 	// 		} catch (error) {
 	// 			console.log(error)
 	// 		}
@@ -36,7 +36,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
 	// const onClickItem = () => {
 	// 	setFocused(false)
 	// 	setSearchQuery('')
-	// 	setArticle([])
+	// 	setpost([])
 	// }
 
 	return (
@@ -62,26 +62,26 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
 					onChange={e => setSearchQuery(e.target.value)}
 				/>
 
-				{/* {article.length > 0 && (
+				{/* {post.length > 0 && (
 					<div
 						className={cn(
 							'absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 invisible opacity-0 z-30',
 							focused && 'visible opacity-100 top-12'
 						)}
 					>
-						{article.map(article => (
+						{post.map(post => (
 							<Link
 								onClick={onClickItem}
-								key={article.id}
+								key={post.id}
 								className='flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10'
-								href={`/article/${article.id}`}
+								href={`/post/${post.id}`}
 							>
 								<img
 									className='rounded-sm h-8 w-8'
-									src={article.imageUrl}
-									alt={article.name}
+									src={post.imageUrl}
+									alt={post.name}
 								/>
-								<span>{article.name}</span>
+								<span>{post.name}</span>
 							</Link>
 						))}
 					</div>

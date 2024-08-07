@@ -28,9 +28,8 @@ export const ProfileButton: React.FC<Props> = ({
 				</Button>
 			) : (
 				<Link href='/profile'>
-					<Button variant='secondary' className='flex items-center gap-2'>
+					<Button variant='secondary' className='flex items-center'>
 						<CircleUser size={18} />
-						Профиль
 					</Button>
 				</Link>
 			)}

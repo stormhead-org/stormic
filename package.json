@@ -21,6 +21,7 @@
 		"@radix-ui/react-dialog": "^1.1.1",
 		"@radix-ui/react-dropdown-menu": "^2.1.1",
 		"@radix-ui/react-slot": "^1.1.0",
+		"@radix-ui/react-switch": "^1.1.0",
 		"@types/bcrypt": "^5.0.2",
 		"axios": "^1.7.3",
 		"bcrypt": "^5.1.1",

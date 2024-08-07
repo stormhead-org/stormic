@@ -31,7 +31,6 @@ model User {
 
   fullName String
   email    String       @unique
-  imageUrl String?
   password String
   role     UserRoleType @default(USER)
   verified DateTime?
@@ -47,7 +46,7 @@ model User {
   profile_picture     String?
   bio                 String?
   roles               UserRoleAssignment[]
-  articles            Article[]
+  posts               Post[]
   comments            Comment[]
   likes               Like[]
   views               View[]
@@ -70,18 +69,18 @@ model VerificationCode {
   @@unique([userId, code])
 }
 
-model Article {
-  article_id       Int           @id @default(autoincrement())
+model Post {
+  post_id          Int        @id @default(autoincrement())
   title            String
   content          String
   author_id        Int
-  publication_date DateTime      @default(now())
+  publication_date DateTime   @default(now())
   last_edit_date   DateTime?
   status           String
-  views_count      Int           @default(0)
-  likes_count      Int           @default(0)
+  views_count      Int        @default(0)
+  likes_count      Int        @default(0)
   category_id      Int
-  tags             ArticleTags[]
+  tags             PostTags[]
   comments         Comment[]
   likes            Like[]
   views            View[]
@@ -94,7 +93,7 @@ model Article {
 model Category {
   category_id   Int                 @id @default(autoincrement())
   category_name String
-  articles      Article[]
+  posts         Post[]
   owner_id      Int
   moderators    CategoryModerator[]
 
@@ -113,32 +112,32 @@ model CategoryModerator {
 
 model Comment {
   comment_id        Int      @id @default(autoincrement())
-  article_id        Int
+  post_id           Int
   author_id         Int
   content           String
   publication_date  DateTime @default(now())
   parent_comment_id Int?
 
-  article  Article   @relation(fields: [article_id], references: [article_id])
+  post     Post      @relation(fields: [post_id], references: [post_id])
   author   User      @relation(fields: [author_id], references: [id])
   parent   Comment?  @relation(name: "CommentToComment", fields: [parent_comment_id], references: [comment_id])
   children Comment[] @relation(name: "CommentToComment")
 }
 
 model Tag {
-  tag_id   Int           @id @default(autoincrement())
+  tag_id   Int        @id @default(autoincrement())
   tag_name String
-  articles ArticleTags[]
+  posts    PostTags[]
 }
 
-model ArticleTags {
-  article_id Int
-  tag_id     Int
+model PostTags {
+  post_id Int
+  tag_id  Int
 
-  article Article @relation(fields: [article_id], references: [article_id])
-  tag     Tag     @relation(fields: [tag_id], references: [tag_id])
+  post Post @relation(fields: [post_id], references: [post_id])
+  tag  Tag  @relation(fields: [tag_id], references: [tag_id])
 
-  @@id([article_id, tag_id])
+  @@id([post_id, tag_id])
 }
 
 model UserRole {
@@ -175,23 +174,23 @@ model RolePermission {
 }
 
 model Like {
-  like_id    Int      @id @default(autoincrement())
-  user_id    Int
-  article_id Int
-  like_date  DateTime @default(now())
+  like_id   Int      @id @default(autoincrement())
+  user_id   Int
+  post_id   Int
+  like_date DateTime @default(now())
 
-  user    User    @relation(fields: [user_id], references: [id])
-  article Article @relation(fields: [article_id], references: [article_id])
+  user User @relation(fields: [user_id], references: [id])
+  post Post @relation(fields: [post_id], references: [post_id])
 }
 
 model View {
-  view_id    Int      @id @default(autoincrement())
-  user_id    Int?
-  article_id Int
-  view_date  DateTime @default(now())
+  view_id   Int      @id @default(autoincrement())
+  user_id   Int?
+  post_id   Int
+  view_date DateTime @default(now())
 
-  user    User?   @relation(fields: [user_id], references: [id])
-  article Article @relation(fields: [article_id], references: [article_id])
+  user User? @relation(fields: [user_id], references: [id])
+  post Post  @relation(fields: [post_id], references: [post_id])
 }
 
 model Image {
@@ -205,12 +204,12 @@ model Image {
 
 model Media {
   media_id    Int      @id @default(autoincrement())
-  article_id  Int
+  post_id     Int
   media_url   String
   media_type  String
   upload_date DateTime @default(now())
 
-  article Article @relation(fields: [article_id], references: [article_id])
+  post Post @relation(fields: [post_id], references: [post_id])
 }
 
 model Notification {
