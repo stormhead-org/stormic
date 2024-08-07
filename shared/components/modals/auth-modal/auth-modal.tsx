@@ -4,6 +4,7 @@ import { LoginForm } from '@/shared/components/modals/auth-modal/forms/login-for
 import { RegisterForm } from '@/shared/components/modals/auth-modal/forms/register-form'
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
+import { Github } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import React from 'react'
 
@@ -25,7 +26,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
 
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className='w-[450px] bg-white p-10'>
+			<DialogContent className='w-[450px] p-10'>
 				{type === 'login' ? (
 					<LoginForm onClose={handleClose} />
 				) : (
@@ -45,10 +46,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
 						type='button'
 						className='gap-2 h-12 p-2 flex-1'
 					>
-						<img
-							className='w-6 h-6'
-							src='https://github.githubassets.com/favicons/favicon.svg'
-						/>
+						<Github size={24} />
 						GitHub
 					</Button>
 
@@ -72,7 +70,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
 				</div>
 
 				<Button
-					variant='outline'
+					variant='secondary'
 					onClick={onSwitchType}
 					type='button'
 					className='h-12'

@@ -70,6 +70,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
 				<FormInput name='password' label='Пароль' type='password' required />
 
 				<Button
+					variant='secondary'
 					loading={form.formState.isSubmitting}
 					className='h-12 text-base'
 					type='submit'
