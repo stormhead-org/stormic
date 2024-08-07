@@ -2,15 +2,22 @@ import { prisma } from '@/prisma/prisma-client'
 import {
 	Container,
 	FeedUserMenu,
+	MainBannerForm,
 	NewPostButton,
 	SideCustomMenuForm,
 	SideFooter,
 	SocialMenu,
+	SortFeedButtons,
 	Title,
 } from '@/shared/components/'
 
 export default async function Home() {
 	const menu = await prisma.sideCustomMenu.findMany()
+	const banner = await prisma.stormicMedia.findFirst({
+		where: {
+			name: String('Stormic'),
+		},
+	})
 
 	return (
 		<>
@@ -26,7 +33,10 @@ export default async function Home() {
 					</div>
 
 					{/* Центральная часть */}
-					<div className='flex-1 bg-blue-800'>Контент</div>
+					<div className='flex-1'>
+						<MainBannerForm data={banner} />
+						<SortFeedButtons className='mt-[7px]' />
+					</div>
 
 					{/* Правая часть */}
 					<div className='w-[300px] bg-red-800'>

@@ -34,26 +34,24 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 
 	return (
 		<div className={cn('', className)}>
-			<ul>
-				{userMenu.map(item => (
-					<li
-						key={item.id}
-						className={cn(
-							'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-600 mb-[1px] cursor-pointer',
-							`${pathname === item.path ? 'bg-blue-600' : ''}`
-						)}
-						onClick={() => router.push(item.path)}
-					>
-						<div className='flex items-center gap-2 ml-2'>
-							{item.icon}
-							<Link href={item.path} className='text-lg font-bold'>
-								{item.text}
-							</Link>
-						</div>
-						{item.dot}
-					</li>
-				))}
-			</ul>
+			{userMenu.map(item => (
+				<li
+					key={item.id}
+					className={cn(
+						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-600 mb-[1px] cursor-pointer',
+						`${pathname === item.path ? 'bg-blue-600' : ''}`
+					)}
+					onClick={() => router.push(item.path)}
+				>
+					<div className='flex items-center gap-2 ml-2'>
+						{item.icon}
+						<Link href={item.path} className='text-lg font-bold'>
+							{item.text}
+						</Link>
+					</div>
+					{item.dot}
+				</li>
+			))}
 		</div>
 	)
 }

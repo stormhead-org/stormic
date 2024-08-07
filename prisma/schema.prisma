@@ -14,6 +14,7 @@ enum UserRoleType {
 
 model StormicMedia {
   id          Int     @id @default(autoincrement())
+  name        String?
   imageLogo   String?
   imageAuth   String?
   imageBanner String?
