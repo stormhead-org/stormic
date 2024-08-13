@@ -1,223 +1,329 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client-js" // Генератор Prisma Client для работы с базой данных
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql" // Используемая база данных PostgreSQL
+  url      = env("DATABASE_URL") // URL подключения к базе данных из переменной окружения
 }
 
 enum UserRoleType {
-  USER
-  ADMIN
+  USER // Роль пользователя
+  ADMIN // Роль администратора
+}
+
+enum MediaType {
+  LOGO // Логотип
+  BANNER // Баннер
+  AUTH_IMAGE // Изображение для аутентификации
+  OTHER // Другие типы медиа
+}
+
+enum PostStatus {
+  PUBLISHED // Опубликован
+  DRAFT // Черновик
+}
+
+model StormicSettings {
+  id         Int              @id @default(autoincrement()) // Уникальный идентификатор настройки
+  name       String // Название платформы
+  media      StormicMedia[] // Связь с таблицей изображений
+  navigation NavigationMenu[] // Связь с таблицей меню навигации
 }
 
 model StormicMedia {
-  id          Int     @id @default(autoincrement())
-  name        String?
-  imageLogo   String?
-  imageAuth   String?
-  imageBanner String?
+  id                Int             @id @default(autoincrement()) // Уникальный идентификатор медиа
+  mediaType         MediaType // Тип медиа (логотип, баннер и т.д.)
+  url               String // URL изображения
+  description       String? // Описание или альтернатива для изображения
+  uploadedAt        DateTime        @default(now()) // Дата загрузки изображения
+  stormicSettings   StormicSettings @relation(fields: [stormicSettingsId], references: [id]) // Связь с настройками платформы
+  stormicSettingsId Int // Внешний ключ к модели StormicSettings
 }
 
-model SideCustomMenu {
-  id      Int    @id @default(autoincrement())
-  name    String
-  pageUrl String
+model NavigationMenu {
+  id                Int             @id @default(autoincrement()) // Уникальный идентификатор элемента меню
+  name              String // Название элемента меню
+  pageUrl           String // URL страницы, на которую ведет элемент меню
+  order             Int             @default(0) // Порядок отображения элемента меню
+  stormicSettings   StormicSettings @relation(fields: [stormicSettingsId], references: [id]) // Связь с настройками платформы
+  stormicSettingsId Int // Внешний ключ к модели StormicSettings
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) // Уникальный идентификатор пользователя
 
-  fullName String
-  email    String       @unique
-  password String
-  role     UserRoleType @default(USER)
-  verified DateTime?
+  fullName String // Полное имя пользователя
+  email    String       @unique // Электронная почта пользователя, уникальна
+  password String // Хэш пароля пользователя
+  role     UserRoleType @default(USER) // Роль пользователя по умолчанию - USER
+  verified DateTime? // Дата подтверждения регистрации
 
-  provider   String?
-  providerId String?
+  provider   String? // Провайдер аутентификации (например, Google, Facebook)
+  providerId String? // Идентификатор пользователя у провайдера
 
-  verificationCode VerificationCode?
+  verificationCode VerificationCode? // Связь с моделью VerificationCode
+  createdAt        DateTime          @default(now()) // Дата создания пользователя
+  updatedAt        DateTime          @updatedAt // Дата последнего обновления пользователя
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  profile_picture     String? // URL профайлной фотографии пользователя
+  bio                 String? // Биография пользователя
+  roles               UserRoleAssignment[] // Роли, назначенные пользователю
+  posts               Post[] // Посты, созданные пользователем
+  comments            Comment[] // Комментарии пользователя
+  likes               Like[] // Лайки пользователя
+  views               View[] // Просмотры пользователем
+  images              Image[] // Изображения пользователя
+  notifications       Notification[] // Уведомления пользователя
+  categories          Category[]           @relation("UserCategories") // Категории, которые пользователь создал
+  moderatedCategories CategoryModerator[] // Категории, которые пользователь модерирует
+  followers           UserSubscription[]   @relation("Following") // Подписчики пользователя
+  following           UserSubscription[]   @relation("Followers") // Подписки пользователя
+  reputation          Reputation? // Репутация пользователя
+  badges              UserBadge[] // Награды пользователя
+  postEditHistories   PostEditHistory[] // История изменений постов
+  recommendations     Recommendation[] // Рекомендации постов пользователю
 
-  profile_picture     String?
-  bio                 String?
-  roles               UserRoleAssignment[]
-  posts               Post[]
-  comments            Comment[]
-  likes               Like[]
-  views               View[]
-  images              Image[]
-  notifications       Notification[]
-  categories          Category[]           @relation("UserCategories")
-  moderatedCategories CategoryModerator[]
+  @@map("users") // Переименование таблицы в базе данных на "users"
 }
 
 model VerificationCode {
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) // Уникальный идентификатор кода подтверждения
 
-  user   User @relation(fields: [userId], references: [id])
-  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id]) // Связь с моделью User
+  userId Int  @unique // Внешний ключ к модели User, уникален
 
-  code String
+  code String // Код подтверждения
 
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) // Дата создания кода
 
-  @@unique([userId, code])
+  @@unique([userId, code]) // Уникальность комбинации userId и code
 }
 
 model Post {
-  post_id          Int        @id @default(autoincrement())
-  title            String
-  content          String
-  author_id        Int
-  publication_date DateTime   @default(now())
-  last_edit_date   DateTime?
-  status           String
-  views_count      Int        @default(0)
-  likes_count      Int        @default(0)
-  category_id      Int
-  tags             PostTags[]
-  comments         Comment[]
-  likes            Like[]
-  views            View[]
-  media            Media[]
+  post_id          Int               @id @default(autoincrement()) // Уникальный идентификатор поста
+  title            String // Заголовок поста
+  content          String // Содержимое поста
+  author_id        Int // Идентификатор автора поста
+  publication_date DateTime          @default(now()) // Дата публикации поста
+  last_edit_date   DateTime? // Дата последнего редактирования поста
+  PostStatus       PostStatus // Статус поста (например, "опубликован", "в черновиках")
+  views_count      Int               @default(0) // Количество просмотров поста
+  likes_count      Int               @default(0) // Количество лайков поста
+  category_id      Int // Идентификатор категории поста
+  tags             PostTags[] // Теги поста
+  comments         Comment[] // Комментарии к посту
+  likes            Like[] // Лайки поста
+  views            View[] // Просмотры поста
+  media            Media[] // Медиафайлы, связанные с постом
+  editHistory      PostEditHistory[] // История редактирования поста
+  recommendations  Recommendation[] // Рекомендации для поста
 
-  author   User     @relation(fields: [author_id], references: [id])
-  category Category @relation(fields: [category_id], references: [category_id])
+  author   User     @relation(fields: [author_id], references: [id]) // Связь с моделью User
+  category Category @relation(fields: [category_id], references: [category_id]) // Связь с моделью Category
 }
 
 model Category {
-  category_id   Int                 @id @default(autoincrement())
-  category_name String
-  posts         Post[]
-  owner_id      Int
-  moderators    CategoryModerator[]
+  category_id   Int                 @id @default(autoincrement()) // Уникальный идентификатор категории
+  category_name String // Название категории
+  posts         Post[] // Посты в категории
+  owner_id      Int // Идентификатор владельца категории
+  moderators    CategoryModerator[] // Модераторы категории
 
-  owner User @relation("UserCategories", fields: [owner_id], references: [id])
+  owner User @relation("UserCategories", fields: [owner_id], references: [id]) // Связь с моделью User
 }
 
 model CategoryModerator {
   category_id Int
   user_id     Int
 
-  category Category @relation(fields: [category_id], references: [category_id])
-  user     User     @relation(fields: [user_id], references: [id])
+  category Category @relation(fields: [category_id], references: [category_id]) // Связь с моделью Category
+  user     User     @relation(fields: [user_id], references: [id]) // Связь с моделью User
 
-  @@id([category_id, user_id])
+  @@id([category_id, user_id]) // Композитный ключ
 }
 
 model Comment {
-  comment_id        Int      @id @default(autoincrement())
-  post_id           Int
-  author_id         Int
-  content           String
-  publication_date  DateTime @default(now())
-  parent_comment_id Int?
+  comment_id        Int      @id @default(autoincrement()) // Уникальный идентификатор комментария
+  post_id           Int // Идентификатор поста, к которому относится комментарий
+  author_id         Int // Идентификатор автора комментария
+  content           String // Содержимое комментария
+  publication_date  DateTime @default(now()) // Дата публикации комментария
+  parent_comment_id Int? // Идентификатор родительского комментария (для ответов)
 
-  post     Post      @relation(fields: [post_id], references: [post_id])
-  author   User      @relation(fields: [author_id], references: [id])
-  parent   Comment?  @relation(name: "CommentToComment", fields: [parent_comment_id], references: [comment_id])
-  children Comment[] @relation(name: "CommentToComment")
+  post     Post      @relation(fields: [post_id], references: [post_id]) // Связь с моделью Post
+  author   User      @relation(fields: [author_id], references: [id]) // Связь с моделью User
+  parent   Comment?  @relation(name: "CommentToComment", fields: [parent_comment_id], references: [comment_id]) // Связь с родительским комментарием
+  children Comment[] @relation(name: "CommentToComment") // Дети комментария (ответы)
 }
 
 model Tag {
-  tag_id   Int        @id @default(autoincrement())
-  tag_name String
-  posts    PostTags[]
+  tag_id      Int          @id @default(autoincrement()) // Уникальный идентификатор тега
+  tag_name    String // Название тега
+  posts       PostTags[] // Посты, связанные с этим тегом
+  category    TagCategory? @relation(fields: [category_id], references: [id]) // Связь с моделью TagCategory
+  category_id Int? // Идентификатор категории тега
+}
+
+model TagCategory {
+  id   Int    @id @default(autoincrement()) // Уникальный идентификатор категории тегов
+  name String // Название категории
+  tags Tag[] // Теги в категории
 }
 
 model PostTags {
-  post_id Int
-  tag_id  Int
+  post_id Int // Идентификатор поста
+  tag_id  Int // Идентификатор тега
 
-  post Post @relation(fields: [post_id], references: [post_id])
-  tag  Tag  @relation(fields: [tag_id], references: [tag_id])
+  post Post @relation(fields: [post_id], references: [post_id]) // Связь с моделью Post
+  tag  Tag  @relation(fields: [tag_id], references: [tag_id]) // Связь с моделью Tag
 
-  @@id([post_id, tag_id])
+  @@id([post_id, tag_id]) // Композитный ключ
 }
 
 model UserRole {
-  role_id     Int                  @id @default(autoincrement())
-  role_name   String
-  users       UserRoleAssignment[]
-  permissions RolePermission[]
+  role_id     Int                  @id @default(autoincrement()) // Уникальный идентификатор роли
+  role_name   String // Название роли
+  users       UserRoleAssignment[] // Пользователи с этой ролью
+  permissions RolePermission[] // Разрешения для этой роли
 }
 
 model UserRoleAssignment {
   user_id Int
   role_id Int
 
-  user User     @relation(fields: [user_id], references: [id])
-  role UserRole @relation(fields: [role_id], references: [role_id])
+  user User     @relation(fields: [user_id], references: [id]) // Связь с моделью User
+  role UserRole @relation(fields: [role_id], references: [role_id]) // Связь с моделью UserRole
 
-  @@id([user_id, role_id])
+  @@id([user_id, role_id]) // Композитный ключ
 }
 
 model Permission {
-  permission_id   Int              @id @default(autoincrement())
-  permission_name String
-  roles           RolePermission[]
+  permission_id   Int              @id @default(autoincrement()) // Уникальный идентификатор разрешения
+  permission_name String // Название разрешения
+  roles           RolePermission[] // Роли, которые имеют это разрешение
 }
 
 model RolePermission {
   role_id       Int
   permission_id Int
 
-  role       UserRole   @relation(fields: [role_id], references: [role_id])
-  permission Permission @relation(fields: [permission_id], references: [permission_id])
+  role       UserRole   @relation(fields: [role_id], references: [role_id]) // Связь с моделью UserRole
+  permission Permission @relation(fields: [permission_id], references: [permission_id]) // Связь с моделью Permission
 
-  @@id([role_id, permission_id])
+  @@id([role_id, permission_id]) // Композитный ключ
 }
 
 model Like {
-  like_id   Int      @id @default(autoincrement())
-  user_id   Int
-  post_id   Int
-  like_date DateTime @default(now())
+  like_id   Int      @id @default(autoincrement()) // Уникальный идентификатор лайка
+  user_id   Int // Идентификатор пользователя, который поставил лайк
+  post_id   Int // Идентификатор поста, который был лайкнут
+  like_date DateTime @default(now()) // Дата, когда был поставлен лайк
 
-  user User @relation(fields: [user_id], references: [id])
-  post Post @relation(fields: [post_id], references: [post_id])
+  user User @relation(fields: [user_id], references: [id]) // Связь с моделью User
+  post Post @relation(fields: [post_id], references: [post_id]) // Связь с моделью Post
 }
 
 model View {
-  view_id   Int      @id @default(autoincrement())
-  user_id   Int?
-  post_id   Int
-  view_date DateTime @default(now())
+  view_id   Int      @id @default(autoincrement()) // Уникальный идентификатор просмотра
+  user_id   Int? // Идентификатор пользователя, который просмотрел пост (может быть null)
+  post_id   Int // Идентификатор поста, который был просмотрен
+  view_date DateTime @default(now()) // Дата просмотра
 
-  user User? @relation(fields: [user_id], references: [id])
-  post Post  @relation(fields: [post_id], references: [post_id])
+  user User? @relation(fields: [user_id], references: [id]) // Связь с моделью User
+  post Post  @relation(fields: [post_id], references: [post_id]) // Связь с моделью Post
 }
 
 model Image {
-  image_id    Int      @id @default(autoincrement())
-  url         String
-  uploaded_by Int
-  upload_date DateTime @default(now())
+  image_id    Int      @id @default(autoincrement()) // Уникальный идентификатор изображения
+  url         String // URL изображения
+  uploaded_by Int // Идентификатор пользователя, который загрузил изображение
+  upload_date DateTime @default(now()) // Дата загрузки изображения
 
-  user User @relation(fields: [uploaded_by], references: [id])
+  user User @relation(fields: [uploaded_by], references: [id]) // Связь с моделью User
 }
 
 model Media {
-  media_id    Int      @id @default(autoincrement())
-  post_id     Int
-  media_url   String
-  media_type  String
-  upload_date DateTime @default(now())
+  media_id    Int      @id @default(autoincrement()) // Уникальный идентификатор медиафайла
+  post_id     Int // Идентификатор поста, к которому относится медиафайл
+  media_url   String // URL медиафайла
+  media_type  String // Тип медиафайла
+  upload_date DateTime @default(now()) // Дата загрузки медиафайла
 
-  post Post @relation(fields: [post_id], references: [post_id])
+  post Post @relation(fields: [post_id], references: [post_id]) // Связь с моделью Post
 }
 
 model Notification {
-  notification_id   Int      @id @default(autoincrement())
-  user_id           Int
-  content           String
-  notification_date DateTime @default(now())
-  read_status       Boolean  @default(false)
+  notification_id   Int      @id @default(autoincrement()) // Уникальный идентификатор уведомления
+  user_id           Int // Идентификатор пользователя, которому предназначено уведомление
+  content           String // Содержимое уведомления
+  notification_date DateTime @default(now()) // Дата уведомления
+  read_status       Boolean  @default(false) // Статус прочтения уведомления
+  type              String // Тип уведомления (например, "лайк", "комментарий", "подписка", "сообщение")
+  link              String? // Ссылка на соответствующий контент (если применимо)
 
-  user User @relation(fields: [user_id], references: [id])
+  user User @relation(fields: [user_id], references: [id]) // Связь с моделью User
+}
+
+model PostEditHistory {
+  id         Int      @id @default(autoincrement()) // Уникальный идентификатор истории редактирования
+  postId     Int // Идентификатор поста, который редактировался
+  editorId   Int // Идентификатор пользователя, который редактировал пост
+  oldContent String // Старое содержимое поста
+  newContent String // Новое содержимое поста
+  editDate   DateTime @default(now()) // Дата редактирования
+
+  post   Post @relation(fields: [postId], references: [post_id]) // Связь с моделью Post
+  editor User @relation(fields: [editorId], references: [id]) // Связь с моделью User
+}
+
+model Reputation {
+  id        Int      @id @default(autoincrement()) // Уникальный идентификатор репутации
+  userId    Int      @unique // Идентификатор пользователя, уникален
+  points    Int      @default(0) // Очки репутации
+  createdAt DateTime @default(now()) // Дата создания репутации
+  updatedAt DateTime @updatedAt // Дата последнего обновления репутации
+
+  user User @relation(fields: [userId], references: [id]) // Связь с моделью User
+}
+
+model Badge {
+  id       Int         @id @default(autoincrement()) // Уникальный идентификатор награды
+  name     String // Название награды
+  iconUrl  String // URL иконки награды
+  criteria String // Критерии для получения награды
+  users    UserBadge[] // Пользователи, получившие эту награду
+}
+
+model UserBadge {
+  userId    Int // Идентификатор пользователя
+  badgeId   Int // Идентификатор награды
+  awardedAt DateTime @default(now()) // Дата присуждения награды
+
+  user  User  @relation(fields: [userId], references: [id]) // Связь с моделью User
+  badge Badge @relation(fields: [badgeId], references: [id]) // Связь с моделью Badge
+
+  @@id([userId, badgeId]) // Композитный ключ
+}
+
+model UserSubscription {
+  id          Int @id @default(autoincrement()) // Уникальный идентификатор подписки
+  followerId  Int // Идентификатор подписчика
+  followingId Int // Идентификатор подписки
+
+  follower  User @relation("Following", fields: [followerId], references: [id]) // Связь с моделью User для подписчиков
+  following User @relation("Followers", fields: [followingId], references: [id]) // Связь с моделью User для подписок
+
+  @@unique([followerId, followingId]) // Уникальность комбинации followerId и followingId
+}
+
+model Recommendation {
+  id        Int      @id @default(autoincrement()) // Уникальный идентификатор рекомендации
+  userId    Int // Идентификатор пользователя, для которого сделана рекомендация
+  postId    Int // Идентификатор поста, который рекомендуется
+  reason    String // Причина рекомендации (например, "популярный", "трендовый", "персонализированный")
+  createdAt DateTime @default(now()) // Дата создания рекомендации
+
+  user User @relation(fields: [userId], references: [id]) // Связь с моделью User
+  post Post @relation(fields: [postId], references: [post_id]) // Связь с моделью Post
 }

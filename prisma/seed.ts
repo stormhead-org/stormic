@@ -1,232 +1,300 @@
-import { Prisma } from '@prisma/client'
-import { hashSync } from 'bcrypt'
-import { _ingredients, categories, products } from './constants'
-import { prisma } from './prisma-client'
+import { PrismaClient, UserRoleType, PostStatus, MediaType } from '@prisma/client';
+import { hashSync } from 'bcrypt';
 
-const randomDecimalNumber = (min: number, max: number) => {
-	return Math.floor(Math.random() * (max - min) * 10 + min * 10) / 10
-}
+const prisma = new PrismaClient();
 
-const generateProductItem = ({
-	productId,
-	pizzaType,
-	size,
-}: {
-	productId: number
-	pizzaType?: 1 | 2
-	size?: 20 | 30 | 40
-}) => {
-	return {
-		productId,
-		price: randomDecimalNumber(190, 600),
-		pizzaType,
-		size,
-	} as Prisma.ProductItemUncheckedCreateInput
-}
+const generateDate = (daysAgo: number) => {
+	const date = new Date();
+	date.setDate(date.getDate() - daysAgo);
+	return date;
+};
 
 async function up() {
+	// Создание пользователей
 	await prisma.user.createMany({
 		data: [
 			{
-				fullName: 'User Test',
-				email: 'user@test.ru',
-				password: hashSync('111111', 10),
+				fullName: 'Карл Саган',
+				email: 'sagan@astro.org',
+				password: hashSync('password', 10),
+				role: UserRoleType.ADMIN,
 				verified: new Date(),
-				role: 'USER',
+				profile_picture: 'https://example.com/sagan.jpg',
+				bio: 'Американский астроном, популяризатор науки и автор книг по астрофизике.',
 			},
 			{
-				fullName: 'Admin Admin',
-				email: 'admin@test.ru',
-				password: hashSync('111111', 10),
+				fullName: 'Стивен Хокинг',
+				email: 'hawking@astro.org',
+				password: hashSync('password', 10),
+				role: UserRoleType.USER,
 				verified: new Date(),
-				role: 'ADMIN',
+				profile_picture: 'https://example.com/hawking.jpg',
+				bio: 'Британский теоретический физик, космолог и популяризатор науки.',
+			},
+			{
+				fullName: 'Нил Деграсс Тайсон',
+				email: 'tyson@astro.org',
+				password: hashSync('password', 10),
+				role: UserRoleType.USER,
+				verified: new Date(),
+				profile_picture: 'https://example.com/tyson.jpg',
+				bio: 'Американский астрофизик и популяризатор науки.',
 			},
 		],
-	})
-
+	});
+	
+	// Создание настроек платформы
+	await prisma.stormicSettings.create({
+		data: {
+			name: 'AstroPlatform',
+		},
+	});
+	
+	// Создание медиа
+	await prisma.stormicMedia.createMany({
+		data: [
+			{
+				mediaType: MediaType.LOGO,
+				url: 'https://example.com/logo.png',
+				description: 'Логотип нашей астрономической платформы.',
+				stormicSettingsId: 1,
+			},
+			{
+				mediaType: MediaType.BANNER,
+				url: 'https://example.com/banner.jpg',
+				description: 'Баннер для рекламы новых статей.',
+				stormicSettingsId: 1,
+			},
+		],
+	});
+	
+	// Создание меню навигации
+	await prisma.navigationMenu.createMany({
+		data: [
+			{ name: 'Главная', pageUrl: '/', order: 1, stormicSettingsId: 1 },
+			{ name: 'Исследования', pageUrl: '/research', order: 2, stormicSettingsId: 1 },
+			{ name: 'Новости', pageUrl: '/news', order: 3, stormicSettingsId: 1 },
+		],
+	});
+	
+	// Создание категорий
 	await prisma.category.createMany({
-		data: categories,
-	})
-
-	await prisma.ingredient.createMany({
-		data: _ingredients,
-	})
-
-	await prisma.product.createMany({
-		data: products,
-	})
-
-	const pizza1 = await prisma.product.create({
-		data: {
-			name: 'Пепперони фреш',
-			imageUrl:
-				'https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp',
-			categoryId: 1,
-			ingredients: {
-				connect: _ingredients.slice(0, 5),
-			},
-		},
-	})
-
-	const pizza2 = await prisma.product.create({
-		data: {
-			name: 'Сырная',
-			imageUrl:
-				'https://media.dodostatic.net/image/r:233x233/11EE7D610CF7E265B7C72BE5AE757CA7.webp',
-			categoryId: 1,
-			ingredients: {
-				connect: _ingredients.slice(5, 10),
-			},
-		},
-	})
-
-	const pizza3 = await prisma.product.create({
-		data: {
-			name: 'Чоризо фреш',
-			imageUrl:
-				'https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp',
-			categoryId: 1,
-			ingredients: {
-				connect: _ingredients.slice(10, 40),
-			},
-		},
-	})
-
-	await prisma.productItem.createMany({
 		data: [
-			// Пицца "Пепперони фреш"
-			generateProductItem({ productId: pizza1.id, pizzaType: 1, size: 20 }),
-			generateProductItem({ productId: pizza1.id, pizzaType: 2, size: 30 }),
-			generateProductItem({ productId: pizza1.id, pizzaType: 2, size: 40 }),
-
-			// Пицца "Сырная"
-			generateProductItem({ productId: pizza2.id, pizzaType: 1, size: 20 }),
-			generateProductItem({ productId: pizza2.id, pizzaType: 1, size: 30 }),
-			generateProductItem({ productId: pizza2.id, pizzaType: 1, size: 40 }),
-			generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 20 }),
-			generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 30 }),
-			generateProductItem({ productId: pizza2.id, pizzaType: 2, size: 40 }),
-
-			// Пицца "Чоризо фреш"
-			generateProductItem({ productId: pizza3.id, pizzaType: 1, size: 20 }),
-			generateProductItem({ productId: pizza3.id, pizzaType: 2, size: 30 }),
-			generateProductItem({ productId: pizza3.id, pizzaType: 2, size: 40 }),
-
-			// Остальные продукты
-			generateProductItem({ productId: 1 }),
-			generateProductItem({ productId: 2 }),
-			generateProductItem({ productId: 3 }),
-			generateProductItem({ productId: 4 }),
-			generateProductItem({ productId: 5 }),
-			generateProductItem({ productId: 6 }),
-			generateProductItem({ productId: 7 }),
-			generateProductItem({ productId: 8 }),
-			generateProductItem({ productId: 9 }),
-			generateProductItem({ productId: 10 }),
-			generateProductItem({ productId: 11 }),
-			generateProductItem({ productId: 12 }),
-			generateProductItem({ productId: 13 }),
-			generateProductItem({ productId: 14 }),
-			generateProductItem({ productId: 15 }),
-			generateProductItem({ productId: 16 }),
-			generateProductItem({ productId: 17 }),
+			{ category_name: 'Черные дыры', owner_id: 1 },
+			{ category_name: 'Космология', owner_id: 1 },
+			{ category_name: 'Экзопланеты', owner_id: 1 },
+			{ category_name: 'Солнечная система', owner_id: 1 },
 		],
-	})
-
-	await prisma.cart.createMany({
+	});
+	
+	// Создание постов
+	await prisma.post.createMany({
 		data: [
 			{
-				userId: 1,
-				totalAmount: 0,
-				token: '11111',
+				title: 'Чёрные дыры: загадки и открытия',
+				content: 'Чёрные дыры — это области пространства, где гравитация настолько сильна, что даже свет не может уйти от них.',
+				author_id: 1,
+				publication_date: generateDate(10),
+				last_edit_date: generateDate(5),
+				PostStatus: PostStatus.PUBLISHED,
+				views_count: 150,
+				likes_count: 30,
+				category_id: 1,
 			},
 			{
-				userId: 2,
-				totalAmount: 0,
-				token: '222222',
+				title: 'Космология и Большой взрыв',
+				content: 'Космология изучает происхождение и развитие Вселенной. Основной теорией является теория Большого взрыва.',
+				author_id: 2,
+				publication_date: generateDate(5),
+				PostStatus: PostStatus.PUBLISHED,
+				views_count: 200,
+				likes_count: 50,
+				category_id: 2,
+			},
+			{
+				title: 'Поиск экзопланет: методы и достижения',
+				content: 'Экзопланеты — это планеты, вращающиеся вокруг звёзд, отличных от Солнца. Методы их поиска включают транзиты и радиальные скорости.',
+				author_id: 3,
+				publication_date: generateDate(1),
+				PostStatus: PostStatus.PUBLISHED,
+				views_count: 300,
+				likes_count: 70,
+				category_id: 3,
 			},
 		],
-	})
-
-	await prisma.cartItem.create({
-		data: {
-			productItemId: 1,
-			cartId: 1,
-			quantity: 2,
-			ingredients: {
-				connect: [{ id: 1 }, { id: 2 }, { id: 3 }],
-			},
-		},
-	})
-
-	await prisma.story.createMany({
+	});
+	
+	// Создание тэгов
+	await prisma.tag.createMany({
 		data: [
-			{
-				previewImageUrl:
-					'https://cdn.inappstory.ru/story/xep/xzh/zmc/cr4gcw0aselwvf628pbmj3j/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=3101815496',
-			},
-			{
-				previewImageUrl:
-					'https://cdn.inappstory.ru/story/km2/9gf/jrn/sb7ls1yj9fe5bwvuwgym73e/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=3074015640',
-			},
-			{
-				previewImageUrl:
-					'https://cdn.inappstory.ru/story/quw/acz/zf5/zu37vankpngyccqvgzbohj1/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=1336215020',
-			},
-			{
-				previewImageUrl:
-					'https://cdn.inappstory.ru/story/7oc/5nf/ipn/oznceu2ywv82tdlnpwriyrq/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=38903958',
-			},
-			{
-				previewImageUrl:
-					'https://cdn.inappstory.ru/story/q0t/flg/0ph/xt67uw7kgqe9bag7spwkkyw/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=2941222737',
-			},
-			{
-				previewImageUrl:
-					'https://cdn.inappstory.ru/story/lza/rsp/2gc/xrar8zdspl4saq4uajmso38/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=4207486284',
-			},
+			{ tag_name: 'Астрономия', category_id: 1 },
+			{ tag_name: 'Космос', category_id: 2 },
+			{ tag_name: 'Физика', category_id: 3 },
 		],
-	})
-
-	await prisma.storyItem.createMany({
+	});
+	
+	// Создание связей постов и тэгов
+	await prisma.postTags.createMany({
 		data: [
-			{
-				storyId: 1,
-				sourceUrl:
-					'https://cdn.inappstory.ru/file/dd/yj/sx/oqx9feuljibke3mknab7ilb35t.webp?k=IgAAAAAAAAAE',
-			},
-			{
-				storyId: 1,
-				sourceUrl:
-					'https://cdn.inappstory.ru/file/jv/sb/fh/io7c5zarojdm7eus0trn7czdet.webp?k=IgAAAAAAAAAE',
-			},
-			{
-				storyId: 1,
-				sourceUrl:
-					'https://cdn.inappstory.ru/file/ts/p9/vq/zktyxdxnjqbzufonxd8ffk44cb.webp?k=IgAAAAAAAAAE',
-			},
-			{
-				storyId: 1,
-				sourceUrl:
-					'https://cdn.inappstory.ru/file/ur/uq/le/9ufzwtpdjeekidqq04alfnxvu2.webp?k=IgAAAAAAAAAE',
-			},
-			{
-				storyId: 1,
-				sourceUrl:
-					'https://cdn.inappstory.ru/file/sy/vl/c7/uyqzmdojadcbw7o0a35ojxlcul.webp?k=IgAAAAAAAAAE',
-			},
+			{ post_id: 1, tag_id: 1 },
+			{ post_id: 1, tag_id: 2 },
+			{ post_id: 2, tag_id: 3 },
+			{ post_id: 3, tag_id: 1 },
+			{ post_id: 3, tag_id: 2 },
 		],
-	})
+	});
+	
+	// Создание ролей
+	await prisma.userRole.createMany({
+		data: [
+			{ role_name: 'Admin' },
+			{ role_name: 'Editor' },
+			{ role_name: 'Viewer' },
+		],
+	});
+	
+	// Назначение ролей пользователям
+	await prisma.userRoleAssignment.createMany({
+		data: [
+			{ user_id: 1, role_id: 1 },
+			{ user_id: 2, role_id: 2 },
+			{ user_id: 3, role_id: 3 },
+		],
+	});
+	
+	// Создание разрешений
+	await prisma.permission.createMany({
+		data: [
+			{ permission_name: 'Read' },
+			{ permission_name: 'Write' },
+			{ permission_name: 'Delete' },
+		],
+	});
+	
+	// Создание связей ролей и разрешений
+	await prisma.rolePermission.createMany({
+		data: [
+			{ role_id: 1, permission_id: 2 }, // Admin - Write
+			{ role_id: 1, permission_id: 3 }, // Admin - Delete
+			{ role_id: 2, permission_id: 2 }, // Editor - Write
+			{ role_id: 3, permission_id: 1 }, // Viewer - Read
+		],
+	});
+	
+	// Создание лайков
+	await prisma.like.createMany({
+		data: [
+			{ user_id: 2, post_id: 1, like_date: generateDate(3) },
+			{ user_id: 3, post_id: 2, like_date: generateDate(2) },
+		],
+	});
+	
+	// Создание просмотров
+	await prisma.view.createMany({
+		data: [
+			{ user_id: 1, post_id: 1, view_date: generateDate(1) },
+			{ user_id: 2, post_id: 2, view_date: generateDate(1) },
+		],
+	});
+	
+	// Создание изображений
+	await prisma.image.createMany({
+		data: [
+			{ url: 'https://example.com/image1.jpg', uploaded_by: 1, upload_date: generateDate(1) },
+			{ url: 'https://example.com/image2.jpg', uploaded_by: 2, upload_date: generateDate(2) },
+		],
+	});
+	
+	// Создание медиафайлов
+	await prisma.media.createMany({
+		data: [
+			{ post_id: 1, media_url: 'https://example.com/media1.mp4', media_type: 'video', upload_date: generateDate(1) },
+			{ post_id: 2, media_url: 'https://example.com/media2.mp4', media_type: 'video', upload_date: generateDate(2) },
+		],
+	});
+	
+	// Создание уведомлений
+	await prisma.notification.createMany({
+		data: [
+			{ user_id: 1, content: 'Ваш пост получил новый комментарий.', notification_date: generateDate(1), read_status: false, type: 'comment' },
+			{ user_id: 2, content: 'Новый пост в категории, на которую вы подписаны.', notification_date: generateDate(1), read_status: false, type: 'post' },
+		],
+	});
+	
+	// Создание истории редактирования постов
+	await prisma.postEditHistory.createMany({
+		data: [
+			{ postId: 1, editorId: 1, oldContent: 'Старое содержимое', newContent: 'Новое содержимое', editDate: generateDate(1) },
+			{ postId: 2, editorId: 2, oldContent: 'Старое содержимое', newContent: 'Новое содержимое', editDate: generateDate(2) },
+		],
+	});
+	
+	// Создание репутации
+	await prisma.reputation.createMany({
+		data: [
+			{ userId: 1, points: 100, createdAt: generateDate(10), updatedAt: new Date() },
+			{ userId: 2, points: 50, createdAt: generateDate(5), updatedAt: new Date() },
+		],
+	});
+	
+	// Создание наград
+	await prisma.badge.createMany({
+		data: [
+			{ name: 'Звездный исследователь', iconUrl: 'https://example.com/badge1.png', criteria: 'Написано 10 постов' },
+			{ name: 'Гуру комментариев', iconUrl: 'https://example.com/badge2.png', criteria: 'Получено 50 лайков на комментарии' },
+		],
+	});
+	
+	// Назначение наград пользователям
+	await prisma.userBadge.createMany({
+		data: [
+			{ userId: 1, badgeId: 1, awardedAt: generateDate(1) },
+			{ userId: 2, badgeId: 2, awardedAt: generateDate(2) },
+		],
+	});
+	
+	// Создание подписок пользователей
+	await prisma.userSubscription.createMany({
+		data: [
+			{ followerId: 1, followingId: 2 },
+			{ followerId: 2, followingId: 3 },
+		],
+	});
+	
+	// Создание рекомендаций
+	await prisma.recommendation.createMany({
+		data: [
+			{ userId: 1, postId: 2, reason: 'Популярный пост', createdAt: generateDate(1) },
+			{ userId: 2, postId: 3, reason: 'Персонализированная рекомендация', createdAt: generateDate(2) },
+		],
+	});
 }
 
 async function down() {
-	await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`
-	await prisma.$executeRaw`TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE`
-	await prisma.$executeRaw`TRUNCATE TABLE "Cart" RESTART IDENTITY CASCADE`
-	await prisma.$executeRaw`TRUNCATE TABLE "CartItem" RESTART IDENTITY CASCADE`
-	await prisma.$executeRaw`TRUNCATE TABLE "Ingredient" RESTART IDENTITY CASCADE`
-	await prisma.$executeRaw`TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE`
-	await prisma.$executeRaw`TRUNCATE TABLE "ProductItem" RESTART IDENTITY CASCADE`
+	// Удаление данных для отката
+	await prisma.recommendation.deleteMany({});
+	await prisma.userSubscription.deleteMany({});
+	await prisma.userBadge.deleteMany({});
+	await prisma.badge.deleteMany({});
+	await prisma.reputation.deleteMany({});
+	await prisma.postEditHistory.deleteMany({});
+	await prisma.notification.deleteMany({});
+	await prisma.media.deleteMany({});
+	await prisma.image.deleteMany({});
+	await prisma.view.deleteMany({});
+	await prisma.like.deleteMany({});
+	await prisma.rolePermission.deleteMany({});
+	await prisma.permission.deleteMany({});
+	await prisma.userRoleAssignment.deleteMany({});
+	await prisma.userRole.deleteMany({});
+	await prisma.postTags.deleteMany({});
+	await prisma.tag.deleteMany({});
+	await prisma.category.deleteMany({});
+	await prisma.post.deleteMany({});
+	await prisma.stormicMedia.deleteMany({});
+	await prisma.navigationMenu.deleteMany({});
+	await prisma.stormicSettings.deleteMany({});
+	await prisma.user.deleteMany({});
 }
 
 async function main() {
