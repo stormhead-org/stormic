@@ -1,6 +1,6 @@
 'use client'
 
-import { SideCustomMenu } from '@prisma/client'
+import { NavigationMenu } from '@prisma/client'
 import { LinkIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -8,11 +8,11 @@ import React from 'react'
 import { cn } from '../lib/utils'
 
 interface Props {
-	data: SideCustomMenu[]
+	data: NavigationMenu[]
 	className?: string
 }
 
-export const SideCustomMenuForm: React.FC<Props> = ({ data, className }) => {
+export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 	const router = useRouter()
 	const pathname = usePathname()
 

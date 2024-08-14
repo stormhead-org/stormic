@@ -4,7 +4,7 @@ import {
 	FeedUserMenu,
 	MainBannerForm,
 	NewPostButton,
-	SideCustomMenuForm,
+	NavigationMenuForm,
 	SideFooter,
 	SocialMenu,
 	SortFeedButtons,
@@ -12,12 +12,17 @@ import {
 } from '@/shared/components/'
 
 export default async function Home() {
-	const menu = await prisma.sideCustomMenu.findMany()
+	const stormicName = await prisma.stormicSettings.findFirst({
+		where: {
+			settingsType: 'NAME'
+		}
+	})
 	const banner = await prisma.stormicMedia.findFirst({
 		where: {
-			name: String('Stormic'),
+			mediaType: 'BANNER'
 		},
 	})
+	const menu = await prisma.navigationMenu.findMany()
 
 	return (
 		<>
@@ -28,13 +33,13 @@ export default async function Home() {
 						<FeedUserMenu />
 						<SocialMenu className='my-2' />
 						<NewPostButton className='my-4' />
-						<SideCustomMenuForm className='mt-4' data={menu} />
+						<NavigationMenuForm className='mt-4' data={menu} />
 						<SideFooter className='my-4' />
 					</div>
 
 					{/* Центральная часть */}
 					<div className='flex-1'>
-						<MainBannerForm data={banner} />
+						<MainBannerForm stormicName={stormicName} bannerUrl={banner} />
 						<SortFeedButtons className='mt-[7px]' />
 					</div>
 

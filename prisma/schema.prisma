@@ -19,16 +19,21 @@ enum MediaType {
   OTHER // Другие типы медиа
 }
 
+enum SettingsType {
+  NAME // Название плафтормы
+}
+
 enum PostStatus {
   PUBLISHED // Опубликован
   DRAFT // Черновик
 }
 
 model StormicSettings {
-  id         Int              @id @default(autoincrement()) // Уникальный идентификатор настройки
-  name       String // Название платформы
-  media      StormicMedia[] // Связь с таблицей изображений
-  navigation NavigationMenu[] // Связь с таблицей меню навигации
+  id           Int              @id @default(autoincrement()) // Уникальный идентификатор настройки
+  name         String // Название платформы
+  settingsType SettingsType // Тип настроек платформы (название и т.д.)
+  media        StormicMedia[] // Связь с таблицей изображений
+  navigation   NavigationMenu[] // Связь с таблицей меню навигации
 }
 
 model StormicMedia {

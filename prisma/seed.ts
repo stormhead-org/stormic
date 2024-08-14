@@ -1,4 +1,4 @@
-import { UserRoleType, PostStatus, MediaType } from '@prisma/client';
+import { UserRoleType, PostStatus, MediaType, SettingsType } from '@prisma/client'
 import { hashSync } from 'bcrypt';
 
 import { prisma } from './prisma-client'
@@ -46,7 +46,8 @@ async function up() {
 	// Создание настроек платформы
 	await prisma.stormicSettings.create({
 		data: {
-			name: 'AstroPlatform',
+			name: 'Stormic',
+			settingsType: SettingsType.NAME
 		},
 	});
 	
@@ -61,7 +62,7 @@ async function up() {
 			},
 			{
 				mediaType: MediaType.BANNER,
-				url: 'https://example.com/banner.jpg',
+				url: 'https://i.pinimg.com/564x/f8/1e/7d/f81e7dde45454fcb1a61bf676e3e95b0.jpg',
 				description: 'Баннер для рекламы новых статей.',
 				stormicSettingsId: 1,
 			},
@@ -71,9 +72,10 @@ async function up() {
 	// Создание меню навигации
 	await prisma.navigationMenu.createMany({
 		data: [
-			{ name: 'Главная', pageUrl: '/', order: 1, stormicSettingsId: 1 },
-			{ name: 'Исследования', pageUrl: '/research', order: 2, stormicSettingsId: 1 },
-			{ name: 'Новости', pageUrl: '/news', order: 3, stormicSettingsId: 1 },
+			{ name: 'Self-Host', pageUrl: '/self-host', order: 1, stormicSettingsId: 1 },
+			{ name: 'Stormic Doc', pageUrl: '/doc', order: 2, stormicSettingsId: 1 },
+			{ name: 'Контакты', pageUrl: '/contacts', order: 3, stormicSettingsId: 1 },
+			{ name: 'FAQ', pageUrl: '/faq', order: 4, stormicSettingsId: 1 },
 		],
 	});
 	

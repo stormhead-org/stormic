@@ -1,16 +1,17 @@
 import { cn } from '@/shared/lib/utils'
-import { StormicMedia } from '@prisma/client'
+import { type StormicMedia, StormicSettings } from '@prisma/client'
 import React from 'react'
 import { SearchInput } from './search-input'
 
 interface Props {
-	data?: StormicMedia
+	stormicName: StormicSettings
+	bannerUrl: StormicMedia
 	className?: string
 }
 
-export const MainBannerForm: React.FC<Props> = ({ data, className }) => {
+export const MainBannerForm: React.FC<Props> = ({ stormicName, bannerUrl, className }) => {
 	const styling = {
-		backgroundImage: `url('${String(data?.imageBanner)}')`,
+		backgroundImage: `url('${String(bannerUrl?.url)}')`,
 	}
 
 	return (
@@ -21,7 +22,7 @@ export const MainBannerForm: React.FC<Props> = ({ data, className }) => {
 			>
 				<div className='py-10 text-center'>
 					<span className='uppercase font-extrabold text-4xl [text-shadow:_0_4px_0_rgb(0_0_0_/_40%)]'>
-						{data?.name}
+						{String(stormicName?.name)}
 					</span>
 				</div>
 			</div>
