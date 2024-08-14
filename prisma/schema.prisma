@@ -149,6 +149,7 @@ model Comment {
   author_id         Int // Идентификатор автора комментария
   content           String // Содержимое комментария
   publication_date  DateTime @default(now()) // Дата публикации комментария
+  update_date       DateTime @default(now()) // Дата обновления комментария
   parent_comment_id Int? // Идентификатор родительского комментария (для ответов)
 
   post     Post      @relation(fields: [post_id], references: [post_id]) // Связь с моделью Post

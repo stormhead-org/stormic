@@ -87,6 +87,15 @@ async function up() {
 		],
 	});
 	
+	// Создание модераторов категорий
+	await prisma.categoryModerator.createMany({
+		data: [
+			{ category_id: 1, user_id: 1 },
+			{ category_id: 2, user_id: 2 },
+			{ category_id: 3, user_id: 3 },
+		],
+	});
+	
 	// Создание постов
 	await prisma.post.createMany({
 		data: [
@@ -124,10 +133,28 @@ async function up() {
 		],
 	});
 	
-	// Создание тэгов
+	// Создание комментариев
+	await prisma.comment.createMany({
+		data: [
+			{ content: 'Это невероятно интересно!', post_id: 1, author_id: 2, parent_comment_id: null, publication_date: generateDate(1), update_date: generateDate(1) },
+			{ content: 'Больше информации о Большом взрыве!', post_id: 2, author_id: 3, parent_comment_id: null, publication_date: generateDate(2), update_date: generateDate(2) },
+			{ content: 'Согласен с вами!', post_id: 2, author_id: 1, parent_comment_id: 2, publication_date: generateDate(3), update_date: generateDate(3) },
+		],
+	});
+	
+	// Создаем категории тегов
+	await prisma.tagCategory.createMany({
+		data: [
+			{ name: 'Наука' },
+			{ name: 'Космос' },
+			{ name: 'Физика' },
+		],
+	});
+
+// Создаем теги
 	await prisma.tag.createMany({
 		data: [
-			{ tag_name: 'Астрономия', category_id: 1 },
+			{ tag_name: 'Астрономия', category_id: 1 }, // Убедитесь, что категория с id 1 существует
 			{ tag_name: 'Космос', category_id: 2 },
 			{ tag_name: 'Физика', category_id: 3 },
 		],
@@ -275,7 +302,7 @@ async function down() {
 	await prisma.$executeRaw`TRUNCATE TABLE "StormicSettings" RESTART IDENTITY CASCADE`;
 	await prisma.$executeRaw`TRUNCATE TABLE "StormicMedia" RESTART IDENTITY CASCADE`;
 	await prisma.$executeRaw`TRUNCATE TABLE "NavigationMenu" RESTART IDENTITY CASCADE`;
-	await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "users" RESTART IDENTITY CASCADE`;
 	await prisma.$executeRaw`TRUNCATE TABLE "VerificationCode" RESTART IDENTITY CASCADE`;
 	await prisma.$executeRaw`TRUNCATE TABLE "Post" RESTART IDENTITY CASCADE`;
 	await prisma.$executeRaw`TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE`;
