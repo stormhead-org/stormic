@@ -1,9 +1,9 @@
 'use client'
 
-import { CategoryProps, type FilterCategoryProps } from '@/shared/components/category-props'
+import { CategoryItem, FilterCategoryProps } from '@/shared/components/category-item'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import React from 'react'
 import { Skeleton } from './ui/skeleton'
 import { Input } from './ui/input'
@@ -32,7 +32,6 @@ export const CategoryForm: React.FC<Props> = ({
 	loading,
   }) => {
 	
-	const router = useRouter()
 	const pathname = usePathname()
 	const [showAll, setShowAll] = React.useState(false)
 	const [searchValue, setSearchValue] = React.useState('')
@@ -78,7 +77,7 @@ export const CategoryForm: React.FC<Props> = ({
 			
 			<div className='flex flex-col max-h-96 pr-2 overflow-auto scrollbar'>
 				{list.map((item, index) => (
-					<CategoryProps
+					<CategoryItem
 						key={index}
 						text={item.text}
 						image={item.image}

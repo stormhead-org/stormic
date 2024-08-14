@@ -12,7 +12,7 @@ export interface FilterCategoryProps {
 	className?: string
 }
 
-export const CategoryProps: React.FC<FilterCategoryProps> = ({
+export const CategoryItem: React.FC<FilterCategoryProps> = ({
 	text,
 	value,
 	endAdornment,
