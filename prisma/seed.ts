@@ -15,40 +15,46 @@ async function up() {
 		data: [
 			{
 				fullName: 'Карл Саган',
-				email: 'sagan@astro.org',
+				email: 'sagan@stormic.app',
 				password: hashSync('password', 10),
 				role: UserRoleType.ADMIN,
 				verified: new Date(),
-				profile_picture: 'https://example.com/sagan.jpg',
+				profile_picture: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp',
 				bio: 'Американский астроном, популяризатор науки и автор книг по астрофизике.',
 			},
 			{
 				fullName: 'Стивен Хокинг',
-				email: 'hawking@astro.org',
+				email: 'hawking@stormic.app',
 				password: hashSync('password', 10),
 				role: UserRoleType.USER,
 				verified: new Date(),
-				profile_picture: 'https://example.com/hawking.jpg',
+				profile_picture: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
 				bio: 'Британский теоретический физик, космолог и популяризатор науки.',
 			},
 			{
 				fullName: 'Нил Деграсс Тайсон',
-				email: 'tyson@astro.org',
+				email: 'tyson@stormic.app',
 				password: hashSync('password', 10),
 				role: UserRoleType.USER,
 				verified: new Date(),
-				profile_picture: 'https://example.com/tyson.jpg',
+				profile_picture: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
 				bio: 'Американский астрофизик и популяризатор науки.',
 			},
 		],
 	});
 	
 	// Создание настроек платформы
-	await prisma.stormicSettings.create({
-		data: {
-			name: 'Stormic',
+	await prisma.stormicSettings.createMany({
+		data: [
+			{
+			content: 'Stormic',
 			settingsType: SettingsType.NAME
-		},
+		  },
+			{
+				content: 'код, GitHub и ты',
+				settingsType: SettingsType.DESCRIPTION
+			}
+	  ],
 	});
 	
 	// Создание медиа
@@ -56,7 +62,7 @@ async function up() {
 		data: [
 			{
 				mediaType: MediaType.LOGO,
-				url: 'https://example.com/logo.png',
+				url: 'https://i.imgur.com/CPCySAr.png',
 				description: 'Логотип нашей астрономической платформы.',
 				stormicSettingsId: 1,
 			},
@@ -229,8 +235,8 @@ async function up() {
 	// Создание изображений
 	await prisma.image.createMany({
 		data: [
-			{ url: 'https://example.com/image1.jpg', uploaded_by: 1, upload_date: generateDate(1) },
-			{ url: 'https://example.com/image2.jpg', uploaded_by: 2, upload_date: generateDate(2) },
+			{ url: 'https://leonardo.osnova.io/2b1829fb-5f49-494f-b193-7a4257bde6f0/-/scale_crop/72x72/-/format/webp', uploaded_by: 1, upload_date: generateDate(1) },
+			{ url: 'https://leonardo.osnova.io/08eabace-883e-b3ab-a2b2-338257d5b1f3/-/scale_crop/72x72/-/format/webp', uploaded_by: 2, upload_date: generateDate(2) },
 		],
 	});
 	
@@ -269,8 +275,8 @@ async function up() {
 	// Создание наград
 	await prisma.badge.createMany({
 		data: [
-			{ name: 'Звездный исследователь', iconUrl: 'https://example.com/badge1.png', criteria: 'Написано 10 постов' },
-			{ name: 'Гуру комментариев', iconUrl: 'https://example.com/badge2.png', criteria: 'Получено 50 лайков на комментарии' },
+			{ name: 'Звездный исследователь', iconUrl: 'https://leonardo.osnova.io/a0e881f3-d9e8-520a-bc4b-951dd3c455b5/-/scale_crop/72x72/-/format/webp', criteria: 'Написано 10 постов' },
+			{ name: 'Гуру комментариев', iconUrl: 'https://leonardo.osnova.io/49b68da0-b49b-56ee-875e-7bc31a295848/-/scale_crop/72x72/-/format/webp', criteria: 'Получено 50 лайков на комментарии' },
 		],
 	});
 	

@@ -1,9 +1,10 @@
-import { Header } from '@/shared/components/'
+import { HeaderForm } from '@/shared/components/'
+import Header from '@/shared/components/header'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic Pizza | Главная',
+	title: 'Stormic Community | Главная',
 }
 
 export default function HomeLayout({

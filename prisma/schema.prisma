@@ -21,6 +21,7 @@ enum MediaType {
 
 enum SettingsType {
   NAME // Название плафтормы
+  DESCRIPTION // Описание платформы
 }
 
 enum PostStatus {
@@ -30,7 +31,7 @@ enum PostStatus {
 
 model StormicSettings {
   id           Int              @id @default(autoincrement()) // Уникальный идентификатор настройки
-  name         String // Название платформы
+  content      String // Название платформы
   settingsType SettingsType // Тип настроек платформы (название и т.д.)
   media        StormicMedia[] // Связь с таблицей изображений
   navigation   NavigationMenu[] // Связь с таблицей меню навигации

@@ -1,17 +1,19 @@
+import { ProfileAvatar } from '@/shared/components/profile-avatar'
 import { Button } from '@/shared/components/ui/button'
 import { CircleUser } from 'lucide-react'
 import { useSession } from 'next-auth/react'
-import Link from 'next/link'
 import React from 'react'
 
 interface Props {
+	avatarImage: string
 	onClickSignIn?: () => void
 	className?: string
 }
 
 export const ProfileButton: React.FC<Props> = ({
+	avatarImage,
+  onClickSignIn,
 	className,
-	onClickSignIn,
 }) => {
 	const { data: session } = useSession()
 
@@ -27,11 +29,7 @@ export const ProfileButton: React.FC<Props> = ({
 					Войти
 				</Button>
 			) : (
-				<Link href='/profile'>
-					<Button variant='secondary' className='flex items-center'>
-						<CircleUser size={18} />
-					</Button>
-				</Link>
+					<ProfileAvatar  avatarImage={avatarImage}/>
 			)}
 		</div>
 	)
