@@ -8,10 +8,13 @@ import {
 	SideFooter,
 	SocialMenu,
 	SortFeedButtons,
-	Title,
+	Title, CategoryGroup, CategoryForm
 } from '@/shared/components/'
+import { useCategories } from '@/shared/hooks/use-categories'
 
 export default async function Home() {
+	
+	const menu = await prisma.navigationMenu.findMany()
 	const stormicName = await prisma.stormicSettings.findFirst({
 		where: {
 			settingsType: 'NAME'
@@ -22,8 +25,7 @@ export default async function Home() {
 			mediaType: 'BANNER'
 		},
 	})
-	const menu = await prisma.navigationMenu.findMany()
-
+	
 	return (
 		<>
 			<Container className='mt-4'>
@@ -34,6 +36,7 @@ export default async function Home() {
 						<SocialMenu className='my-2' />
 						<NewPostButton className='my-4' />
 						<NavigationMenuForm className='mt-4' data={menu} />
+						<CategoryGroup className='mt-4' />
 						<SideFooter className='my-4' />
 					</div>
 

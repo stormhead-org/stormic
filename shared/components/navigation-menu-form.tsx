@@ -17,7 +17,7 @@ export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 	const pathname = usePathname()
 
 	return (
-		<div className={className}>
+		<div className={cn('', className)}>
 			{data.map(item => (
 				<li
 					key={item.id}

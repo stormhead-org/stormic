@@ -130,11 +130,14 @@ model Post {
 }
 
 model Category {
-  category_id   Int                 @id @default(autoincrement()) // Уникальный идентификатор категории
-  category_name String // Название категории
-  posts         Post[] // Посты в категории
-  owner_id      Int // Идентификатор владельца категории
-  moderators    CategoryModerator[] // Модераторы категории
+  category_id          Int                 @id @default(autoincrement()) // Уникальный идентификатор категории
+  category_name        String // Название категории
+  category_description String // Описание категории
+  category_image       String // Лого категории
+  category_url         String // Ссылка на категорию
+  posts                Post[] // Посты в категории
+  owner_id             Int // Идентификатор владельца категории
+  moderators           CategoryModerator[] // Модераторы категории
 
   owner User @relation("UserCategories", fields: [owner_id], references: [id]) // Связь с моделью User
 }

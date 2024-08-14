@@ -88,10 +88,10 @@ async function up() {
 	// Создание категорий
 	await prisma.category.createMany({
 		data: [
-			{ category_name: 'Черные дыры', owner_id: 1 },
-			{ category_name: 'Космология', owner_id: 1 },
-			{ category_name: 'Экзопланеты', owner_id: 1 },
-			{ category_name: 'Солнечная система', owner_id: 1 },
+			{ category_name: 'Черные дыры', category_description: 'Изучение черных дыр', owner_id: 1, category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp', category_url: '/black-holes' },
+			{ category_name: 'Космология', category_description: 'Космология вокруг', owner_id: 1, category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp', category_url: '/cosmology' },
+			{ category_name: 'Экзопланеты', category_description: 'Лучшие экзопланеты для отдыха', owner_id: 1, category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp', category_url: '/exosystems' },
+			{ category_name: 'Солнечная система', category_description: 'Солнечная система и Нибиру', owner_id: 1, category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp', category_url: '/solar-system' },
 		],
 	});
 	

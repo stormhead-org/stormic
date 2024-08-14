@@ -74,7 +74,7 @@ export async function registerUser(body: Prisma.UserCreateInput) {
 
 		await sendEmail(
 			createdUser.email,
-			'Stormic Pizza / 📝 Подтверждение регистрации',
+			'Stormic Community / 📝 Подтверждение регистрации',
 			VerificationUserTemplate({
 				code,
 			})
