@@ -1,7 +1,7 @@
-import { PrismaClient, UserRoleType, PostStatus, MediaType } from '@prisma/client';
+import { UserRoleType, PostStatus, MediaType } from '@prisma/client';
 import { hashSync } from 'bcrypt';
 
-const prisma = new PrismaClient();
+import { prisma } from './prisma-client'
 
 const generateDate = (daysAgo: number) => {
 	const date = new Date();
