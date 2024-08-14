@@ -237,8 +237,8 @@ async function up() {
 	// Создание медиафайлов
 	await prisma.media.createMany({
 		data: [
-			{ post_id: 1, media_url: 'https://example.com/media1.mp4', media_type: 'video', upload_date: generateDate(1) },
-			{ post_id: 2, media_url: 'https://example.com/media2.mp4', media_type: 'video', upload_date: generateDate(2) },
+			{ post_id: 1, media_url: 'https://www.hollywoodreporter.com/wp-content/uploads/2014/10/interstellar_a_0.jpg?w=2000&h=1126&crop=1', media_type: 'image', upload_date: generateDate(1) },
+			{ post_id: 2, media_url: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w', media_type: 'image', upload_date: generateDate(2) },
 		],
 	});
 	
