@@ -272,30 +272,35 @@ async function up() {
 
 async function down() {
 	// Удаление данных для отката
-	await prisma.recommendation.deleteMany({});
-	await prisma.userSubscription.deleteMany({});
-	await prisma.userBadge.deleteMany({});
-	await prisma.badge.deleteMany({});
-	await prisma.reputation.deleteMany({});
-	await prisma.postEditHistory.deleteMany({});
-	await prisma.notification.deleteMany({});
-	await prisma.media.deleteMany({});
-	await prisma.image.deleteMany({});
-	await prisma.view.deleteMany({});
-	await prisma.like.deleteMany({});
-	await prisma.rolePermission.deleteMany({});
-	await prisma.permission.deleteMany({});
-	await prisma.userRoleAssignment.deleteMany({});
-	await prisma.userRole.deleteMany({});
-	await prisma.postTags.deleteMany({});
-	await prisma.tag.deleteMany({});
-	await prisma.category.deleteMany({});
-	await prisma.post.deleteMany({});
-	await prisma.stormicMedia.deleteMany({});
-	await prisma.navigationMenu.deleteMany({});
-	await prisma.stormicSettings.deleteMany({});
-	await prisma.user.deleteMany({});
+	await prisma.$executeRaw`TRUNCATE TABLE "StormicSettings" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "StormicMedia" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "NavigationMenu" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "VerificationCode" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Post" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "CategoryModerator" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Comment" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Tag" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "TagCategory" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "PostTags" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "UserRole" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "UserRoleAssignment" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Permission" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "RolePermission" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Like" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "View" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Media" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Notification" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "PostEditHistory" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Reputation" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Badge" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "UserBadge" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "UserSubscription" RESTART IDENTITY CASCADE`;
+	await prisma.$executeRaw`TRUNCATE TABLE "Recommendation" RESTART IDENTITY CASCADE`;
 }
+
 
 async function main() {
 	try {
