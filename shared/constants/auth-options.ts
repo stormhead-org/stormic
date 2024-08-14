@@ -106,6 +106,7 @@ export const authOptions: AuthOptions = {
 						data: {
 							provider: account?.provider,
 							providerId: account?.providerAccountId,
+							profile_picture: user.image || findUser.profile_picture,
 						},
 					})
 
@@ -120,6 +121,7 @@ export const authOptions: AuthOptions = {
 						verified: new Date(),
 						provider: account?.provider,
 						providerId: account?.providerAccountId,
+						profile_picture: user.image || null,
 					},
 				})
 
@@ -145,6 +147,7 @@ export const authOptions: AuthOptions = {
 				token.email = findUser.email
 				token.fullName = findUser.fullName
 				token.role = findUser.role
+				token.image = findUser.profile_picture
 			}
 
 			return token
@@ -153,6 +156,7 @@ export const authOptions: AuthOptions = {
 			if (session?.user) {
 				session.user.id = token.id
 				session.user.role = token.role
+				// session.user.image = token.image
 			}
 
 			return session
