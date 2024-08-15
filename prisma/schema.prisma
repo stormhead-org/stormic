@@ -109,8 +109,9 @@ model VerificationCode {
 model Post {
   post_id          Int               @id @default(autoincrement()) // Уникальный идентификатор поста
   title            String // Заголовок поста
+  post_image       String? // Изображение поста
   content          String // Содержимое поста
-  author_id        Int // Идентификатор автора поста
+  author_id        Int // Автор поста
   publication_date DateTime          @default(now()) // Дата публикации поста
   last_edit_date   DateTime? // Дата последнего редактирования поста
   PostStatus       PostStatus // Статус поста (например, "опубликован", "в черновиках")
@@ -125,7 +126,7 @@ model Post {
   editHistory      PostEditHistory[] // История редактирования поста
   recommendations  Recommendation[] // Рекомендации для поста
 
-  author   User     @relation(fields: [author_id], references: [id]) // Связь с моделью User
+  author   User     @relation(fields: [author_id], references: [id]) // Связь с моделью UserId
   category Category @relation(fields: [category_id], references: [category_id]) // Связь с моделью Category
 }
 

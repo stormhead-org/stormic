@@ -23,7 +23,6 @@ html {
 		--bg-color-ui-item: 216 39.13% 22.55%;
 		--txt-color: 210 5.36% 78.04%;
 		--txt-color-headers: 210 5.88% 80%;
-		--a-color: 215.71 66.53% 51.96%;
 		--a-color-hover: 216 56.03%, 45.49%;
 		--a-color-hover-dark: 188.57 3.11% 55.88%;
 		--notification-color-red: 0 100% 33.33%;
@@ -34,7 +33,7 @@ html {
 		--primary: 222.2 47.4% 11.2%;
 		--primary-foreground: 210 40% 98%;
 
-		--secondary: 210 40% 96.1%;
+		--secondary: 210 40% 94%;
 		--secondary-foreground: 222.2 47.4% 11.2%;
 
 		--muted: 210 40% 96.1%;
@@ -101,16 +100,16 @@ html {
 
 .scrollbar::-webkit-scrollbar-track {
 	border-radius: 6px;
-	background: #fff;
+	@apply bg-secondary;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-	background: #dbdadd;
+	@apply bg-primary;
 	border-radius: 6px;
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
-	background: #dbdadd;
+	@apply bg-primary;
 }
 
 @layer utilities {

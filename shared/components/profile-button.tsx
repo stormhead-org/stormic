@@ -2,6 +2,7 @@ import { ProfileAvatar } from '@/shared/components/profile-avatar'
 import { Button } from '@/shared/components/ui/button'
 import { CircleUser } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 import React from 'react'
 
 interface Props {
@@ -29,7 +30,9 @@ export const ProfileButton: React.FC<Props> = ({
 					Войти
 				</Button>
 			) : (
+				<Link href='/profile'>
 					<ProfileAvatar  avatarImage={avatarImage}/>
+				</Link>
 			)}
 		</div>
 	)

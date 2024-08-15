@@ -1,4 +1,4 @@
 export enum ApiRoutes {
-	SEARCH_POSTS = 'posts/search',
+	POSTS = 'posts',
 	CATEGORIES = 'categories',
 }

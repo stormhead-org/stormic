@@ -16,13 +16,11 @@ export const ProfileAvatar: React.FC<Props> = ({
   className,
   }) => {
 	return (
-		<Link href='/profile'>
 				<Avatar className={cn('border-2 border-secondary rounded-full', className)}>
 					<AvatarImage src={avatarImage} />
 					<AvatarFallback>
 						<CircleUser />
 					</AvatarFallback>
 				</Avatar>
-		</Link>
 	);
 };

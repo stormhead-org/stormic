@@ -33,7 +33,7 @@ export const HeaderButtons: React.FC<Props> = ({ className }) => {
 							handleClick(obj.path)
 						}}
 						href={obj.path}
-						className='hover:bg-blue-600 cursor-pointer rounded-[6px] items-center p-2 justify-center'
+						className='hover:bg-secondary/50 cursor-pointer rounded-[6px] items-center p-2 justify-center'
 					>
 						{obj.icon}
 					</Link>

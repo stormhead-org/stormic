@@ -38,8 +38,8 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 				<li
 					key={item.id}
 					className={cn(
-						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-600 mb-[1px] cursor-pointer',
-						`${pathname === item.path ? 'bg-blue-600' : ''}`
+						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-secondary/50 cursor-pointer mb-[1px]',
+						`${pathname === item.path ? 'bg-secondary/50' : ''}`
 					)}
 					onClick={() => router.push(item.path)}
 				>

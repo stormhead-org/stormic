@@ -85,22 +85,43 @@ async function up() {
 		],
 	});
 	
-	// Создание категорий
 	await prisma.category.createMany({
 		data: [
 			{ category_name: 'Черные дыры', category_description: 'Изучение черных дыр', owner_id: 1, category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp', category_url: '/black-holes' },
 			{ category_name: 'Космология', category_description: 'Космология вокруг', owner_id: 1, category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp', category_url: '/cosmology' },
 			{ category_name: 'Экзопланеты', category_description: 'Лучшие экзопланеты для отдыха', owner_id: 1, category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp', category_url: '/exosystems' },
 			{ category_name: 'Солнечная система', category_description: 'Солнечная система и Нибиру', owner_id: 1, category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp', category_url: '/solar-system' },
+			{ category_name: 'Галактики', category_description: 'Структура и эволюция галактик', owner_id: 2, category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp', category_url: '/galaxies' },
+			{ category_name: 'Темная материя', category_description: 'Скрытая масса Вселенной', owner_id: 2, category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp', category_url: '/dark-matter' },
+			{ category_name: 'Темная энергия', category_description: 'Таинственная сила, ускоряющая расширение Вселенной', owner_id: 2, category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp', category_url: '/dark-energy' },
+			{ category_name: 'Квазары', category_description: 'Яркие центры активных галактик', owner_id: 3, category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp', category_url: '/quasars' },
+			{ category_name: 'Релятивистская астрофизика', category_description: 'Астрофизика высоких скоростей', owner_id: 3, category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp', category_url: '/relativistic-astrophysics' },
+			{ category_name: 'Нейтронные звезды', category_description: 'Изучение наиболее плотных объектов', owner_id: 3, category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp', category_url: '/neutron-stars' },
+			{ category_name: 'Гравитационные волны', category_description: 'Колебания пространства-времени', owner_id: 1, category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp', category_url: '/gravitational-waves' },
+			{ category_name: 'Космические телескопы', category_description: 'Инструменты для наблюдения Вселенной', owner_id: 1, category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp', category_url: '/space-telescopes' },
+			{ category_name: 'Космические миссии', category_description: 'Экспедиции к другим планетам и звездам', owner_id: 2, category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp', category_url: '/space-missions' },
+			{ category_name: 'Планетарная наука', category_description: 'Изучение планет и их систем', owner_id: 2, category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp', category_url: '/planetary-science' },
+			{ category_name: 'Астрохимия', category_description: 'Химия космоса', owner_id: 3, category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp', category_url: '/astrochemistry' },
 		],
 	});
 	
-	// Создание модераторов категорий
 	await prisma.categoryModerator.createMany({
 		data: [
-			{ category_id: 1, user_id: 1 },
-			{ category_id: 2, user_id: 2 },
-			{ category_id: 3, user_id: 3 },
+			{ category_id: 1, user_id: 1 },  // Черные дыры - Карл Саган
+			{ category_id: 2, user_id: 1 },  // Космология - Карл Саган
+			{ category_id: 3, user_id: 1 },  // Экзопланеты - Карл Саган
+			{ category_id: 4, user_id: 1 },  // Солнечная система - Карл Саган
+			{ category_id: 5, user_id: 2 },  // Галактики - Стивен Хокинг
+			{ category_id: 6, user_id: 2 },  // Темная материя - Стивен Хокинг
+			{ category_id: 7, user_id: 2 },  // Темная энергия - Стивен Хокинг
+			{ category_id: 8, user_id: 3 },  // Квазары - Нил Деграсс Тайсон
+			{ category_id: 9, user_id: 3 },  // Релятивистская астрофизика - Нил Деграсс Тайсон
+			{ category_id: 10, user_id: 3 }, // Нейтронные звезды - Нил Деграсс Тайсон
+			{ category_id: 11, user_id: 1 }, // Гравитационные волны - Карл Саган
+			{ category_id: 12, user_id: 1 }, // Космические телескопы - Карл Саган
+			{ category_id: 13, user_id: 2 }, // Космические миссии - Стивен Хокинг
+			{ category_id: 14, user_id: 2 }, // Планетарная наука - Стивен Хокинг
+			{ category_id: 15, user_id: 3 }, // Астрохимия - Нил Деграсс Тайсон
 		],
 	});
 	
@@ -109,6 +130,7 @@ async function up() {
 		data: [
 			{
 				title: 'Чёрные дыры: загадки и открытия',
+				post_image: 'https://www.hollywoodreporter.com/wp-content/uploads/2014/10/interstellar_a_0.jpg?w=2000&h=1126&crop=1',
 				content: 'Чёрные дыры — это области пространства, где гравитация настолько сильна, что даже свет не может уйти от них.',
 				author_id: 1,
 				publication_date: generateDate(10),
@@ -120,6 +142,7 @@ async function up() {
 			},
 			{
 				title: 'Космология и Большой взрыв',
+				post_image: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				content: 'Космология изучает происхождение и развитие Вселенной. Основной теорией является теория Большого взрыва.',
 				author_id: 2,
 				publication_date: generateDate(5),
@@ -130,6 +153,7 @@ async function up() {
 			},
 			{
 				title: 'Поиск экзопланет: методы и достижения',
+				post_image: 'https://www.hollywoodreporter.com/wp-content/uploads/2014/10/interstellar_a_0.jpg?w=2000&h=1126&crop=1',
 				content: 'Экзопланеты — это планеты, вращающиеся вокруг звёзд, отличных от Солнца. Методы их поиска включают транзиты и радиальные скорости.',
 				author_id: 3,
 				publication_date: generateDate(1),

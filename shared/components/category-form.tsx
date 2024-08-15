@@ -1,6 +1,6 @@
 'use client'
 
-import { CategoryItem, FilterCategoryProps } from '@/shared/components/category-item'
+import { CategoryItem, CategoryItemProps } from '@/shared/components/category-item'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
 import { usePathname } from 'next/navigation'
@@ -8,7 +8,7 @@ import React from 'react'
 import { Skeleton } from './ui/skeleton'
 import { Input } from './ui/input'
 
-type Item = FilterCategoryProps
+type Item = CategoryItemProps
 
 interface Props {
 	title: string
@@ -63,7 +63,7 @@ export const CategoryForm: React.FC<Props> = ({
 	
 	return (
 		<div className={cn('', className)}>
-			<Title text={title} size='xs' className='mb-4' />
+			<Title text={title} size='xs' className='mb-6 font-bold' />
 			
 			{showAll && (
 				<div className='mb-5'>
@@ -75,7 +75,7 @@ export const CategoryForm: React.FC<Props> = ({
 				</div>
 			)}
 			
-			<div className='flex flex-col max-h-96 pr-2 overflow-auto scrollbar'>
+			<div className='flex flex-col max-h-[245px] pr-2 overflow-auto scrollbar'>
 				{list.map((item, index) => (
 					<CategoryItem
 						key={index}
@@ -86,8 +86,8 @@ export const CategoryForm: React.FC<Props> = ({
 						endAdornment={item.endAdornment}
 						name={name}
 						className={cn(
-							'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-600 mb-[1px] cursor-pointer',
-							`${pathname === item.url ? 'bg-blue-600' : ''}`
+							'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-secondary/50 mb-[1px] cursor-pointer',
+							`${pathname === item.url ? 'bg-secondary' : ''}`
 						)}
 					/>
 				))}

@@ -1,8 +1,8 @@
 import { prisma } from '@/prisma/prisma-client'
 import {
 	MainBannerForm,
-	SortFeedButtons,
 } from '@/shared/components/'
+import { PostGroup } from '@/shared/components/post-item/post-group'
 
 export default async function Home() {
 	
@@ -19,11 +19,11 @@ export default async function Home() {
 	
 	return (
 		<>
-					{/* Центральная часть */}
-					<div className='w-2/4'>
-						<MainBannerForm stormicName={stormicName} bannerUrl={banner} />
-						<SortFeedButtons className='mt-[7px]' />
-					</div>
-</>
+			{/* Центральная часть */}
+			<div className='w-2/4'>
+				<MainBannerForm stormicName={stormicName} bannerUrl={banner} />
+				<PostGroup className='mt-4' />
+			</div>
+		</>
 	)
 }
