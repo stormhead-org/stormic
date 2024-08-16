@@ -3,6 +3,7 @@
 import { CategoryItem, CategoryItemProps } from '@/shared/components/category-item'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import React from 'react'
 import { Input } from './ui/input'
 import { Skeleton } from './ui/skeleton'
@@ -90,9 +91,18 @@ export const CategoryForm: React.FC<Props> = ({
 				<div className='border-b border-b-secondary'>
 					<button
 						onClick={() => setShowAll(!showAll)}
-						className='text-primary mb-3 mt-3'
+						className='text-primary mb-3 mt-3 w-full'
 					>
-						{showAll ? 'Скрыть' : 'Показать'}
+						{showAll ? (
+							<div className='flex flex-1 items-center'>
+								<ChevronUp className='mx-3' />
+								<p className='font-bold'>Скрыть</p>
+							</div>
+						) : (
+							<div className='flex flex-1 items-center'>
+								<ChevronDown className='mx-3' />
+								<p className='font-bold'>Показать все</p>
+							</div>)}
 					</button>
 				</div>
 			)}
