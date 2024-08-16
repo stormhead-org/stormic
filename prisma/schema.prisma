@@ -72,7 +72,8 @@ model User {
   createdAt        DateTime          @default(now()) // Дата создания пользователя
   updatedAt        DateTime          @updatedAt // Дата последнего обновления пользователя
 
-  profile_picture     String? // URL профайлной фотографии пользователя
+  profile_banner      String? // URL баннер профиля пользователя
+  profile_picture     String? // URL фотографии пользователя
   bio                 String? // Биография пользователя
   roles               UserRoleAssignment[] // Роли, назначенные пользователю
   posts               Post[] // Посты, созданные пользователем

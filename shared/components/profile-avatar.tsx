@@ -7,16 +7,21 @@ import React from 'react'
 
 interface Props {
 	avatarImage: string
+	avatarSize?: number
 	className?: string
 }
 
 export const ProfileAvatar: React.FC<Props> = ({
 	                                               avatarImage,
+	                                               avatarSize,
 	                                               className
                                                }) => {
 	return (
-		<Avatar className={cn('border-2 border-secondary rounded-full hover:border-blue-600', className)}>
-			<AvatarImage src={avatarImage} />
+		<Avatar className={cn('border-2 border-secondary rounded-full', className)}>
+			<AvatarImage
+				className='m-auto rounded-full'
+				src={avatarImage}
+				style={{ width: avatarSize, height: avatarSize }} />
 			<AvatarFallback>
 				<CircleUser />
 			</AvatarFallback>

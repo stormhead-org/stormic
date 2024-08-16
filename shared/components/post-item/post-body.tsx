@@ -2,7 +2,7 @@ import { Title } from '@/shared/components'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
-export interface PostItemProps {
+interface Props {
 	postTitle: string
 	postContent: string
 	postImage?: string | null
@@ -17,13 +17,13 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 	return text
 }
 
-export const PostBody: React.FC<PostItemProps> = ({
-	                                                  postTitle,
-	                                                  postContent,
-	                                                  postImage,
-	                                                  className,
-	                                                  maxLength
-                                                  }) => {
+export const PostBody: React.FC<Props> = ({
+	                                          postTitle,
+	                                          postContent,
+	                                          postImage,
+	                                          className,
+	                                          maxLength
+                                          }) => {
 	
 	const truncatedContent = truncateText(postContent, maxLength)
 	
