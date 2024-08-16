@@ -1,25 +1,27 @@
 import { prisma } from '@/prisma/prisma-client'
 import {
-	CategoryGroup, Container,
+	CategoryGroup,
+	Container,
 	FeedUserMenu,
-	HeaderForm, MainBannerForm,
 	NavigationMenuForm,
-	NewPostButton, SideFooter,
-	SocialMenu, SortFeedButtons, Title
+	NewPostButton,
+	SideFooter,
+	SocialMenu,
+	Title
 } from '@/shared/components/'
+import { CommentFeedGroup } from '@/shared/components/comment-feed-item/comment-feed-group'
 import Header from '@/shared/components/header'
-import { PostGroup } from '@/shared/components/post-item/post-group'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic Community | Главная',
+	title: 'Stormic Community | Главная'
 }
 
 export default async function HomeLayout({
-	children,
-	modal,
-}: Readonly<{
+	                                         children,
+	                                         modal
+                                         }: Readonly<{
 	children: React.ReactNode
 	modal: React.ReactNode
 }>) {
@@ -44,12 +46,10 @@ export default async function HomeLayout({
 					</div>
 					
 					{/* Центральная часть */}
-					{/* <div className='w-2/4'> */}
-					{/* 	<MainBannerForm stormicName={stormicName} bannerUrl={banner} /> */}
-					{/* 	<SortFeedButtons className='mt-[7px]' /> */}
-					{/* 	<PostGroup className='mt-4' /> */}
-					{/* </div> */}
-					{children}
+					<div className='w-2/4'>
+						{children}
+					</div>
+					
 					
 					{/* Правая часть */}
 					<div className='w-1/4'>
@@ -58,6 +58,7 @@ export default async function HomeLayout({
 							size='sm'
 							className='font-bold flex items-center w-full h-12 rounded-[6px] bg-secondary/50 pl-2'
 						/>
+						<CommentFeedGroup />
 					</div>
 				</div>
 			</Container>

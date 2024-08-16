@@ -7,19 +7,33 @@ export interface PostItemProps {
 	postContent: string
 	postImage?: string | null
 	className?: string
+	maxLength: number // Максимальная длина текста для обрезки по символам
+}
+
+const truncateText = (text: string, maxLength: number | undefined) => {
+	if (maxLength && text.length > maxLength) {
+		return text.slice(0, maxLength) + '...'
+	}
+	return text
 }
 
 export const PostBody: React.FC<PostItemProps> = ({
 	                                                  postTitle,
 	                                                  postContent,
 	                                                  postImage,
-	                                                  className
+	                                                  className,
+	                                                  maxLength
                                                   }) => {
+	
+	const truncatedContent = truncateText(postContent, maxLength)
+	
 	return (
 		<div className={cn('', className)}>
 			<Title text={postTitle} size='sm' className='font-extrabold my-2' />
-			<p className=''>{postContent}</p>
-			<img className='rounded-md mt-4 object-cover h-80 w-full' src={String(postImage)} alt={postTitle} />
+			<p>{truncatedContent}</p>
+			{postImage && (
+				<img className='rounded-md mt-4 object-cover h-80 w-full' src={String(postImage)} alt={postTitle} />
+			)}
 		</div>
 	)
 }

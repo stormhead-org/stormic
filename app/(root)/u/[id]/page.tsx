@@ -1,5 +1,4 @@
 import { prisma } from '@/prisma/prisma-client'
-import { Container } from '@/shared/components'
 
 export default async function UserPage({
 	                                       params: { id }
@@ -17,17 +16,15 @@ export default async function UserPage({
 	// Проверяем, найден ли пользователь
 	if (!user) {
 		return (
-			<Container className='flex flex-col my-10'>
-				<p>Пользователь не найден</p>
-			</Container>
+			<p>Пользователь не найден</p>
 		)
 	}
 	
 	return (
-		<Container className='flex flex-col my-10'>
+		<>
 			<p>User ID: {user.id}</p>
 			<p>Full Name: {user.fullName}</p>
 			<p>Email: {user.email}</p>
-		</Container>
+		</>
 	)
 }

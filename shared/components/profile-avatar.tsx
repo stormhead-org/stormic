@@ -1,9 +1,8 @@
-"use client";
+'use client'
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/shared/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar'
 import { cn } from '@/shared/lib/utils'
 import { CircleUser } from 'lucide-react'
-import Link from 'next/link'
 import React from 'react'
 
 interface Props {
@@ -12,15 +11,15 @@ interface Props {
 }
 
 export const ProfileAvatar: React.FC<Props> = ({
-  avatarImage,
-  className,
-  }) => {
+	                                               avatarImage,
+	                                               className
+                                               }) => {
 	return (
-				<Avatar className={cn('border-2 border-secondary rounded-full', className)}>
-					<AvatarImage src={avatarImage} />
-					<AvatarFallback>
-						<CircleUser />
-					</AvatarFallback>
-				</Avatar>
-	);
-};
+		<Avatar className={cn('border-2 border-secondary rounded-full hover:border-blue-600', className)}>
+			<AvatarImage src={avatarImage} />
+			<AvatarFallback>
+				<CircleUser />
+			</AvatarFallback>
+		</Avatar>
+	)
+}

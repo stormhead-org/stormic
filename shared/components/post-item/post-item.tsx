@@ -47,7 +47,7 @@ export const PostItem: React.FC<PostItemProps> = ({
 			<Link href={String(postUrl)}>
 				<PostHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
 				            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
-				<PostBody postTitle={postTitle} postContent={postContent} postImage={postImage} />
+				<PostBody postTitle={postTitle} postContent={postContent} postImage={postImage} maxLength={300} />
 				<PostFooter commentsCount={commentsCount} bookmarksCount={bookmarksCount} likesCount={likesCount}
 				            viewsCount={viewsCount} className='mt-4' />
 				{endAdornment}

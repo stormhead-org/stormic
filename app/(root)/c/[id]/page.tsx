@@ -1,5 +1,4 @@
 import { prisma } from '@/prisma/prisma-client'
-import { Container } from '@/shared/components'
 
 export default async function CategoryPage({
 	                                           params: { id }
@@ -17,17 +16,15 @@ export default async function CategoryPage({
 	// Проверяем, найдена ли категория
 	if (!category) {
 		return (
-			<Container className='flex flex-col my-10'>
-				<p>Категория не найдена</p>
-			</Container>
+			<p>Категория не найдена</p>
 		)
 	}
 	
 	return (
-		<Container className='flex flex-col my-10'>
+		<>
 			<p>Category ID: {category.category_id}</p>
 			<p>Название категории: {category.category_name}</p>
 			<p>Описание категории: {category.category_description}</p>
-		</Container>
+		</>
 	)
 }

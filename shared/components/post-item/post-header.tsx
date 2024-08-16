@@ -44,7 +44,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 			<div className='flex items-center'>
 				<Button
 					variant='secondary'
-					className='h-6 w-26 text-sm font-bold bg-[#f4f7fa] dark:bg-[#162033]'
+					className='h-6 w-26 text-sm font-bold bg-white dark:bg-slate-700 hover:dark:bg-slate-800'
 					type='button'
 					// onClick={() => router.push('/write')}
 				>
