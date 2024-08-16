@@ -1,3 +1,5 @@
+import { PostBody } from '@/shared/components/post-item/post-body'
+import { PostFooter } from '@/shared/components/post-item/post-footer'
 import { PostHeader } from '@/shared/components/post-item/post-header'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
@@ -14,6 +16,8 @@ export interface PostItemProps {
 	authorAvatar?: string | null
 	categoryName: string
 	categoryUrl: string
+	commentsCount: number
+	bookmarksCount: number
 	likesCount: number
 	viewsCount: number
 	postTime: string
@@ -31,20 +35,21 @@ export const PostItem: React.FC<PostItemProps> = ({
 	                                                  authorAvatar,
 	                                                  categoryName,
 	                                                  categoryUrl,
+	                                                  commentsCount,
+	                                                  bookmarksCount,
 	                                                  likesCount,
 	                                                  viewsCount,
 	                                                  postTime,
 	                                                  className
                                                   }) => {
 	return (
-		<div className={cn('bg-secondary rounded-md mb-4 p-2', className)}>
+		<div className={cn('bg-secondary rounded-md mb-4 p-4 hover:bg-secondary/50', className)}>
 			<Link href={String(postUrl)}>
 				<PostHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
 				            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
-				<p>{postContent}</p>
-				<img src={String(postImage)} width={400} height={400} alt={postTitle} />
-				<p>{likesCount}</p>
-				<p>{viewsCount}</p>
+				<PostBody postTitle={postTitle} postContent={postContent} postImage={postImage} />
+				<PostFooter commentsCount={commentsCount} bookmarksCount={bookmarksCount} likesCount={likesCount}
+				            viewsCount={viewsCount} className='mt-4' />
 				{endAdornment}
 			</Link>
 		</div>

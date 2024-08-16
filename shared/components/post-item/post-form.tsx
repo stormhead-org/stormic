@@ -1,12 +1,9 @@
 'use client'
 
 import { PostItem, PostItemProps } from '@/shared/components/post-item/post-item'
-import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
-import { usePathname } from 'next/navigation'
 import React from 'react'
 import { Skeleton } from '../ui/skeleton'
-import { Input } from '../ui/input'
 
 type Item = PostItemProps
 
@@ -18,11 +15,11 @@ interface Props {
 }
 
 export const PostForm: React.FC<Props> = ({
-	items,
-	limit = 5,
-	loading,
-	className,
-  }) => {
+	                                          items,
+	                                          limit = 5,
+	                                          loading,
+	                                          className
+                                          }) => {
 	
 	if (loading) {
 		return (
@@ -52,6 +49,8 @@ export const PostForm: React.FC<Props> = ({
 						authorAvatar={item.authorAvatar}
 						categoryName={item.categoryName}
 						categoryUrl={item.categoryUrl}
+						commentsCount={item.commentsCount}
+						bookmarksCount={item.bookmarksCount}
 						likesCount={item.likesCount}
 						viewsCount={item.viewsCount}
 						postTime={item.postTime}

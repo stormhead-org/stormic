@@ -77,6 +77,7 @@ model User {
   roles               UserRoleAssignment[] // Роли, назначенные пользователю
   posts               Post[] // Посты, созданные пользователем
   comments            Comment[] // Комментарии пользователя
+  bookmarks           Bookmark[] // Пользователи, которые добавили пост в закладки
   likes               Like[] // Лайки пользователя
   views               View[] // Просмотры пользователем
   images              Image[] // Изображения пользователя
@@ -120,6 +121,7 @@ model Post {
   category_id      Int // Идентификатор категории поста
   tags             PostTags[] // Теги поста
   comments         Comment[] // Комментарии к посту
+  bookmarks        Bookmark[] // Закладки пользователя
   likes            Like[] // Лайки поста
   views            View[] // Просмотры поста
   media            Media[] // Медиафайлы, связанные с постом
@@ -141,6 +143,18 @@ model Category {
   moderators           CategoryModerator[] // Модераторы категории
 
   owner User @relation("UserCategories", fields: [owner_id], references: [id]) // Связь с моделью User
+}
+
+model Bookmark {
+  id      Int      @id @default(autoincrement()) // Уникальный идентификатор закладки
+  user_id Int // Идентификатор пользователя, который добавил пост в закладки
+  post_id Int // Идентификатор поста, добавленного в закладки
+  addedAt DateTime @default(now()) // Дата добавления в закладки
+
+  user User @relation(fields: [user_id], references: [id]) // Связь с моделью User
+  post Post @relation(fields: [post_id], references: [post_id]) // Связь с моделью Post
+
+  @@unique([user_id, post_id]) // Уникальность комбинации user_id и post_id
 }
 
 model CategoryModerator {
