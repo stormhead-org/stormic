@@ -92,105 +92,105 @@ async function up() {
 				category_description: 'Изучение черных дыр',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp',
-				category_url: '/black-holes'
+				category_url: '/c/1'
 			},
 			{
 				category_name: 'Космология',
 				category_description: 'Космология вокруг',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
-				category_url: '/cosmology'
+				category_url: '/c/2'
 			},
 			{
 				category_name: 'Экзопланеты',
 				category_description: 'Лучшие экзопланеты для отдыха',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
-				category_url: '/exosystems'
+				category_url: '/c/3'
 			},
 			{
 				category_name: 'Солнечная система',
 				category_description: 'Солнечная система и Нибиру',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp',
-				category_url: '/solar-system'
+				category_url: '/c/4'
 			},
 			{
 				category_name: 'Галактики',
 				category_description: 'Структура и эволюция галактик',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
-				category_url: '/galaxies'
+				category_url: '/c/5'
 			},
 			{
 				category_name: 'Темная материя',
 				category_description: 'Скрытая масса Вселенной',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
-				category_url: '/dark-matter'
+				category_url: '/c/6'
 			},
 			{
 				category_name: 'Темная энергия',
 				category_description: 'Таинственная сила, ускоряющая расширение Вселенной',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
-				category_url: '/dark-energy'
+				category_url: '/c/7'
 			},
 			{
 				category_name: 'Квазары',
 				category_description: 'Яркие центры активных галактик',
 				owner_id: 3,
 				category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp',
-				category_url: '/quasars'
+				category_url: '/c/8'
 			},
 			{
 				category_name: 'Релятивистская астрофизика',
 				category_description: 'Астрофизика высоких скоростей',
 				owner_id: 3,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
-				category_url: '/relativistic-astrophysics'
+				category_url: '/c/9'
 			},
 			{
 				category_name: 'Нейтронные звезды',
 				category_description: 'Изучение наиболее плотных объектов',
 				owner_id: 3,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
-				category_url: '/neutron-stars'
+				category_url: '/c/10'
 			},
 			{
 				category_name: 'Гравитационные волны',
 				category_description: 'Колебания пространства-времени',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
-				category_url: '/gravitational-waves'
+				category_url: '/c/11'
 			},
 			{
 				category_name: 'Космические телескопы',
 				category_description: 'Инструменты для наблюдения Вселенной',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
-				category_url: '/space-telescopes'
+				category_url: '/c/12'
 			},
 			{
 				category_name: 'Космические миссии',
 				category_description: 'Экспедиции к другим планетам и звездам',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
-				category_url: '/space-missions'
+				category_url: '/c/14'
 			},
 			{
 				category_name: 'Планетарная наука',
 				category_description: 'Изучение планет и их систем',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
-				category_url: '/planetary-science'
+				category_url: '/c/14'
 			},
 			{
 				category_name: 'Астрохимия',
 				category_description: 'Химия космоса',
 				owner_id: 3,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
-				category_url: '/astrochemistry'
+				category_url: '/c/15'
 			}
 		]
 	})
@@ -296,7 +296,7 @@ async function up() {
 				update_date: generateDate(2)
 			},
 			{
-				content: 'Согласен с вами!',
+				content: 'Согласен c вами!',
 				post_id: 2,
 				author_id: 1,
 				parent_comment_id: 2,
@@ -318,7 +318,7 @@ async function up() {
 // Создаем теги
 	await prisma.tag.createMany({
 		data: [
-			{ tag_name: 'Астрономия', category_id: 1 }, // Убедитесь, что категория с id 1 существует
+			{ tag_name: 'Астрономия', category_id: 1 }, // Убедитесь, что категория c id 1 существует
 			{ tag_name: 'Космос', category_id: 2 },
 			{ tag_name: 'Физика', category_id: 3 }
 		]

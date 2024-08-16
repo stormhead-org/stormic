@@ -3,10 +3,9 @@
 import { CategoryItem, CategoryItemProps } from '@/shared/components/category-item'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
-import { usePathname } from 'next/navigation'
 import React from 'react'
-import { Skeleton } from './ui/skeleton'
 import { Input } from './ui/input'
+import { Skeleton } from './ui/skeleton'
 
 type Item = CategoryItemProps
 
@@ -22,17 +21,15 @@ interface Props {
 }
 
 export const CategoryForm: React.FC<Props> = ({
-	title,
-	items,
-	defaultItems,
-	limit = 5,
-	searchInputPlaceholder = 'Поиск...',
-	name,
-	className,
-	loading,
-  }) => {
-	
-	const pathname = usePathname()
+	                                              title,
+	                                              items,
+	                                              defaultItems,
+	                                              limit = 5,
+	                                              searchInputPlaceholder = 'Поиск...',
+	                                              name,
+	                                              className,
+	                                              loading
+                                              }) => {
 	const [showAll, setShowAll] = React.useState(false)
 	const [searchValue, setSearchValue] = React.useState('')
 	const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,10 +82,6 @@ export const CategoryForm: React.FC<Props> = ({
 						value={item.value}
 						endAdornment={item.endAdornment}
 						name={name}
-						className={cn(
-							'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-secondary/50 mb-[1px] cursor-pointer',
-							`${pathname === item.url ? 'bg-secondary' : ''}`
-						)}
 					/>
 				))}
 			</div>

@@ -15,7 +15,7 @@ interface Props {
 export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 	const router = useRouter()
 	const pathname = usePathname()
-
+	
 	return (
 		<div className={cn('', className)}>
 			{data.map(item => (
@@ -23,16 +23,16 @@ export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 					key={item.id}
 					className={cn(
 						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-secondary/50 cursor-pointer',
-						`${pathname === item.pageUrl ? 'bg-blue-600' : ''}`
+						`${pathname === item.pageUrl ? 'bg-secondary' : ''}`
 					)}
 					onClick={() => router.push(item.pageUrl)}
 				>
-					<div className='flex items-center gap-2 ml-2'>
-						<LinkIcon size={22} />
-						<Link href={item.pageUrl} className='text-lg font-bold'>
+					<Link href={item.pageUrl}>
+						<div className='flex items-center gap-2 ml-2 text-lg font-bold'>
+							<LinkIcon size={22} />
 							{item.name}
-						</Link>
-					</div>
+						</div>
+					</Link>
 				</li>
 			))}
 		</div>
