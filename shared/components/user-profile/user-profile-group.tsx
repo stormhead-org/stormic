@@ -5,7 +5,6 @@ import { UserProfileBody } from '@/shared/components/user-profile/user-profile-b
 import { UserProfileHeader } from '@/shared/components/user-profile/user-profile-header'
 import { UserProfilePosts } from '@/shared/components/user-profile/user-profile-posts'
 import { cn } from '@/shared/lib/utils'
-import type { Post } from '@prisma/client'
 import React from 'react'
 
 interface Props {
@@ -17,7 +16,7 @@ interface Props {
 	userRegTime: string
 	userSubscribes: number
 	userSub: number
-	profilePosts: Post[]
+	userId: string
 	className?: string
 }
 
@@ -30,7 +29,7 @@ export const UserProfileGroup: React.FC<Props> = ({
 	                                                  userRegTime,
 	                                                  userSubscribes,
 	                                                  userSub,
-	                                                  profilePosts,
+	                                                  userId,
 	                                                  className
                                                   }) => {
 	
@@ -45,7 +44,9 @@ export const UserProfileGroup: React.FC<Props> = ({
 			<div className='ml-6 mt-1 -mb-3'>
 				<FeedToggle />
 			</div>
-			<UserProfilePosts posts={profilePosts} className='mt1' />
+			<UserProfilePosts
+				userId={String(userId)}
+				className='mt-1' />
 		</div>
 	)
 }
