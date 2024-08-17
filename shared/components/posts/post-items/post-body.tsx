@@ -31,9 +31,9 @@ export const PostBody: React.FC<Props> = ({
 		<div className={cn('', className)}>
 			<Title text={postTitle} size='sm' className='font-extrabold my-2' />
 			<p>{truncatedContent}</p>
-			{postImage && (
+			{postImage ? (
 				<img className='rounded-md mt-4 object-cover h-80 w-full' src={String(postImage)} alt={postTitle} />
-			)}
+			) : null}
 		</div>
 	)
 }

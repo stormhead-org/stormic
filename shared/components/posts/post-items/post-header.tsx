@@ -37,7 +37,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 					<Link className='hover:text-primary/50' href={authorUrl}>{authorName}</Link>
 					<br />
 					<Link className='text-sm hover:text-primary/50' href={categoryUrl}>{categoryName}</Link>
-					<span className='ml-2 text-sm'>{postTime}</span>
+					<span className='ml-2 text-sm cursor-default'>{postTime}</span>
 				</div>
 			
 			</div>
@@ -52,7 +52,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 				</Button>
 				<div className='group'>
 					<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-						<GripHorizontal className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1' />
+						<GripHorizontal className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer' />
 					</p>
 				</div>
 			</div>
