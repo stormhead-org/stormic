@@ -7,26 +7,26 @@ import React from 'react'
 
 interface Props {
 	profileBanner?: string
-	userAvatar?: string
-	userName: string
-	userBio?: string
-	userRep: number
-	userRegTime: string
-	userSubscribes: number
-	userSub: number
+	profileAvatar?: string
+	profileName: string
+	profileDescription?: string
+	profileRep: number
+	profileRegTime: string
+	profileFollowers: number
+	profileFollowing: number
 	userId: string
 	className?: string
 }
 
 export const UserProfileGroup: React.FC<Props> = ({
 	                                                  profileBanner,
-	                                                  userAvatar,
-	                                                  userName,
-	                                                  userBio,
-	                                                  userRep,
-	                                                  userRegTime,
-	                                                  userSubscribes,
-	                                                  userSub,
+	                                                  profileAvatar,
+	                                                  profileName,
+	                                                  profileDescription,
+	                                                  profileRep,
+	                                                  profileRegTime,
+	                                                  profileFollowers,
+	                                                  profileFollowing,
 	                                                  userId,
 	                                                  className
                                                   }) => {
@@ -36,13 +36,13 @@ export const UserProfileGroup: React.FC<Props> = ({
 		<div className={cn('', className)}>
 			<ProfileItem
 				profileBanner={profileBanner}
-				userAvatar={userAvatar}
-				userName={userName}
-				userBio={userBio}
-				userRep={userRep}
-				userRegTime={userRegTime}
-				userSubscribes={userSubscribes}
-				userSub={userSub}
+				profileAvatar={profileAvatar}
+				profileName={profileName}
+				profileDescription={profileDescription}
+				profileRep={profileRep}
+				profileRegTime={profileRegTime}
+				profileFollowers={profileFollowers}
+				profileFollowing={profileFollowing}
 			/>
 			<UserProfilePostGroup
 				userId={String(userId)}

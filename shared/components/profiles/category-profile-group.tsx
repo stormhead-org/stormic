@@ -1,33 +1,33 @@
 'use client'
 
-import { UserProfilePostGroup } from '@/shared/components/posts/user-profile-post-group'
+import { CategoryProfilePostGroup } from '@/shared/components/posts/category-profile-post-group'
 import { ProfileItem } from '@/shared/components/profiles/profile-items/profile-item'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 interface Props {
 	profileBanner?: string
-	userAvatar?: string
-	userName: string
-	userBio?: string
-	userRep: number
-	userRegTime: string
-	userSubscribes: number
-	userSub: number
-	userId: string
+	profileAvatar?: string
+	profileName: string
+	profileDescription?: string
+	profileRep?: number
+	profileRegTime?: string
+	profileFollowers: number
+	profileFollowing?: number
+	categoryId: string
 	className?: string
 }
 
 export const CategoryProfileGroup: React.FC<Props> = ({
 	                                                      profileBanner,
-	                                                      userAvatar,
-	                                                      userName,
-	                                                      userBio,
-	                                                      userRep,
-	                                                      userRegTime,
-	                                                      userSubscribes,
-	                                                      userSub,
-	                                                      userId,
+	                                                      profileAvatar,
+	                                                      profileName,
+	                                                      profileDescription,
+	                                                      profileRep,
+	                                                      profileRegTime,
+	                                                      profileFollowers,
+	                                                      profileFollowing,
+	                                                      categoryId,
 	                                                      className
                                                       }) => {
 	
@@ -36,16 +36,16 @@ export const CategoryProfileGroup: React.FC<Props> = ({
 		<div className={cn('', className)}>
 			<ProfileItem
 				profileBanner={profileBanner}
-				userAvatar={userAvatar}
-				userName={userName}
-				userBio={userBio}
-				userRep={userRep}
-				userRegTime={userRegTime}
-				userSubscribes={userSubscribes}
-				userSub={userSub}
+				profileAvatar={profileAvatar}
+				profileName={profileName}
+				profileDescription={profileDescription}
+				profileRep={profileRep}
+				profileRegTime={profileRegTime}
+				profileFollowers={profileFollowers}
+				profileFollowing={profileFollowing}
 			/>
-			<UserProfilePostGroup
-				userId={String(userId)}
+			<CategoryProfilePostGroup
+				categoryId={String(categoryId)}
 				className='mt-1' />
 		</div>
 	)

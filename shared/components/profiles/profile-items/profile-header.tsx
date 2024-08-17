@@ -8,19 +8,19 @@ import React from 'react'
 
 interface Props {
 	profileBanner?: string
-	userAvatar?: string
-	userName: string
-	userRep: number
-	userRegTime: string
+	profileAvatar?: string
+	profileName: string
+	profileRep?: number
+	profileRegTime?: string
 	className?: string
 }
 
 export const ProfileHeader: React.FC<Props> = ({
 	                                               profileBanner,
-	                                               userAvatar,
-	                                               userName,
-	                                               userRep,
-	                                               userRegTime,
+	                                               profileAvatar,
+	                                               profileName,
+	                                               profileRep,
+	                                               profileRegTime,
 	                                               className
                                                }) => {
 	
@@ -33,7 +33,7 @@ export const ProfileHeader: React.FC<Props> = ({
 			/>
 			<div className='-mt-10 mx-6'>
 				<div className='flex w-full justify-between'>
-					<ProfileAvatar className='w-24 h-24' avatarImage={String(userAvatar)} avatarSize={Number(92)} />
+					<ProfileAvatar className='w-24 h-24' avatarImage={String(profileAvatar)} avatarSize={Number(92)} />
 					<div className='flex items-center'>
 						<Button
 							variant='secondary'
@@ -48,11 +48,17 @@ export const ProfileHeader: React.FC<Props> = ({
 						</p>
 					</div>
 				</div>
-				<p className='font-bold mt-2 text-2xl'> {userName} </p>
-				<div className='flex flex-1 items-center mt-2'>
-					<p className='text-md text-green-500'>+{userRep}</p>
-					<p className='ml-4 text-md'>c {userRegTime}</p>
-				</div>
+				<p className='font-bold mt-2 text-2xl'> {profileName} </p>
+				
+				
+				{profileRep ? (
+					<div className='flex flex-1 items-center mt-2'>
+						<p className='text-md text-green-500 font-bold'>+{profileRep}</p>
+						<p className='ml-4 text-md font-bold'>c {profileRegTime}</p>
+					</div>
+				) : (
+					null
+				)}
 			</div>
 		</div>
 	)

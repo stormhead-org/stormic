@@ -8,25 +8,25 @@ import React from 'react'
 
 interface Props {
 	profileBanner?: string
-	userAvatar?: string
-	userName: string
-	userBio?: string
-	userRep: number
-	userRegTime: string
-	userSubscribes: number
-	userSub: number
+	profileAvatar?: string
+	profileName: string
+	profileDescription?: string
+	profileRep?: number
+	profileRegTime?: string
+	profileFollowers: number
+	profileFollowing?: number
 	className?: string
 }
 
 export const ProfileItem: React.FC<Props> = ({
 	                                             profileBanner,
-	                                             userAvatar,
-	                                             userName,
-	                                             userBio,
-	                                             userRep,
-	                                             userRegTime,
-	                                             userSubscribes,
-	                                             userSub,
+	                                             profileAvatar,
+	                                             profileName,
+	                                             profileDescription,
+	                                             profileRep,
+	                                             profileRegTime,
+	                                             profileFollowers,
+	                                             profileFollowing,
 	                                             className
                                              }) => {
 	
@@ -34,11 +34,12 @@ export const ProfileItem: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<div className='rounded-md bg-secondary'>
-				<ProfileHeader profileBanner={profileBanner} userName={userName} userRegTime={userRegTime}
-				               userRep={userRep}
-				               userAvatar={userAvatar}
+				<ProfileHeader profileBanner={profileBanner} profileName={profileName} profileRegTime={profileRegTime}
+				               profileRep={profileRep}
+				               profileAvatar={profileAvatar}
 				/>
-				<ProfileBody userSub={userSub} userSubscribes={userSubscribes} userBio={userBio} />
+				<ProfileBody profileFollowing={profileFollowing} profileFollowers={profileFollowers}
+				             profileDescription={profileDescription} />
 			</div>
 			<div className='ml-6 mt-1 -mb-3'>
 				<FeedToggle />

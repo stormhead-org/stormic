@@ -6,11 +6,20 @@ export async function GET(request: Request) {
 	// Получаем параметры запроса
 	const url = new URL(request.url)
 	const userId = url.searchParams.get('userId')
+	const categoryId = url.searchParams.get('categoryId')
 	
-	// Условие для фильтрации постов: если `userId` передан, то фильтруем по нему
-	const whereCondition = userId ? { author_id: Number(userId) } : {}
+	// Создаем объект условия для фильтрации
+	const whereCondition: any = {}
 	
-	// Ищем посты (либо все, либо для конкретного пользователя)
+	if (userId) {
+		whereCondition.author_id = Number(userId)
+	}
+	
+	if (categoryId) {
+		whereCondition.category_id = Number(categoryId)
+	}
+	
+	// Ищем посты с учетом фильтрации
 	const posts = await prisma.post.findMany({
 		where: whereCondition,
 		include: {

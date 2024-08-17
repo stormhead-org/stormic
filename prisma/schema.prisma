@@ -137,6 +137,7 @@ model Post {
 model Category {
   category_id          Int                    @id @default(autoincrement()) // Уникальный идентификатор категории
   category_name        String // Название категории
+  category_banner      String? // URL баннер категории
   category_description String // Описание категории
   category_image       String // Лого категории
   category_url         String // Ссылка на категорию

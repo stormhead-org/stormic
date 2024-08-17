@@ -121,6 +121,7 @@ async function up() {
 		data: [
 			{
 				category_name: 'Черные дыры',
+				category_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				category_description: 'Изучение черных дыр',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp',
@@ -128,6 +129,7 @@ async function up() {
 			},
 			{
 				category_name: 'Космология',
+				category_banner: 'https://4kwallpapers.com/images/walls/thumbs_3t/9621.jpg',
 				category_description: 'Космология вокруг',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
@@ -135,6 +137,7 @@ async function up() {
 			},
 			{
 				category_name: 'Экзопланеты',
+				category_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				category_description: 'Лучшие экзопланеты для отдыха',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
@@ -142,6 +145,7 @@ async function up() {
 			},
 			{
 				category_name: 'Солнечная система',
+				category_banner: 'https://4kwallpapers.com/images/walls/thumbs_3t/9621.jpg',
 				category_description: 'Солнечная система и Нибиру',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp',
@@ -149,6 +153,7 @@ async function up() {
 			},
 			{
 				category_name: 'Галактики',
+				category_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				category_description: 'Структура и эволюция галактик',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
@@ -156,6 +161,7 @@ async function up() {
 			},
 			{
 				category_name: 'Темная материя',
+				category_banner: 'https://4kwallpapers.com/images/walls/thumbs_3t/9621.jpg',
 				category_description: 'Скрытая масса Вселенной',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
@@ -163,6 +169,7 @@ async function up() {
 			},
 			{
 				category_name: 'Темная энергия',
+				category_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				category_description: 'Таинственная сила, ускоряющая расширение Вселенной',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
@@ -170,6 +177,7 @@ async function up() {
 			},
 			{
 				category_name: 'Квазары',
+				category_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				category_description: 'Яркие центры активных галактик',
 				owner_id: 3,
 				category_image: 'https://leonardo.osnova.io/aa08c3bd-0d34-5626-9986-7f06f5bedd24/-/scale_crop/72x72/-/format/webp',
@@ -177,6 +185,7 @@ async function up() {
 			},
 			{
 				category_name: 'Релятивистская астрофизика',
+				category_banner: 'https://4kwallpapers.com/images/walls/thumbs_3t/9621.jpg',
 				category_description: 'Астрофизика высоких скоростей',
 				owner_id: 3,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
@@ -184,6 +193,7 @@ async function up() {
 			},
 			{
 				category_name: 'Нейтронные звезды',
+				category_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				category_description: 'Изучение наиболее плотных объектов',
 				owner_id: 3,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
@@ -191,6 +201,7 @@ async function up() {
 			},
 			{
 				category_name: 'Гравитационные волны',
+				category_banner: 'https://4kwallpapers.com/images/walls/thumbs_3t/9621.jpg',
 				category_description: 'Колебания пространства-времени',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
@@ -198,6 +209,7 @@ async function up() {
 			},
 			{
 				category_name: 'Космические телескопы',
+				category_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				category_description: 'Инструменты для наблюдения Вселенной',
 				owner_id: 1,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
@@ -205,6 +217,7 @@ async function up() {
 			},
 			{
 				category_name: 'Космические миссии',
+				category_banner: 'https://4kwallpapers.com/images/walls/thumbs_3t/9621.jpg',
 				category_description: 'Экспедиции к другим планетам и звездам',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
@@ -212,6 +225,7 @@ async function up() {
 			},
 			{
 				category_name: 'Планетарная наука',
+				category_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
 				category_description: 'Изучение планет и их систем',
 				owner_id: 2,
 				category_image: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
@@ -219,6 +233,7 @@ async function up() {
 			},
 			{
 				category_name: 'Астрохимия',
+				category_banner: 'https://4kwallpapers.com/images/walls/thumbs_3t/9621.jpg',
 				category_description: 'Химия космоса',
 				owner_id: 3,
 				category_image: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',

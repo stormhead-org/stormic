@@ -10,3 +10,8 @@ export const getAll = async (): Promise<Post[]> => {
 export const getPostsByUserId = async (userId: string): Promise<Post[]> => {
 	return (await axiosInstance.get<Post[]>(`${ApiRoutes.POSTS}?userId=${userId}`)).data
 }
+
+// Функция для получения постов конкретной категории по ее ID
+export const getPostsByCategoryId = async (categoryId: string): Promise<Post[]> => {
+	return (await axiosInstance.get<Post[]>(`${ApiRoutes.POSTS}?categoryId=${categoryId}`)).data
+}

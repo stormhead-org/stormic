@@ -54,14 +54,14 @@ export default async function UserPage({
 	return (
 		<>
 			<UserProfileGroup
-				userName={user.fullName}
 				profileBanner={String(user.profile_banner || stormicBanner.url)}
-				userRegTime={userRegConvert}
-				userRep={userRep}
-				userAvatar={user.profile_picture || ''}
-				userBio={user.bio || ''}
-				userSub={followersCount}
-				userSubscribes={followingCount}
+				profileAvatar={user.profile_picture || ''}
+				profileName={user.fullName}
+				profileDescription={user.bio || ''}
+				profileRep={userRep}
+				profileRegTime={userRegConvert}
+				profileFollowers={followingCount}
+				profileFollowing={followersCount}
 				userId={String(userId)}
 			/>
 		</>

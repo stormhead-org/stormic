@@ -9,48 +9,50 @@ export default async function CategoryPage({
 	// Преобразуем id в число
 	const categoryId = Number(id)
 	
-	// Ищем категорию по id
-	const category = await prisma.category.findUnique({
-		where: { category_id: categoryId }
-	})
-	
 	// Ищем категорию по id и считаем количество подписчиков
-	const [user, followersCount] = await Promise.all([
-		prisma.category.findUnique({
-			where: { category_id: categoryId }
-		}),
-		prisma.userSubscription.count({
-			where: {
-				followingId: userId
+	const [categoryWithDetails, stormicBanner] = await Promise.all([
+		await prisma.category.findUnique({
+			where: { category_id: categoryId },
+			include: {
+				_count: {
+					select: { followers: true }
+				},
+				owner: true // Включаем данные о владельце категории
 			}
 		}),
-		prisma.userSubscription.count({
-			where: {
-				followerId: userId
-			}
+		prisma.stormicMedia.findFirst({
+			where: { mediaType: 'BANNER' }
 		})
 	])
 	
 	// Проверяем, найдена ли категория
-	if (!category) {
+	if (!categoryWithDetails) {
 		return (
 			<p>Категория не найдена</p>
 		)
 	}
 	
 	return (
-		<>
-			<CategoryProfileGroup
-				userName={user.fullName}
-				profileBanner={String(user.profile_banner)}
-				userRegTime={userRegConvert}
-				userRep={userRep}
-				userAvatar={user.profile_picture || ''}
-				userBio={user.bio || ''}
-				userSub={followersCount}
-				userSubscribes={followingCount}
-				userId={String(userId)}
-			/>
-		</>
+		<CategoryProfileGroup
+			profileBanner={String(categoryWithDetails.category_banner || stormicBanner.url)}
+			profileAvatar={categoryWithDetails.category_image || ''}
+			profileName={categoryWithDetails.category_name}
+			profileDescription={categoryWithDetails.category_description || ''}
+			profileFollowers={categoryWithDetails._count.followers}
+			categoryId={String(categoryId)}
+		/>
 	)
 }
+
+// <h1>{categoryWithDetails.category_name}</h1>
+// <p>{categoryWithDetails.category_description}</p>
+// <img src={categoryWithDetails.category_image} alt={categoryWithDetails.category_name} />
+// <p>URL: {categoryWithDetails.category_url}</p>
+// <p>Owner:</p>
+// <div>
+// 	<img src={categoryWithDetails.owner.profile_picture || '/default-avatar.png'}
+// 	     alt={categoryWithDetails.owner.fullName} style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
+// 	<p>Name: {categoryWithDetails.owner.fullName}</p>
+// 	<a href={`/u/${categoryWithDetails.owner.id}`}>Profile Link</a>
+// </div>
+// <p>Followers Count: {categoryWithDetails._count.followers}</p>
