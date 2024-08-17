@@ -1,14 +1,12 @@
 'use client'
 
-import { FeedToggle } from '@/shared/components/ui/feed-toggle'
-import { UserProfileBody } from '@/shared/components/user-profile/user-profile-body'
-import { UserProfileHeader } from '@/shared/components/user-profile/user-profile-header'
-import { UserProfilePosts } from '@/shared/components/user-profile/user-profile-posts'
+import { UserProfilePostGroup } from '@/shared/components/posts/user-profile-post-group'
+import { ProfileItem } from '@/shared/components/profiles/profile-items/profile-item'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 interface Props {
-	profileBanner: string
+	profileBanner?: string
 	userAvatar?: string
 	userName: string
 	userBio?: string
@@ -36,15 +34,17 @@ export const UserProfileGroup: React.FC<Props> = ({
 	
 	return (
 		<div className={cn('', className)}>
-			<div className='rounded-md bg-secondary'>
-				<UserProfileHeader profileBanner={profileBanner} userName={userName} userRegTime={userRegTime} userRep={userRep}
-				                   userAvatar={userAvatar} />
-				<UserProfileBody userSub={userSub} userSubscribes={userSubscribes} userBio={userBio} />
-			</div>
-			<div className='ml-6 mt-1 -mb-3'>
-				<FeedToggle />
-			</div>
-			<UserProfilePosts
+			<ProfileItem
+				profileBanner={profileBanner}
+				userAvatar={userAvatar}
+				userName={userName}
+				userBio={userBio}
+				userRep={userRep}
+				userRegTime={userRegTime}
+				userSubscribes={userSubscribes}
+				userSub={userSub}
+			/>
+			<UserProfilePostGroup
 				userId={String(userId)}
 				className='mt-1' />
 		</div>

@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma/prisma-client'
 import { MainBannerForm } from '@/shared/components/'
-import { PostGroup } from '@/shared/components/post-item/post-group'
+import { MainPagePostGroup } from '@/shared/components/posts/main-page-post-group'
 
 export default async function Home() {
 	
@@ -19,7 +19,7 @@ export default async function Home() {
 		<>
 			{/* Центральная часть */}
 			<MainBannerForm stormicName={stormicName} bannerUrl={banner} />
-			<PostGroup className='mt-4' />
+			<MainPagePostGroup className='mt-4' />
 		</>
 	)
 }

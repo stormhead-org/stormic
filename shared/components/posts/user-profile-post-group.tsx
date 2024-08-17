@@ -1,27 +1,31 @@
 'use client'
 
-import { PostForm } from '@/shared/components/post-item/post-form'
-import { usePosts } from '@/shared/hooks/use-posts'
+import { PostForm } from '@/shared/components/posts/post-items/post-form'
+import { useUserPosts } from '@/shared/hooks/use-user-post'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 interface Props {
+	userId: string
 	className?: string
 }
 
-export const PostGroup: React.FC<Props> = ({ className }) => {
+export const UserProfilePostGroup: React.FC<Props> = ({
+	                                                      userId,
+	                                                      className
+                                                      }) => {
 	
-	const { posts, loading } = usePosts()
+	const { posts, loading } = useUserPosts(userId)
 	
 	const items = posts.map(item => ({
 		postTitle: item.title,
 		postContent: item.content,
 		postImage: item.post_image,
 		postUrl: '/p/' + item.post_id,
-		authorName: item.author.fullName,
+		authorName: item.author_fullName,
 		authorUrl: '/u/' + item.author_id,
-		authorAvatar: item.author.profile_picture,
-		categoryName: item.category.category_name,
+		authorAvatar: item.author_profile_picture,
+		categoryName: item.category_name,
 		categoryUrl: '/c/' + item.category_id,
 		commentsCount: item.commentsCount,
 		bookmarksCount: item.bookmarksCount,

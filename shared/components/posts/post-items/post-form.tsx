@@ -1,9 +1,9 @@
 'use client'
 
-import { PostItem, PostItemProps } from '@/shared/components/post-item/post-item'
+import { PostItem, PostItemProps } from '@/shared/components/posts/post-items/post-item'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
-import { Skeleton } from '../ui/skeleton'
+import { Skeleton } from '../../ui/skeleton'
 
 type Item = PostItemProps
 

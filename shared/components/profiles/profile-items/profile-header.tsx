@@ -7,7 +7,7 @@ import { GripHorizontal } from 'lucide-react'
 import React from 'react'
 
 interface Props {
-	profileBanner: string
+	profileBanner?: string
 	userAvatar?: string
 	userName: string
 	userRep: number
@@ -15,19 +15,22 @@ interface Props {
 	className?: string
 }
 
-export const UserProfileHeader: React.FC<Props> = ({
-	                                                   profileBanner,
-	                                                   userAvatar,
-	                                                   userName,
-	                                                   userRep,
-	                                                   userRegTime,
-	                                                   className
-                                                   }) => {
+export const ProfileHeader: React.FC<Props> = ({
+	                                               profileBanner,
+	                                               userAvatar,
+	                                               userName,
+	                                               userRep,
+	                                               userRegTime,
+	                                               className
+                                               }) => {
 	
 	return (
 		<div className={cn('', className)}>
-			<img className='rounded-t-md object-cover object-center w-full h-[120px]' src={profileBanner}
-			     alt='Profile Banner' />
+			<img
+				className='rounded-t-md object-cover object-center w-full h-[120px]'
+				src={profileBanner}
+				alt='Profile Banner'
+			/>
 			<div className='-mt-10 mx-6'>
 				<div className='flex w-full justify-between'>
 					<ProfileAvatar className='w-24 h-24' avatarImage={String(userAvatar)} avatarSize={Number(92)} />

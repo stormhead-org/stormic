@@ -9,6 +9,35 @@ const generateDate = (daysAgo: number) => {
 	return date
 }
 
+// Функция для генерации случайного числа в заданном диапазоне
+const getRandomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min
+
+// Функция для генерации случайных подписок
+const generateRandomSubscriptions = async () => {
+	// Получаем всех пользователей и категории
+	const users = await prisma.user.findMany()
+	const categories = await prisma.category.findMany()
+	
+	for (const user of users) {
+		const numCategories = getRandomInt(1, categories.length) // Случайное количество категорий
+		const subscribedCategories = new Set<number>()
+		
+		while (subscribedCategories.size < numCategories) {
+			const randomCategoryId = categories[getRandomInt(0, categories.length - 1)].category_id
+			subscribedCategories.add(randomCategoryId)
+		}
+		
+		for (const categoryId of Array.from(subscribedCategories)) { // Преобразование Set в массив
+			await prisma.categorySubscription.create({
+				data: {
+					user_id: user.id,
+					category_id: categoryId
+				}
+			})
+		}
+	}
+}
+
 async function up() {
 	// Создание пользователей
 	await prisma.user.createMany({
@@ -530,6 +559,10 @@ async function up() {
 			{ userId: 2, postId: 3, reason: 'Персонализированная рекомендация', createdAt: generateDate(2) }
 		]
 	})
+	
+	// Генерация случайных подписок
+	await generateRandomSubscriptions()
+	
 }
 
 async function down() {
@@ -562,6 +595,7 @@ async function down() {
 	await prisma.$executeRaw`TRUNCATE TABLE "UserBadge" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "UserSubscription" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "Recommendation" RESTART IDENTITY CASCADE`
+	await prisma.$executeRaw`TRUNCATE TABLE "CategorySubscription" RESTART IDENTITY CASCADE`
 }
 
 

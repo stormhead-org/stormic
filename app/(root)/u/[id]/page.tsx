@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
-import { UserProfileGroup } from '@/shared/components/user-profile/user-profile-group'
+import { UserProfileGroup } from '@/shared/components/profiles/user-profile-group'
 import { format } from 'date-fns'
 
 export default async function UserPage({
@@ -11,7 +11,7 @@ export default async function UserPage({
 	const userId = Number(id)
 	
 	// Ищем пользователя по id и считаем количество подписчиков и подписок
-	const [user, followersCount, followingCount] = await Promise.all([
+	const [user, followersCount, followingCount, stormicBanner] = await Promise.all([
 		prisma.user.findUnique({
 			where: { id: userId },
 			include: {
@@ -31,6 +31,9 @@ export default async function UserPage({
 			where: {
 				followerId: userId
 			}
+		}),
+		prisma.stormicMedia.findFirst({
+			where: { mediaType: 'BANNER' }
 		})
 	])
 	
@@ -52,7 +55,7 @@ export default async function UserPage({
 		<>
 			<UserProfileGroup
 				userName={user.fullName}
-				profileBanner={String(user.profile_banner)}
+				profileBanner={String(user.profile_banner || stormicBanner.url)}
 				userRegTime={userRegConvert}
 				userRep={userRep}
 				userAvatar={user.profile_picture || ''}

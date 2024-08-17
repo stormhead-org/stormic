@@ -9,12 +9,12 @@ interface Props {
 	className?: string
 }
 
-export const UserProfileBody: React.FC<Props> = ({
-	                                                 userBio,
-	                                                 userSubscribes,
-	                                                 userSub,
-	                                                 className
-                                                 }) => {
+export const ProfileBody: React.FC<Props> = ({
+	                                             userBio,
+	                                             userSubscribes,
+	                                             userSub,
+	                                             className
+                                             }) => {
 	return (
 		<div className={cn('mx-6', className)}>
 			<p className='text-md mt-2'>{userBio}</p>
@@ -25,7 +25,7 @@ export const UserProfileBody: React.FC<Props> = ({
 			<div className='flex mt-2'>
 				<Button
 					variant='secondary'
-					className='h-10 w-26 text-md font-bold mt-auto hover:border-blue-600 border-b-4'
+					className='h-10 w-26 text-md font-bold mt-auto hover:border-blue-600 border-b-4 rounded-none px-0'
 					type='button'
 					// onClick={() => router.push('/write')}
 				>
@@ -33,7 +33,7 @@ export const UserProfileBody: React.FC<Props> = ({
 				</Button>
 				<Button
 					variant='secondary'
-					className='h-10 w-26 text-md font-bold mt-auto hover:border-blue-600 border-b-4 ml-4'
+					className='h-10 w-26 text-md font-bold mt-auto hover:border-blue-600 border-b-4 ml-8 rounded-none px-0'
 					type='button'
 					// onClick={() => router.push('/write')}
 				>

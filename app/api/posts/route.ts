@@ -42,11 +42,24 @@ export async function GET(request: Request) {
 				}
 			})
 			
+			// Возвращаем новый объект с перенесенными на верхний уровень свойствами
 			return {
-				...post,
+				post_id: post.post_id,
+				title: post.title,
+				post_image: post.post_image,
+				content: post.content,
+				publication_date: format(new Date(post.publication_date), 'dd.MM.yy'),
+				last_edit_date: post.last_edit_date,
+				post_status: post.PostStatus,
+				likes_count: post.likes_count,
+				views_count: post.views_count,
+				author_id: post.author_id,
+				author_fullName: post.author.fullName,
+				author_profile_picture: post.author.profile_picture,
+				category_id: post.category_id,
+				category_name: post.category.category_name,
 				commentsCount,
-				bookmarksCount,
-				publication_date: format(new Date(post.publication_date), 'dd.MM.yy')
+				bookmarksCount
 			}
 		})
 	)

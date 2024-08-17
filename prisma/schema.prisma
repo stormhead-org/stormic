@@ -72,25 +72,26 @@ model User {
   createdAt        DateTime          @default(now()) // Дата создания пользователя
   updatedAt        DateTime          @updatedAt // Дата последнего обновления пользователя
 
-  profile_banner      String? // URL баннер профиля пользователя
-  profile_picture     String? // URL фотографии пользователя
-  bio                 String? // Биография пользователя
-  roles               UserRoleAssignment[] // Роли, назначенные пользователю
-  posts               Post[] // Посты, созданные пользователем
-  comments            Comment[] // Комментарии пользователя
-  bookmarks           Bookmark[] // Пользователи, которые добавили пост в закладки
-  likes               Like[] // Лайки пользователя
-  views               View[] // Просмотры пользователем
-  images              Image[] // Изображения пользователя
-  notifications       Notification[] // Уведомления пользователя
-  categories          Category[]           @relation("UserCategories") // Категории, которые пользователь создал
-  moderatedCategories CategoryModerator[] // Категории, которые пользователь модерирует
-  followers           UserSubscription[]   @relation("Following") // Подписчики пользователя
-  following           UserSubscription[]   @relation("Followers") // Подписки пользователя
-  reputation          Reputation? // Репутация пользователя
-  badges              UserBadge[] // Награды пользователя
-  postEditHistories   PostEditHistory[] // История изменений постов
-  recommendations     Recommendation[] // Рекомендации постов пользователю
+  profile_banner       String? // URL баннер профиля пользователя
+  profile_picture      String? // URL фотографии пользователя
+  bio                  String? // Биография пользователя
+  roles                UserRoleAssignment[] // Роли, назначенные пользователю
+  posts                Post[] // Посты, созданные пользователем
+  comments             Comment[] // Комментарии пользователя
+  bookmarks            Bookmark[] // Пользователи, которые добавили пост в закладки
+  likes                Like[] // Лайки пользователя
+  views                View[] // Просмотры пользователем
+  images               Image[] // Изображения пользователя
+  notifications        Notification[] // Уведомления пользователя
+  categories           Category[]             @relation("UserCategories") // Категории, которые пользователь создал
+  moderatedCategories  CategoryModerator[] // Категории, которые пользователь модерирует
+  followers            UserSubscription[]     @relation("Following") // Подписчики пользователя
+  following            UserSubscription[]     @relation("Followers") // Подписки пользователя
+  subscribedCategories CategorySubscription[] // Подписки пользователя на категории
+  reputation           Reputation? // Репутация пользователя
+  badges               UserBadge[] // Награды пользователя
+  postEditHistories    PostEditHistory[] // История изменений постов
+  recommendations      Recommendation[] // Рекомендации постов пользователю
 
   @@map("users") // Переименование таблицы в базе данных на "users"
 }
@@ -134,16 +135,17 @@ model Post {
 }
 
 model Category {
-  category_id          Int                 @id @default(autoincrement()) // Уникальный идентификатор категории
+  category_id          Int                    @id @default(autoincrement()) // Уникальный идентификатор категории
   category_name        String // Название категории
   category_description String // Описание категории
   category_image       String // Лого категории
   category_url         String // Ссылка на категорию
   posts                Post[] // Посты в категории
+  followers            CategorySubscription[] @relation("CategorySubscriptions") // Подписчики категории
   owner_id             Int // Идентификатор владельца категории
   moderators           CategoryModerator[] // Модераторы категории
 
-  owner User @relation("UserCategories", fields: [owner_id], references: [id]) // Связь c моделью User
+  owner User @relation("UserCategories", fields: [owner_id], references: [id]) // Связь с моделью User
 }
 
 model Bookmark {
@@ -341,6 +343,17 @@ model UserSubscription {
   following User @relation("Followers", fields: [followingId], references: [id]) // Связь c моделью User для подписок
 
   @@unique([followerId, followingId]) // Уникальность комбинации followerId и followingId
+}
+
+model CategorySubscription {
+  id          Int      @id @default(autoincrement()) // Уникальный идентификатор для связи подписки
+  user_id     Int // Идентификатор пользователя
+  category_id Int // Идентификатор категории
+  createdAt   DateTime @default(now()) // Дата создания подписки
+
+  // Определение связей
+  user     User     @relation(fields: [user_id], references: [id])
+  category Category @relation("CategorySubscriptions", fields: [category_id], references: [category_id])
 }
 
 model Recommendation {
