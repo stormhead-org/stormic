@@ -13,6 +13,7 @@ export interface FullPostItemProps {
 	authorAvatar?: string | null
 	categoryName: string
 	categoryUrl: string
+	postTags?: string[]
 	commentsCount: number
 	bookmarksCount: number
 	likesCount: number
@@ -30,6 +31,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 	                                                          authorAvatar,
 	                                                          categoryName,
 	                                                          categoryUrl,
+	                                                          postTags,
 	                                                          commentsCount,
 	                                                          bookmarksCount,
 	                                                          likesCount,
@@ -42,8 +44,13 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 			<PostHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
 			            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
 			<PostFullBody className='cursor-default' postTitle={postTitle} postContent={postContent} postImage={postImage} />
-			<PostFooter commentsCount={commentsCount} bookmarksCount={bookmarksCount} likesCount={likesCount}
-			            viewsCount={viewsCount} className='mt-4' />
+			<PostFooter
+				postTags={postTags}
+				commentsCount={commentsCount}
+				bookmarksCount={bookmarksCount}
+				likesCount={likesCount}
+				viewsCount={viewsCount}
+				className='mt-4' />
 		</div>
 	)
 }

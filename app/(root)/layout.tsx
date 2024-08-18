@@ -9,7 +9,7 @@ import {
 	SocialMenu,
 	Title
 } from '@/shared/components/'
-import { CommentFeedGroup } from '@/shared/components/comment-feed-item/comment-feed-group'
+import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
 import Header from '@/shared/components/header'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'

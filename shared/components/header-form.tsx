@@ -1,9 +1,6 @@
 'use client'
 
-import {
-	Container,
-	HeaderButtons, HeaderUserBar,
-} from '@/shared/components'
+import { Container, HeaderButtons, HeaderUserBar } from '@/shared/components'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import React from 'react'
@@ -19,14 +16,14 @@ interface Props {
 }
 
 export const HeaderForm: React.FC<Props> = ({
-  hasSearch = true,
-	hasCart = true,
-	avatarImage,
-  logoImage,
-  stormicName,
-  description,
-	className,
-}) => {
+	                                            hasSearch = true,
+	                                            hasCart = true,
+	                                            avatarImage,
+	                                            logoImage,
+	                                            stormicName,
+	                                            description,
+	                                            className
+                                            }) => {
 	return (
 		<header className={cn('border-b', className)}>
 			<Container className='flex items-center justify-between py-4'>
@@ -42,7 +39,7 @@ export const HeaderForm: React.FC<Props> = ({
 						</div>
 					</div>
 				</Link>
-
+				
 				{/* {hasSearch && (
 					<div className='mx-10 flex-1'>
 						<SearchInput />
@@ -51,11 +48,11 @@ export const HeaderForm: React.FC<Props> = ({
 				<div className='w-[500px]'>
 					<HeaderButtons />
 				</div>
-
+				
 				{/* Правая часть */}
 				<div className='flex items-center gap-3 w-[250px] justify-end'>
-
-					<HeaderUserBar avatarImage={ avatarImage	}/>
+					
+					<HeaderUserBar avatarImage={avatarImage} />
 				</div>
 			</Container>
 		</header>

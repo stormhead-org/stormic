@@ -87,6 +87,7 @@ model User {
   moderatedCategories  CategoryModerator[] // Категории, которые пользователь модерирует
   followers            UserSubscription[]     @relation("Following") // Подписчики пользователя
   following            UserSubscription[]     @relation("Followers") // Подписки пользователя
+  commentLikes         CommentLike[] // Лайки, поставленные пользователем
   subscribedCategories CategorySubscription[] // Подписки пользователя на категории
   reputation           Reputation? // Репутация пользователя
   badges               UserBadge[] // Награды пользователя
@@ -180,10 +181,23 @@ model Comment {
   update_date       DateTime @default(now()) // Дата обновления комментария
   parent_comment_id Int? // Идентификатор родительского комментария (для ответов)
 
-  post     Post      @relation(fields: [post_id], references: [post_id]) // Связь c моделью Post
-  author   User      @relation(fields: [author_id], references: [id]) // Связь c моделью User
-  parent   Comment?  @relation(name: "CommentToComment", fields: [parent_comment_id], references: [comment_id]) // Связь c родительским комментарием
-  children Comment[] @relation(name: "CommentToComment") // Дети комментария (ответы)
+  post     Post          @relation(fields: [post_id], references: [post_id]) // Связь c моделью Post
+  author   User          @relation(fields: [author_id], references: [id]) // Связь c моделью User
+  likes    CommentLike[] // Лайки, связанные с комментарием
+  parent   Comment?      @relation(name: "CommentToComment", fields: [parent_comment_id], references: [comment_id]) // Связь c родительским комментарием
+  children Comment[]     @relation(name: "CommentToComment") // Дети комментария (ответы)
+}
+
+model CommentLike {
+  id         Int      @id @default(autoincrement()) // Уникальный идентификатор лайка
+  comment_id Int // Идентификатор комментария, к которому относится лайк
+  user_id    Int // Идентификатор пользователя, поставившего лайк
+  created_at DateTime @default(now()) // Дата создания лайка
+
+  comment Comment @relation(fields: [comment_id], references: [comment_id], onDelete: Cascade) // Связь с моделью Comment
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade) // Связь с моделью User
+
+  @@unique([comment_id, user_id]) // Гарантирует уникальность лайка для каждого пользователя и комментария
 }
 
 model Tag {

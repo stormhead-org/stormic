@@ -39,6 +39,15 @@ export async function GET(request: Request) {
 					select: {
 						category_name: true
 					}
+				},
+				tags: {
+					include: {
+						tag: {
+							select: {
+								tag_name: true
+							}
+						}
+					}
 				}
 			}
 		})
@@ -71,7 +80,8 @@ export async function GET(request: Request) {
 				category_id: post.category_id,
 				category_name: post.category.category_name,
 				commentsCount,
-				bookmarksCount
+				bookmarksCount,
+				tags: post.tags.map(pt => pt.tag.tag_name) // Массив имен тегов
 			}
 			
 			return NextResponse.json(postWithDetails)
@@ -92,6 +102,15 @@ export async function GET(request: Request) {
 				category: {
 					select: {
 						category_name: true
+					}
+				},
+				tags: {
+					include: {
+						tag: {
+							select: {
+								tag_name: true
+							}
+						}
 					}
 				}
 			}
@@ -128,7 +147,8 @@ export async function GET(request: Request) {
 					author_id: post.author_id,
 					category_id: post.category_id,
 					commentsCount,
-					bookmarksCount
+					bookmarksCount,
+					tags: post.tags.map(pt => pt.tag.tag_name) // Массив имен тегов
 				}
 			})
 		)

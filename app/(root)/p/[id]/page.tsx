@@ -26,8 +26,7 @@ export default async function PostPage({
 	}
 	
 	return (
-		<>
-			<FullPostPage className='mt-4' postId={String(postId)} />
-		</>
+		
+		<FullPostPage postId={String(postId)} />
 	)
 }

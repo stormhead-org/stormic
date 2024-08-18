@@ -1,6 +1,6 @@
 'use client'
 
-import { CommentFeedForm } from '@/shared/components/comment-feed-item/comment-feed-form'
+import { CommentForm } from '@/shared/components/comments/comments-items/comment-form'
 import { useComments } from '@/shared/hooks/use-comments'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
@@ -14,21 +14,23 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 	const { comments, loading } = useComments()
 	
 	const items = comments.map(item => ({
-		postTitle: item.post.title,
-		postContent: item.content,
+		postTitle: item.post_title,
+		content: item.content,
 		postUrl: '/p/' + item.post_id,
-		authorName: item.author.fullName,
+		authorName: item.author_fullName,
 		authorUrl: '/u/' + item.author_id,
-		authorAvatar: item.author.profile_picture
+		authorAvatar: item.author_profile_picture
 	}))
 	
 	return (
 		<div className={cn('', className)}>
-			<CommentFeedForm
+			<CommentForm
 				limit={10}
 				items={items}
 				loading={loading}
 				className='mt-4'
+				maxLengthHeader={28}
+				maxLengthBody={56}
 			/>
 		</div>
 	)

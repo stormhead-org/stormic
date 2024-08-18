@@ -38,6 +38,7 @@ export const FullPostForm: React.FC<Props> = ({
 				authorAvatar={items.authorAvatar}
 				categoryName={items.categoryName}
 				categoryUrl={items.categoryUrl}
+				postTags={items.postTags}
 				commentsCount={items.commentsCount}
 				bookmarksCount={items.bookmarksCount}
 				likesCount={items.likesCount}

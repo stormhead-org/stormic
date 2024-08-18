@@ -1,9 +1,11 @@
 'use client'
 
+import { CommentFullPostGroup } from '@/shared/components/comments/comment-full-post-group'
 import { FullPostForm } from '@/shared/components/posts/full-post-items/full-post-form'
 import { usePostById } from '@/shared/hooks/use-post-by-id'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 
 interface Props {
 	postId: string
@@ -27,6 +29,7 @@ export const FullPostPage: React.FC<Props> = ({
 		authorAvatar: post.author_profile_picture,
 		categoryName: post.category_name,
 		categoryUrl: '/c/' + post.category_id,
+		postTags: post.tags,
 		commentsCount: post.commentsCount,
 		bookmarksCount: post.bookmarksCount,
 		likesCount: post.likes_count,
@@ -34,13 +37,19 @@ export const FullPostPage: React.FC<Props> = ({
 		postTime: String(post.publication_date)
 	}
 	
+	// Инициализируем useForm
+	const form = useForm()
+	
 	return (
 		<div className={cn('', className)}>
-			<FullPostForm
-				items={items}
-				loading={loading}
-				className='mt-4'
-			/>
+			<FormProvider {...form}>
+				<FullPostForm
+					items={items}
+					loading={loading}
+				/>
+				<CommentFullPostGroup className='mb-4' postId={String(postId)} commentsHeader={items.commentsCount} />
+			
+			</FormProvider>
 		</div>
 	)
 }

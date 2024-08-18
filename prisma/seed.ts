@@ -38,6 +38,23 @@ const generateRandomSubscriptions = async () => {
 	}
 }
 
+// Функция для генерации случайных лайков комментариям
+const generateRandomCommentLikes = async () => {
+	const users = await prisma.user.findMany()
+	const comments = await prisma.comment.findMany()
+	
+	for (const comment of comments) {
+		const randomUser = users[Math.floor(Math.random() * users.length)]
+		
+		await prisma.commentLike.create({
+			data: {
+				comment_id: comment.comment_id,
+				user_id: randomUser.id
+			}
+		})
+	}
+}
+
 async function up() {
 	// Создание пользователей
 	await prisma.user.createMany({
@@ -578,6 +595,10 @@ async function up() {
 	// Генерация случайных подписок
 	await generateRandomSubscriptions()
 	
+	// Генерация случайных лайков комментариям
+	await generateRandomCommentLikes()
+	
+	
 }
 
 async function down() {
@@ -611,6 +632,7 @@ async function down() {
 	await prisma.$executeRaw`TRUNCATE TABLE "UserSubscription" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "Recommendation" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "CategorySubscription" RESTART IDENTITY CASCADE`
+	await prisma.$executeRaw`TRUNCATE TABLE "CommentLike" RESTART IDENTITY CASCADE`
 }
 
 
