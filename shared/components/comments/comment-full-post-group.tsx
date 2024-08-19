@@ -45,7 +45,7 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 	}))
 	
 	return (
-		<div className={cn('bg-secondary rounded-md p-4 pb-8', className)}>
+		<div className={cn('bg-secondary rounded-md p-4', className)}>
 			<CommentInputForm commentsHeader={commentsHeader} loading={loading} />
 			<FullPostCommentForm
 				items={items}

@@ -26,24 +26,24 @@ export const CommentInputForm: React.FC<Props> = ({ loading, commentsHeader, cla
 		<div className={cn('', className)}>
 			<div className='flex justify-between items-center'>
 				{commentsHeader ? (
-					<p className='pl-1 text-lg mt-2 mb-5 cursor-default'>
+					<p className='pl-1 text-lg cursor-default'>
 						{commentsHeader} комментария
 					</p>
 				) : (
-					<p className='pl-1 text-lg mt-2 mb-5 cursor-default'>
-						Этот пост вы нашли первыми...
+					<p className='pl-1 text-lg cursor-default'>
+						Тут пока никого нет...
 					</p>
 				)}
 				<div className='group'>
-					<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-						<ListFilter className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer mb-2' />
+					<p className='flex items-center group-hover:text-blue-600 font-bold'>
+						<ListFilter className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer' />
 					</p>
 				</div>
 			</div>
 			
 			<FormTextarea
 				name='comment'
-				className='text-base'
+				className='text-base mt-2'
 				placeholder='Комментарий...'
 				rows={5}
 			/>

@@ -32,7 +32,7 @@ const CommentComponent: React.FC<{ comment: Comment; level?: number }> = ({ comm
 	const indentation = `ml-${level * 2}` // Отступ на основе уровня вложенности
 	
 	return (
-		<div className={`${indentation} mt-4`}>
+		<div className={`${indentation} mt-4 mb-2`}>
 			<CommentItem
 				endAdornment={null} // Вы можете изменить это в зависимости от ваших нужд
 				content={comment.content}

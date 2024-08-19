@@ -36,12 +36,12 @@ export const FormTextarea: React.FC<Props> = ({
 	
 	return (
 		<div className={className}>
-			<p className='font-medium mb-2'>
+			<p className='font-medium'>
 				{label} {required && <span className='text-red-500'>*</span>}
 			</p>
 			
 			<div className='relative'>
-				<Textarea className='min-h-24 text-md mb-10 pr-20 pb-14' {...register(name)} {...props} />
+				<Textarea className='min-h-24 text-md pb-14' {...register(name)} {...props} />
 				
 				{value && value.length > 0 ? (
 					<>
