@@ -23,8 +23,8 @@ html {
 		--bg-color-ui-item: 216 39.13% 22.55%;
 		--txt-color: 210 5.36% 78.04%;
 		--txt-color-headers: 210 5.88% 80%;
-		--a-color-hover: 216 56.03%, 45.49%;
-		--a-color-hover-dark: 188.57 3.11% 55.88%;
+		--a-color: 218, 70%, 67%;
+		--a-color-hover: 218, 100%, 67%;
 		--notification-color-red: 0 100% 33.33%;
 		
 		--popover: 0 0% 100%;
@@ -61,9 +61,8 @@ html {
 		--bg-color-ui-item: 216 39.13% 22.55%;
 		--txt-color: 210 5.36% 78.04%;
 		--txt-color-headers: 210 5.88% 80%;
-		--a-color: 215.71 66.53% 51.96%;
-		--a-color-hover: 216 56.03%, 45.49%;
-		--a-color-hover-dark: 188.57 3.11% 55.88%;
+		--a-color: 218, 70%, 67%;
+		--a-color-hover: 218, 100%, 67%;
 		--notification-color-red: 0 100% 33.33%;
 		
 		--popover: 222.2 84% 4.9%;

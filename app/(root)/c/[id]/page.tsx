@@ -34,7 +34,7 @@ export default async function CategoryPage({
 	
 	return (
 		<CategoryProfileGroup
-			profileBanner={String(categoryWithDetails.category_banner || stormicBanner.url)}
+			profileBanner={String(categoryWithDetails.category_banner)}
 			profileAvatar={categoryWithDetails.category_image || ''}
 			profileName={categoryWithDetails.category_name}
 			profileDescription={categoryWithDetails.category_description || ''}
@@ -43,16 +43,3 @@ export default async function CategoryPage({
 		/>
 	)
 }
-
-// <h1>{categoryWithDetails.category_name}</h1>
-// <p>{categoryWithDetails.category_description}</p>
-// <img src={categoryWithDetails.category_image} alt={categoryWithDetails.category_name} />
-// <p>URL: {categoryWithDetails.category_url}</p>
-// <p>Owner:</p>
-// <div>
-// 	<img src={categoryWithDetails.owner.profile_picture || '/default-avatar.png'}
-// 	     alt={categoryWithDetails.owner.fullName} style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
-// 	<p>Name: {categoryWithDetails.owner.fullName}</p>
-// 	<a href={`/u/${categoryWithDetails.owner.id}`}>Profile Link</a>
-// </div>
-// <p>Followers Count: {categoryWithDetails._count.followers}</p>

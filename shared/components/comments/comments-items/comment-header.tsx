@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 
 export interface CommentHeaderProps {
-	postTitle?: string
+	postTitle: string
 	maxLength?: number // Максимальная длина текста для обрезки по символам
 	authorName: string
 	authorAvatar?: string
@@ -43,7 +43,7 @@ export const CommentHeader: React.FC<CommentHeaderProps> = ({
 					
 					<Link className='hover:text-primary/50' href={authorUrl}>{authorName}</Link>
 					<br />
-					{maxLength ? (
+					{!publicationDate ? (
 						<p className='text-sm hover:text-primary/50'>{truncatedContent}</p>
 					) : (
 						<p className='text-sm'>{publicationDate}</p>

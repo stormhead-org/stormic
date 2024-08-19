@@ -1,25 +1,10 @@
 import { prisma } from '@/prisma/prisma-client'
 import { UserRoleType } from '@prisma/client'
 import { compare, hashSync } from 'bcrypt'
-import { AuthOptions, DefaultSession, User as NextAuthUser } from 'next-auth'
+import { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
-
-interface AuthUser extends NextAuthUser {
-	id: string
-	role: UserRoleType
-}
-
-declare module 'next-auth' {
-	interface Session {
-		user: {
-			id: string
-			role: UserRoleType
-			image?: string | null
-		} & DefaultSession['user']
-	}
-}
 
 export const authOptions: AuthOptions = {
 	providers: [
@@ -51,28 +36,37 @@ export const authOptions: AuthOptions = {
 					return null
 				}
 				
+				const values = {
+					email: credentials.email
+				}
+				
 				const findUser = await prisma.user.findFirst({
-					where: { email: credentials.email }
+					where: values
 				})
 				
 				if (!findUser) {
 					return null
 				}
 				
-				const isPasswordValid = await compare(credentials.password, findUser.password)
+				const isPasswordValid = await compare(
+					credentials.password,
+					findUser.password
+				)
 				
-				if (!isPasswordValid || !findUser.verified) {
+				if (!isPasswordValid) {
 					return null
 				}
 				
-				// Приводим результат к типу AuthUser
+				if (!findUser.verified) {
+					return null
+				}
+				
 				return {
-					id: String(findUser.id),
-					name: findUser.fullName,
+					id: findUser.id,
 					email: findUser.email,
-					image: findUser.profile_picture,
+					name: findUser.fullName,
 					role: findUser.role
-				} as AuthUser
+				}
 			}
 		})
 	],
@@ -111,7 +105,7 @@ export const authOptions: AuthOptions = {
 						data: {
 							provider: account?.provider,
 							providerId: account?.providerAccountId,
-							profile_picture: user.image || findUser.profile_picture
+							profile_picture: user.image
 						}
 					})
 					
@@ -122,11 +116,11 @@ export const authOptions: AuthOptions = {
 					data: {
 						email: user.email,
 						fullName: user.name || 'User #' + user.id,
+						profile_picture: user.image,
 						password: hashSync(user.id.toString(), 10),
 						verified: new Date(),
 						provider: account?.provider,
-						providerId: account?.providerAccountId,
-						profile_picture: user.image || null
+						providerId: account?.providerAccountId
 					}
 				})
 				
@@ -149,19 +143,17 @@ export const authOptions: AuthOptions = {
 			
 			if (findUser) {
 				token.id = String(findUser.id)
-				token.fullName = findUser.fullName
 				token.email = findUser.email
+				token.fullName = findUser.fullName
 				token.role = findUser.role
-				token.image = findUser.profile_picture
 			}
 			
 			return token
 		},
-		async session({ session, token }) {
-			if (session.user) {
-				session.user.id = token.id as string
-				session.user.role = token.role as UserRoleType
-				session.user.image = token.image as string | null
+		session({ session, token }) {
+			if (session?.user) {
+				session.user.id = token.id
+				session.user.role = token.role
 			}
 			
 			return session

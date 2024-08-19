@@ -1,7 +1,6 @@
 'use client'
 
 import { CommentItem } from '@/shared/components/comments/comments-items/comment-item'
-import { cn } from '@/shared/lib/utils'
 import React from 'react'
 import { Skeleton } from '../../ui/skeleton'
 
@@ -32,9 +31,8 @@ const CommentComponent: React.FC<{ comment: Comment; level?: number }> = ({ comm
 	const indentation = `ml-${level * 2}` // Отступ на основе уровня вложенности
 	
 	return (
-		<div className={`${indentation} mt-4 mb-2`}>
+		<div className={`${indentation} mt-4`}>
 			<CommentItem
-				endAdornment={null} // Вы можете изменить это в зависимости от ваших нужд
 				content={comment.content}
 				authorName={comment.author.fullName}
 				authorUrl={`/u/${comment.author_id}`} // Примерный URL для автора
@@ -44,31 +42,29 @@ const CommentComponent: React.FC<{ comment: Comment; level?: number }> = ({ comm
 				className='p-0 pl-4 cursor-default border-l-4 border-blue-600'
 			/>
 			{/* Отображаем дочерние комментарии, если они существуют */}
-			{comment.children?.length > 0 && (
-				<div className='ml-2'>
+			{comment.children && comment.children.length > 0 && (
+				<>
 					{comment.children.map((childComment) => (
 						<CommentComponent key={childComment.comment_id} comment={childComment} level={level + 1} />
 					))}
-				</div>
+				</>
 			)}
 		</div>
 	)
 }
 
 export const FullPostCommentForm: React.FC<Props> = ({ items, loading, className }) => {
+	
 	if (loading) {
 		return (
-			<div className={className}>
-				<Skeleton className='h-6 mb-4 rounded-[8px]' />
-			</div>
+			<Skeleton className='h-6 mb-4 rounded-[8px]' />
 		)
 	}
-	
 	return (
-		<div className={cn('', className)}>
+		<>
 			{items.map((item) => (
 				<CommentComponent key={item.comment_id} comment={item} />
 			))}
-		</div>
+		</>
 	)
 }

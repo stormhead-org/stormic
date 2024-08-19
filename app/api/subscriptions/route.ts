@@ -1,5 +1,3 @@
-// src/app/api/subscriptions/posts/route.ts
-
 import { prisma } from '@/prisma/prisma-client'
 import { format } from 'date-fns'
 import { NextRequest, NextResponse } from 'next/server'

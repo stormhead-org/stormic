@@ -10,25 +10,28 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 	return (
 		<div className={cn('', className)}>
 			<span className=''>
-				stormic.app: <Link href='https://stormic.app/about/'>О проекте</Link> |{' '}
-				<Link href='https://stormic.app/rules/'>Правила</Link> |{' '}
-				<Link href='https://stormic.app/privacy_policy/'>
+				stormic.app: <Link className='text-a-color hover:text-a-color-hover'
+				                   href='/about'>О проекте</Link> |{' '}
+				<Link className='text-a-color hover:text-a-color-hover' href='/rules'>Правила</Link> |{' '}
+				<Link className='text-a-color hover:text-a-color-hover' href='/privacy_policy'>
 					Политика конфиденциальности
 				</Link>
 				<br />
 				<br />
-				stormic: <Link href='https://stormic.app/about/'>О проекте</Link> |{' '}
-				<Link href='https://stormic.app/rules/'>Сочетания клавиш</Link> |{' '}
-				<Link href='https://github.com/stormhead-org/Stormic'>
+				stormic: <Link className='text-a-color hover:text-a-color-hover'
+				               href='https://stormic.app/about/'>О проекте</Link> |{' '}
+				<Link className='text-a-color hover:text-a-color-hover'
+				      href='https://stormic.app/rules/'>Сочетания клавиш</Link> |{' '}
+				<Link className='text-a-color hover:text-a-color-hover' href='https://github.com/stormhead-org/stormic'>
 					Исходный код
 				</Link>{' '}
 				| v0.0.1-alpha
 				<br />
 				<br />
 				Сделано с любовью и{' '}
-				<Link href='https://github.com/vercel/next.js'>NextJS</Link>
+				<Link className='text-a-color hover:text-a-color-hover' href='https://github.com/vercel/next.js'>NextJS</Link>
 				<br />
-				Сообщество <Link href='https://stormic.app/'>Stormic</Link> © 2023 -
+				Сообщество <Link className='text-a-color hover:text-a-color-hover' href='https://stormic.app/'>Stormic</Link> © 2023 -
 				2024
 			</span>
 		</div>

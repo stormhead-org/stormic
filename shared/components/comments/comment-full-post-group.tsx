@@ -20,8 +20,9 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 	
 	const { comments, loading } = usePostsComments(postId)
 	
-	const items = comments.map(item => ({
+	const items = comments.map((item: any) => ({
 		comment_id: item.comment_id,
+		post_id: item.post_id,
 		content: item.content,
 		author_id: item.author_id,
 		likesCount: item.likes_count,
@@ -29,9 +30,10 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 			fullName: item.author_fullName,
 			profile_picture: item.author_profile_picture
 		},
-		publication_date: item.publication_date,
-		children: item.children ? item.children.map(child => ({
+		publication_date: String(item.publication_date),
+		children: item.children ? item.children.map((child: any) => ({
 			comment_id: child.comment_id,
+			post_id: child.post_id,
 			content: child.content,
 			author_id: child.author_id,
 			likesCount: child.likes_count,
@@ -39,8 +41,8 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 				fullName: child.author_fullName,
 				profile_picture: child.author_profile_picture
 			},
-			publication_date: child.publication_date,
-			children: [] // У дочерних комментариев children может быть пустым, если нет дальнейших вложений
+			publication_date: String(child.publication_date),
+			children: [] // У дочерних комментариев children может быть пустым
 		})) : []
 	}))
 	

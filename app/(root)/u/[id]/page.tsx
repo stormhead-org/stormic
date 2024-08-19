@@ -54,7 +54,7 @@ export default async function UserPage({
 	return (
 		<>
 			<UserProfileGroup
-				profileBanner={String(user.profile_banner || stormicBanner.url)}
+				profileBanner={String(user.profile_banner)}
 				profileAvatar={user.profile_picture || ''}
 				profileName={user.fullName}
 				profileDescription={user.bio || ''}

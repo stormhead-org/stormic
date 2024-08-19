@@ -3,13 +3,14 @@ import { HeaderForm } from '@/shared/components'
 import { getUserSession } from '@/shared/lib'
 
 export default async function Header() {
-	
 	const session = await getUserSession()
 	
-	const avatarImage = session ? (
-		await prisma.user.findFirst({ where: { id: Number(session?.id) } })
-	) : null
+	// Получаем данные пользователя, если сессия активна
+	const user = session
+		? await prisma.user.findFirst({ where: { id: Number(session?.id) } })
+		: null
 	
+	// Получаем логотип, имя и описание
 	const logoImage = await prisma.stormicMedia.findFirst({
 		where: {
 			mediaType: 'LOGO'
@@ -28,7 +29,12 @@ export default async function Header() {
 		}
 	})
 	
-	return <HeaderForm avatarImage={!session ? ('') : (String(avatarImage.profile_picture))}
-	                   logoImage={String(logoImage.url)} stormicName={String(stormicName.content)}
-	                   description={String(description.content)} />
+	return (
+		<HeaderForm
+			avatarImage={user?.profile_picture ? String(user.profile_picture) : ''}
+			logoImage={logoImage?.url ? String(logoImage.url) : ''}
+			stormicName={stormicName?.content ? String(stormicName.content) : ''}
+			description={description?.content ? String(description.content) : ''}
+		/>
+	)
 }

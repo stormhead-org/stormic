@@ -6,7 +6,7 @@ import React from 'react'
 
 export interface CommentItemProps {
 	endAdornment?: React.ReactNode
-	postTitle?: string
+	postTitle?: string | null
 	content: string
 	postUrl?: string
 	authorName: string
@@ -35,9 +35,9 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	return (
 		<div className={cn('rounded-md p-2 w-full', className)}>
 			<CommentHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
-			               postTitle={postTitle} maxLength={maxLengthHeader} publicationDate={publicationDate} />
+			               postTitle={String(postTitle)} maxLength={maxLengthHeader} publicationDate={publicationDate} />
 			<CommentBody content={content} maxLength={maxLengthBody} />
-			{!postTitle ? <FullPostCommentFooter
+			{likesCount ? <FullPostCommentFooter
 				likesCount={Number(likesCount)}
 				className='mt-2'
 			/> : null}

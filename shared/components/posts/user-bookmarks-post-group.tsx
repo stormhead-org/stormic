@@ -18,7 +18,7 @@ export const UserBookmarksPostGroup: React.FC<Props> = ({
 	
 	const { posts, loading } = useUserBookmarksPosts(userId)
 	
-	const items = posts.map(item => ({
+	const items = posts.map((item: any) => ({
 		postTitle: item.title,
 		postContent: item.content,
 		postImage: item.post_image,

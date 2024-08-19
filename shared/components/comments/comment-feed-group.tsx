@@ -13,7 +13,7 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 	
 	const { comments, loading } = useComments()
 	
-	const items = comments.map(item => ({
+	const items = comments.map((item: any) => ({
 		postTitle: item.post_title,
 		content: item.content,
 		postUrl: '/p/' + item.post_id,

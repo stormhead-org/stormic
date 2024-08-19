@@ -12,7 +12,7 @@ export const MainPagePostGroup: React.FC<Props> = ({ className }) => {
 	
 	const { posts, loading } = usePosts()
 	
-	const items = posts.map(item => ({
+	const items = posts.map((item: any) => ({
 		postTitle: item.title,
 		postContent: item.content,
 		postImage: item.post_image,

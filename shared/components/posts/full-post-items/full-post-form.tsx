@@ -8,7 +8,7 @@ import { Skeleton } from '../../ui/skeleton'
 type Item = FullPostItemProps
 
 interface Props {
-	items: Item[]
+	items: Item
 	loading?: boolean
 	className?: string
 }
