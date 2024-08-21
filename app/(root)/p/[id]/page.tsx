@@ -1,7 +1,12 @@
 import { prisma } from '@/prisma/prisma-client'
 import { Container } from '@/shared/components'
 import { FullPostPage } from '@/shared/components/posts/full-post-page'
+import type { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+	title: 'Stormic Community'
+}
 
 export default async function PostPage({
 	                                       params: { id }

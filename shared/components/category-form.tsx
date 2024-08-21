@@ -18,6 +18,7 @@ interface Props {
 	loading?: boolean
 	searchInputPlaceholder?: string
 	name?: string
+	hasPost: boolean
 	className?: string
 }
 
@@ -29,6 +30,7 @@ export const CategoryForm: React.FC<Props> = ({
 	                                              searchInputPlaceholder = 'Поиск...',
 	                                              name,
 	                                              className,
+	                                              hasPost,
 	                                              loading
                                               }) => {
 	const [showAll, setShowAll] = React.useState(false)
@@ -60,11 +62,10 @@ export const CategoryForm: React.FC<Props> = ({
 		: (defaultItems || items).slice(0, limit)
 	
 	return (
-		<div className={cn('', className)}>
-			<Title text={title} size='xs' className='mb-6 font-bold' />
-			
+		<div className={cn(hasPost ? 'max-w-[200px]' : '', className)}>
+			{!hasPost && <Title text={title} size='xs' className='mb-6 font-bold' />}
 			{showAll && (
-				<div className='mb-5'>
+				<div className={cn(hasPost ? 'mb-2]' : 'mb-5', className)}>
 					<Input
 						onChange={onChangeSearchInput}
 						placeholder={searchInputPlaceholder}

@@ -43,6 +43,7 @@ export const CategoryProfileGroup: React.FC<Props> = ({
 				profileRegTime={profileRegTime}
 				profileFollowers={profileFollowers}
 				profileFollowing={profileFollowing}
+				hasUser={false}
 			/>
 			<CategoryProfilePostGroup
 				categoryId={String(categoryId)}

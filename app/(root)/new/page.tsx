@@ -1,6 +1,11 @@
 import { prisma } from '@/prisma/prisma-client'
 import { MainBannerForm } from '@/shared/components/'
 import { MainPagePostGroup } from '@/shared/components/posts/main-page-post-group'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Stormic: Свежее'
+}
 
 export default async function Home() {
 	
@@ -18,7 +23,8 @@ export default async function Home() {
 	return (
 		<>
 			{/* Центральная часть */}
-			<MainBannerForm stormicName={stormicName} bannerUrl={banner} />
+			<MainBannerForm stormicName={stormicName && String(stormicName.content)}
+			                bannerUrl={banner && String(banner.url)} />
 			<MainPagePostGroup className='mt-4' />
 		</>
 	)

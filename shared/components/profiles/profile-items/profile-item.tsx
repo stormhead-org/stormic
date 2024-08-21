@@ -2,7 +2,6 @@
 
 import { ProfileBody } from '@/shared/components/profiles/profile-items/profile-body'
 import { ProfileHeader } from '@/shared/components/profiles/profile-items/profile-header'
-import { FeedToggle } from '@/shared/components/ui/feed-toggle'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
@@ -15,6 +14,7 @@ interface Props {
 	profileRegTime?: string
 	profileFollowers: number
 	profileFollowing?: number
+	hasUser: boolean
 	className?: string
 }
 
@@ -27,6 +27,7 @@ export const ProfileItem: React.FC<Props> = ({
 	                                             profileRegTime,
 	                                             profileFollowers,
 	                                             profileFollowing,
+	                                             hasUser,
 	                                             className
                                              }) => {
 	
@@ -37,12 +38,11 @@ export const ProfileItem: React.FC<Props> = ({
 				<ProfileHeader profileBanner={profileBanner} profileName={profileName} profileRegTime={profileRegTime}
 				               profileRep={profileRep}
 				               profileAvatar={profileAvatar}
-				/>
-				<ProfileBody profileFollowing={profileFollowing} profileFollowers={profileFollowers}
-				             profileDescription={profileDescription} />
-			</div>
-			<div className='ml-6 mt-1 -mb-3'>
-				<FeedToggle />
+				               hasUser={hasUser} />
+				<ProfileBody profileFollowing={profileFollowing}
+				             profileFollowers={profileFollowers}
+				             profileDescription={profileDescription}
+				             hasUser={hasUser} />
 			</div>
 		</div>
 	)
