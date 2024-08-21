@@ -8,7 +8,7 @@ import Header from '@editorjs/header'
 import ImageTool from '@editorjs/image'
 import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
-import { Maximize2 } from 'lucide-react'
+import { Maximize2, Minimize2 } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
 
 interface Props {
@@ -88,8 +88,11 @@ export const WriteModal: React.FC<Props> = ({ authorAvatar, authorName, authorUr
 					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[720px] min-h-[620px]'
 				}`}
 			>
-				<Maximize2 onClick={handleToggleSize} className='cursor-pointer absolute top-4 right-10' size={15} />
-				
+				{isFullScreen ?
+					<Minimize2 onClick={handleToggleSize} className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
+					           size={15} /> :
+					<Maximize2 onClick={handleToggleSize} className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
+					           size={15} />}
 				<div className='flex mx-auto'>
 					<div className='p-2'>
 						<PostWriteHeader authorName={authorName} authorUrl={authorUrl} authorAvatar={authorAvatar} />
