@@ -38,7 +38,7 @@ export const UserSubscriptionsPostGroup: React.FC<Props> = ({
 	return (
 		<div className={className}>
 			{loading ? (
-				<Skeleton className='h-6 mb-4 rounded-[8px]' />
+				<Skeleton className='h-6 mt-4 rounded-[8px]' />
 			) : items.length > 0 ? (
 				<PostForm
 					limit={5}

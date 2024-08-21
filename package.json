@@ -16,6 +16,12 @@
 		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 	},
 	"dependencies": {
+		"@editorjs/code": "^2.9.0",
+		"@editorjs/editorjs": "^2.30.5",
+		"@editorjs/header": "^2.8.7",
+		"@editorjs/image": "^2.9.3",
+		"@editorjs/list": "^1.10.0",
+		"@editorjs/paragraph": "^2.11.6",
 		"@hookform/resolvers": "^3.9.0",
 		"@prisma/client": "^5.18.0",
 		"@radix-ui/react-avatar": "^1.1.0",

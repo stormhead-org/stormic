@@ -1,6 +1,11 @@
 import { prisma } from '@/prisma/prisma-client'
 import { UserProfileGroup } from '@/shared/components/profiles/user-profile-group'
 import { format } from 'date-fns'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Stormic Community'
+}
 
 export default async function UserPage({
 	                                       params: { id }
@@ -50,11 +55,16 @@ export default async function UserPage({
 	// Форматируем дату регистрации пользователя
 	const userRegConvert = format(new Date(user.createdAt), 'dd.MM.yy')
 	
+	const profileBannerUrl = user.profile_banner
+		? String(user.profile_banner)
+		: stormicBanner?.url
+			? String(stormicBanner.url)
+			: '/defaultBanner.jpg'
 	
 	return (
 		<>
 			<UserProfileGroup
-				profileBanner={String(user.profile_banner)}
+				profileBanner={profileBannerUrl}
 				profileAvatar={user.profile_picture || ''}
 				profileName={user.fullName}
 				profileDescription={user.bio || ''}

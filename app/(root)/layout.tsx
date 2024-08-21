@@ -11,11 +11,12 @@ import {
 } from '@/shared/components/'
 import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
 import Header from '@/shared/components/header'
+import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
+import React, { Suspense } from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic Community | Главная'
+	title: 'Stormic Community'
 }
 
 export default async function HomeLayout({
@@ -26,6 +27,8 @@ export default async function HomeLayout({
 	modal: React.ReactNode
 }>) {
 	
+	const session = await getUserSession()
+	const user = session && await prisma.user.findUnique({ where: { id: Number(session?.id) } })
 	const menu = await prisma.navigationMenu.findMany()
 	
 	return (
@@ -39,9 +42,14 @@ export default async function HomeLayout({
 					<div className='w-1/4'>
 						<FeedUserMenu />
 						<SocialMenu className='my-2' />
-						<NewPostButton className='my-4' />
+						<NewPostButton
+							className='my-4'
+							authorAvatar={String(user && user.profile_picture)}
+							authorName={String(user && user.fullName)}
+							authorUrl={String(user && '/u/' + user.id)}
+							hasSession={!!user} />
 						<NavigationMenuForm className='mt-4' data={menu} />
-						<CategoryGroup className='mt-4' />
+						<CategoryGroup className='mt-4' hasPost={false} />
 						<SideFooter className='mt-4' />
 					</div>
 					

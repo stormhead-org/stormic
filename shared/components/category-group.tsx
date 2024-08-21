@@ -6,10 +6,14 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 interface Props {
+	hasPost: boolean
 	className?: string
 }
 
-export const CategoryGroup: React.FC<Props> = ({ className }) => {
+export const CategoryGroup: React.FC<Props> = ({
+	                                               hasPost,
+	                                               className
+                                               }) => {
 	
 	const { categories, loading } = useCategories()
 	
@@ -29,7 +33,7 @@ export const CategoryGroup: React.FC<Props> = ({ className }) => {
 				items={items}
 				loading={loading}
 				className='mt-4'
-			/>
+				hasPost={hasPost} />
 		</div>
 	)
 }

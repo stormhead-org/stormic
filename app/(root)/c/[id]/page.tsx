@@ -1,5 +1,10 @@
 import { prisma } from '@/prisma/prisma-client'
 import { CategoryProfileGroup } from '@/shared/components/profiles/category-profile-group'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Stormic: Категории'
+}
 
 export default async function CategoryPage({
 	                                           params: { id }
@@ -32,9 +37,15 @@ export default async function CategoryPage({
 		)
 	}
 	
+	const profileBannerUrl = categoryWithDetails.category_banner
+		? String(categoryWithDetails.category_banner)
+		: stormicBanner?.url
+			? String(stormicBanner.url)
+			: '/defaultBanner.jpg'
+	
 	return (
 		<CategoryProfileGroup
-			profileBanner={String(categoryWithDetails.category_banner)}
+			profileBanner={profileBannerUrl}
 			profileAvatar={categoryWithDetails.category_image || ''}
 			profileName={categoryWithDetails.category_name}
 			profileDescription={categoryWithDetails.category_description || ''}

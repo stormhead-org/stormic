@@ -43,6 +43,7 @@ export const UserProfileGroup: React.FC<Props> = ({
 				profileRegTime={profileRegTime}
 				profileFollowers={profileFollowers}
 				profileFollowing={profileFollowing}
+				hasUser={true}
 			/>
 			<UserProfilePostGroup
 				userId={String(userId)}

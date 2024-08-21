@@ -12,6 +12,7 @@ interface Props {
 	profileName: string
 	profileRep?: number
 	profileRegTime?: string
+	hasUser: boolean
 	className?: string
 }
 
@@ -21,6 +22,7 @@ export const ProfileHeader: React.FC<Props> = ({
 	                                               profileName,
 	                                               profileRep,
 	                                               profileRegTime,
+	                                               hasUser,
 	                                               className
                                                }) => {
 	
@@ -51,14 +53,14 @@ export const ProfileHeader: React.FC<Props> = ({
 				<p className='font-bold mt-2 text-2xl'> {profileName} </p>
 				
 				
-				{profileRep ? (
-					<div className='flex flex-1 items-center mt-2'>
-						<p className='text-md text-green-500 font-bold'>+{profileRep}</p>
-						<p className='ml-4 text-md font-bold'>c {profileRegTime}</p>
-					</div>
-				) : (
-					null
-				)}
+				{hasUser &&
+					<>
+						<div className='flex flex-1 items-center mt-2'>
+							<p className='text-md text-green-500 font-bold'>+{profileRep}</p>
+							<p className='ml-4 text-md font-bold'>c {profileRegTime}</p>
+						</div>
+					</>
+				}
 			</div>
 		</div>
 	)
