@@ -10,7 +10,7 @@ import {
 	Title
 } from '@/shared/components/'
 import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
-import Header from '@/shared/components/header'
+import { Header } from '@/shared/components/header/header'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
 import React, { Suspense } from 'react'
@@ -29,12 +29,35 @@ export default async function HomeLayout({
 	
 	const session = await getUserSession()
 	const user = session && await prisma.user.findUnique({ where: { id: Number(session?.id) } })
-	const menu = await prisma.navigationMenu.findMany()
+	
+	const [logoImage, stormicName, description, menu] = await Promise.all([
+		await prisma.stormicMedia.findFirst({
+			where: {
+				mediaType: 'LOGO'
+			}
+		}),
+		await prisma.stormicSettings.findFirst({
+			where: {
+				settingsType: 'NAME'
+			}
+		}),
+		await prisma.stormicSettings.findFirst({
+			where: {
+				settingsType: 'DESCRIPTION'
+			}
+		}),
+		await prisma.navigationMenu.findMany()
+	])
 	
 	return (
 		<main className='min-h-screen'>
 			<Suspense>
-				<Header />
+				<Header
+					logoImage={logoImage?.url || '/logo.png'}
+					stormicName={stormicName?.content || 'Stormic'}
+					description={description?.content || 'код, GitHub и ты'}
+					avatarImage={user?.profile_picture || ''}
+				/>
 			</Suspense>
 			<Container className='mt-4'>
 				<div className='flex gap-4'>

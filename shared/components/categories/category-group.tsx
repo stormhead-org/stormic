@@ -1,6 +1,6 @@
 'use client'
 
-import { CategoryForm } from '@/shared/components/category-form'
+import { CategoryForm } from '@/shared/components/categories/category-form'
 import { useCategories } from '@/shared/hooks/use-categories'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'

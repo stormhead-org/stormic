@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
-import { ProfileForm } from '@/shared/components'
+import { PersonalPageProfileGroup } from '@/shared/components'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -21,5 +21,5 @@ export default async function ProfilePage() {
 		return redirect('/not-auth')
 	}
 	
-	return <ProfileForm data={user} />
+	return <PersonalPageProfileGroup data={user} />
 }

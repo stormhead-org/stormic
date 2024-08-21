@@ -1,12 +1,12 @@
 'use client'
 
-import { CategoryItem, CategoryItemProps } from '@/shared/components/category-item'
+import { CategoryItem, CategoryItemProps } from '@/shared/components/categories/category-item'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import React from 'react'
-import { Input } from './ui/input'
-import { Skeleton } from './ui/skeleton'
+import { Input } from '../ui/input'
+import { Skeleton } from '../ui/skeleton'
 
 type Item = CategoryItemProps
 

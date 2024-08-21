@@ -10,20 +10,16 @@ interface Props {
 	logoImage: string
 	stormicName: string
 	description: string
-	hasSearch?: boolean
-	hasCart?: boolean
 	className?: string
 }
 
-export const HeaderForm: React.FC<Props> = ({
-	                                            hasSearch = true,
-	                                            hasCart = true,
-	                                            avatarImage,
-	                                            logoImage,
-	                                            stormicName,
-	                                            description,
-	                                            className
-                                            }) => {
+export const Header: React.FC<Props> = ({
+	                                        avatarImage,
+	                                        logoImage,
+	                                        stormicName,
+	                                        description,
+	                                        className
+                                        }) => {
 	return (
 		<header className={cn('border-b', className)}>
 			<Container className='flex items-center justify-between py-4'>
@@ -40,18 +36,13 @@ export const HeaderForm: React.FC<Props> = ({
 					</div>
 				</Link>
 				
-				{/* {hasSearch && (
-					<div className='mx-10 flex-1'>
-						<SearchInput />
-					</div>
-				)} */}
+				{/* Центральная */}
 				<div className='w-[500px]'>
 					<HeaderButtons />
 				</div>
 				
 				{/* Правая часть */}
 				<div className='flex items-center gap-3 w-[250px] justify-end'>
-					
 					<HeaderUserBar avatarImage={avatarImage} />
 				</div>
 			</Container>

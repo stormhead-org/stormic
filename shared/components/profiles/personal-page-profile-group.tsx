@@ -1,8 +1,7 @@
 'use client'
 
 import { updateUserInfo } from '@/app/actions'
-import { Container } from '@/shared/components'
-import { Title } from '@/shared/components/'
+import { Container, Title } from '@/shared/components'
 import { FormInput } from '@/shared/components/form'
 import { Button } from '@/shared/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,50 +10,47 @@ import { signOut } from 'next-auth/react'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import {
-	TFormRegisterValues,
-	formRegisterSchema,
-} from './modals/auth-modal/forms/schemas'
+import { formRegisterSchema, TFormRegisterValues } from '../modals/auth-modal/forms/schemas'
 
 interface Props {
 	data: User
 }
 
-export const ProfileForm: React.FC<Props> = ({ data }) => {
+export const PersonalPageProfileGroup: React.FC<Props> = ({ data }) => {
 	const form = useForm({
 		resolver: zodResolver(formRegisterSchema),
 		defaultValues: {
 			fullName: data.fullName,
 			email: data.email,
 			password: '',
-			confirmPassword: '',
-		},
+			confirmPassword: ''
+		}
 	})
-
+	
 	const onSubmit = async (data: TFormRegisterValues) => {
 		try {
 			await updateUserInfo({
 				email: data.email,
 				fullName: data.fullName,
-				password: data.password,
+				password: data.password
 			})
-
+			
 			toast.error('Данные обновлены 📝', {
-				icon: '✅',
+				icon: '✅'
 			})
 		} catch (error) {
 			return toast.error('Ошибка при обновлении данных', {
-				icon: '❌',
+				icon: '❌'
 			})
 		}
 	}
-
+	
 	const onClickSignOut = () => {
 		signOut({
-			callbackUrl: '/',
+			callbackUrl: '/'
 		})
 	}
-
+	
 	return (
 		<Container className='my-10'>
 			<Title
@@ -62,7 +58,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 				size='md'
 				className='font-bold'
 			/>
-
+			
 			<FormProvider {...form}>
 				<form
 					className='flex flex-col gap-5 w-96 mt-10'
@@ -70,7 +66,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 				>
 					<FormInput name='email' label='E-Mail' required />
 					<FormInput name='fullName' label='Полное имя' required />
-
+					
 					<FormInput
 						type='password'
 						name='password'
@@ -83,7 +79,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 						label='Повторите пароль'
 						required
 					/>
-
+					
 					<Button
 						disabled={form.formState.isSubmitting}
 						className='text-base mt-10'
@@ -91,7 +87,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 					>
 						Сохранить
 					</Button>
-
+					
 					<Button
 						onClick={onClickSignOut}
 						variant='secondary'

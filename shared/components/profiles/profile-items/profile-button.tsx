@@ -1,4 +1,4 @@
-import { ProfileAvatar } from '@/shared/components/profile-avatar'
+import { ProfileAvatar } from '@/shared/components/profiles/profile-items/profile-avatar'
 import { Button } from '@/shared/components/ui/button'
 import { CircleUser } from 'lucide-react'
 import { useSession } from 'next-auth/react'
@@ -12,12 +12,12 @@ interface Props {
 }
 
 export const ProfileButton: React.FC<Props> = ({
-	avatarImage,
-  onClickSignIn,
-	className,
-}) => {
+	                                               avatarImage,
+	                                               onClickSignIn,
+	                                               className
+                                               }) => {
 	const { data: session } = useSession()
-
+	
 	return (
 		<div className={className}>
 			{!session ? (
@@ -31,7 +31,7 @@ export const ProfileButton: React.FC<Props> = ({
 				</Button>
 			) : (
 				<Link href='/profile'>
-					<ProfileAvatar  avatarImage={avatarImage}/>
+					<ProfileAvatar avatarImage={avatarImage} />
 				</Link>
 			)}
 		</div>
