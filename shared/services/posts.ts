@@ -20,3 +20,12 @@ export const getPostsByCategoryId = async (categoryId: string): Promise<Post[]> 
 export const getPostById = async (postId: string): Promise<Post[]> => {
 	return (await axiosInstance.get<Post[]>(`${ApiRoutes.POSTS}?postId=${postId}`)).data
 }
+
+// Поиск постов
+export const search = async (query: string): Promise<Post[]> => {
+	return (
+		await axiosInstance.get<Post[]>(ApiRoutes.SEARCH_POSTS, {
+			params: { query }
+		})
+	).data
+}
