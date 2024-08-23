@@ -8,16 +8,6 @@ import Link from 'next/link'
 import React from 'react'
 import { useClickAway, useDebounce } from 'react-use'
 
-interface Author {
-	id: number;
-	profile_picture: string | null;
-	fullName: string;
-}
-
-interface PostWithAuthor extends Post {
-	author: Author | null;
-}
-
 interface Props {
 	className?: string;
 }

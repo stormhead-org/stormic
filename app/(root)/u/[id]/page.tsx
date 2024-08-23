@@ -64,6 +64,7 @@ export default async function UserPage({
 	return (
 		<>
 			<UserProfileGroup
+				userId={String(userId)}
 				profileBanner={profileBannerUrl}
 				profileAvatar={user.profile_picture || ''}
 				profileName={user.fullName}
@@ -72,7 +73,6 @@ export default async function UserPage({
 				profileRegTime={userRegConvert}
 				profileFollowers={followingCount}
 				profileFollowing={followersCount}
-				userId={String(userId)}
 			/>
 		</>
 	)

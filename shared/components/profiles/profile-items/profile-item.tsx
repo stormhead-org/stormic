@@ -14,6 +14,7 @@ interface Props {
 	profileRegTime?: string
 	profileFollowers: number
 	profileFollowing?: number
+	userId?: string
 	hasUser: boolean
 	className?: string
 }
@@ -27,6 +28,7 @@ export const ProfileItem: React.FC<Props> = ({
 	                                             profileRegTime,
 	                                             profileFollowers,
 	                                             profileFollowing,
+	                                             userId,
 	                                             hasUser,
 	                                             className
                                              }) => {
@@ -35,14 +37,17 @@ export const ProfileItem: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<div className='rounded-md bg-secondary'>
-				<ProfileHeader profileBanner={profileBanner} profileName={profileName} profileRegTime={profileRegTime}
+				<ProfileHeader profileBanner={profileBanner}
+				               profileName={profileName}
 				               profileRep={profileRep}
 				               profileAvatar={profileAvatar}
 				               hasUser={hasUser} />
 				<ProfileBody profileFollowing={profileFollowing}
 				             profileFollowers={profileFollowers}
 				             profileDescription={profileDescription}
-				             hasUser={hasUser} />
+				             profileRegTime={profileRegTime}
+				             hasUser={hasUser}
+				             userId={userId} />
 			</div>
 		</div>
 	)

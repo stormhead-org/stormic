@@ -54,7 +54,7 @@ export const PersonalPageProfileGroup: React.FC<Props> = ({ data }) => {
 	return (
 		<Container className='my-10'>
 			<Title
-				text={`Личные данные | #${data.id}`}
+				text={`Личные данные | #${data.fullName}`}
 				size='md'
 				className='font-bold'
 			/>

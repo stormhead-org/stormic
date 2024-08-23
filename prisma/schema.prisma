@@ -75,6 +75,7 @@ model User {
   profile_banner       String? // URL баннер профиля пользователя
   profile_picture      String? // URL фотографии пользователя
   bio                  String? // Биография пользователя
+  customFields         CustomField[] // Дополнительная информация о пользователе
   roles                UserRoleAssignment[] // Роли, назначенные пользователю
   posts                Post[] // Посты, созданные пользователем
   comments             Comment[] // Комментарии пользователя
@@ -83,8 +84,8 @@ model User {
   views                View[] // Просмотры пользователем
   images               Image[] // Изображения пользователя
   notifications        Notification[] // Уведомления пользователя
-  categories           Category[]             @relation("UserCategories") // Категории, которые пользователь создал
-  moderatedCategories  CategoryModerator[] // Категории, которые пользователь модерирует
+  categories           Category[]             @relation("UserCategories") // Сообщества, которые пользователь создал
+  moderatedCategories  CategoryModerator[] // Сообщества, которые пользователь модерирует
   followers            UserSubscription[]     @relation("Following") // Подписчики пользователя
   following            UserSubscription[]     @relation("Followers") // Подписки пользователя
   commentLikes         CommentLike[] // Лайки, поставленные пользователем
@@ -108,6 +109,19 @@ model VerificationCode {
   createdAt DateTime @default(now()) // Дата создания кода
 
   @@unique([userId, code]) // Уникальность комбинации userId и code
+}
+
+model CustomField {
+  id     Int    @id @default(autoincrement()) // Уникальный идентификатор поля
+  key    String // Название поля (например, "GitHub")
+  value  String // Значение поля (например, "example.com/repo")
+  user   User   @relation(fields: [userId], references: [id]) // Связь с пользователем
+  userId Int // Идентификатор пользователя
+
+  createdAt DateTime @default(now()) // Дата создания поля
+  updatedAt DateTime @updatedAt // Дата последнего обновления поля
+
+  @@map("custom_fields") // Переименование таблицы в базе данных на "custom_fields"
 }
 
 model Post {

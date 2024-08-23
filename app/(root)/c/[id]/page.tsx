@@ -3,7 +3,7 @@ import { CategoryProfileGroup } from '@/shared/components/profiles/category-prof
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Категории'
+	title: 'Stormic: Сообщества'
 }
 
 export default async function CategoryPage({

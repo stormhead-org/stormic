@@ -27,7 +27,7 @@ export const CategoryGroup: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<CategoryForm
-				title='Категории'
+				title='Сообщества'
 				limit={5}
 				defaultItems={items.slice(0, 5)}
 				items={items}

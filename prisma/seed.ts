@@ -56,6 +56,39 @@ const generateRandomCommentLikes = async () => {
 }
 
 async function up() {
+	
+	// Создание настроек платформы
+	await prisma.stormicSettings.createMany({
+		data: [
+			{
+				content: 'Stormic',
+				settingsType: SettingsType.NAME
+			},
+			{
+				content: 'код, GitHub и ты',
+				settingsType: SettingsType.DESCRIPTION
+			}
+		]
+	})
+	
+	// Создание медиа
+	await prisma.stormicMedia.createMany({
+		data: [
+			{
+				mediaType: MediaType.LOGO,
+				url: 'https://i.imgur.com/CPCySAr.png',
+				description: 'Логотип нашей астрономической платформы.',
+				stormicSettingsId: 1
+			},
+			{
+				mediaType: MediaType.BANNER,
+				url: 'https://i.pinimg.com/564x/f8/1e/7d/f81e7dde45454fcb1a61bf676e3e95b0.jpg',
+				description: 'Баннер для рекламы новых статей.',
+				stormicSettingsId: 1
+			}
+		]
+	})
+	
 	// Создание пользователей
 	await prisma.user.createMany({
 		data: [
@@ -92,34 +125,23 @@ async function up() {
 		]
 	})
 	
-	// Создание настроек платформы
-	await prisma.stormicSettings.createMany({
+	// Заполнение таблицы CustomField
+	await prisma.customField.createMany({
 		data: [
 			{
-				content: 'Stormic',
-				settingsType: SettingsType.NAME
+				key: 'Сайт:',
+				value: 'https://carlsagan.com',
+				userId: 1
 			},
 			{
-				content: 'код, GitHub и ты',
-				settingsType: SettingsType.DESCRIPTION
-			}
-		]
-	})
-	
-	// Создание медиа
-	await prisma.stormicMedia.createMany({
-		data: [
-			{
-				mediaType: MediaType.LOGO,
-				url: 'https://i.imgur.com/CPCySAr.png',
-				description: 'Логотип нашей астрономической платформы.',
-				stormicSettingsId: 1
+				key: 'Сайт:',
+				value: 'https://www.hawking.org.uk',
+				userId: 2
 			},
 			{
-				mediaType: MediaType.BANNER,
-				url: 'https://i.pinimg.com/564x/f8/1e/7d/f81e7dde45454fcb1a61bf676e3e95b0.jpg',
-				description: 'Баннер для рекламы новых статей.',
-				stormicSettingsId: 1
+				key: 'Мои книги:',
+				value: 'https://www.penguinrandomhouse.com/the-read-down/stephen-hawking/',
+				userId: 2
 			}
 		]
 	})
@@ -607,6 +629,7 @@ async function down() {
 	await prisma.$executeRaw`TRUNCATE TABLE "StormicMedia" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "NavigationMenu" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "users" RESTART IDENTITY CASCADE`
+	await prisma.$executeRaw`TRUNCATE TABLE "custom_fields" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "VerificationCode" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "Post" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "Bookmark" RESTART IDENTITY CASCADE`

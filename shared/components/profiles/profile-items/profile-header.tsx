@@ -11,7 +11,6 @@ interface Props {
 	profileAvatar?: string
 	profileName: string
 	profileRep?: number
-	profileRegTime?: string
 	hasUser: boolean
 	className?: string
 }
@@ -21,7 +20,6 @@ export const ProfileHeader: React.FC<Props> = ({
 	                                               profileAvatar,
 	                                               profileName,
 	                                               profileRep,
-	                                               profileRegTime,
 	                                               hasUser,
 	                                               className
                                                }) => {
@@ -34,7 +32,7 @@ export const ProfileHeader: React.FC<Props> = ({
 				alt='Profile Banner'
 			/>
 			<div className='-mt-10 mx-6'>
-				<div className='flex w-full justify-between'>
+				<div className='flex w-full justify-between mb-2'>
 					<ProfileAvatar className='w-24 h-24' avatarImage={String(profileAvatar)} avatarSize={Number(92)} />
 					<div className='flex items-center'>
 						<Button
@@ -50,15 +48,10 @@ export const ProfileHeader: React.FC<Props> = ({
 						</p>
 					</div>
 				</div>
-				<p className='font-bold mt-2 text-2xl'> {profileName} </p>
-				
-				
+				<span className='font-bold text-2xl'> {profileName} </span>
 				{hasUser &&
 					<>
-						<div className='flex flex-1 items-center mt-2'>
-							<p className='text-md text-green-500 font-bold'>+{profileRep}</p>
-							<p className='ml-4 text-md font-bold'>c {profileRegTime}</p>
-						</div>
+						<span className='text-md text-green-500 font-bold'>+{profileRep}</span>
 					</>
 				}
 			</div>
