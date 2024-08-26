@@ -57,6 +57,7 @@ export default async function HomeLayout({
 					stormicName={stormicName?.content || 'Stormic'}
 					description={description?.content || 'код, GitHub и ты'}
 					avatarImage={user?.profile_picture || ''}
+					userUrl={'/u/' + String(user?.id) || ''}
 				/>
 			</Suspense>
 			<Container className='mt-4'>
@@ -64,13 +65,16 @@ export default async function HomeLayout({
 					{/* Левая часть */}
 					<div className='w-1/4'>
 						<FeedUserMenu />
-						<SocialMenu className='my-2' />
+						<SocialMenu
+							className='my-2'
+						/>
 						<NewPostButton
 							className='my-4'
 							authorAvatar={String(user && user.profile_picture)}
 							authorName={String(user && user.fullName)}
 							authorUrl={String(user && '/u/' + user.id)}
-							hasSession={!!user} />
+							hasSession={!!user}
+						/>
 						<NavigationMenuForm className='mt-4' data={menu} />
 						<CategoryGroup className='mt-4' hasPost={false} />
 						<SideFooter className='mt-4' />

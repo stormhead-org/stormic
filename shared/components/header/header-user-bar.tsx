@@ -7,11 +7,12 @@ import React from 'react'
 import { AuthModal } from '../modals'
 
 interface Props {
+	userUrl: string
 	avatarImage: string
 	className?: string
 }
 
-export const HeaderUserBar: React.FC<Props> = ({ avatarImage, className }) => {
+export const HeaderUserBar: React.FC<Props> = ({ userUrl, avatarImage, className }) => {
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 	
 	return (
@@ -24,7 +25,7 @@ export const HeaderUserBar: React.FC<Props> = ({ avatarImage, className }) => {
 			
 			<Notifications />
 			
-			<ProfileButton onClickSignIn={() => setOpenAuthModal(true)} avatarImage={avatarImage} />
+			<ProfileButton onClickSignIn={() => setOpenAuthModal(true)} avatarImage={avatarImage} userUrl={userUrl} />
 		</div>
 	)
 }

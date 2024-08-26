@@ -112,7 +112,7 @@ export const authOptions: AuthOptions = {
 					return true
 				}
 				
-				await prisma.user.create({
+				const newUser = await prisma.user.create({
 					data: {
 						email: user.email,
 						fullName: user.name || 'User #' + user.id,
@@ -122,6 +122,14 @@ export const authOptions: AuthOptions = {
 						provider: account?.provider,
 						providerId: account?.providerAccountId
 					}
+				})
+				
+				// Создание CustomField записей
+				await prisma.customField.createMany({
+					data: [
+						{ key: '', value: '', userId: newUser.id },
+						{ key: '', value: '', userId: newUser.id }
+					]
 				})
 				
 				return true

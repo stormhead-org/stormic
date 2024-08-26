@@ -46,6 +46,7 @@ export const CommentInputForm: React.FC<Props> = ({ loading, commentsHeader, cla
 				className='text-base mt-2'
 				placeholder='Комментарий...'
 				rows={5}
+				sideButton={true}
 			/>
 		</div>
 	)

@@ -11,7 +11,7 @@ export const VerificationUserTemplate: React.FC<Props> = ({ code }) => (
 		</p>
 		
 		<p>
-			<a href={`https://stormic.app/api/auth/verify?code=${code}`}>Подтвердить регистрацию</a>
+			<a href={`${process.env.NEXTAUTH_URL}/api/auth/verify?code=${code}`}>Подтвердить регистрацию</a>
 		</p>
 	</div>
 )

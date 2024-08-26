@@ -5,9 +5,27 @@ import { VerificationUserTemplate } from '@/shared/components/email-templates/ve
 import { sendEmail } from '@/shared/lib'
 import { getUserSession } from '@/shared/lib/'
 import { Prisma } from '@prisma/client'
-import { hashSync } from 'bcrypt'
+import { compareSync, hashSync } from 'bcrypt'
 
-export async function updateUserInfo(body: Prisma.UserUpdateInput) {
+
+export interface CustomField {
+	id: number;
+	key: string;
+	value: string;
+}
+
+export interface UserProfile {
+	id: number;
+	fullName: string;
+	email: string;
+	bio: string | null;
+	customFields: CustomField[];
+}
+
+export async function updateUserInfo({ data }: {
+	where: { id: number };
+	data: Prisma.UserUpdateInput & { customFields?: CustomField[] };
+}) {
 	try {
 		const currentUser = await getUserSession()
 		
@@ -21,20 +39,82 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
 			}
 		})
 		
-		await prisma.user.update({
+		if (!findUser) {
+			throw new Error('Пользователь не найден в базе данных')
+		}
+		
+		const updatedUser = await prisma.user.update({
 			where: {
 				id: Number(currentUser.id)
 			},
 			data: {
-				fullName: body.fullName,
-				email: body.email,
-				password: body.password
-					? hashSync(body.password as string, 10)
-					: findUser?.password
-			}
+				fullName: data.fullName,
+				email: data.email,
+				bio: data.bio,
+				// password: data.password
+				// 	? hashSync(data.password as string, 10)
+				// 	: findUser.password,
+				customFields: data.customFields
+					? {
+						upsert: data.customFields.map((field) => ({
+							where: { id: field.id },
+							create: {
+								key: field.key,
+								value: field.value
+							},
+							update: {
+								key: field.key,
+								value: field.value
+							}
+						}))
+					}
+					: undefined
+			},
+			include: { customFields: true }
 		})
+		return updatedUser
 	} catch (err) {
 		console.log('Error [UPDATE_USER]', err)
+		throw err
+	}
+}
+
+// Функция проверки текущего пароля
+export async function checkCurrentPassword(userId: number, currentPassword: string): Promise<boolean> {
+	try {
+		const user = await prisma.user.findUnique({
+			where: { id: userId }
+		})
+		
+		if (!user) {
+			throw new Error('User not found')
+		}
+		
+		return compareSync(currentPassword, user.password)
+	} catch (error) {
+		console.error('Error checking current password:', error)
+		throw error
+	}
+}
+
+export async function getUserInfo(userId: number) {
+	try {
+		if (!userId) {
+			throw new Error('User ID is required')
+		}
+		
+		const user = await prisma.user.findUnique({
+			where: { id: Number(userId) },
+			include: { customFields: true }
+		})
+		
+		if (!user) {
+			throw new Error('User not found')
+		}
+		
+		return user
+	} catch (err) {
+		console.log('Error fetching user:', err)
 		throw err
 	}
 }

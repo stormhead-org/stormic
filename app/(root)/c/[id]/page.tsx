@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
-import { CategoryProfileGroup } from '@/shared/components/profiles/category-profile-group'
+import { CategoryCommunityProfileGroup } from '@/shared/components/profiles/category-community-profile-group'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -44,7 +44,7 @@ export default async function CategoryPage({
 			: '/defaultBanner.jpg'
 	
 	return (
-		<CategoryProfileGroup
+		<CategoryCommunityProfileGroup
 			profileBanner={profileBannerUrl}
 			profileAvatar={categoryWithDetails.category_image || ''}
 			profileName={categoryWithDetails.category_name}

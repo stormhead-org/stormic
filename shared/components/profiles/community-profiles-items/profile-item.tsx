@@ -1,7 +1,7 @@
 'use client'
 
-import { ProfileBody } from '@/shared/components/profiles/profile-items/profile-body'
-import { ProfileHeader } from '@/shared/components/profiles/profile-items/profile-header'
+import { ProfileBody } from '@/shared/components/profiles/community-profiles-items/profile-body'
+import { ProfileHeader } from '@/shared/components/profiles/community-profiles-items/profile-header'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 

@@ -11,16 +11,18 @@ const socialMenu = [
 	{ id: 2, icon: <Facebook size={24} />, path: '/placeholder2' },
 	{ id: 3, icon: <Github size={24} />, path: '/placeholder3' },
 	{ id: 4, icon: <Instagram size={24} />, path: '/placeholder4' },
-	{ id: 5, icon: <Twitch size={24} />, path: '/placeholder5' },
+	{ id: 5, icon: <Twitch size={24} />, path: '/placeholder5' }
 ]
 
 interface Props {
 	className?: string
 }
 
-export const SocialMenu: React.FC<Props> = ({ className }) => {
+export const SocialMenu: React.FC<Props> = ({
+	                                            className
+                                            }) => {
 	const router = useRouter()
-
+	
 	return (
 		<div className={cn('', className)}>
 			<div className='flex flex-1 justify-evenly items-center'>

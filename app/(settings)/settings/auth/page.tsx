@@ -1,5 +1,8 @@
 import { prisma } from '@/prisma/prisma-client'
-import { PersonalPageProfileGroup } from '@/shared/components'
+import { SettingsProfilePageAuthGroup } from '@/shared/components'
+import {
+	SettingsProfileAuthTopMenu
+} from '@/shared/components/profiles/personal-profile-settings-items/settings-profile-auth-top-menu'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -21,5 +24,10 @@ export default async function ProfilePage() {
 		return redirect('/not-auth')
 	}
 	
-	return <PersonalPageProfileGroup data={user} />
+	return (
+		<>
+			<SettingsProfileAuthTopMenu />
+			<SettingsProfilePageAuthGroup data={user} />
+		</>
+	)
 }

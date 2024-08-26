@@ -1,6 +1,6 @@
 'use client'
 
-import { ProfileCustomFieldItem } from '@/shared/components/profiles/profile-items/profile-custom-filed-item'
+import { ProfileCustomFieldItem } from '@/shared/components/profiles/community-profiles-items/profile-custom-filed-item'
 import { Skeleton } from '@/shared/components/ui/skeleton'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'

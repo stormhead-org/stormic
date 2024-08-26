@@ -1,7 +1,9 @@
 import { prisma } from '@/prisma/prisma-client'
-import { Container, SideFooter, Title } from '@/shared/components/'
-import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
+import { Container } from '@/shared/components'
 import { Header } from '@/shared/components/header/header'
+import {
+	SettingsProfileSideMenu
+} from '@/shared/components/profiles/personal-profile-settings-items/settings-profile-side-menu'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
 import React, { Suspense } from 'react'
@@ -10,9 +12,9 @@ export const metadata: Metadata = {
 	title: 'Stormic: Профиль'
 }
 
-export default async function ProfileLayout({
-	                                            children
-                                            }: Readonly<{
+export default async function SettingsLayout({
+	                                             children
+                                             }: Readonly<{
 	children: React.ReactNode
 }>) {
 	
@@ -46,29 +48,25 @@ export default async function ProfileLayout({
 					stormicName={stormicName?.content || 'Stormic'}
 					description={description?.content || 'код, GitHub и ты'}
 					avatarImage={user?.profile_picture || ''}
+					userUrl={'/u/' + String(user?.id) || ''}
 				/>
 			</Suspense>
 			<Container className='mt-4'>
 				<div className='flex gap-4'>
+					
 					{/* Левая часть */}
-					<div className='w-1/4'>
-						<SideFooter className='mt-4' />
+					<div className='w-1/4 h-full'>
+						<div className='h-3/4'>
+							<SettingsProfileSideMenu />
+						</div>
+						{/* <div className='h-1/4 mt-20'> */}
+						{/* 	<SideFooter className='mt-4' /> */}
+						{/* </div> */}
 					</div>
-					
-					{/* Центральная часть */}
-					<div className='w-2/4'>
-						{children}
-					</div>
-					
 					
 					{/* Правая часть */}
-					<div className='w-1/4'>
-						<Title
-							text='Сейчас обсуждают'
-							size='sm'
-							className='font-bold flex items-center w-full h-12 rounded-[6px] bg-secondary/50 pl-2'
-						/>
-						<CommentFeedGroup />
+					<div className='w-3/4'>
+						{children}
 					</div>
 				</div>
 			</Container>

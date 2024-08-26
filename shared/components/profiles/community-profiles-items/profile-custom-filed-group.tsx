@@ -1,6 +1,6 @@
 'use client'
 
-import { ProfileCustomField } from '@/shared/components/profiles/profile-items/profile-custom-filed-form'
+import { ProfileCustomField } from '@/shared/components/profiles/community-profiles-items/profile-custom-filed-form'
 import { useUserById } from '@/shared/hooks/use-user-by-id'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
@@ -19,9 +19,12 @@ export const ProfileCustomFieldForm: React.FC<Props> = ({ userId, className }) =
 		fieldsValue: field.value
 	})) || []
 	
+	// Проверка на наличие хотя бы одного непустого ключа
+	const hasNonEmptyField = user?.customFields.some(field => field.key.trim().length > 0 || field.value.trim().length > 0)
+	
 	return (
 		<div className={cn('', className)}>
-			<ProfileCustomField items={items} loading={loading} />
+			{hasNonEmptyField && <ProfileCustomField items={items} loading={loading} />}
 		</div>
 	)
 }

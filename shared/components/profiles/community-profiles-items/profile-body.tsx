@@ -1,4 +1,6 @@
-import { ProfileCustomFieldForm } from '@/shared/components/profiles/profile-items/profile-custom-filed-group'
+import {
+	ProfileCustomFieldForm
+} from '@/shared/components/profiles/community-profiles-items/profile-custom-filed-group'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'

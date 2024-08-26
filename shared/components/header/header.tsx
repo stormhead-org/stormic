@@ -7,6 +7,7 @@ import React from 'react'
 
 interface Props {
 	avatarImage: string
+	userUrl: string
 	logoImage: string
 	stormicName: string
 	description: string
@@ -15,6 +16,7 @@ interface Props {
 
 export const Header: React.FC<Props> = ({
 	                                        avatarImage,
+	                                        userUrl,
 	                                        logoImage,
 	                                        stormicName,
 	                                        description,
@@ -43,7 +45,7 @@ export const Header: React.FC<Props> = ({
 				
 				{/* Правая часть */}
 				<div className='flex items-center gap-3 w-[250px] justify-end'>
-					<HeaderUserBar avatarImage={avatarImage} />
+					<HeaderUserBar avatarImage={avatarImage} userUrl={userUrl} />
 				</div>
 			</Container>
 		</header>

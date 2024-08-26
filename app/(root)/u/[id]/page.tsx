@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
-import { UserProfileGroup } from '@/shared/components/profiles/user-profile-group'
+import { UserCommunityProfileGroup } from '@/shared/components/profiles/user-community-profile-group'
 import { format } from 'date-fns'
 import type { Metadata } from 'next'
 
@@ -63,7 +63,7 @@ export default async function UserPage({
 	
 	return (
 		<>
-			<UserProfileGroup
+			<UserCommunityProfileGroup
 				userId={String(userId)}
 				profileBanner={profileBannerUrl}
 				profileAvatar={user.profile_picture || ''}
