@@ -1,11 +1,10 @@
 'use client'
 
+import { cn } from '@/shared/lib/utils'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
-import * as React from 'react'
-
-import { cn } from '@/shared/lib/utils'
 import { Loader } from 'lucide-react'
+import * as React from 'react'
 
 const buttonVariants = cva(
 	'inline-flex items-center justify-center whitespace-nowrap rounded-md active:translate-y-[1px] text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 disabled:bg-gray-500',
@@ -17,21 +16,22 @@ const buttonVariants = cva(
 					'bg-destructive text-destructive-foreground hover:bg-destructive/90',
 				outline:
 					'border border-primary text-primary bg-transparent hover:bg-secondary',
-				secondary: 'bg-secondary text-primary hover:bg-secondary/50',
+				secondary: 'bg-secondary text-white hover:bg-primary/5',
 				ghost: 'hover:bg-secondary hover:text-secondary-foreground',
 				link: 'text-primary underline-offset-4 hover:underline',
+				blue: 'bg-blue-700 text-white hover:bg-blue-800'
 			},
 			size: {
 				default: 'h-10 px-4 py-2',
 				sm: 'h-9 rounded-md px-3',
 				lg: 'h-11 rounded-md px-8',
-				icon: 'h-10 w-10',
-			},
+				icon: 'h-10 w-10'
+			}
 		},
 		defaultVariants: {
 			variant: 'default',
-			size: 'default',
-		},
+			size: 'default'
+		}
 	}
 )
 

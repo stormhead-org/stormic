@@ -111,7 +111,7 @@ export const SettingsProfilePageAuthGroup: React.FC<Props> = ({ data }) => {
 	}
 	
 	return (
-		<Container className='bg-secondary rounded-md mt-[1px] p-4'>
+		<Container className='bg-secondary rounded-md mt-1 p-4'>
 			<Title text='Безопасность' size='sm' />
 			
 			<FormProvider {...formAccountUpdate}>
@@ -129,6 +129,7 @@ export const SettingsProfilePageAuthGroup: React.FC<Props> = ({ data }) => {
 							type='password'
 							name='currentPassword'
 							label='Текущий пароль'
+							placeholder='********'
 							required
 						/>
 					</div>
@@ -143,12 +144,14 @@ export const SettingsProfilePageAuthGroup: React.FC<Props> = ({ data }) => {
 							type='password'
 							name='password'
 							label='Новый пароль'
+							placeholder='Введите новый пароль'
 						/>
 						<FormInput
 							className='w-full'
 							type='password'
 							name='confirmPassword'
-							label='Повторите пароль'
+							label='Подтвердрите пароль'
+							placeholder='Введите новый пароль еще раз'
 						/>
 					</div>
 				</form>
@@ -156,7 +159,8 @@ export const SettingsProfilePageAuthGroup: React.FC<Props> = ({ data }) => {
 			
 			<Button
 				disabled={formAccountUpdate.formState.isSubmitting || formPasswordUpdate.formState.isSubmitting}
-				className='text-base mt-4'
+				variant='blue'
+				className='text-base mt-6 w-full'
 				onClick={onSubmit}
 			>
 				Сохранить

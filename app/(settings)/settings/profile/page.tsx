@@ -1,7 +1,7 @@
 import { prisma } from '@/prisma/prisma-client'
 import {
 	SettingsProfileTopMenu
-} from '@/shared/components/profiles/personal-profile-settings-items/settings-profile-top-menu'
+} from '@/shared/components/profiles/settings/settings-page-items/personal-profile-settings-items/settings-profile-top-menu'
 import { SettingsProfilePageGroup } from '@/shared/components/profiles/settings/settings-profile-page-group'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'

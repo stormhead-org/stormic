@@ -18,26 +18,22 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 		<div className={cn('flex items-center justify-between', className)}>
 			<div className='flex items-center'>
 				<div className='group mr-4 cursor-pointer'>
-					<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-						<Heart className='group-hover:bg-blue-600/20 rounded-full mr-1 w-7 h-7 p-1' /> {likesCount}
+					<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+						<Heart className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {likesCount}
 					</p>
 				</div>
-				<div className='group mr-4 cursor-pointer'>
-					<p className='flex items-center '>
-						<Button
-							variant='secondary'
-							className='h-6 text-sm font-bold p-0 hover:border-blue-600 border-b-4 -mb-1 rounded-none'
-							type='button'
-							// onClick={() => router.push('/write')}
-						>
-							Ответить
-						</Button>
-					</p>
-				</div>
+				<Button
+					variant='blue'
+					className='h-6 text-sm font-bold p-0 -mb-1 border-b-4 border-transparent bg-transparent hover:border-blue-700 hover:bg-transparent rounded-none text-primary'
+					type='button'
+					// onClick={() => router.push('/write')}
+				>
+					Ответить
+				</Button>
 			</div>
 			<div className='flex group cursor-pointer items-center'>
-				<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-					<Ellipsis className='group-hover:bg-blue-600/20 rounded-full mr-1 w-7 h-7 p-1' />
+				<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+					<Ellipsis className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' />
 				</p>
 			</div>
 		</div>

@@ -37,10 +37,10 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 			<CommentHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
 			               postTitle={String(postTitle)} maxLength={maxLengthHeader} publicationDate={publicationDate} />
 			<CommentBody content={content} maxLength={maxLengthBody} />
-			{likesCount ? <FullPostCommentFooter
+			{likesCount && <FullPostCommentFooter
 				likesCount={Number(likesCount)}
 				className='mt-2'
-			/> : null}
+			/>}
 			{endAdornment}
 		</div>
 	)

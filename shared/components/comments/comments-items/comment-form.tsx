@@ -54,7 +54,7 @@ export const CommentForm: React.FC<Props> = ({
 							authorAvatar={item.authorAvatar}
 							maxLengthHeader={maxLengthHeader}
 							maxLengthBody={maxLengthBody}
-							className='bg-secondary/25 hover:bg-secondary/50 mb-4'
+							className='bg-secondary/25 hover:bg-primary/5 mb-4'
 						/>
 					</Link>
 				))}

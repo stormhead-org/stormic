@@ -31,7 +31,7 @@ export const SocialMenu: React.FC<Props> = ({
 						key={item.id}
 						onClick={() => router.push(item.path)}
 						href={item.path}
-						className='hover:bg-secondary/50 cursor-pointer rounded-[6px] items-center p-2 justify-center'
+						className='hover:bg-blue-700 hover:text-white cursor-pointer rounded-full items-center p-2 justify-center'
 					>
 						{item.icon}
 					</Link>

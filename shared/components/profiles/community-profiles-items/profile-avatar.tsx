@@ -16,12 +16,15 @@ export const ProfileAvatar: React.FC<Props> = ({
 	                                               avatarSize,
 	                                               className
                                                }) => {
+	
 	return (
-		<Avatar className={cn('border-2 border-secondary rounded-full', className)}>
+		<Avatar
+			className={cn('border-[1px] border-transparent rounded-full hover:bg-blue-700', className)}>
 			<AvatarImage
 				className='m-auto rounded-full'
 				src={avatarImage}
-				style={{ width: avatarSize, height: avatarSize }} />
+				style={{ width: avatarSize, height: avatarSize }}
+			/>
 			<AvatarFallback>
 				<CircleUser />
 			</AvatarFallback>

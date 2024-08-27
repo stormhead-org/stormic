@@ -3,7 +3,7 @@ import { Container } from '@/shared/components'
 import { Header } from '@/shared/components/header/header'
 import {
 	SettingsProfileSideMenu
-} from '@/shared/components/profiles/personal-profile-settings-items/settings-profile-side-menu'
+} from '@/shared/components/profiles/settings/settings-page-items/personal-profile-settings-items/settings-profile-side-menu'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
 import React, { Suspense } from 'react'

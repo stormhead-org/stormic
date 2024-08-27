@@ -26,7 +26,7 @@ export const PostFooter: React.FC<PostHeaderProps> = ({
 			{postTags && postTags.length > 0 ? (
 				<p className='flex flex-wrap gap-2'>
 					{postTags.map((tag, index) => (
-						<span key={index} className='mr-2 pm-1 text-sm font-bold text-blue-600 cursor-default'>
+						<span key={index} className='mr-2 pm-1 text-sm font-bold text-blue-700 cursor-default'>
 							#{tag}
 						</span>
 					))}
@@ -35,29 +35,29 @@ export const PostFooter: React.FC<PostHeaderProps> = ({
 			<div className='flex items-center justify-between mt-3'>
 				<div className='flex items-center'>
 					<div className='group mr-4 cursor-pointer'>
-						<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-							<Heart className='group-hover:bg-blue-600/20 rounded-full mr-1 w-7 h-7 p-1' /> {likesCount}
+						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+							<Heart className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {likesCount}
 						</p>
 					</div>
 					<div className='group mr-4 cursor-pointer'>
-						<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-							<MessageCircle className='group-hover:bg-blue-600/20 rounded-full mr-1 w-7 h-7 p-1' /> {commentsCount}
+						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+							<MessageCircle className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {commentsCount}
 						</p>
 					</div>
 					<div className='group mr-4 cursor-pointer'>
-						<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-							<Bookmark className='group-hover:bg-blue-600/20 rounded-full mr-1 w-7 h-7 p-1' /> {bookmarksCount}
+						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+							<Bookmark className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {bookmarksCount}
 						</p>
 					</div>
 					<div className='group cursor-pointer'>
-						<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-							<Redo className='group-hover:bg-blue-600/20 rounded-full mr-1 w-7 h-7 p-1' />
+						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+							<Redo className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' />
 						</p>
 					</div>
 				</div>
 				<div className='group cursor-pointer'>
-					<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-						<Eye className='group-hover:bg-blue-600/20 rounded-full mr-1 w-7 h-7 p-1' /> {viewsCount}
+					<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+						<Eye className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {viewsCount}
 					</p>
 				</div>
 			</div>

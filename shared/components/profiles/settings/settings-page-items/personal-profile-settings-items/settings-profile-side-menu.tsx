@@ -24,26 +24,26 @@ const sideSettingsMenu = [
 		id: 3,
 		text: 'Подписки и подписчики',
 		icon: <Users />,
-		path: '/settings/relationships'
+		path: '/settings/auth#2'
 	},
 	{
 		id: 4,
 		text: 'Фильтры',
 		icon: <Filter />,
-		path: '/settings/filters'
+		path: '/settings/auth#3'
 	},
 	{
 		id: 5,
 		text: 'Настройки',
 		icon: <Settings />,
-		path: '/settings/preferences'
+		path: '/settings/auth#4'
 	},
 	{
 		id: 6,
 		text: 'Выйти',
 		icon: <LogOut />,
 		path: '',
-		click: 'onClickSignOut' // Эта строка будет сопоставлена с функцией выхода
+		click: 'onClickSignOut'
 	}
 ]
 
@@ -68,8 +68,8 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 					<li
 						key={item.id}
 						className={cn(
-							'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-secondary/50 cursor-pointer mb-[1px]',
-							`${pathname === item.path ? 'bg-secondary/50' : ''}`
+							'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-800 hover:text-white cursor-pointer mb-1',
+							`${pathname === item.path ? 'bg-blue-800 text-white' : ''}`
 						)}
 						onClick={() => {
 							if (item.click === 'onClickSignOut') {

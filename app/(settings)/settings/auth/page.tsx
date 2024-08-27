@@ -2,7 +2,7 @@ import { prisma } from '@/prisma/prisma-client'
 import { SettingsProfilePageAuthGroup } from '@/shared/components'
 import {
 	SettingsProfileAuthTopMenu
-} from '@/shared/components/profiles/personal-profile-settings-items/settings-profile-auth-top-menu'
+} from '@/shared/components/profiles/settings/settings-page-items/personal-profile-settings-items/settings-profile-auth-top-menu'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'

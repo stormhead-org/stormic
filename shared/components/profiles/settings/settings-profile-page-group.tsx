@@ -56,7 +56,7 @@ export const SettingsProfilePageGroup: React.FC<Props> = ({ data }) => {
 	}
 	
 	return (
-		<Container className='bg-secondary rounded-md mt-[1px] p-4'>
+		<Container className='bg-secondary rounded-md mt-1 p-4'>
 			<p>
 				Настройте то, что люди видят в вашем профиле. Другие люди с большей вероятностью подпишутся на Вас и будут
 				взаимодействовать с вами, если у Вас заполнен профиль и добавлено изображение.
@@ -100,6 +100,7 @@ export const SettingsProfilePageGroup: React.FC<Props> = ({ data }) => {
 					<Button
 						disabled={formState.isSubmitting}
 						className='text-base mt-6 w-full'
+						variant='blue'
 						type='submit'
 					>
 						Сохранить

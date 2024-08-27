@@ -13,15 +13,15 @@ const userMenu = [
 		text: 'Свежее',
 		icon: <Flame size={22} />,
 		path: '/new',
-		dot: <Dot size={32} className='text-blue-400' />,
+		dot: <Dot size={32} className='text-blue-400' />
 	},
 	{ id: 3, text: 'Моя лента', icon: <CheckCheck size={22} />, path: '/my' },
 	{
 		id: 4,
 		text: 'Закладки',
 		icon: <BookmarkCheck size={22} />,
-		path: '/bookmarks',
-	},
+		path: '/bookmarks'
+	}
 ]
 
 interface Props {
@@ -31,15 +31,15 @@ interface Props {
 export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 	const pathname = usePathname()
 	const router = useRouter()
-
+	
 	return (
 		<div className={cn('', className)}>
 			{userMenu.map(item => (
 				<li
 					key={item.id}
 					className={cn(
-						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-secondary/50 cursor-pointer mb-[1px]',
-						`${pathname === item.path ? 'bg-secondary/50' : ''}`
+						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-700 hover:text-white cursor-pointer mb-1',
+						`${pathname === item.path ? 'bg-blue-800 text-white hover:bg-blue-800' : ''}`
 					)}
 					onClick={() => router.push(item.path)}
 				>

@@ -19,7 +19,7 @@ export default async function Home() {
 			{/* Центральная часть */}
 			<MainBannerForm stormicName={stormicName && String(stormicName.content)}
 			                bannerUrl={banner && String(banner.url)} />
-			<SortFeedButtons className='mt-[7px]' />
+			<SortFeedButtons className='mt-4' />
 		</>
 	)
 }

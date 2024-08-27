@@ -43,7 +43,7 @@ export const PostItem: React.FC<PostItemProps> = ({
 	                                                  className
                                                   }) => {
 	return (
-		<div className={cn('bg-secondary rounded-md mb-4 p-4 hover:bg-secondary/50', className)}>
+		<div className={cn('bg-secondary rounded-md mb-4 p-4 hover:bg-primary/5', className)}>
 			<Link href={String(postUrl)}>
 				<PostHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
 				            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />

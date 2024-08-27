@@ -20,15 +20,15 @@ export const SettingsProfileAuthTopMenu: React.FC<Props> = ({ className }) => {
 	const router = useRouter()
 	
 	return (
-		<div className={cn('flex flex-1 bg-secondary rounded-md', className)}>
+		<div className={cn('flex flex-1 rounded-md gap-1', className)}>
 			{topMenuButtons.map(item => (
 				<Button
 					key={item.id}
-					variant='secondary'
+					variant='blue'
 					type='button'
 					className={cn(
-						'h-12 flex-1 text-sm font-bold cursor-pointer hover:bg-[#f4f7fa] dark:hover:bg-[#162033]',
-						`${pathname === item.path ? 'bg-blue-600' : ''}`
+						'h-12 flex-1 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white',
+						`${pathname === item.path ? 'bg-blue-800 hover:bg-blue-800 text-white' : ''}`
 					)}
 					onClick={() => router.push(item.path)}
 				>

@@ -18,29 +18,33 @@ export function FeedToggle() {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button
-					className='bg-transparent hover:bg-transparent text-md'
-					variant='secondary'
+					className='bg-transparent hover:bg-transparent text-md text-primary hover:text-a-color-hover cursor-pointer'
+					variant='blue'
 					type='button'>
 					Свежее <ChevronDown />
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align='end' className='bg-secondary'>
 				<DropdownMenuItem
+					className='cursor-pointer'
 					// onClick={() => setTheme('light')}
 				>
 					Свежее
 				</DropdownMenuItem>
 				<DropdownMenuItem
+					className='cursor-pointer'
 					// onClick={() => setTheme('dark')}
 				>
 					Популярное
 				</DropdownMenuItem>
 				<DropdownMenuItem
+					className='cursor-pointer'
 					// onClick={() => setTheme('system')}
 				>
 					Топ за месяц
 				</DropdownMenuItem>
 				<DropdownMenuItem
+					className='cursor-pointer'
 					// onClick={() => setTheme('system')}
 				>
 					Топ за год

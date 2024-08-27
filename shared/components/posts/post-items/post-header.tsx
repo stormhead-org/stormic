@@ -34,25 +34,25 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 				</Link>
 				<div className='ml-2'>
 					
-					<Link className='hover:text-primary/50' href={authorUrl}>{authorName}</Link>
+					<Link className='hover:text-a-color-hover' href={authorUrl}>{authorName}</Link>
 					<br />
-					<Link className='text-sm hover:text-primary/50' href={categoryUrl}>{categoryName}</Link>
+					<Link className='text-sm hover:text-a-color-hover' href={categoryUrl}>{categoryName}</Link>
 					<span className='ml-2 text-sm cursor-default'>{postTime}</span>
 				</div>
 			
 			</div>
 			<div className='flex items-center'>
 				<Button
-					variant='secondary'
-					className='h-6 w-26 text-sm font-bold bg-white dark:bg-slate-700 hover:dark:bg-slate-800'
+					variant='blue'
+					className='h-6 w-26 text-sm font-bold'
 					type='button'
 					// onClick={() => router.push('/write')}
 				>
 					Подписаться
 				</Button>
 				<div className='group'>
-					<p className='flex p-1 items-center group-hover:text-blue-600 font-bold'>
-						<GripHorizontal className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer' />
+					<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+						<GripHorizontal className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />
 					</p>
 				</div>
 			</div>

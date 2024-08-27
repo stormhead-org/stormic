@@ -38,7 +38,7 @@ export const NewPostButton: React.FC<Props> = ({
 			/>
 			
 			<Button
-				variant='secondary'
+				variant='blue'
 				className='h-12 w-full text-lg font-bold'
 				type='button'
 				onClick={hasSession ? () => setOpenWriteModal(true) : () => setOpenAuthModal(true)}

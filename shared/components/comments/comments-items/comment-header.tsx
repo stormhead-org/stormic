@@ -36,15 +36,15 @@ export const CommentHeader: React.FC<CommentHeaderProps> = ({
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
 			<div className='flex items-center'>
-				<Link className='' href={authorUrl}>
+				<Link href={authorUrl}>
 					<ProfileAvatar avatarImage={String(authorAvatar)} />
 				</Link>
 				<div className='ml-2'>
 					
-					<Link className='hover:text-primary/50' href={authorUrl}>{authorName}</Link>
+					<Link className='hover:text-a-color-hover' href={authorUrl}>{authorName}</Link>
 					<br />
 					{!publicationDate ? (
-						<p className='text-sm hover:text-primary/50'>{truncatedContent}</p>
+						<p className='text-sm hover:text-a-color-hover'>{truncatedContent}</p>
 					) : (
 						<p className='text-sm'>{publicationDate}</p>
 					)}

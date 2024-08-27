@@ -4,6 +4,7 @@ import { CategoryItem, CategoryItemProps } from '@/shared/components/categories/
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 import { Input } from '../ui/input'
 import { Skeleton } from '../ui/skeleton'
@@ -62,8 +63,18 @@ export const CategoryForm: React.FC<Props> = ({
 		: (defaultItems || items).slice(0, limit)
 	
 	return (
-		<div className={cn(hasPost ? 'max-w-[200px]' : '', className)}>
-			{!hasPost && <Title text={title} size='xs' className='mb-6 font-bold' />}
+		<div className={cn(hasPost && 'max-w-[200px]', className)}>
+			{!hasPost &&
+				<Link
+					href={`/communities`}
+				>
+					<Title
+						text={title}
+						size='xs'
+						className='font-bold text-a-color hover:text-a-color-hover mb-6'
+					/>
+				</Link>
+			}
 			{showAll && (
 				<div className={cn(hasPost ? 'mb-2]' : 'mb-5', className)}>
 					<Input
@@ -74,7 +85,7 @@ export const CategoryForm: React.FC<Props> = ({
 				</div>
 			)}
 			
-			<div className='flex flex-col max-h-[245px] pr-2 overflow-auto scrollbar'>
+			<div className='flex flex-col mt-4 max-h-[415px] pr-2 overflow-auto scrollbar'>
 				{list.map((item, index) => (
 					<CategoryItem
 						key={index}
@@ -95,12 +106,12 @@ export const CategoryForm: React.FC<Props> = ({
 						className='text-primary mb-3 mt-3 w-full'
 					>
 						{showAll ? (
-							<div className='flex flex-1 items-center'>
+							<div className='flex flex-1 items-center hover:text-a-color-hover'>
 								<ChevronUp className='mx-3' />
 								<p className='font-bold'>Скрыть</p>
 							</div>
 						) : (
-							<div className='flex flex-1 items-center'>
+							<div className='flex flex-1 items-center hover:text-a-color-hover'>
 								<ChevronDown className='mx-3' />
 								<p className='font-bold'>Показать все</p>
 							</div>)}

@@ -41,8 +41,8 @@ export const ProfileBody: React.FC<Props> = ({
 			</div>
 			<div className='flex mt-2'>
 				<Button
-					variant='secondary'
-					className='h-10 w-26 text-md font-bold mt-auto hover:border-blue-600 border-b-4 rounded-none px-0'
+					variant='blue'
+					className='h-10 w-26 text-md font-bold p-0 bg-transparent border-b-4 border-transparent hover:border-blue-700 hover:bg-transparent rounded-none text-primary'
 					type='button'
 					// onClick={() => router.push('/write')}
 				>
@@ -52,7 +52,7 @@ export const ProfileBody: React.FC<Props> = ({
 					<>
 						<Button
 							variant='secondary'
-							className='h-10 w-26 text-md font-bold mt-auto hover:border-blue-600 border-b-4 ml-8 rounded-none px-0'
+							className='h-10 w-26 text-md font-bold p-0 bg-transparent border-b-4 border-transparent hover:border-blue-700 hover:bg-transparent ml-8 rounded-none text-primary'
 							type='button'
 							// onClick={() => router.push('/write')}
 						>
@@ -64,7 +64,7 @@ export const ProfileBody: React.FC<Props> = ({
 					<>
 						<Button
 							variant='secondary'
-							className='h-10 w-26 text-md font-bold mt-auto hover:border-blue-600 border-b-4 ml-8 rounded-none px-0'
+							className='h-10 w-26 text-md font-bold p-0 bg-transparent border-b-4 border-transparent hover:border-blue-700 hover:bg-transparent ml-8 rounded-none text-primary'
 							type='button'
 							// onClick={() => router.push('/write')}
 						>

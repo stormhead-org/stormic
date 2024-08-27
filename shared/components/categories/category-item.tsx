@@ -32,8 +32,8 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 			<Link href={String(url)}>
 				<div
 					className={cn(
-						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-secondary/50 mb-[1px] cursor-pointer space-x-2',
-						`${pathname === url ? 'bg-secondary' : ''}`
+						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-700 hover:text-white cursor-pointer mb-1 space-x-2',
+						`${pathname === url ? 'bg-blue-800 text-white hover:bg-blue-800' : ''}`
 					)}>
 					
 					<img className='w-8 h-8 rounded-full ml-2' src={image} alt={name} />
