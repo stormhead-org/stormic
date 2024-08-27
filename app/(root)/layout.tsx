@@ -91,7 +91,7 @@ export default async function HomeLayout({
 						<Title
 							text='Сейчас обсуждают'
 							size='sm'
-							className='font-bold flex items-center w-full h-12 pl-2 border-l-2 border-l-blue-700'
+							className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-l-blue-700'
 						/>
 						<CommentFeedGroup />
 					</div>

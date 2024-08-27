@@ -12,6 +12,13 @@ interface Props {
 	className?: string;
 }
 
+const truncateText = (text: string, maxLength: number | undefined) => {
+	if (maxLength && text.length > maxLength) {
+		return text.slice(0, maxLength) + '...'
+	}
+	return text
+}
+
 export const SearchInput: React.FC<Props> = ({ className }) => {
 	const [searchQuery, setSearchQuery] = React.useState('')
 	const [focused, setFocused] = React.useState(false)
@@ -83,7 +90,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
 							<Link
 								onClick={onClickItem}
 								key={item.postId}
-								className='flex items-center gap-3 w-full px-3 py-2 hover:bg-primary/10'
+								className='flex items-center gap-3 mx-2 px-3 py-2 hover:bg-blue-700 hover:text-white rounded-md'
 								href={item.postUrl}
 							>
 								<img
@@ -91,7 +98,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
 									src={item?.authorAvatar || '/logo.png'}
 									alt={String(item.authorName)}
 								/>
-								<span>{item.postTitle}</span>
+								<span>{String(truncateText(item.postTitle, 34))}</span>
 							</Link>
 						))}
 					</div>
