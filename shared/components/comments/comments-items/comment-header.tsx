@@ -9,6 +9,7 @@ export interface CommentHeaderProps {
 	authorName: string
 	authorAvatar?: string
 	authorUrl: string
+	postUrl?: string
 	publicationDate?: string
 	className?: string
 }
@@ -26,6 +27,7 @@ export const CommentHeader: React.FC<CommentHeaderProps> = ({
 	                                                            authorName,
 	                                                            authorAvatar,
 	                                                            authorUrl,
+	                                                            postUrl,
 	                                                            publicationDate,
 	                                                            className
                                                             }) => {
@@ -43,8 +45,13 @@ export const CommentHeader: React.FC<CommentHeaderProps> = ({
 					
 					<Link className='hover:text-a-color-hover' href={authorUrl}>{authorName}</Link>
 					<br />
-					{!publicationDate ? (
-						<p className='text-sm hover:text-a-color-hover'>{truncatedContent}</p>
+					{postUrl ? (
+						<Link
+							className='text-sm hover:text-a-color-hover'
+							href={postUrl}
+						>
+							{truncatedContent}
+						</Link>
 					) : (
 						<p className='text-sm'>{publicationDate}</p>
 					)}

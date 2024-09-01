@@ -4,6 +4,7 @@ import { cn } from '@/shared/lib/utils'
 import { GripHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { useIntl } from 'react-intl'
 
 export interface PostHeaderProps {
 	authorName: string
@@ -24,8 +25,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 	                                                      postTime,
 	                                                      className
                                                       }) => {
-	
-	
+	const { formatMessage } = useIntl()
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
 			<div className='flex items-center'>
@@ -48,7 +48,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 					type='button'
 					// onClick={() => router.push('/write')}
 				>
-					Подписаться
+					{formatMessage({ id: 'postHeader.subscribeButton' })}
 				</Button>
 				<div className='group'>
 					<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>

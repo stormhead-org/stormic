@@ -23,6 +23,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	                                                        endAdornment,
 	                                                        postTitle,
 	                                                        content,
+	                                                        postUrl,
 	                                                        authorName,
 	                                                        authorUrl,
 	                                                        authorAvatar,
@@ -35,8 +36,9 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	return (
 		<div className={cn('rounded-md p-2 w-full', className)}>
 			<CommentHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
-			               postTitle={String(postTitle)} maxLength={maxLengthHeader} publicationDate={publicationDate} />
-			<CommentBody content={content} maxLength={maxLengthBody} />
+			               postTitle={String(postTitle)} maxLength={maxLengthHeader} publicationDate={publicationDate}
+			               postUrl={postUrl} />
+			<CommentBody content={content} maxLength={maxLengthBody} postUrl={postUrl} />
 			{likesCount && <FullPostCommentFooter
 				likesCount={Number(likesCount)}
 				className='mt-2'
