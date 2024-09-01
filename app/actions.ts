@@ -24,7 +24,7 @@ export interface UserProfile {
 
 export async function updateUserInfo({ data }: {
 	where: { id: number };
-	data: Prisma.UserUpdateInput & { customFields?: CustomField[] };
+	data: Prisma.UserUpdateInput & { customFields?: CustomField[], passwordChange?: boolean };
 }) {
 	try {
 		const currentUser = await getUserSession()
@@ -51,9 +51,10 @@ export async function updateUserInfo({ data }: {
 				fullName: data.fullName,
 				email: data.email,
 				bio: data.bio,
-				// password: data.password
-				// 	? hashSync(data.password as string, 10)
-				// 	: findUser.password,
+				password: data.password
+					? hashSync(data.password as string, 10)
+					: findUser.password,
+				passwordChange: data.passwordChange ?? findUser.passwordChange, // Обновляем passwordChange
 				customFields: data.customFields
 					? {
 						upsert: data.customFields.map((field) => ({
@@ -80,7 +81,7 @@ export async function updateUserInfo({ data }: {
 }
 
 // Функция проверки текущего пароля
-export async function checkCurrentPassword(userId: number, currentPassword: string): Promise<boolean> {
+export async function checkCurrentPassword(userId: number, password: string): Promise<boolean> {
 	try {
 		const user = await prisma.user.findUnique({
 			where: { id: userId }
@@ -90,7 +91,7 @@ export async function checkCurrentPassword(userId: number, currentPassword: stri
 			throw new Error('User not found')
 		}
 		
-		return compareSync(currentPassword, user.password)
+		return compareSync(password, user.password)
 	} catch (error) {
 		console.error('Error checking current password:', error)
 		throw error
@@ -139,7 +140,8 @@ export async function registerUser(body: Prisma.UserCreateInput) {
 			data: {
 				fullName: body.fullName,
 				email: body.email,
-				password: hashSync(body.password, 10)
+				password: hashSync(body.password, 10),
+				passwordChange: true
 			}
 		})
 		

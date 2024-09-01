@@ -105,7 +105,7 @@ export const authOptions: AuthOptions = {
 						data: {
 							provider: account?.provider,
 							providerId: account?.providerAccountId,
-							profile_picture: user.image
+							profile_picture: user?.image
 						}
 					})
 					

@@ -59,11 +59,12 @@ model NavigationMenu {
 model User {
   id Int @id @default(autoincrement()) // Уникальный идентификатор пользователя
 
-  fullName String // Полное имя пользователя
-  email    String       @unique // Электронная почта пользователя, уникальна
-  password String // Хэш пароля пользователя
-  role     UserRoleType @default(USER) // Роль пользователя по умолчанию - USER
-  verified DateTime? // Дата подтверждения регистрации
+  fullName       String // Полное имя пользователя
+  email          String       @unique // Электронная почта пользователя, уникальна
+  password       String // Хэш пароля пользователя
+  passwordChange Boolean      @default(false) // Изменял ли юзер пароль
+  role           UserRoleType @default(USER) // Роль пользователя по умолчанию - USER
+  verified       DateTime? // Дата подтверждения регистрации
 
   provider   String? // Провайдер аутентификации (например, Google, Facebook)
   providerId String? // Идентификатор пользователя у провайдера
