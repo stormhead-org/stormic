@@ -5,6 +5,7 @@ import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { GripHorizontal } from 'lucide-react'
 import React from 'react'
+import { useIntl } from 'react-intl'
 
 interface Props {
 	profileBanner?: string
@@ -23,7 +24,7 @@ export const ProfileHeader: React.FC<Props> = ({
 	                                               hasUser,
 	                                               className
                                                }) => {
-	
+	const { formatMessage } = useIntl()
 	return (
 		<div className={cn('', className)}>
 			<img
@@ -44,7 +45,7 @@ export const ProfileHeader: React.FC<Props> = ({
 							type='button'
 							// onClick={() => router.push('/write')}
 						>
-							Подписаться
+							{formatMessage({ id: 'profileHeader.profileSubscribeButton' })}
 						</Button>
 						<p className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
 							<GripHorizontal className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />

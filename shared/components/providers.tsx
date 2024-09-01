@@ -1,24 +1,42 @@
 'use client'
 
+import { LocaleProvider, useLocale } from '@/shared/components/locale-provider'
+import { Toaster } from '@/shared/components/ui/sonner'
+import { messages } from '@/shared/lib/messages'
 import { SessionProvider } from 'next-auth/react'
 import NextTopLoader from 'nextjs-toploader'
 import React from 'react'
-import { Toaster } from 'react-hot-toast'
+import { IntlProvider } from 'react-intl'
 import { ThemeProvider } from './theme-provider'
 
-export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
+interface ProvidersProps {
+	children: React.ReactNode;
+}
+
+export const Providers: React.FC<ProvidersProps> = ({ children }) => {
 	return (
-		<>
-			<ThemeProvider
-				attribute='class'
-				defaultTheme='dark'
-				enableSystem
-				// disableTransitionOnChange
-			>
-				<SessionProvider>{children}</SessionProvider>
-				<Toaster />
-				<NextTopLoader />
-			</ThemeProvider>
-		</>
+		<LocaleProvider>
+			<IntlProviderWrapper>
+				<ThemeProvider
+					attribute='class'
+					defaultTheme='dark'
+					enableSystem
+				>
+					<SessionProvider>{children}</SessionProvider>
+					<Toaster />
+					<NextTopLoader />
+				</ThemeProvider>
+			</IntlProviderWrapper>
+		</LocaleProvider>
+	)
+}
+
+const IntlProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+	const { locale } = useLocale()
+	
+	return (
+		<IntlProvider locale={locale} messages={messages[locale]}>
+			{children}
+		</IntlProvider>
 	)
 }

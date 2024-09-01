@@ -52,7 +52,6 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 			<FullPostCommentForm
 				items={items}
 				loading={loading}
-				className=''
 			/>
 		</div>
 	)

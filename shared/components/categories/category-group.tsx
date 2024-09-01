@@ -4,6 +4,7 @@ import { CategoryForm } from '@/shared/components/categories/category-form'
 import { useCategories } from '@/shared/hooks/use-categories'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
+import { useIntl } from 'react-intl'
 
 interface Props {
 	hasPost: boolean
@@ -14,7 +15,7 @@ export const CategoryGroup: React.FC<Props> = ({
 	                                               hasPost,
 	                                               className
                                                }) => {
-	
+	const { formatMessage } = useIntl()
 	const { categories, loading } = useCategories()
 	
 	const items = categories.map(item => ({
@@ -27,7 +28,7 @@ export const CategoryGroup: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<CategoryForm
-				title='Сообщества'
+				title={formatMessage({ id: 'categoryGroup.communitiesPageLink' })}
 				limit={5}
 				defaultItems={items.slice(0, 5)}
 				items={items}

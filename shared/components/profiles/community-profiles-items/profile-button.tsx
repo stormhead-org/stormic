@@ -1,6 +1,6 @@
 'use client'
 
-import { Avatar, AvatarImage } from '@/shared/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar'
 import { Button } from '@/shared/components/ui/button'
 import {
 	DropdownMenu,
@@ -12,6 +12,7 @@ import { CircleUser } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import { useIntl } from 'react-intl'
 
 interface Props {
 	avatarImage: string
@@ -26,6 +27,7 @@ export const ProfileButton: React.FC<Props> = ({
 	                                               onClickSignIn,
 	                                               className
                                                }) => {
+	const { formatMessage } = useIntl()
 	const { data: session } = useSession()
 	const router = useRouter()
 	
@@ -41,10 +43,10 @@ export const ProfileButton: React.FC<Props> = ({
 				<Button
 					onClick={onClickSignIn}
 					variant='secondary'
-					className='flex items-center gap-2'
+					className='flex items-center gap-2 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white rounded-full'
 				>
 					<CircleUser size={18} />
-					Войти
+					{formatMessage({ id: 'profileButton.login' })}
 				</Button>
 			) : (
 				<>
@@ -56,6 +58,9 @@ export const ProfileButton: React.FC<Props> = ({
 									className='m-auto rounded-full'
 									src={avatarImage}
 								/>
+								<AvatarFallback>
+									<CircleUser />
+								</AvatarFallback>
 							</Avatar>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align='end' className='bg-secondary'>
@@ -63,19 +68,19 @@ export const ProfileButton: React.FC<Props> = ({
 								className='cursor-pointer'
 								onClick={() => router.push(userUrl)}
 							>
-								Профиль
+								{formatMessage({ id: 'profileButton.profile' })}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								className='cursor-pointer'
 								onClick={() => router.push('/settings/profile')}
 							>
-								Настройки
+								{formatMessage({ id: 'profileButton.Settings' })}
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								className='cursor-pointer'
 								onClick={() => onClickSignOut()}
 							>
-								Выйти
+								{formatMessage({ id: 'profileButton.logout' })}
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

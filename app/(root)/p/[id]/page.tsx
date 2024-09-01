@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
-import { Container } from '@/shared/components'
+import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { FullPostPage } from '@/shared/components/posts/full-post-page'
 import type { Metadata } from 'next'
 import React from 'react'
@@ -23,11 +23,7 @@ export default async function PostPage({
 	
 	// Проверяем, найдена ли публикация
 	if (!post) {
-		return (
-			<Container className='flex flex-col my-10'>
-				<p>Публикация не найдена</p>
-			</Container>
-		)
+		return <PostNotFound />
 	}
 	
 	return (

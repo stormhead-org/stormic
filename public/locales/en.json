@@ -1,0 +1,163 @@
+{
+	"mainBannerForm": {
+		"searchInputPlaceholder": "Search..."
+	},
+	"profileButton": {
+		"login": "Login",
+		"profile": "Profile",
+		"Settings": "Settings",
+		"logout": "Log Out"
+	},
+	"loginForm": {
+		"toastSuccess": "You have successfully logged in",
+		"toastError": "Failed to log in",
+		"title": "Account Login",
+		"loginDescription": "Enter your email to log in to your account",
+		"formInputEmailLabel": "Email",
+		"formInputPassLabel": "Password",
+		"loginButton": "Log In"
+	},
+	"registerForm": {
+		"toastSuccess": "Registration successful. Please confirm your email",
+		"toastError": "Invalid email or password",
+		"formInputEmailLabel": "Email",
+		"formInputNameLabel": "Full Name",
+		"formInputPassLabel": "Password",
+		"formInputConfirmPassLabel": "Confirm Password",
+		"regButton": "Register"
+	},
+	"feedUserMenu": {
+		"popular": "Popular",
+		"hot": "New",
+		"myFeed": "My Feed",
+		"bookmarks": "Bookmarks"
+	},
+	"sortFeedButtons": {
+		"day": "Day",
+		"weekly": "Week",
+		"month": "Month",
+		"year": "Year"
+	},
+	"newPostButton": "New Post",
+	"categoryGroup": {
+		"communitiesPageLink": "Communities",
+		"communityListHide": "Hide",
+		"communityListShow": "Show All"
+	},
+	"sideFooter": {
+		"about": "About",
+		"rules": "Rules",
+		"privacyPolicy": "Privacy Policy",
+		"keyBinds": "Keyboard Shortcuts",
+		"sourceCode": "Source Code",
+		"madeWithLove": "Made with love and",
+		"community": "Community",
+		"communityDate": " © 2023 - 2024"
+	},
+	"commentFeedGroup": {
+		"discussingTitle": "Discussed"
+	},
+	"postHeader": {
+		"subscribeButton": "Subscribe"
+	},
+	"infoBlock": {
+		"home": "Home",
+		"reloadPage": "Reload"
+	},
+	"postNotFound": {
+		"title": "Post Not Found",
+		"description": "A UFO came and it was never seen again..."
+	},
+	"userNotFound": {
+		"title": "User Not Found",
+		"description": "A UFO came and they were never seen again..."
+	},
+	"myFeedEmpty": {
+		"title": "Oops. It's Empty",
+		"description": "Start by subscribing to your favorite author or category"
+	},
+	"bookmarksEmpty": {
+		"title": "Oops. It's Empty",
+		"description": "Start by adding your favorite posts to bookmarks"
+	},
+	"notAuthLock": {
+		"title": "Oops. Please Log In",
+		"description": "This page is viewable only by authorized users"
+	},
+	"commentInputForm": {
+		"commentsHeaderCount": "comments",
+		"commentsHeaderEmpty": "No one here yet...",
+		"textareaPlaceholder": "Comment..."
+	},
+	"commentFooter": {
+		"commentReplay": "Reply"
+	},
+	"profileHeader": {
+		"profileSubscribeButton": "Subscribe"
+	},
+	"profileBody": {
+		"joined": "Joined",
+		"followersCount": "followers",
+		"followingCount": "follows",
+		"tabPosts": "Posts",
+		"tabComments": "Comments",
+		"modalModTeam": "Team"
+	},
+	"feedToggle": {
+		"sort": "Sort",
+		"fresh": "Fresh",
+		"hot": "Popular",
+		"topOfTheM": "Best of the Month",
+		"topOfTheY": "Best of the Year"
+	},
+	"settingsProfileSideMenu": {
+		"profile": "Profile",
+		"account": "Account",
+		"relationships": "Following & Followers",
+		"filters": "Filters",
+		"settings": "Settings",
+		"logout": "Log Out"
+	},
+	"profileAuthTopMenu": {
+		"accountSettings": "Account Management",
+		"2FactorAuth": "Login Verification",
+		"authorizedApps": "Apps"
+	},
+	"profileEditTopMenu": {
+		"editProfile": "Edit Profile",
+		"privacyAndReach": "Privacy & Reach",
+		"verification": "Link Verification"
+	},
+	"profilePageEditGroup": {
+		"tipForSocial": "Set up what people see on your profile. Others are more likely to follow and engage with you if your profile is complete and has an image.",
+		"titleBaseInfo": "Basic Information",
+		"titleName": "Display Name",
+		"descriptionName": "Your full name or alias",
+		"titleAbout": "About Me",
+		"descriptionAbout": "Tell the world a little about yourself",
+		"formInputAboutPlaceholder": "I would tell you a lot about myself, I just don't want to...",
+		"extraFields": "Details Table",
+		"descriptionExtraFields": "Your homepage, age - anything you like",
+		"saveButton": "Save"
+	},
+	"profilePageAuthGroup": {
+		"toastWrongPassword": "Incorrect current password",
+		"toastPasswordsNotMatch": "New password and confirmation do not match",
+		"toastFillAllFields": "Please fill out all required fields correctly",
+		"toastSuccess": "Data updated successfully",
+		"toastError": "Error updating data",
+		"socialAccountPasswordChange": "After registering via social networks, you need to change your password!",
+		"titleSecurity": "Security",
+		"titleEmail": "Email",
+		"descriptionEmail": "You can change your email address",
+		"titlePassword": "Password",
+		"descriptionPassword": "Required to confirm changes",
+		"titleNewPassword": "New Password",
+		"descriptionNewPassword": "Enter your desired password",
+		"formInputNewPassPlaceholder": "Enter a new password",
+		"titleConfirmPassword": "Confirm Password",
+		"descriptionConfirmPassword": "Re-enter the new password to avoid typos",
+		"formInputConfirmPassPlaceholder": "Enter the new password again",
+		"saveButton": "Save"
+	}
+}

@@ -8,6 +8,6 @@ interface Props {
 
 export const Notifications: React.FC<Props> = ({ className }) => {
 	const { data: session } = useSession()
-
-	return session && <BellDot />
+	
+	return session && <BellDot className='hover:text-blue-700 cursor-pointer' />
 }

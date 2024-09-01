@@ -5,57 +5,63 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { TFormLoginValues, formLoginSchema } from './schemas'
+import { useIntl } from 'react-intl'
+import { toast } from 'sonner'
+import { formLoginSchema, TFormLoginValues } from './schemas'
 
 interface Props {
 	onClose?: VoidFunction
 }
 
 export const LoginForm: React.FC<Props> = ({ onClose }) => {
+	const { formatMessage } = useIntl()
 	const form = useForm<TFormLoginValues>({
 		resolver: zodResolver(formLoginSchema),
 		defaultValues: {
 			email: '',
-			password: '',
-		},
+			password: ''
+		}
 	})
-
+	
 	const onSubmit = async (data: TFormLoginValues) => {
 		try {
 			const resp = await signIn('credentials', {
 				...data,
-				redirect: false,
+				redirect: false
 			})
-
+			
 			if (!resp?.ok) {
 				throw Error()
 			}
-
-			toast.success('Вы успешно вошли в аккаунт', {
-				icon: '✅',
+			
+			toast.success(String(formatMessage({ id: 'loginForm.toastSuccess' })), {
+				icon: '✅'
 			})
-
+			
 			onClose?.()
 		} catch (error) {
 			console.error('Error [LOGIN]', error)
-			toast.error('Не удалось войти в аккаунт', {
-				icon: '❌',
+			toast.error(String(formatMessage({ id: 'loginForm.toastError' })), {
+				icon: '❌'
 			})
 		}
 	}
-
+	
 	return (
 		<FormProvider {...form}>
 			<form
-				className='flex flex-col gap-5'
+				className='flex flex-col gap-4'
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
 				<div className='flex justify-between items-center'>
 					<div className='mr-2'>
-						<Title text='Вход в аккаунт' size='md' className='font-bold' />
+						<Title
+							text={formatMessage({ id: 'loginForm.title' })}
+							size='md'
+							className='font-bold'
+						/>
 						<p className='text-gray-400'>
-							Введите свою почту, чтобы войти в свой аккаунт
+							{formatMessage({ id: 'loginForm.loginDescription' })}
 						</p>
 					</div>
 					<img
@@ -65,17 +71,27 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
 						height={60}
 					/>
 				</div>
-
-				<FormInput name='email' label='E-Mail' required />
-				<FormInput name='password' label='Пароль' type='password' required />
-
+				
+				<FormInput
+					name='email'
+					label={formatMessage({ id: 'loginForm.formInputEmailLabel' })}
+					placeholder='user@stormic.app'
+					required
+				/>
+				<FormInput
+					name='password'
+					label={formatMessage({ id: 'loginForm.formInputPassLabel' })}
+					type='password'
+					placeholder='********'
+					required />
+				
 				<Button
-					variant='secondary'
+					variant='blue'
 					loading={form.formState.isSubmitting}
-					className='h-12 text-base'
+					className='flex items-center gap-2 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white'
 					type='submit'
 				>
-					Войти
+					{formatMessage({ id: 'loginForm.loginButton' })}
 				</Button>
 			</form>
 		</FormProvider>

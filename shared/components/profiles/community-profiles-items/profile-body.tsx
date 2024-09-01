@@ -4,6 +4,7 @@ import {
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
+import { useIntl } from 'react-intl'
 
 interface Props {
 	profileDescription?: string
@@ -24,20 +25,22 @@ export const ProfileBody: React.FC<Props> = ({
 	                                             hasUser,
 	                                             className
                                              }) => {
+	const { formatMessage } = useIntl()
 	return (
 		<div className={cn('mx-6', className)}>
 			<p className='text-md mt-2'>{profileDescription}</p>
 			{userId &&
 				<div className='rounded-md bg-primary/5 p-4 mt-4'>
-					<p className='text-md font-bold'>Присоединился:</p>
+					<p className='text-md font-bold'>{formatMessage({ id: 'profileBody.joined' })}</p>
 					<p className='text-md font-bold mt-1'>{profileRegTime} г.</p>
 					<ProfileCustomFieldForm userId={userId} />
 				</div>
 			}
 			
 			<div className='flex flex-1 items-center mt-4'>
-				<p className='text-md font-bold'>{profileFollowers} подписчиков</p>
-				{hasUser && <p className='ml-4 text-md font-bold'>{profileFollowing} подписки</p>}
+				<p className='text-md font-bold'>{profileFollowers} {formatMessage({ id: 'profileBody.followersCount' })}</p>
+				{hasUser && <p
+					className='ml-4 text-md font-bold'>{profileFollowing} {formatMessage({ id: 'profileBody.followingCount' })}</p>}
 			</div>
 			<div className='flex mt-2'>
 				<Button
@@ -46,7 +49,7 @@ export const ProfileBody: React.FC<Props> = ({
 					type='button'
 					// onClick={() => router.push('/write')}
 				>
-					Посты
+					{formatMessage({ id: 'profileBody.tabPosts' })}
 				</Button>
 				{hasUser &&
 					<>
@@ -56,7 +59,7 @@ export const ProfileBody: React.FC<Props> = ({
 							type='button'
 							// onClick={() => router.push('/write')}
 						>
-							Комментарии
+							{formatMessage({ id: 'profileBody.tabComments' })}
 						</Button>
 					</>
 				}
@@ -68,7 +71,7 @@ export const ProfileBody: React.FC<Props> = ({
 							type='button'
 							// onClick={() => router.push('/write')}
 						>
-							Команда
+							{formatMessage({ id: 'profileBody.modalModTeam' })}
 						</Button>
 					</>
 				}

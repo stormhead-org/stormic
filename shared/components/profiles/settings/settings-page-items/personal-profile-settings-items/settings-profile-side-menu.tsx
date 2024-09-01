@@ -6,52 +6,14 @@ import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
-
-const sideSettingsMenu = [
-	{
-		id: 1,
-		text: 'Профиль',
-		icon: <UserCog />,
-		path: '/settings/profile'
-	},
-	{
-		id: 2,
-		text: 'Учетная запись',
-		icon: <LockKeyhole />,
-		path: '/settings/auth'
-	},
-	{
-		id: 3,
-		text: 'Подписки и подписчики',
-		icon: <Users />,
-		path: '/settings/auth#2'
-	},
-	{
-		id: 4,
-		text: 'Фильтры',
-		icon: <Filter />,
-		path: '/settings/auth#3'
-	},
-	{
-		id: 5,
-		text: 'Настройки',
-		icon: <Settings />,
-		path: '/settings/auth#4'
-	},
-	{
-		id: 6,
-		text: 'Выйти',
-		icon: <LogOut />,
-		path: '',
-		click: 'onClickSignOut'
-	}
-]
+import { useIntl } from 'react-intl'
 
 interface Props {
 	className?: string
 }
 
 export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
+	const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
 	
@@ -60,6 +22,46 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 			callbackUrl: '/'
 		})
 	}
+	
+	const sideSettingsMenu = [
+		{
+			id: 1,
+			text: formatMessage({ id: 'settingsProfileSideMenu.profile' }),
+			icon: <UserCog />,
+			path: '/settings/profile'
+		},
+		{
+			id: 2,
+			text: formatMessage({ id: 'settingsProfileSideMenu.account' }),
+			icon: <LockKeyhole />,
+			path: '/settings/auth'
+		},
+		{
+			id: 3,
+			text: formatMessage({ id: 'settingsProfileSideMenu.relationships' }),
+			icon: <Users />,
+			path: '/settings/auth#2'
+		},
+		{
+			id: 4,
+			text: formatMessage({ id: 'settingsProfileSideMenu.filters' }),
+			icon: <Filter />,
+			path: '/settings/auth#3'
+		},
+		{
+			id: 5,
+			text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
+			icon: <Settings />,
+			path: '/settings/auth#4'
+		},
+		{
+			id: 6,
+			text: formatMessage({ id: 'settingsProfileSideMenu.logout' }),
+			icon: <LogOut />,
+			path: '',
+			click: 'onClickSignOut'
+		}
+	]
 	
 	return (
 		<div className={cn('', className)}>

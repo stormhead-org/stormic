@@ -4,20 +4,34 @@ import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
-
-const topMenuButtons = [
-	{ id: 1, text: 'Изменить профиль', path: '/settings/profile' },
-	{ id: 2, text: 'Приватность и доступ', path: '/settings/profile#2' },
-	{ id: 3, text: 'Верификация ссылок', path: '/settings/profile#3' }
-]
+import { useIntl } from 'react-intl'
 
 interface Props {
 	className?: string
 }
 
 export const SettingsProfileTopMenu: React.FC<Props> = ({ className }) => {
+	const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
+	
+	const topMenuButtons = [
+		{
+			id: 1,
+			text: formatMessage({ id: 'profileEditTopMenu.editProfile' }),
+			path: '/settings/profile'
+		},
+		{
+			id: 2,
+			text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
+			path: '/settings/profile#2'
+		},
+		{
+			id: 3,
+			text: formatMessage({ id: 'profileEditTopMenu.verification' }),
+			path: '/settings/profile#3'
+		}
+	]
 	
 	return (
 		<div className={cn('flex flex-1 rounded-md gap-1', className)}>

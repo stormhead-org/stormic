@@ -1,5 +1,8 @@
+'use client'
+
 import { Providers } from '@/shared/components/providers'
 import { Nunito } from 'next/font/google'
+import React, { useEffect, useState } from 'react'
 import './globals.css'
 
 const nunito = Nunito({
@@ -13,13 +16,23 @@ export default function RootLayout({
                                    }: Readonly<{
 	children: React.ReactNode
 }>) {
+	
+	const [locale, setLocale] = useState<string>('en')
+	
+	useEffect(() => {
+		const userLang = navigator.language.split('-')[0] || 'en' // Нормализация локали
+		setLocale(userLang)
+	}, [])
+	
 	return (
-		<html lang='en'>
+		<html lang={locale}>
 		<head>
 			<link data-rh='true' rel='icon' href='/favicon.ico' />
 		</head>
 		<body className={nunito.className}>
-		<Providers>{children}</Providers>
+		<Providers>
+			{children}
+		</Providers>
 		</body>
 		</html>
 	)

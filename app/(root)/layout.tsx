@@ -6,8 +6,7 @@ import {
 	NavigationMenuForm,
 	NewPostButton,
 	SideFooter,
-	SocialMenu,
-	Title
+	SocialMenu
 } from '@/shared/components/'
 import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
 import { Header } from '@/shared/components/header/header'
@@ -88,11 +87,6 @@ export default async function HomeLayout({
 					
 					{/* Правая часть */}
 					<div className='w-1/4'>
-						<Title
-							text='Сейчас обсуждают'
-							size='sm'
-							className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-l-blue-700'
-						/>
 						<CommentFeedGroup />
 					</div>
 				</div>

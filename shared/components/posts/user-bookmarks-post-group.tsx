@@ -1,6 +1,6 @@
 'use client'
 
-import { InfoBlock } from '@/shared/components'
+import { BookmarksEmpty } from '@/shared/components/info-blocks/bookmarks-empty'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { Skeleton } from '@/shared/components/ui/skeleton'
 import { useUserBookmarksPosts } from '@/shared/hooks/use-user-bookmarks-post'
@@ -36,7 +36,7 @@ export const UserBookmarksPostGroup: React.FC<Props> = ({
 	}))
 	
 	return (
-		<div className={className}>
+		<>
 			{loading ? (
 				<Skeleton className='h-6 mt-4 rounded-[8px]' />
 			) : items.length > 0 ? (
@@ -46,16 +46,7 @@ export const UserBookmarksPostGroup: React.FC<Props> = ({
 					loading={loading}
 					className='mt-4'
 				/>
-			) : (
-				<div className='flex ml-[25%] mt-[25%]'>
-					<InfoBlock
-						title='Упс. Пусто'
-						text='Для начала добавьте понравившееся посты в закладки'
-						imageUrl='/assets/images/empty-box.png'
-					/>
-				</div>
-			
-			)}
-		</div>
+			) : <BookmarksEmpty />}
+		</>
 	)
 }

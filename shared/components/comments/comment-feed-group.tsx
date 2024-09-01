@@ -1,16 +1,18 @@
 'use client'
 
+import { Title } from '@/shared/components'
 import { CommentForm } from '@/shared/components/comments/comments-items/comment-form'
 import { useComments } from '@/shared/hooks/use-comments'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
+import { useIntl } from 'react-intl'
 
 interface Props {
 	className?: string
 }
 
 export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
-	
+	const { formatMessage } = useIntl()
 	const { comments, loading } = useComments()
 	
 	const items = comments.map((item: any) => ({
@@ -24,6 +26,11 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 	
 	return (
 		<div className={cn('', className)}>
+			<Title
+				text={formatMessage({ id: 'commentFeedGroup.discussingTitle' })}
+				size='sm'
+				className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-l-blue-700'
+			/>
 			<CommentForm
 				limit={10}
 				items={items}

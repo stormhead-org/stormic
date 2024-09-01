@@ -1,6 +1,6 @@
 'use client'
 
-import { InfoBlock } from '@/shared/components'
+import { MyFeedEmpty } from '@/shared/components/info-blocks/my-feed-empty'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { Skeleton } from '@/shared/components/ui/skeleton'
 import { useUserSubscriptionsPosts } from '@/shared/hooks/use-user-subscriptions-post'
@@ -36,7 +36,7 @@ export const UserSubscriptionsPostGroup: React.FC<Props> = ({
 	}))
 	
 	return (
-		<div className={className}>
+		<>
 			{loading ? (
 				<Skeleton className='h-6 mt-4 rounded-[8px]' />
 			) : items.length > 0 ? (
@@ -46,16 +46,7 @@ export const UserSubscriptionsPostGroup: React.FC<Props> = ({
 					loading={loading}
 					className='mt-4'
 				/>
-			) : (
-				<div className='flex ml-[25%] mt-[25%]'>
-					<InfoBlock
-						title='Упс. Пусто'
-						text='Для начала подпишитесь на любимого автора или понравившуюся категорию'
-						imageUrl='/assets/images/empty-box.png'
-					/>
-				</div>
-			
-			)}
-		</div>
+			) : <MyFeedEmpty />}
+		</>
 	)
 }

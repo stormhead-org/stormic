@@ -2,6 +2,7 @@
 
 import { AuthModal } from '@/shared/components/modals'
 import React from 'react'
+import { useIntl } from 'react-intl'
 import { cn } from '../lib/utils'
 import { Button } from './ui/button'
 
@@ -20,6 +21,7 @@ export const NewPostButton: React.FC<Props> = ({
 	                                               hasSession,
 	                                               className
                                                }) => {
+	const { formatMessage } = useIntl()
 	const [openWriteModal, setOpenWriteModal] = React.useState(false)
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 	
@@ -43,7 +45,7 @@ export const NewPostButton: React.FC<Props> = ({
 				type='button'
 				onClick={hasSession ? () => setOpenWriteModal(true) : () => setOpenAuthModal(true)}
 			>
-				Новый пост
+				{formatMessage({ id: 'newPostButton' })}
 			</Button>
 		</div>
 	)

@@ -1,7 +1,10 @@
+'use client'
+
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { Ellipsis, Heart } from 'lucide-react'
 import React from 'react'
+import { useIntl } from 'react-intl'
 
 interface PostFooterProps {
 	likesCount: number
@@ -12,8 +15,7 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 	                                                                 likesCount,
 	                                                                 className
                                                                  }) => {
-	
-	
+	const { formatMessage } = useIntl()
 	return (
 		<div className={cn('flex items-center justify-between', className)}>
 			<div className='flex items-center'>
@@ -28,7 +30,7 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 					type='button'
 					// onClick={() => router.push('/write')}
 				>
-					Ответить
+					{formatMessage({ id: 'commentFooter.commentReplay' })}
 				</Button>
 			</div>
 			<div className='flex group cursor-pointer items-center'>

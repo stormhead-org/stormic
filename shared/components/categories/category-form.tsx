@@ -6,6 +6,7 @@ import { cn } from '@/shared/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { useIntl } from 'react-intl'
 import { Input } from '../ui/input'
 import { Skeleton } from '../ui/skeleton'
 
@@ -34,6 +35,7 @@ export const CategoryForm: React.FC<Props> = ({
 	                                              hasPost,
 	                                              loading
                                               }) => {
+	const { formatMessage } = useIntl()
 	const [showAll, setShowAll] = React.useState(false)
 	const [searchValue, setSearchValue] = React.useState('')
 	const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +68,7 @@ export const CategoryForm: React.FC<Props> = ({
 		<div className={cn(hasPost && 'max-w-[200px]', className)}>
 			{!hasPost &&
 				<Link
-					href={`/communities`}
+					href={`/new`}
 				>
 					<Title
 						text={title}
@@ -108,12 +110,12 @@ export const CategoryForm: React.FC<Props> = ({
 						{showAll ? (
 							<div className='flex flex-1 items-center hover:text-a-color-hover'>
 								<ChevronUp className='mx-3' />
-								<p className='font-bold'>Скрыть</p>
+								<p className='font-bold'>{formatMessage({ id: 'categoryGroup.communityListHide' })}</p>
 							</div>
 						) : (
 							<div className='flex flex-1 items-center hover:text-a-color-hover'>
 								<ChevronDown className='mx-3' />
-								<p className='font-bold'>Показать все</p>
+								<p className='font-bold'>{formatMessage({ id: 'categoryGroup.communityListShow' })}</p>
 							</div>)}
 					</button>
 				</div>

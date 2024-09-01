@@ -1,6 +1,7 @@
 'use client'
 
 import { Notifications, ProfileButton } from '@/shared/components'
+import { LocaleToggle } from '@/shared/components/ui/locale-toggle'
 import { ModeToggle } from '@/shared/components/ui/mode-toggle'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export const HeaderUserBar: React.FC<Props> = ({ userUrl, avatarImage, className }) => {
+	
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 	
 	return (
@@ -21,6 +23,9 @@ export const HeaderUserBar: React.FC<Props> = ({ userUrl, avatarImage, className
 				open={openAuthModal}
 				onClose={() => setOpenAuthModal(false)}
 			/>
+			
+			<LocaleToggle />
+			
 			<ModeToggle />
 			
 			<Notifications />

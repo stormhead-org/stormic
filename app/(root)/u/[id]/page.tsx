@@ -1,4 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
+import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
 import { UserCommunityProfileGroup } from '@/shared/components/profiles/user-community-profile-group'
 import { format } from 'date-fns'
 import type { Metadata } from 'next'
@@ -44,9 +45,7 @@ export default async function UserPage({
 	
 	// Проверяем, найден ли пользователь
 	if (!user) {
-		return (
-			<p>Пользователь не найден</p>
-		)
+		return <UserNotFound />
 	}
 	
 	// Проверяем, есть ли репутация и присваиваем 0, если она отсутствует

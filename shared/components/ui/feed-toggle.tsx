@@ -1,55 +1,38 @@
 'use client'
 
-import { Button } from '@/shared/components/ui/button'
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger
-} from '@/shared/components/ui/dropdown-menu'
-import { ChevronDown } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
 import * as React from 'react'
+import { useIntl } from 'react-intl'
 
 export function FeedToggle() {
-	const { setTheme } = useTheme()
-	
+	const { formatMessage } = useIntl()
 	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
-				<Button
-					className='bg-transparent hover:bg-transparent text-md text-primary hover:text-a-color-hover cursor-pointer'
-					variant='blue'
-					type='button'>
-					Свежее <ChevronDown />
-				</Button>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent align='end' className='bg-secondary'>
-				<DropdownMenuItem
-					className='cursor-pointer'
-					// onClick={() => setTheme('light')}
-				>
-					Свежее
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					className='cursor-pointer'
-					// onClick={() => setTheme('dark')}
-				>
-					Популярное
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					className='cursor-pointer'
-					// onClick={() => setTheme('system')}
-				>
-					Топ за месяц
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					className='cursor-pointer'
-					// onClick={() => setTheme('system')}
-				>
-					Топ за год
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+		<Select
+			// onValueChange={(value) => handleLanguageChange(value)}
+			// value={locale}
+		>
+			<SelectTrigger className='w-auto h-12 border-none font-bold'>
+				<SelectValue
+					placeholder={formatMessage({ id: 'feedToggle.sort' })}
+					className='font-bold' />
+			</SelectTrigger>
+			<SelectContent
+				className='bg-secondary'
+			>
+				<SelectItem value='1' className='font-bold'>
+					{formatMessage({ id: 'feedToggle.fresh' })}
+				</SelectItem>
+				<SelectItem value='2' className='font-bold'>
+					{formatMessage({ id: 'feedToggle.hot' })}
+				</SelectItem>
+				<SelectItem value='3' className='font-bold'>
+					{formatMessage({ id: 'feedToggle.topOfTheM' })}
+				</SelectItem>
+				<SelectItem value='4' className='font-bold'>
+					{formatMessage({ id: 'feedToggle.topOfTheY' })}
+				</SelectItem>
+			</SelectContent>
+		</Select>
+	
 	)
 }

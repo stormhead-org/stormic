@@ -6,6 +6,7 @@ import { Post } from '@prisma/client'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { useIntl } from 'react-intl'
 import { useClickAway, useDebounce } from 'react-use'
 
 interface Props {
@@ -20,6 +21,7 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 }
 
 export const SearchInput: React.FC<Props> = ({ className }) => {
+	const { formatMessage } = useIntl()
 	const [searchQuery, setSearchQuery] = React.useState('')
 	const [focused, setFocused] = React.useState(false)
 	const [posts, setPosts] = React.useState<Post[]>([])
@@ -73,7 +75,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
 				<input
 					className='rounded-2xl outline-none w-full pl-11 bg-secondary'
 					type='text'
-					placeholder='Поиск...'
+					placeholder={formatMessage({ id: 'mainBannerForm.searchInputPlaceholder' })}
 					onFocus={() => setFocused(true)}
 					value={searchQuery}
 					onChange={e => setSearchQuery(e.target.value)}

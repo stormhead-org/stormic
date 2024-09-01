@@ -1,0 +1,163 @@
+{
+	"mainBannerForm": {
+		"searchInputPlaceholder": "Поиск..."
+	},
+	"profileButton": {
+		"login": "Войти",
+		"profile": "Профиль",
+		"Settings": "Настройки",
+		"logout": "Выйти"
+	},
+	"loginForm": {
+		"toastSuccess": "Вы успешно вошли в аккаунт",
+		"toastError": "Не удалось войти в аккаунт",
+		"title": "Вход в аккаунт",
+		"loginDescription": "Введите свою почту, чтобы войти в свой аккаунт",
+		"formInputEmailLabel": "Почта",
+		"formInputPassLabel": "Пароль",
+		"loginButton": "Войти"
+	},
+	"registerForm": {
+		"toastSuccess": "Регистрация успешна. Подтвердите свою почту",
+		"toastError": "Неверная почта или пароль",
+		"formInputEmailLabel": "Почта",
+		"formInputNameLabel": "Полное имя",
+		"formInputPassLabel": "Пароль",
+		"formInputConfirmPassLabel": "Подтвердите пароль",
+		"regButton": "Зарегистрироваться"
+	},
+	"feedUserMenu": {
+		"popular": "Горячее",
+		"hot": "Свежее",
+		"myFeed": "Моя лента",
+		"bookmarks": "Закладки"
+	},
+	"sortFeedButtons": {
+		"day": "День",
+		"weekly": "Неделя",
+		"month": "Месяц",
+		"year": "Год"
+	},
+	"newPostButton": "Новый пост",
+	"categoryGroup": {
+		"communitiesPageLink": "Сообщества",
+		"communityListHide": "Скрыть",
+		"communityListShow": "Показать все"
+	},
+	"sideFooter": {
+		"about": "О проекте",
+		"rules": "Правила",
+		"privacyPolicy": "Политика конфиденциальности",
+		"keyBinds": "Сочетания клавиш",
+		"sourceCode": "Исходный код",
+		"madeWithLove": "Сделано с любовью и",
+		"community": "Сообщество",
+		"communityDate": " © 2023 - 2024"
+	},
+	"commentFeedGroup": {
+		"discussingTitle": "Сейчас обсуждают"
+	},
+	"postHeader": {
+		"subscribeButton": "Подписаться"
+	},
+	"infoBlock": {
+		"home": "Домой",
+		"reloadPage": "Обновить"
+	},
+	"postNotFound": {
+		"title": "Публикация не найдена",
+		"description": "Прилетело НЛО и ее больше никто не видел..."
+	},
+	"userNotFound": {
+		"title": "Пользователь не найден",
+		"description": "Прилетело НЛО и его больше никто не видел..."
+	},
+	"myFeedEmpty": {
+		"title": "Упс. Пусто",
+		"description": "Для начала подпишитесь на любимого автора или понравившуюся категорию"
+	},
+	"bookmarksEmpty": {
+		"title": "Упс. Пусто",
+		"description": "Для начала добавьте понравившееся посты в закладки"
+	},
+	"notAuthLock": {
+		"title": "Упс. Авторизуйтесь",
+		"description": "Данную страницу могут просматривать только авторизованные пользователи"
+	},
+	"commentInputForm": {
+		"commentsHeaderCount": "комментариев",
+		"commentsHeaderEmpty": "Тут пока никого нет...",
+		"textareaPlaceholder": "Комментарий..."
+	},
+	"commentFooter": {
+		"commentReplay": "Ответить"
+	},
+	"profileHeader": {
+		"profileSubscribeButton": "Подписаться"
+	},
+	"profileBody": {
+		"joined": "Присоединился",
+		"followersCount": "подписчиков",
+		"followingCount": "подписки",
+		"tabPosts": "Посты",
+		"tabComments": "Комментарии",
+		"modalModTeam": "Команда"
+	},
+	"feedToggle": {
+		"sort": "Сортировка",
+		"fresh": "Свежее",
+		"hot": "Популярное",
+		"topOfTheM": "Лучшее за месяц",
+		"topOfTheY": "Лучшее за год"
+	},
+	"settingsProfileSideMenu": {
+		"profile": "Профиль",
+		"account": "Учетная запись",
+		"relationships": "Подписки и подписчики",
+		"filters": "Фильтры",
+		"settings": "Настройки",
+		"logout": "Выйти"
+	},
+	"profileAuthTopMenu": {
+		"accountSettings": "Управление учётной записью",
+		"2FactorAuth": "Подтверждение входа",
+		"authorizedApps": "Приложения"
+	},
+	"profileEditTopMenu": {
+		"editProfile": "Изменить профиль",
+		"privacyAndReach": "Приватность и доступ",
+		"verification": "Верификация ссылок"
+	},
+	"profilePageEditGroup": {
+		"tipForSocial": "Настройте то, что люди видят в вашем профиле. Другие люди с большей вероятностью подпишутся на Вас и будут взаимодействовать с вами, если у Вас заполнен профиль и добавлено изображение.",
+		"titleBaseInfo": "Основная информация",
+		"titleName": "Отображаемое имя",
+		"descriptionName": "Ваше полное имя или псевдоним",
+		"titleAbout": "О себе",
+		"descriptionAbout": "Расскажите миру немного о себе",
+		"formInputAboutPlaceholder": "Я бы много вам о себе рассказал, просто не хочу...",
+		"extraFields": "Таблица деталей",
+		"descriptionExtraFields": "Ваша домашняя страница, возраст - все, что угодно",
+		"saveButton": "Сохранить"
+	},
+	"profilePageAuthGroup": {
+		"toastWrongPassword": "Неверный текущий пароль",
+		"toastPasswordsNotMatch": "Новый пароль и подтверждение пароля не совпадают",
+		"toastFillAllFields": "Пожалуйста, заполните все необходимые поля корректно",
+		"toastSuccess": "Данные обновлены",
+		"toastError": "Ошибка при обновлении данных",
+		"socialAccountPasswordChange": "После регистрации через социальные сети, необходимо сменить пароль!",
+		"titleSecurity": "Безопасность",
+		"titleEmail": "Почта",
+		"descriptionEmail": "Вы можете изменить свой почтовый адрес",
+		"titlePassword": "Пароль",
+		"descriptionPassword": "Требуется для подтверждения изменений",
+		"titleNewPassword": "Новый пароль",
+		"descriptionNewPassword": "Введите желаемый пароль",
+		"formInputNewPassPlaceholder": "Введите новый пароль",
+		"titleConfirmPassword": "Подтвердите пароль",
+		"descriptionConfirmPassword": "Введите повторно новый пароль для избежания опечаток",
+		"formInputConfirmPassPlaceholder": "Введите новый пароль еще раз",
+		"saveButton": "Сохранить"
+	}
+}

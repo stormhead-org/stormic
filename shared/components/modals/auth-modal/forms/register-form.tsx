@@ -6,8 +6,9 @@ import { Button } from '@/shared/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { TFormRegisterValues, formRegisterSchema } from './schemas'
+import { useIntl } from 'react-intl'
+import { toast } from 'sonner'
+import { formRegisterSchema, TFormRegisterValues } from './schemas'
 
 interface Props {
 	onClose?: VoidFunction
@@ -15,59 +16,76 @@ interface Props {
 }
 
 export const RegisterForm: React.FC<Props> = ({ onClose, onClickLogin }) => {
+	const { formatMessage } = useIntl()
 	const form = useForm<TFormRegisterValues>({
 		resolver: zodResolver(formRegisterSchema),
 		defaultValues: {
 			email: '',
 			fullName: '',
 			password: '',
-			confirmPassword: '',
-		},
+			confirmPassword: ''
+		}
 	})
-
+	
 	const onSubmit = async (data: TFormRegisterValues) => {
 		try {
 			await registerUser({
 				email: data.email,
 				fullName: data.fullName,
-				password: data.password,
+				password: data.password
 			})
-
-			toast.error('Регистрация успешна 📝. Подтвердите свою почту', {
-				icon: '✅',
+			
+			toast.success(String(formatMessage({ id: 'registerForm.toastSuccess' })), {
+				icon: '✅'
 			})
-
+			
 			onClose?.()
 		} catch (error) {
-			return toast.error('Неверный E-Mail или пароль', {
-				icon: '❌',
+			return toast.error(String(formatMessage({ id: 'registerForm.toastError' })), {
+				icon: '❌'
 			})
 		}
 	}
-
+	
 	return (
 		<FormProvider {...form}>
 			<form
-				className='flex flex-col gap-5'
+				className='flex flex-col gap-4'
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
-				<FormInput name='email' label='E-Mail' required />
-				<FormInput name='fullName' label='Полное имя' required />
-				<FormInput name='password' label='Пароль' type='password' required />
 				<FormInput
-					name='confirmPassword'
-					label='Подтвердите пароль'
-					type='password'
+					name='email'
+					label={formatMessage({ id: 'registerForm.formInputEmailLabel' })}
+					placeholder='user@stormic.app'
 					required
 				/>
-
+				<FormInput
+					name='fullName'
+					label={formatMessage({ id: 'registerForm.formInputNameLabel' })}
+					placeholder='Stormhead'
+					required
+				/>
+				<FormInput
+					name='password'
+					label={formatMessage({ id: 'registerForm.formInputPassLabel' })}
+					type='password'
+					placeholder='********'
+					required />
+				<FormInput
+					name='confirmPassword'
+					label={formatMessage({ id: 'registerForm.formInputConfirmPassLabel' })}
+					type='password'
+					placeholder='********'
+					required
+				/>
+				
 				<Button
-					variant='secondary'
+					variant='blue'
 					loading={form.formState.isSubmitting}
-					className='h-12 text-base'
+					className='flex items-center gap-2 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white'
 					type='submit'
 				>
-					Зарегистрироваться
+					{formatMessage({ id: 'registerForm.regButton' })}
 				</Button>
 			</form>
 		</FormProvider>

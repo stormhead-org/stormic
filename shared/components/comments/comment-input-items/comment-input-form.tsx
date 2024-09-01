@@ -5,6 +5,7 @@ import { Skeleton } from '@/shared/components/ui/skeleton'
 import { cn } from '@/shared/lib/utils'
 import { ListFilter } from 'lucide-react'
 import React from 'react'
+import { useIntl } from 'react-intl'
 
 interface Props {
 	loading?: boolean
@@ -13,7 +14,7 @@ interface Props {
 }
 
 export const CommentInputForm: React.FC<Props> = ({ loading, commentsHeader, className }) => {
-	
+	const { formatMessage } = useIntl()
 	if (loading) {
 		return (
 			<div className={className}>
@@ -25,13 +26,13 @@ export const CommentInputForm: React.FC<Props> = ({ loading, commentsHeader, cla
 	return (
 		<div className={cn('', className)}>
 			<div className='flex justify-between items-center'>
-				{commentsHeader ? (
+				{commentsHeader > String(0) ? (
 					<p className='pl-1 text-lg cursor-default'>
-						{commentsHeader} комментария
+						{commentsHeader} {formatMessage({ id: 'commentInputForm.commentsHeaderCount' })}
 					</p>
 				) : (
 					<p className='pl-1 text-lg cursor-default'>
-						Тут пока никого нет...
+						{formatMessage({ id: 'commentInputForm.commentsHeaderEmpty' })}
 					</p>
 				)}
 				<div className='group'>
@@ -44,7 +45,7 @@ export const CommentInputForm: React.FC<Props> = ({ loading, commentsHeader, cla
 			<FormTextarea
 				name='comment'
 				className='text-base mt-2'
-				placeholder='Комментарий...'
+				placeholder={formatMessage({ id: 'commentInputForm.textareaPlaceholder' })}
 				rows={5}
 				sideButton={true}
 			/>

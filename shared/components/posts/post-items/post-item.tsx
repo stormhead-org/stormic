@@ -2,7 +2,6 @@ import { PostBody } from '@/shared/components/posts/post-items/post-body'
 import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
 import { cn } from '@/shared/lib/utils'
-import Link from 'next/link'
 import React from 'react'
 
 export interface PostItemProps {
@@ -44,14 +43,14 @@ export const PostItem: React.FC<PostItemProps> = ({
                                                   }) => {
 	return (
 		<div className={cn('bg-secondary rounded-md mb-4 p-4 hover:bg-primary/5', className)}>
-			<Link href={String(postUrl)}>
-				<PostHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
-				            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
-				<PostBody postTitle={postTitle} postContent={postContent} postImage={postImage} maxLength={300} />
-				<PostFooter commentsCount={commentsCount} bookmarksCount={bookmarksCount} likesCount={likesCount}
-				            viewsCount={viewsCount} className='mt-4' />
-				{endAdornment}
-			</Link>
+			
+			<PostHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
+			            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
+			<PostBody postTitle={postTitle} postContent={postContent} postImage={postImage} maxLength={300}
+			          postUrl={postUrl} />
+			<PostFooter commentsCount={commentsCount} bookmarksCount={bookmarksCount} likesCount={likesCount}
+			            viewsCount={viewsCount} className='mt-4' />
+			{endAdornment}
 		</div>
 	)
 }

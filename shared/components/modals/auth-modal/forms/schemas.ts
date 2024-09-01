@@ -35,15 +35,15 @@ export const formProfileUpdateSchema = z.object({
 	customFields: z.array(customFieldSchema) // Добавлено поле customFields
 })
 
-export const formAccountUpdateSchema = z.object({
-	id: z.number(),
-	email: emailSchema.optional(),
-	currentPassword: passwordSchema.optional()
-})
+export const formAccountUpdateSchema = formLoginSchema.merge(
+	z.object({
+		id: z.number()
+	})
+)
 
 export const formNewPasswordUpdateSchema = z.object({
 	id: z.number(),
-	password: passwordSchema.optional(),
+	newPassword: passwordSchema.optional(),
 	confirmPassword: passwordSchema.optional()
 })
 
