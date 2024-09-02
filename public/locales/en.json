@@ -8,6 +8,15 @@
 		"Settings": "Settings",
 		"logout": "Log Out"
 	},
+	"localeToggle": {
+		"languagePlaceholder": "Language"
+	},
+	"modeSelector": {
+		"themePlaceholder": "Theme",
+		"dark": "Dark",
+		"light": "Light",
+		"system": "System"
+	},
 	"loginForm": {
 		"toastSuccess": "You have successfully logged in",
 		"toastError": "Failed to log in",
@@ -128,6 +137,11 @@
 		"privacyAndReach": "Privacy & Reach",
 		"verification": "Link Verification"
 	},
+	"profilePreferencesTopMenu": {
+		"appearance": "Appearance",
+		"notifications": "Email notifications",
+		"other": "Other"
+	},
 	"profilePageEditGroup": {
 		"tipForSocial": "Set up what people see on your profile. Others are more likely to follow and engage with you if your profile is complete and has an image.",
 		"titleBaseInfo": "Basic Information",
@@ -158,6 +172,14 @@
 		"titleConfirmPassword": "Confirm Password",
 		"descriptionConfirmPassword": "Re-enter the new password to avoid typos",
 		"formInputConfirmPassPlaceholder": "Enter the new password again",
+		"saveButton": "Save"
+	},
+	"profilePagePreferencesGroup": {
+		"titleBaseInfo": "Appearance",
+		"titleLocale": "Interface Language",
+		"descriptionLocale": "Select your preferred language",
+		"titleTheme": "Site Theme",
+		"descriptionTheme": "Select your preferred theme",
 		"saveButton": "Save"
 	}
 }

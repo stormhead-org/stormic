@@ -8,6 +8,15 @@
 		"Settings": "Настройки",
 		"logout": "Выйти"
 	},
+	"localeToggle": {
+		"languagePlaceholder": "Язык"
+	},
+	"modeSelector": {
+		"themePlaceholder": "Тема",
+		"dark": "Тёмная",
+		"light": "Светлая",
+		"system": "Системная"
+	},
 	"loginForm": {
 		"toastSuccess": "Вы успешно вошли в аккаунт",
 		"toastError": "Не удалось войти в аккаунт",
@@ -128,6 +137,11 @@
 		"privacyAndReach": "Приватность и доступ",
 		"verification": "Верификация ссылок"
 	},
+	"profilePreferencesTopMenu": {
+		"appearance": "Внешний вид",
+		"notifications": "Email уведомления",
+		"other": "Остальное"
+	},
 	"profilePageEditGroup": {
 		"tipForSocial": "Настройте то, что люди видят в вашем профиле. Другие люди с большей вероятностью подпишутся на Вас и будут взаимодействовать с вами, если у Вас заполнен профиль и добавлено изображение.",
 		"titleBaseInfo": "Основная информация",
@@ -158,6 +172,14 @@
 		"titleConfirmPassword": "Подтвердите пароль",
 		"descriptionConfirmPassword": "Введите повторно новый пароль для избежания опечаток",
 		"formInputConfirmPassPlaceholder": "Введите новый пароль еще раз",
+		"saveButton": "Сохранить"
+	},
+	"profilePagePreferencesGroup": {
+		"titleBaseInfo": "Внешний вид",
+		"titleLocale": "Язык интерфейса",
+		"descriptionLocale": "Выберите предпочтительный для вас язык",
+		"titleTheme": "Тема сайта",
+		"descriptionTheme": "Выберите предпочтительную для вас тему",
 		"saveButton": "Сохранить"
 	}
 }
