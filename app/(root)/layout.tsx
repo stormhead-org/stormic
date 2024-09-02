@@ -1,14 +1,4 @@
 import { prisma } from '@/prisma/prisma-client'
-import {
-	CategoryGroup,
-	Container,
-	FeedUserMenu,
-	NavigationMenuForm,
-	NewPostButton,
-	SideFooter,
-	SocialMenu
-} from '@/shared/components/'
-import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
 import { Header } from '@/shared/components/header/header'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
@@ -29,7 +19,7 @@ export default async function HomeLayout({
 	const session = await getUserSession()
 	const user = session && await prisma.user.findUnique({ where: { id: Number(session?.id) } })
 	
-	const [logoImage, stormicName, description, menu] = await Promise.all([
+	const [logoImage, stormicName, description] = await Promise.all([
 		await prisma.stormicMedia.findFirst({
 			where: {
 				mediaType: 'LOGO'
@@ -44,8 +34,7 @@ export default async function HomeLayout({
 			where: {
 				settingsType: 'DESCRIPTION'
 			}
-		}),
-		await prisma.navigationMenu.findMany()
+		})
 	])
 	
 	return (
@@ -59,38 +48,7 @@ export default async function HomeLayout({
 					userUrl={'/u/' + String(user?.id) || ''}
 				/>
 			</Suspense>
-			<Container className='mt-4'>
-				<div className='flex gap-4'>
-					{/* Левая часть */}
-					<div className='w-1/4'>
-						<FeedUserMenu />
-						<SocialMenu
-							className='my-2'
-						/>
-						<NewPostButton
-							className='my-4'
-							authorAvatar={String(user && user.profile_picture)}
-							authorName={String(user && user.fullName)}
-							authorUrl={String(user && '/u/' + user.id)}
-							hasSession={!!user}
-						/>
-						<NavigationMenuForm className='mt-4' data={menu} />
-						<CategoryGroup className='mt-4' hasPost={false} />
-						<SideFooter className='mt-4' />
-					</div>
-					
-					{/* Центральная часть */}
-					<div className='w-2/4'>
-						{children}
-					</div>
-					
-					
-					{/* Правая часть */}
-					<div className='w-1/4'>
-						<CommentFeedGroup />
-					</div>
-				</div>
-			</Container>
+			{children}
 			{modal}
 		</main>
 	)
