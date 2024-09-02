@@ -6,7 +6,7 @@ import type { Metadata } from 'next'
 import React from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Профиль'
+	title: 'Stormic: Настройки'
 }
 
 export default async function SettingsLayout({
@@ -14,7 +14,6 @@ export default async function SettingsLayout({
                                              }: Readonly<{
 	children: React.ReactNode
 }>) {
-	
 	return (
 		<>
 			<Container className='mt-4'>
@@ -25,9 +24,6 @@ export default async function SettingsLayout({
 						<div className='h-3/4'>
 							<SettingsProfileSideMenu />
 						</div>
-						{/* <div className='h-1/4 mt-20'> */}
-						{/* 	<SideFooter className='mt-4' /> */}
-						{/* </div> */}
 					</div>
 					
 					{/* Правая часть */}

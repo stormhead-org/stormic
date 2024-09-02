@@ -15,15 +15,15 @@ export interface CategoryItemProps {
 	className?: string
 }
 
-export const CategoryItem: React.FC<CategoryItemProps> = ({
-	                                                          text,
-	                                                          value,
-	                                                          endAdornment,
-	                                                          name,
-	                                                          image,
-	                                                          url,
-	                                                          className
-                                                          }) => {
+export const CommunitiesItem: React.FC<CategoryItemProps> = ({
+	                                                             text,
+	                                                             value,
+	                                                             endAdornment,
+	                                                             name,
+	                                                             image,
+	                                                             url,
+	                                                             className
+                                                             }) => {
 	
 	const pathname = usePathname()
 	

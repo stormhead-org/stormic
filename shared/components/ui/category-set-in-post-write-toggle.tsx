@@ -1,6 +1,6 @@
 'use client'
 
-import { CategoryGroup } from '@/shared/components'
+import { CommunitiesListGroup } from '@/shared/components'
 import { Button } from '@/shared/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu'
 import { ChevronDown } from 'lucide-react'
@@ -19,7 +19,7 @@ export function CategorySetInPostWriteToggle() {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align='end' className='bg-secondary'>
-				<CategoryGroup hasPost={true} />
+				<CommunitiesListGroup hasPost={true} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

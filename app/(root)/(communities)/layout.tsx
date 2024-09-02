@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma/prisma-client'
 import {
-	CategoryGroup,
+	CommunitiesListGroup,
 	Container,
 	FeedUserMenu,
 	NavigationMenuForm,
@@ -21,8 +21,6 @@ export default async function CommunitiesLayout({
                                                 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	
-	
 	const session = await getUserSession()
 	const user = session && await prisma.user.findUnique({ where: { id: Number(session?.id) } })
 	
@@ -50,7 +48,7 @@ export default async function CommunitiesLayout({
 								hasSession={!!user}
 							/>
 							<NavigationMenuForm className='mt-4' data={menu} />
-							<CategoryGroup className='mt-4' hasPost={false} />
+							<CommunitiesListGroup className='mt-4' hasPost={false} />
 							<SideFooter className='mt-4' />
 						</div>
 					</div>

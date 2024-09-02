@@ -1,6 +1,6 @@
 'use client'
 
-import { CategoryForm } from '@/shared/components/categories/category-form'
+import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
 import { useCategories } from '@/shared/hooks/use-categories'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
@@ -11,10 +11,10 @@ interface Props {
 	className?: string
 }
 
-export const CategoryGroup: React.FC<Props> = ({
-	                                               hasPost,
-	                                               className
-                                               }) => {
+export const CommunitiesListGroup: React.FC<Props> = ({
+	                                                      hasPost,
+	                                                      className
+                                                      }) => {
 	const { formatMessage } = useIntl()
 	const { categories, loading } = useCategories()
 	
@@ -27,7 +27,7 @@ export const CategoryGroup: React.FC<Props> = ({
 	
 	return (
 		<div className={cn('', className)}>
-			<CategoryForm
+			<CommunitiesForm
 				title={formatMessage({ id: 'categoryGroup.communitiesPageLink' })}
 				limit={5}
 				defaultItems={items.slice(0, 5)}

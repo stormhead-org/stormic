@@ -1,14 +1,14 @@
 'use client'
 
-import { CategoryItem, CategoryItemProps } from '@/shared/components/categories/category-item'
+import { CategoryItemProps, CommunitiesItem } from '@/shared/components/communities/list-items/communities-item'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { useIntl } from 'react-intl'
-import { Input } from '../ui/input'
-import { Skeleton } from '../ui/skeleton'
+import { Input } from '../../ui/input'
+import { Skeleton } from '../../ui/skeleton'
 
 type Item = CategoryItemProps
 
@@ -24,17 +24,17 @@ interface Props {
 	className?: string
 }
 
-export const CategoryForm: React.FC<Props> = ({
-	                                              title,
-	                                              items,
-	                                              defaultItems,
-	                                              limit = 5,
-	                                              searchInputPlaceholder = 'Поиск...',
-	                                              name,
-	                                              className,
-	                                              hasPost,
-	                                              loading
-                                              }) => {
+export const CommunitiesForm: React.FC<Props> = ({
+	                                                 title,
+	                                                 items,
+	                                                 defaultItems,
+	                                                 limit = 5,
+	                                                 searchInputPlaceholder = 'Поиск...',
+	                                                 name,
+	                                                 className,
+	                                                 hasPost,
+	                                                 loading
+                                                 }) => {
 	const { formatMessage } = useIntl()
 	const [showAll, setShowAll] = React.useState(false)
 	const [searchValue, setSearchValue] = React.useState('')
@@ -89,7 +89,7 @@ export const CategoryForm: React.FC<Props> = ({
 			
 			<div className='flex flex-col mt-4 max-h-[415px] pr-2 overflow-auto scrollbar'>
 				{list.map((item, index) => (
-					<CategoryItem
+					<CommunitiesItem
 						key={index}
 						text={item.text}
 						image={item.image}

@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma/prisma-client'
 import {
-	CategoryGroup,
+	CommunitiesListGroup,
 	Container,
 	FeedUserMenu,
 	NavigationMenuForm,
@@ -49,7 +49,7 @@ export default async function MainLayout({
 							hasSession={!!user}
 						/>
 						<NavigationMenuForm className='mt-4' data={menu} />
-						<CategoryGroup className='mt-4' hasPost={false} />
+						<CommunitiesListGroup className='mt-4' hasPost={false} />
 						<SideFooter className='mt-4' />
 					</div>
 					
@@ -57,7 +57,6 @@ export default async function MainLayout({
 					<div className='w-2/4'>
 						{children}
 					</div>
-					
 					
 					{/* Правая часть */}
 					<div className='w-1/4'>
