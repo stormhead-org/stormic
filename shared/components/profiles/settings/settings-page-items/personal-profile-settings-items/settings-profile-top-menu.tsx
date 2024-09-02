@@ -19,17 +19,20 @@ export const SettingsProfileTopMenu: React.FC<Props> = ({ className }) => {
 		{
 			id: 1,
 			text: formatMessage({ id: 'profileEditTopMenu.editProfile' }),
-			path: '/settings/profile'
+			path: '/settings/profile',
+			disabled: false
 		},
 		{
 			id: 2,
 			text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
-			path: '/settings/profile#2'
+			path: '/settings/profile#2',
+			disabled: true
 		},
 		{
 			id: 3,
 			text: formatMessage({ id: 'profileEditTopMenu.verification' }),
-			path: '/settings/profile#3'
+			path: '/settings/profile#3',
+			disabled: true
 		}
 	]
 	
@@ -40,8 +43,9 @@ export const SettingsProfileTopMenu: React.FC<Props> = ({ className }) => {
 					key={item.id}
 					variant='blue'
 					type='button'
+					disabled={item.disabled}
 					className={cn(
-						'h-12 flex-1 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white',
+						'h-12 flex-1 text-md font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white',
 						`${pathname === item.path ? 'bg-blue-800 hover:bg-blue-800 text-white' : ''}`
 					)}
 					onClick={() => router.push(item.path)}

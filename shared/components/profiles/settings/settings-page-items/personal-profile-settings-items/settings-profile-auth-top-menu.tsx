@@ -19,17 +19,20 @@ export const SettingsProfileAuthTopMenu: React.FC<Props> = ({ className }) => {
 		{
 			id: 1,
 			text: formatMessage({ id: 'profileAuthTopMenu.accountSettings' }),
-			path: '/settings/auth'
+			path: '/settings/auth',
+			disabled: false
 		},
 		{
 			id: 2,
 			text: formatMessage({ id: 'profileAuthTopMenu.2FactorAuth' }),
-			path: '/settings/auth#2'
+			path: '/settings/auth#2',
+			disabled: true
 		},
 		{
 			id: 3,
 			text: formatMessage({ id: 'profileAuthTopMenu.authorizedApps' }),
-			path: '/settings/auth#3'
+			path: '/settings/auth#3',
+			disabled: true
 		}
 	]
 	
@@ -40,8 +43,9 @@ export const SettingsProfileAuthTopMenu: React.FC<Props> = ({ className }) => {
 					key={item.id}
 					variant='blue'
 					type='button'
+					disabled={item.disabled}
 					className={cn(
-						'h-12 flex-1 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white',
+						'h-12 flex-1 text-md font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white',
 						`${pathname === item.path ? 'bg-blue-800 hover:bg-blue-800 text-white' : ''}`
 					)}
 					onClick={() => router.push(item.path)}
