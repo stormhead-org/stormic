@@ -3,7 +3,9 @@
 import { Container, HeaderButtons, HeaderUserBar } from '@/shared/components'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
+import { toast } from 'sonner'
 
 interface Props {
 	avatarImage: string
@@ -22,6 +24,26 @@ export const Header: React.FC<Props> = ({
 	                                        description,
 	                                        className
                                         }) => {
+	const router = useRouter()
+	const searchParams = useSearchParams()
+	
+	React.useEffect(() => {
+		let toastMessage = ''
+		
+		if (searchParams.has('verified')) {
+			toastMessage = 'Почта успешно подтверждена!'
+		}
+		
+		if (toastMessage) {
+			setTimeout(() => {
+				router.replace('/')
+				toast.success(toastMessage, {
+					duration: 3000
+				})
+			}, 1000)
+		}
+	}, [])
+	
 	return (
 		<header className={cn('border-b', className)}>
 			<Container className='flex items-center justify-between py-4'>
