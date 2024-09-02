@@ -1,4 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
+import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
 import { CategoryCommunityProfileGroup } from '@/shared/components/profiles/category-community-profile-group'
 import type { Metadata } from 'next'
 
@@ -32,9 +33,7 @@ export default async function CategoryPage({
 	
 	// Проверяем, найдена ли категория
 	if (!categoryWithDetails) {
-		return (
-			<p>Категория не найдена</p>
-		)
+		return <CommunityNotFound />
 	}
 	
 	const profileBannerUrl = categoryWithDetails.category_banner

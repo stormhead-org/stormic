@@ -77,6 +77,10 @@
 		"title": "Post Not Found",
 		"description": "A UFO came and it was never seen again..."
 	},
+	"communityNotFound": {
+		"title": "Community Not Found",
+		"description": "A UFO came by, and it hasn't been seen since..."
+	},
 	"userNotFound": {
 		"title": "User Not Found",
 		"description": "A UFO came and they were never seen again..."
