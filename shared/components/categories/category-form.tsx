@@ -68,7 +68,7 @@ export const CategoryForm: React.FC<Props> = ({
 		<div className={cn(hasPost && 'max-w-[200px]', className)}>
 			{!hasPost &&
 				<Link
-					href={`/new`}
+					href={`/communities`}
 				>
 					<Title
 						text={title}
