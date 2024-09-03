@@ -45,10 +45,10 @@ export const AboutPage: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<div className='w-full mt-4'>
-					<span className='flex text-2xl justify-center'>
+					<span className='flex text-2xl font-extrabold justify-center'>
 					{process.env.NEXT_PUBLIC_BASE_URL}
 				</span>
-				<p className='flex justify-center mt-4'>
+				<p className='flex justify-center mt-4 text-xl'>
 					{formatMessage({ id: 'aboutPage.socialPlatform' })} <Link href='https://stormic.app/about/'
 					                                                          className='text-a-color hover:text-a-color-hover ml-1 font-extrabold'>Stormic</Link>
 				</p>
