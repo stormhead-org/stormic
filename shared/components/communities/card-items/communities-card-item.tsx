@@ -98,12 +98,12 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 							<UsersRound />
 						</Button>
 					</div>
-					<div className='flex group w-full h-1/2 hover:bg-secondary rounded-r-md'>
+					<div className='flex group w-full h-1/2 rounded-r-md'>
 						<Button
 							variant='secondary'
 							type='button'
 							disabled={true}
-							className='h-14 w-14 m-auto group-hover:bg-primary/5 group-hover:text-blue-700'
+							className='h-14 w-14 m-auto'
 							// onClick={() => router.push(String(url))}
 						>
 							<Component />
