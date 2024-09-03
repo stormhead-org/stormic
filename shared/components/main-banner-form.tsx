@@ -5,10 +5,11 @@ import { SearchInput } from './search-input'
 interface Props {
 	stormicName: string | null
 	bannerUrl: string | null
+	search?: boolean
 	className?: string
 }
 
-export const MainBannerForm: React.FC<Props> = ({ stormicName, bannerUrl, className }) => {
+export const MainBannerForm: React.FC<Props> = ({ stormicName, bannerUrl, search = true, className }) => {
 	const styling = {
 		backgroundImage: `url('${String(bannerUrl)}')`
 	}
@@ -25,7 +26,7 @@ export const MainBannerForm: React.FC<Props> = ({ stormicName, bannerUrl, classN
 					</span>
 				</div>
 			</div>
-			<SearchInput className='w-96 -mt-6' />
+			{search && <SearchInput className='w-96 -mt-6' />}
 		</div>
 	)
 }
