@@ -8,8 +8,9 @@ datasource db {
 }
 
 enum UserRoleType {
-  USER // Роль пользователя
+  OWNER // Роль владельца ресурса
   ADMIN // Роль администратора
+  USER // Роль пользователя
 }
 
 enum MediaType {
