@@ -16,8 +16,8 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 	return (
 		<div className={cn('', className)}>
 			<span className=''>
-				{process.env.NEXT_PUBLIC_DOMAIN}: <Link className='text-a-color hover:text-a-color-hover'
-				                                        href='/about'>{formatMessage({ id: 'sideFooter.about' })}</Link> |{' '}
+				{process.env.NEXT_PUBLIC_BASE_URL}: <Link className='text-a-color hover:text-a-color-hover'
+				                                          href='/about'>{formatMessage({ id: 'sideFooter.about' })}</Link> |{' '}
 				<Link className='text-a-color hover:text-a-color-hover'
 				      href='/rules'>{formatMessage({ id: 'sideFooter.rules' })}</Link> |{' '}
 				<Link className='text-a-color hover:text-a-color-hover' href='/privacy_policy'>

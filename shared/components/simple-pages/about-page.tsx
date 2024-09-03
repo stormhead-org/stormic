@@ -46,7 +46,7 @@ export const AboutPage: React.FC<Props> = ({
 		<div className={cn('', className)}>
 			<div className='w-full mt-4'>
 					<span className='flex text-2xl justify-center'>
-					{process.env.NEXT_PUBLIC_DOMAIN}
+					{process.env.NEXT_PUBLIC_BASE_URL}
 				</span>
 				<p className='flex justify-center mt-4'>
 					{formatMessage({ id: 'aboutPage.socialPlatform' })} <Link href='https://stormic.app/about/'
