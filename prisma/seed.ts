@@ -94,6 +94,16 @@ async function up() {
 	await prisma.user.createMany({
 		data: [
 			{
+				fullName: 'Нил Деграсс Тайсон',
+				email: 'tyson@stormic.app',
+				password: hashSync('password', 10),
+				role: UserRoleType.OWNER,
+				verified: new Date(),
+				profile_picture: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
+				profile_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
+				bio: 'Американский астрофизик и популяризатор науки.'
+			},
+			{
 				fullName: 'Карл Саган',
 				email: 'sagan@stormic.app',
 				password: hashSync('password', 10),
@@ -112,16 +122,6 @@ async function up() {
 				profile_picture: 'https://leonardo.osnova.io/5b5880da-185c-5c29-85ab-f5c086df2a7b/-/scale_crop/72x72/-/format/webp',
 				profile_banner: 'https://4kwallpapers.com/images/walls/thumbs_3t/9621.jpg',
 				bio: 'Британский теоретический физик, космолог и популяризатор науки.'
-			},
-			{
-				fullName: 'Нил Деграсс Тайсон',
-				email: 'tyson@stormic.app',
-				password: hashSync('password', 10),
-				role: UserRoleType.USER,
-				verified: new Date(),
-				profile_picture: 'https://leonardo.osnova.io/2983d7e1-ccfe-5139-8504-974f8420e260/-/scale_crop/72x72/-/format/webp',
-				profile_banner: 'https://images.squarespace-cdn.com/content/v1/5a78ab8490badee028bef0e9/1568935524292-TPSLMXHD9HE6PKN02YOG/Interstellar.jpg?format=2500w',
-				bio: 'Американский астрофизик и популяризатор науки.'
 			}
 		]
 	})
