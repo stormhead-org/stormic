@@ -1,4 +1,12 @@
 {
+	"newPostButton": "New Post",
+	"aboutPage": {
+		"socialPlatform": "social platform based on",
+		"managed": "Managed by",
+		"contacts": "Contacts",
+		"about": "About the Project",
+		"rules": "Rules"
+	},
 	"mainBannerForm": {
 		"searchInputPlaceholder": "Search..."
 	},
@@ -47,7 +55,6 @@
 		"month": "Month",
 		"year": "Year"
 	},
-	"newPostButton": "New Post",
 	"categoryGroup": {
 		"communitiesPageLink": "Communities",
 		"communityListHide": "Hide",

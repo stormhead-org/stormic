@@ -1,4 +1,12 @@
 {
+	"newPostButton": "Новый пост",
+	"aboutPage": {
+		"socialPlatform": "социальная платформа на базе",
+		"managed": "Управляется",
+		"contacts": "Контакты",
+		"about": "О проекте",
+		"rules": "Правила"
+	},
 	"mainBannerForm": {
 		"searchInputPlaceholder": "Поиск..."
 	},
@@ -47,7 +55,6 @@
 		"month": "Месяц",
 		"year": "Год"
 	},
-	"newPostButton": "Новый пост",
 	"categoryGroup": {
 		"communitiesPageLink": "Сообщества",
 		"communityListHide": "Скрыть",
