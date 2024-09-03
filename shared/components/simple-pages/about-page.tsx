@@ -40,7 +40,7 @@ export const AboutPage: React.FC<Props> = ({
 	}
 	
 	const truncatedName = truncateText(owner.fullName, 20)
-	const truncatedDescription = truncateText(owner.bio || '', 20)
+	const truncatedDescription = truncateText(owner.bio || '', 24)
 	
 	return (
 		<div className={cn('', className)}>
@@ -56,7 +56,7 @@ export const AboutPage: React.FC<Props> = ({
 			
 			<div className='h-full w-full flex bg-secondary rounded-md p-4 mt-6'>
 				<div className='w-1/2'>
-					<p className='uppercase'>
+					<p className='uppercase font-semibold'>
 						{formatMessage({ id: 'aboutPage.managed' })}
 					</p>
 					<Link href={'/u/' + owner.id}>
@@ -67,10 +67,10 @@ export const AboutPage: React.FC<Props> = ({
 								avatarSize={Number(44)} />
 							<div className='flex h-full my-auto'>
 								<div>
-									<p className='font-bold text-md'>
+									<p className='font-semibold text-md'>
 										{truncatedName}
 									</p>
-									<p className='-mt-1'>
+									<p className='-mt-1 text-gray-400 text-sm font-semibold'>
 										{truncatedDescription}
 									</p>
 								</div>
@@ -83,11 +83,11 @@ export const AboutPage: React.FC<Props> = ({
 					</div>
 				</div>
 				<div className='w-1/2 border-l-2 border-l-blue-700 pl-4'>
-					<p className='uppercase'>
+					<p className='uppercase font-semibold'>
 						{formatMessage({ id: 'aboutPage.contacts' })}
 					</p>
 					<div className='h-full'>
-						<p className='font-extrabold mt-4'>
+						<p className='font-semibold mt-4'>
 							{owner.email}
 						</p>
 					</div>
