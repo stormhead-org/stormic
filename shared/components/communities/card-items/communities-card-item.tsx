@@ -92,7 +92,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 							variant='secondary'
 							type='button'
 							disabled={false}
-							className='h-14 w-14 m-auto group-hover:bg-primary/5 group-hover:text-blue-700'
+							className='h-14 w-14 m-auto group-hover:bg-primary/5 group-hover:text-blue-700 text-primary'
 							onClick={() => router.push(String(url))}
 						>
 							<UsersRound />
@@ -103,7 +103,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 							variant='secondary'
 							type='button'
 							disabled={true}
-							className='h-14 w-14 m-auto'
+							className='h-14 w-14 m-auto text-primary'
 							// onClick={() => router.push(String(url))}
 						>
 							<Component />
