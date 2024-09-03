@@ -11,7 +11,7 @@ import { useIntl } from 'react-intl'
 interface User {
 	id: number;
 	fullName: string;
-	profile_picture: string
+	profile_picture: string | null;
 	email: string;
 	role: string;
 	bio: string | null;
