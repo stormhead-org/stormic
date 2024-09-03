@@ -1,5 +1,6 @@
 'use client'
 
+import packageJson from '@/package.json'
 import Link from 'next/link'
 import React from 'react'
 import { useIntl } from 'react-intl'
@@ -10,12 +11,13 @@ interface Props {
 }
 
 export const SideFooter: React.FC<Props> = ({ className }) => {
+	const version = packageJson.version
 	const { formatMessage } = useIntl()
 	return (
 		<div className={cn('', className)}>
 			<span className=''>
-				stormic.app: <Link className='text-a-color hover:text-a-color-hover'
-				                   href='/about'>{formatMessage({ id: 'sideFooter.about' })}</Link> |{' '}
+				{process.env.NEXT_PUBLIC_DOMAIN}: <Link className='text-a-color hover:text-a-color-hover'
+				                                        href='/about'>{formatMessage({ id: 'sideFooter.about' })}</Link> |{' '}
 				<Link className='text-a-color hover:text-a-color-hover'
 				      href='/rules'>{formatMessage({ id: 'sideFooter.rules' })}</Link> |{' '}
 				<Link className='text-a-color hover:text-a-color-hover' href='/privacy_policy'>
@@ -30,7 +32,7 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 				<Link className='text-a-color hover:text-a-color-hover' href='https://github.com/stormhead-org/stormic'>
 					{formatMessage({ id: 'sideFooter.sourceCode' })}
 				</Link>{' '}
-				| v0.0.1-alpha
+				| {version}
 				<br />
 				<br />
 				{formatMessage({ id: 'sideFooter.madeWithLove' })}{' '}
