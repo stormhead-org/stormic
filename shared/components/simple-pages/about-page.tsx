@@ -70,7 +70,7 @@ export const AboutPage: React.FC<Props> = ({
 									<p className='font-bold text-md'>
 										{truncatedName}
 									</p>
-									<p>
+									<p className='-mt-1'>
 										{truncatedDescription}
 									</p>
 								</div>
