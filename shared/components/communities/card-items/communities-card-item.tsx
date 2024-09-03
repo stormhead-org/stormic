@@ -3,8 +3,9 @@
 import { ProfileAvatar } from '@/shared/components'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
-import { Component, Newspaper, Send, UserRoundPlus } from 'lucide-react'
+import { Component, Newspaper, UserRoundPlus, UsersRound } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useIntl } from 'react-intl'
 
@@ -35,14 +36,15 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 	                                                                        className
                                                                         }) => {
 	const { formatMessage } = useIntl()
+	const router = useRouter()
 	const truncatedName = truncateText(name, 26)
 	const truncatedDescription = truncateText(description, 26)
 	return (
 		<div className={cn('bg-secondary rounded-md', className)}>
 			<div className='h-full flex'>
 				<div className='w-10/12 p-4'>
-					<div className='flex'>
-						<Link href={String(url)}>
+					<Link href={String(url)}>
+						<div className='flex'>
 							<div className='flex gap-4'>
 								<ProfileAvatar
 									className='w-16 h-16 border-none bg-secondary hover:bg-secondary'
@@ -59,9 +61,8 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 									</div>
 								</div>
 							</div>
-						
-						</Link>
-					</div>
+						</div>
+					</Link>
 					<div className='flex items-center border-t-2 border-t-blue-700 mt-4 w-full pt-3'>
 						<div className='flex gap-8 w-1/2'>
 							<div className='flex gap-2 items-center'>
@@ -87,15 +88,29 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 				</div>
 				<div className='w-2/12 h-full  bg-primary/5 rounded-r-md'>
 					<div className='flex group w-full h-1/2 hover:bg-secondary rounded-r-md cursor-pointer'>
-						<Component
-							className='cursor-pointer rounded-md bg-secondary group-hover:bg-primary/5 w-14 h-14 p-4 m-auto' />
+						<Button
+							variant='secondary'
+							type='button'
+							disabled={false}
+							className='h-14 w-14 m-auto group-hover:bg-primary/5 group-hover:text-blue-700'
+							onClick={() => router.push(String(url))}
+						>
+							<UsersRound />
+						</Button>
 					</div>
-					<div className='flex group w-full h-1/2 hover:bg-secondary rounded-r-md cursor-pointer'>
-						<Send className='cursor-pointer rounded-md bg-secondary group-hover:bg-primary/5 w-14 h-14 p-4 m-auto' />
+					<div className='flex group w-full h-1/2 hover:bg-secondary rounded-r-md'>
+						<Button
+							variant='secondary'
+							type='button'
+							disabled={true}
+							className='h-14 w-14 m-auto group-hover:bg-primary/5 group-hover:text-blue-700'
+							// onClick={() => router.push(String(url))}
+						>
+							<Component />
+						</Button>
 					</div>
 				</div>
 			</div>
 		</div>
 	)
 }
-

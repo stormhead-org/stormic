@@ -92,26 +92,6 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 						{item.icon}
 						{item.text}
 					</Button>
-					
-					// <li
-					// 	key={item.id}
-					// 	className={cn(
-					// 		'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-800 hover:text-white cursor-pointer mb-1',
-					// 		`${pathname === item.path ? 'bg-blue-800 text-white' : ''}`
-					// 	)}
-					// 	onClick={() => {
-					// 		if (item.click === 'onClickSignOut') {
-					// 			onClickSignOut() // Вызов функции выхода
-					// 		} else if (item.path) {
-					// 			router.push(item.path) // Переход по пути
-					// 		}
-					// 	}}
-					// >
-					// 	<div className='flex items-center gap-2 ml-2'>
-					// 		{item.icon}
-					// 		{item.text}
-					// 	</div>
-					// </li>
 				))}
 			</ul>
 		</div>

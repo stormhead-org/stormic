@@ -1,42 +1,45 @@
 'use client'
 
-import { BookCheck, Component, Lightbulb, Pencil, Rocket } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Button } from '@/shared/components/ui/button'
+import { cn } from '@/shared/lib/utils'
+import { Component, LibraryBig, Lightbulb, Newspaper, UsersRound } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
-
-const HeaderButtonsArray = [
-	{ id: 1, icon: <Pencil size={24} />, path: '/placeholder#1' },
-	{ id: 2, icon: <Rocket size={24} />, path: '/placeholder#2' },
-	{ id: 3, icon: <BookCheck size={24} />, path: '/placeholder#3' },
-	{ id: 4, icon: <Component size={24} />, path: '/placeholder#4' },
-	{ id: 5, icon: <Lightbulb size={24} />, path: '/placeholder#5' }
-]
 
 interface Props {
 	className?: string
 }
 
 export const HeaderButtons: React.FC<Props> = ({ className }) => {
+	
 	const router = useRouter()
-	const handleClick = (link: string) => {
-		router.push(link)
-	}
+	const pathname = usePathname()
+	
+	const HeaderButtonsArray = [
+		{ id: 1, icon: <Newspaper size={24} />, path: '/', disabled: false },
+		{ id: 2, icon: <UsersRound size={24} />, path: '/communities', disabled: false },
+		{ id: 3, icon: <Component size={24} />, path: '/', disabled: true },
+		{ id: 4, icon: <LibraryBig size={24} />, path: '/wiki', disabled: true },
+		{ id: 5, icon: <Lightbulb size={24} />, path: '/about', disabled: false }
+	]
 	
 	return (
 		<div className={className}>
-			<div className='flex flex-1 justify-evenly items-center'>
-				{HeaderButtonsArray.map(obj => (
-					<Link
-						key={obj.id}
-						onClick={() => {
-							handleClick(obj.path)
-						}}
-						href={obj.path}
-						className='cursor-pointer items-center p-2 justify-center hover:bg-blue-800 hover:text-white rounded-full'
+			<div className='flex justify-evenly items-center'>
+				{HeaderButtonsArray.map(item => (
+					<Button
+						key={item.id}
+						variant='blue'
+						type='button'
+						disabled={item.disabled}
+						className={cn(
+							'w-10 h-10 bg-transparent hover:bg-blue-700 text-primary hover:text-white rounded-full p-0',
+							`${pathname === item.path ? 'bg-blue-800 hover:bg-blue-800 text-white' : ''}`
+						)}
+						onClick={() => router.push(item.path)}
 					>
-						{obj.icon}
-					</Link>
+						{item.icon}
+					</Button>
 				))}
 			</div>
 		</div>
