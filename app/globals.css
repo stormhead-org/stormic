@@ -143,10 +143,10 @@ html {
 	background-color: var(--a-color);
 }
 
-.dark *::selection,
-.dark .ce-block.ce-block--selected .ce-block__content {
-	background-color: var(--a-color);
-}
+/*.dark *::selection,*/
+/*.dark .ce-block.ce-block--selected .ce-block__content {*/
+/*	background-color: var(--a-color);*/
+/*}*/
 
 .dark .ce-popover__items {
 	scrollbar-color: var(--border) var(--secondary);
