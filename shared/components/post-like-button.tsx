@@ -23,7 +23,7 @@ export const PostLikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
 	}
 	
 	return (
-		<button onClick={handleLike} className='like-button'>
+		<button onClick={handleLike} className='like-button focus:outline-none'>
 			<div className='flex items-center'>
 				<div className='group mr-4 cursor-pointer'>
 					<div className='flex p-1 items-center group-hover:text-blue-700 font-bold'>

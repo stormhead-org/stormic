@@ -4,15 +4,15 @@ import { getServerSession } from 'next-auth/next'
 import { NextResponse } from 'next/server'
 
 export async function DELETE(req: Request, { params }: { params: { postId: string } }) {
-	const session = await getServerSession(authOptions)
-	if (!session) {
-		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-	}
-	
-	const userId = parseInt(session.user.id)
-	const postId = parseInt(params.postId)
-	
 	try {
+		const session = await getServerSession(authOptions)
+		if (!session) {
+			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+		}
+		
+		const userId = parseInt(session.user.id)
+		const postId = parseInt(params.postId)
+		
 		const existingLike = await prisma.postLike.findFirst({
 			where: { user_id: userId, post_id: postId }
 		})
@@ -32,6 +32,6 @@ export async function DELETE(req: Request, { params }: { params: { postId: strin
 		
 		return NextResponse.json({ message: 'Unliked successfully' }, { status: 200 })
 	} catch (error) {
-		return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
+		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
 	}
 }

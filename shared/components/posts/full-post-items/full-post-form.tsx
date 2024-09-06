@@ -30,6 +30,7 @@ export const FullPostForm: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<FullPostItem
+				postId={items.postId}
 				postTitle={items.postTitle}
 				postContent={items.postContent}
 				postImage={items.postImage}
@@ -41,7 +42,6 @@ export const FullPostForm: React.FC<Props> = ({
 				postTags={items.postTags}
 				commentsCount={items.commentsCount}
 				bookmarksCount={items.bookmarksCount}
-				likesCount={items.likesCount}
 				viewsCount={items.viewsCount}
 				postTime={items.postTime}
 			/>

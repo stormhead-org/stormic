@@ -1,3 +1,4 @@
+import { toast } from 'sonner'
 import { create } from 'zustand'
 
 interface LikeStoreState {
@@ -15,16 +16,18 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 	async toggleLike(postId: number) {
 		const { hasLiked, likesCount } = get()
 		
-		// Очистить таймер, если он существует
 		if (debounceTimers[postId]) {
 			clearTimeout(debounceTimers[postId]!)
 		}
 		
-		// Установить новый таймер
 		debounceTimers[postId] = setTimeout(async () => {
 			try {
 				if (hasLiked[postId]) {
 					const response = await fetch(`/api/posts/${postId}/unlike`, { method: 'DELETE' })
+					if (response.status === 401) {
+						toast.error('Необходимо авторизоваться', { icon: '❌' })
+						return
+					}
 					if (!response.ok) throw new Error('Failed to unlike')
 					set(state => ({
 						hasLiked: { ...state.hasLiked, [postId]: false },
@@ -32,6 +35,10 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 					}))
 				} else {
 					const response = await fetch(`/api/posts/${postId}/like`, { method: 'POST' })
+					if (response.status === 401) {
+						toast.error('Необходимо авторизоваться', { icon: '❌' })
+						return
+					}
 					if (!response.ok) throw new Error('Failed to like')
 					set(state => ({
 						hasLiked: { ...state.hasLiked, [postId]: true },

@@ -19,6 +19,7 @@ export const UserProfilePostGroup: React.FC<Props> = ({
 	const { posts, loading } = useUserPosts(userId)
 	
 	const items = posts.map((item: any) => ({
+		postId: item.post_id,
 		postTitle: item.title,
 		postContent: item.content,
 		postImage: item.post_image,

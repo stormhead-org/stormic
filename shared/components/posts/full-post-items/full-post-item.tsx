@@ -5,6 +5,7 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 export interface FullPostItemProps {
+	postId: number
 	postTitle: string
 	postContent: string
 	postImage?: string | null
@@ -16,13 +17,13 @@ export interface FullPostItemProps {
 	postTags?: string[]
 	commentsCount: number
 	bookmarksCount: number
-	likesCount: number
 	viewsCount: number
 	postTime: string
 	className?: string
 }
 
 export const FullPostItem: React.FC<FullPostItemProps> = ({
+	                                                          postId,
 	                                                          postTitle,
 	                                                          postContent,
 	                                                          postImage,
@@ -34,7 +35,6 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 	                                                          postTags,
 	                                                          commentsCount,
 	                                                          bookmarksCount,
-	                                                          likesCount,
 	                                                          viewsCount,
 	                                                          postTime,
 	                                                          className
@@ -45,12 +45,13 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 			            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
 			<PostFullBody className='cursor-default' postTitle={postTitle} postContent={postContent} postImage={postImage} />
 			<PostFooter
+				postId={postId}
 				postTags={postTags}
 				commentsCount={commentsCount}
 				bookmarksCount={bookmarksCount}
-				likesCount={likesCount}
 				viewsCount={viewsCount}
-				className='mt-4' />
+				className='mt-4'
+			/>
 		</div>
 	)
 }
