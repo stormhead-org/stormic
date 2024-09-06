@@ -1,21 +1,22 @@
+import { PostLikeButton } from '@/shared/components/post-like-button'
 import { cn } from '@/shared/lib/utils'
-import { Bookmark, Eye, Heart, MessageCircle, Redo } from 'lucide-react'
+import { Bookmark, Eye, MessageCircle, Redo } from 'lucide-react'
 import React from 'react'
 
 export interface PostHeaderProps {
+	postId: number
 	postTags?: string[]
 	commentsCount: number
 	bookmarksCount: number
-	likesCount: number
 	viewsCount: number
 	className?: string
 }
 
 export const PostFooter: React.FC<PostHeaderProps> = ({
+	                                                      postId,
 	                                                      postTags,
 	                                                      commentsCount,
 	                                                      bookmarksCount,
-	                                                      likesCount,
 	                                                      viewsCount,
 	                                                      className
                                                       }) => {
@@ -34,11 +35,7 @@ export const PostFooter: React.FC<PostHeaderProps> = ({
 			) : null}
 			<div className='flex items-center justify-between mt-3'>
 				<div className='flex items-center'>
-					<div className='group mr-4 cursor-pointer'>
-						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
-							<Heart className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {likesCount}
-						</p>
-					</div>
+					<PostLikeButton postId={postId} />
 					<div className='group mr-4 cursor-pointer'>
 						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
 							<MessageCircle className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {commentsCount}

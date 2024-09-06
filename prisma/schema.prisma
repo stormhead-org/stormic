@@ -82,7 +82,7 @@ model User {
   posts                Post[] // Посты, созданные пользователем
   comments             Comment[] // Комментарии пользователя
   bookmarks            Bookmark[] // Пользователи, которые добавили пост в закладки
-  likes                Like[] // Лайки пользователя
+  postLikes            PostLike[] // Лайки пользователя
   views                View[] // Просмотры пользователем
   images               Image[] // Изображения пользователя
   notifications        Notification[] // Уведомления пользователя
@@ -141,14 +141,30 @@ model Post {
   tags             PostTags[] // Теги поста
   comments         Comment[] // Комментарии к посту
   bookmarks        Bookmark[] // Закладки пользователя
-  likes            Like[] // Лайки поста
+  likes            PostLike[] // Лайки поста
   views            View[] // Просмотры поста
   media            Media[] // Медиафайлы, связанные c постом
   editHistory      PostEditHistory[] // История редактирования поста
   recommendations  Recommendation[] // Рекомендации для поста
+  metrics          PostMetric[] // Метрики популярности поста
 
   author   User     @relation(fields: [author_id], references: [id]) // Связь c моделью UserId
   category Category @relation(fields: [category_id], references: [category_id]) // Связь c моделью Category
+}
+
+model PostMetric {
+  id             Int      @id @default(autoincrement()) // Уникальный идентификатор метрики
+  post_id        Int // Идентификатор поста
+  period         String // Период (например, "daily", "weekly", "monthly")
+  views_count    Int      @default(0) // Количество просмотров
+  likes_count    Int      @default(0) // Количество лайков
+  comments_count Int      @default(0) // Количество комментариев
+  recordedAt     DateTime @default(now()) // Дата и время записи метрики
+
+  post Post @relation(fields: [post_id], references: [post_id]) // Связь с постом
+
+  @@unique([post_id, period]) // Уникальность комбинации post_id и period
+  @@map("post_metrics") // Переименование таблицы в базе данных на "post_metrics"
 }
 
 model Category {
@@ -196,6 +212,7 @@ model Comment {
   publication_date  DateTime @default(now()) // Дата публикации комментария
   update_date       DateTime @default(now()) // Дата обновления комментария
   parent_comment_id Int? // Идентификатор родительского комментария (для ответов)
+  likes_count       Int      @default(0) // Количество лайков комментария
 
   post     Post          @relation(fields: [post_id], references: [post_id]) // Связь c моделью Post
   author   User          @relation(fields: [author_id], references: [id]) // Связь c моделью User
@@ -214,6 +231,7 @@ model CommentLike {
   user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade) // Связь с моделью User
 
   @@unique([comment_id, user_id]) // Гарантирует уникальность лайка для каждого пользователя и комментария
+  @@index([comment_id]) // Индекс для быстрого поиска лайков по комментариям
 }
 
 model Tag {
@@ -273,7 +291,7 @@ model RolePermission {
   @@id([role_id, permission_id]) // Композитный ключ
 }
 
-model Like {
+model PostLike {
   like_id   Int      @id @default(autoincrement()) // Уникальный идентификатор лайка
   user_id   Int // Идентификатор пользователя, который поставил лайк
   post_id   Int // Идентификатор поста, который был лайкнут
@@ -281,6 +299,9 @@ model Like {
 
   user User @relation(fields: [user_id], references: [id]) // Связь c моделью User
   post Post @relation(fields: [post_id], references: [post_id]) // Связь c моделью Post
+
+  @@unique([user_id, post_id]) // Гарантирует уникальность лайка для каждого пользователя и поста
+  @@index([post_id]) // Индекс для быстрого поиска лайков по постам
 }
 
 model View {

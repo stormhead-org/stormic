@@ -13,6 +13,7 @@ export const MainPagePostGroup: React.FC<Props> = ({ className }) => {
 	const { posts, loading } = usePosts()
 	
 	const items = posts.map((item: any) => ({
+		postId: item.post_id,
 		postTitle: item.title,
 		postContent: item.content,
 		postImage: item.post_image,
@@ -24,7 +25,6 @@ export const MainPagePostGroup: React.FC<Props> = ({ className }) => {
 		categoryUrl: '/c/' + item.category_id,
 		commentsCount: item.commentsCount,
 		bookmarksCount: item.bookmarksCount,
-		likesCount: item.likes_count,
 		viewsCount: item.views_count,
 		postTime: String(item.publication_date)
 	}))

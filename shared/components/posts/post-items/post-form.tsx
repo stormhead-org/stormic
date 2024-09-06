@@ -40,6 +40,7 @@ export const PostForm: React.FC<Props> = ({
 					<PostItem
 						key={index}
 						endAdornment={item.endAdornment}
+						postId={item.postId}
 						postTitle={item.postTitle}
 						postContent={item.postContent}
 						postImage={item.postImage}
@@ -51,7 +52,6 @@ export const PostForm: React.FC<Props> = ({
 						categoryUrl={item.categoryUrl}
 						commentsCount={item.commentsCount}
 						bookmarksCount={item.bookmarksCount}
-						likesCount={item.likesCount}
 						viewsCount={item.viewsCount}
 						postTime={item.postTime}
 					/>

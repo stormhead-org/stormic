@@ -473,7 +473,7 @@ async function up() {
 	})
 	
 	// Создание лайков
-	await prisma.like.createMany({
+	await prisma.postLike.createMany({
 		data: [
 			{ user_id: 2, post_id: 1, like_date: generateDate(3) },
 			{ user_id: 3, post_id: 2, like_date: generateDate(2) }
@@ -639,7 +639,7 @@ async function down() {
 	await prisma.$executeRaw`TRUNCATE TABLE "UserRoleAssignment" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "Permission" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "RolePermission" RESTART IDENTITY CASCADE`
-	await prisma.$executeRaw`TRUNCATE TABLE "Like" RESTART IDENTITY CASCADE`
+	await prisma.$executeRaw`TRUNCATE TABLE "PostLike" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "View" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "Image" RESTART IDENTITY CASCADE`
 	await prisma.$executeRaw`TRUNCATE TABLE "Media" RESTART IDENTITY CASCADE`
