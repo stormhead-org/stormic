@@ -1,4 +1,4 @@
-import { useLikeStore } from '@/shared/stores/likeStore'
+import { usePostLikesStore } from '@/shared/stores/postLikesStore'
 import { Heart } from 'lucide-react'
 import React, { useEffect } from 'react'
 
@@ -7,7 +7,7 @@ interface LikeButtonProps {
 }
 
 export const PostLikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
-	const { likesCount, hasLiked, toggleLike, initialize } = useLikeStore(state => ({
+	const { likesCount, hasLiked, toggleLike, initialize } = usePostLikesStore(state => ({
 		likesCount: state.likesCount[postId] || 0, // Используем объект для хранения лайков по postId
 		hasLiked: state.hasLiked[postId] || false,
 		toggleLike: state.toggleLike,

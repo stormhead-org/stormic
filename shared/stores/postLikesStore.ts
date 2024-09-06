@@ -9,7 +9,7 @@ interface LikeStoreState {
 
 let debounceTimers: Record<number, NodeJS.Timeout | null> = {} // Объект для хранения таймеров по postId
 
-export const useLikeStore = create<LikeStoreState>((set, get) => ({
+export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 	likesCount: {},
 	hasLiked: {},
 	async toggleLike(postId: number) {
