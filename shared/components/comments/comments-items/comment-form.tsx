@@ -45,6 +45,7 @@ export const CommentForm: React.FC<Props> = ({
 					>
 						<CommentItem
 							endAdornment={item.endAdornment}
+							hasPost={false}
 							postTitle={item.postTitle}
 							content={item.content}
 							postUrl={item.postUrl}

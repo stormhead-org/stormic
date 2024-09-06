@@ -222,7 +222,7 @@ model Comment {
 }
 
 model CommentLike {
-  id         Int      @id @default(autoincrement()) // Уникальный идентификатор лайка
+  like_id    Int      @id @default(autoincrement()) // Уникальный идентификатор лайка
   comment_id Int // Идентификатор комментария, к которому относится лайк
   user_id    Int // Идентификатор пользователя, поставившего лайк
   created_at DateTime @default(now()) // Дата создания лайка
@@ -293,8 +293,8 @@ model RolePermission {
 
 model PostLike {
   like_id   Int      @id @default(autoincrement()) // Уникальный идентификатор лайка
-  user_id   Int // Идентификатор пользователя, который поставил лайк
   post_id   Int // Идентификатор поста, который был лайкнут
+  user_id   Int // Идентификатор пользователя, который поставил лайк
   like_date DateTime @default(now()) // Дата, когда был поставлен лайк
 
   user User @relation(fields: [user_id], references: [id]) // Связь c моделью User

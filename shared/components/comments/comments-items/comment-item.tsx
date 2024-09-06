@@ -6,13 +6,14 @@ import React from 'react'
 
 export interface CommentItemProps {
 	endAdornment?: React.ReactNode
+	hasPost: boolean
 	postTitle?: string | null
 	content: string
 	postUrl?: string
 	authorName: string
 	authorUrl: string
 	authorAvatar?: string | null
-	likesCount?: number
+	commentId?: number
 	publicationDate?: string
 	maxLengthHeader?: number
 	maxLengthBody?: number
@@ -21,13 +22,14 @@ export interface CommentItemProps {
 
 export const CommentItem: React.FC<CommentItemProps> = ({
 	                                                        endAdornment,
+	                                                        hasPost,
 	                                                        postTitle,
 	                                                        content,
 	                                                        postUrl,
 	                                                        authorName,
 	                                                        authorUrl,
 	                                                        authorAvatar,
-	                                                        likesCount,
+	                                                        commentId,
 	                                                        publicationDate,
 	                                                        maxLengthHeader,
 	                                                        maxLengthBody,
@@ -39,8 +41,8 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 			               postTitle={String(postTitle)} maxLength={maxLengthHeader} publicationDate={publicationDate}
 			               postUrl={postUrl} />
 			<CommentBody content={content} maxLength={maxLengthBody} postUrl={postUrl} />
-			{likesCount && <FullPostCommentFooter
-				likesCount={Number(likesCount)}
+			{hasPost && <FullPostCommentFooter
+				commentId={Number(commentId)}
 				className='mt-2'
 			/>}
 			{endAdornment}

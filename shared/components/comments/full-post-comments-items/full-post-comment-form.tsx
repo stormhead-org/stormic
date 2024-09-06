@@ -7,7 +7,6 @@ import { Skeleton } from '../../ui/skeleton'
 interface Comment {
 	comment_id: number;
 	content: string;
-	likesCount: number;
 	author: {
 		fullName: string;
 		profile_picture: string;
@@ -33,11 +32,12 @@ const CommentComponent: React.FC<{ comment: Comment; level?: number }> = ({ comm
 	return (
 		<div className={`${indentation} mt-4`}>
 			<CommentItem
+				hasPost={true}
 				content={comment.content}
 				authorName={comment.author.fullName}
 				authorUrl={`/u/${comment.author_id}`} // Примерный URL для автора
 				authorAvatar={comment.author.profile_picture}
-				likesCount={comment.likesCount}
+				commentId={comment.comment_id}
 				publicationDate={comment.publication_date}
 				className='p-0 pl-4 cursor-default border-l-4 border-blue-600'
 			/>
