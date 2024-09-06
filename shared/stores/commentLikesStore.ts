@@ -48,7 +48,7 @@ export const useCommentLikesStore = create<LikeStoreState>((set, get) => ({
 			} catch (error) {
 				console.error(error)
 			}
-		}, 200) // Задержка 200 миллисекунд
+		}, 100) // Задержка 100 миллисекунд
 		
 	},
 	async initialize(commentId: number) {

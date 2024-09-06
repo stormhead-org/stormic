@@ -23,27 +23,24 @@ export const PostLikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
 	}
 	
 	return (
-		<button onClick={handleLike} className='like-button focus:outline-none'>
-			<div className='flex items-center'>
-				<div className='group mr-4 cursor-pointer'>
-					<div className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
-						{hasLiked ? (
-							<>
-								<Heart className='bg-blue-800/20 text-blue-700 font-bold rounded-full mr-1 w-7 h-7 p-1' />
-								<span className='text-blue-700'>
+		<button onClick={handleLike} className='like-button focus:outline-none  mr-4'>
+			<div className='flex group items-center cursor-pointer'>
+				{hasLiked ? (
+					<>
+						<Heart className='bg-blue-800/20 text-blue-700 rounded-full mr-1 w-7 h-7 p-1' />
+						<span className='text-blue-700 font-bold'>
 									{likesCount}
 								</span>
-							</>
-						) : (
-							<>
-								<Heart className='hover:bg-blue-800/20 hover:text-blue-700 font-bold rounded-full mr-1 w-7 h-7 p-1' />
-								<span className='hover:text-blue-700'>
+					</>
+				) : (
+					<>
+						<Heart
+							className='group-hover:bg-blue-800/20 group-hover:text-blue-700 rounded-full mr-1 w-7 h-7 p-1' />
+						<span className='group-hover:text-blue-700 font-bold'>
 									{likesCount}
-								</span>
-							</>
-						)}
-					</div>
-				</div>
+						</span>
+					</>
+				)}
 			</div>
 		</button>
 	)
