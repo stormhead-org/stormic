@@ -48,7 +48,7 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 			} catch (error) {
 				console.error(error)
 			}
-		}, 100) // Задержка 100 миллисекунд
+		}, 200) // Задержка 200 миллисекунд
 		
 	},
 	async initialize(postId: number) {

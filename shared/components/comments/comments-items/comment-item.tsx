@@ -6,7 +6,7 @@ import React from 'react'
 
 export interface CommentItemProps {
 	endAdornment?: React.ReactNode
-	hasPost: boolean
+	hasPost?: boolean
 	postTitle?: string | null
 	content: string
 	postUrl?: string

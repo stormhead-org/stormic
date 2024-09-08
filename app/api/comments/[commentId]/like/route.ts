@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma/prisma-client'
 import { authOptions } from '@/shared/constants/auth-options'
-import { sendMessageToQueue } from '@/shared/lib/rabbitmq-client'
+import { sendCommentLikeMessage } from '@/shared/lib/rabbitmq-client'
 import { getServerSession } from 'next-auth/next'
 import { NextResponse } from 'next/server'
 
@@ -19,6 +19,7 @@ export async function POST(request: Request) {
 			return NextResponse.json({ error: 'Invalid comment ID' }, { status: 400 })
 		}
 		
+		// Проверка на существующий лайк
 		const existingLike = await prisma.commentLike.findFirst({
 			where: {
 				user_id: userId,
@@ -30,28 +31,11 @@ export async function POST(request: Request) {
 			return NextResponse.json({ message: 'Already liked' }, { status: 400 })
 		}
 		
-		await prisma.commentLike.create({
-			data: {
-				user_id: userId,
-				comment_id: commentId
-			}
-		})
+		// Отправляем сообщение в очередь для обработки лайка
+		await sendCommentLikeMessage({ action: 'like', commentId, userId })
 		
-		await prisma.comment.update({
-			where: { comment_id: commentId },
-			data: {
-				likes_count: {
-					increment: 1
-				}
-			}
-		})
-		
-		// Отправляем сообщение в RabbitMQ
-		await sendMessageToQueue('comment_liked', JSON.stringify({ commentId, userId }))
-		
-		return NextResponse.json({ message: 'Comment liked' })
+		return NextResponse.json({ message: 'Comment like request sent to worker' })
 	} catch (error) {
 		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
 	}
 }
-

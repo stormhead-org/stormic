@@ -1,4 +1,4 @@
-import amqplib from 'amqplib'
+import amqplib, { Message } from 'amqplib'
 
 let connection: amqplib.Connection | null = null
 let channel: amqplib.Channel | null = null
@@ -21,50 +21,60 @@ export async function sendMessageToQueue(queue: string, message: any) {
 	
 	if (channel) {
 		await channel.assertQueue(queue, { durable: true })
-		channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)), { persistent: true }) // persistent для сохранности сообщений
+		channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)), { persistent: true })
 	} else {
 		throw new Error('Channel is not initialized')
 	}
 }
 
 // Функция для получения сообщений из очереди
-export async function consumeFromQueue(queue: string, onMessage: (msg: any) => void) {
+export async function consumeFromQueue(queue: string, onMessage: (msg: Message) => Promise<void>) {
 	if (!channel) {
 		await connectToRabbitMQ()
 	}
 	
 	if (channel) {
 		await channel.assertQueue(queue, { durable: true })
-		channel.consume(queue, (message) => {
-			if (message !== null) {
-				const parsedMessage = JSON.parse(message.content.toString()) // Парсинг сообщения
-				onMessage(parsedMessage) // Передаем уже объект
-				if (channel) {
-					channel.ack(message) // Подтверждаем сообщение
+		channel.consume(queue, async (msg) => {
+			if (msg !== null && channel !== null) {
+				try {
+					await onMessage(msg)
+					channel.ack(msg)
+				} catch (error) {
+					console.error('Failed to process message:', error)
+					channel.nack(msg, false, true) // Отметить сообщение как неудачно обработанное
 				}
 			}
 		})
+		console.log(`Consuming from queue ${queue}`)
 	} else {
 		throw new Error('Channel is not initialized')
 	}
 }
 
-// Функция для отправки сообщения в очередь лайков постов
-export async function sendPostLikeMessage(message: any) {
+// Функция для обработки сообщений о просмотрах постов
+export async function consumePostViewQueue(onMessage: (msg: Message) => Promise<void>) {
+	await consumeFromQueue('postViewQueue', onMessage)
+}
+
+// Функция для отправки сообщения о просмотрах поста
+export const sendPostViewMessage = async (postId: number) => {
+	await sendMessageToQueue('postViewQueue', { postId })
+}
+
+// Функции для работы с очередями лайков постов и комментариев
+export async function sendPostLikeMessage(message: { action: string, postId: number, userId: number }) {
 	await sendMessageToQueue('postLikeQueue', message)
 }
 
-// Функция для получения сообщений из очереди лайков постов
-export async function consumePostLikeQueue(onMessage: (msg: any) => void) {
+export async function consumePostLikeQueue(onMessage: (msg: Message) => Promise<void>) {
 	await consumeFromQueue('postLikeQueue', onMessage)
 }
 
-// Функция для отправки сообщения в очередь лайков комментариев
-export async function sendCommentLikeMessage(message: any) {
+export async function sendCommentLikeMessage(message: { action: string, commentId: number, userId: number }) {
 	await sendMessageToQueue('commentLikeQueue', message)
 }
 
-// Функция для получения сообщений из очереди лайков комментариев
-export async function consumeCommentLikeQueue(onMessage: (msg: any) => void) {
+export async function consumeCommentLikeQueue(onMessage: (msg: Message) => Promise<void>) {
 	await consumeFromQueue('commentLikeQueue', onMessage)
 }
