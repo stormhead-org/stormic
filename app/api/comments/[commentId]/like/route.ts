@@ -1,5 +1,6 @@
 import { prisma } from '@/prisma/prisma-client'
 import { authOptions } from '@/shared/constants/auth-options'
+import { sendMessageToQueue } from '@/shared/lib/rabbitmq-client'
 import { getServerSession } from 'next-auth/next'
 import { NextResponse } from 'next/server'
 
@@ -45,8 +46,12 @@ export async function POST(request: Request) {
 			}
 		})
 		
+		// Отправляем сообщение в RabbitMQ
+		await sendMessageToQueue('comment_liked', JSON.stringify({ commentId, userId }))
+		
 		return NextResponse.json({ message: 'Comment liked' })
 	} catch (error) {
 		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
 	}
 }
+

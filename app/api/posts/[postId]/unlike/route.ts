@@ -1,5 +1,6 @@
 import { prisma } from '@/prisma/prisma-client'
 import { authOptions } from '@/shared/constants/auth-options'
+import { sendMessageToQueue } from '@/shared/lib/rabbitmq-client'
 import { getServerSession } from 'next-auth/next'
 import { NextResponse } from 'next/server'
 
@@ -30,8 +31,12 @@ export async function DELETE(req: Request, { params }: { params: { postId: strin
 			data: { likes_count: { decrement: 1 } }
 		})
 		
+		// Отправляем сообщение в RabbitMQ
+		await sendMessageToQueue('post_unliked', JSON.stringify({ postId, userId }))
+		
 		return NextResponse.json({ message: 'Unliked successfully' }, { status: 200 })
 	} catch (error) {
+		console.error(error)
 		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
 	}
 }
