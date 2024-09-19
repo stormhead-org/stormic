@@ -35,6 +35,7 @@ export const CategoryCommunityProfileGroup: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<ProfileItem
+				categoryId={categoryId}
 				profileBanner={profileBanner}
 				profileAvatar={profileAvatar}
 				profileName={profileName}

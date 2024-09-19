@@ -6,6 +6,8 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 interface Props {
+	userId?: string
+	categoryId?: string
 	profileBanner?: string
 	profileAvatar?: string
 	profileName: string
@@ -14,12 +16,13 @@ interface Props {
 	profileRegTime?: string
 	profileFollowers: number
 	profileFollowing?: number
-	userId?: string
 	hasUser: boolean
 	className?: string
 }
 
 export const ProfileItem: React.FC<Props> = ({
+	                                             userId,
+	                                             categoryId,
 	                                             profileBanner,
 	                                             profileAvatar,
 	                                             profileName,
@@ -28,7 +31,6 @@ export const ProfileItem: React.FC<Props> = ({
 	                                             profileRegTime,
 	                                             profileFollowers,
 	                                             profileFollowing,
-	                                             userId,
 	                                             hasUser,
 	                                             className
                                              }) => {
@@ -37,17 +39,24 @@ export const ProfileItem: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<div className='rounded-md bg-secondary'>
-				<ProfileHeader profileBanner={profileBanner}
-				               profileName={profileName}
-				               profileRep={profileRep}
-				               profileAvatar={profileAvatar}
-				               hasUser={hasUser} />
-				<ProfileBody profileFollowing={profileFollowing}
-				             profileFollowers={profileFollowers}
-				             profileDescription={profileDescription}
-				             profileRegTime={profileRegTime}
-				             hasUser={hasUser}
-				             userId={userId} />
+				<ProfileHeader
+					userId={Number(userId)}
+					categoryId={Number(categoryId)}
+					profileBanner={profileBanner}
+				  profileName={profileName}
+				  profileRep={profileRep}
+				  profileAvatar={profileAvatar}
+				  hasUser={hasUser}
+				/>
+				<ProfileBody
+					userId={Number(userId)}
+					categoryId={Number(categoryId)}
+					profileFollowing={profileFollowing}
+				  profileFollowers={profileFollowers}
+				  profileDescription={profileDescription}
+				  profileRegTime={profileRegTime}
+				  hasUser={hasUser}
+				/>
 			</div>
 		</div>
 	)

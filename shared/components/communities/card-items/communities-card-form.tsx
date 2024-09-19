@@ -40,6 +40,7 @@ export const CommunitiesCardForm: React.FC<Props> = ({
 				{items.map((item, index) => (
 					<CommunitiesCardItem
 						key={index}
+						categoryId={item.categoryId}
 						image={item.image}
 						name={item.name}
 						description={item.description}

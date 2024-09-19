@@ -2,12 +2,16 @@
 
 import { ProfileAvatar } from '@/shared/components'
 import { Button } from '@/shared/components/ui/button'
+import UserFollowButton from '@/shared/components/user-follow-button'
 import { cn } from '@/shared/lib/utils'
 import { GripHorizontal } from 'lucide-react'
 import React from 'react'
 import { useIntl } from 'react-intl'
+import CommunityFollowButton from '../../community-follow-button'
 
 interface Props {
+	userId: number
+	categoryId: number
 	profileBanner?: string
 	profileAvatar?: string
 	profileName: string
@@ -17,6 +21,8 @@ interface Props {
 }
 
 export const ProfileHeader: React.FC<Props> = ({
+	                                               userId,
+	                                               categoryId,
 	                                               profileBanner,
 	                                               profileAvatar,
 	                                               profileName,
@@ -39,14 +45,13 @@ export const ProfileHeader: React.FC<Props> = ({
 						avatarImage={String(profileAvatar)}
 						avatarSize={Number(92)} />
 					<div className='flex items-center'>
-						<Button
-							variant='blue'
-							className='h-6 w-26 text-sm font-bold mt-auto mb-[2px]'
-							type='button'
-							// onClick={() => router.push('/write')}
-						>
-							{formatMessage({ id: 'profileHeader.profileSubscribeButton' })}
-						</Button>
+						<div className='mt-16'>
+							{hasUser ?
+								<UserFollowButton userId={userId} />
+								:
+								<CommunityFollowButton categoryId={categoryId} />
+								}
+						</div>
 						<p className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
 							<GripHorizontal className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />
 						</p>

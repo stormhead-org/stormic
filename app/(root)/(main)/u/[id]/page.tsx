@@ -30,12 +30,12 @@ export default async function UserPage({
 		}),
 		prisma.userSubscription.count({
 			where: {
-				followingId: userId
+				followerId: userId
 			}
 		}),
 		prisma.userSubscription.count({
 			where: {
-				followerId: userId
+				followingId: userId
 			}
 		}),
 		prisma.stormicMedia.findFirst({

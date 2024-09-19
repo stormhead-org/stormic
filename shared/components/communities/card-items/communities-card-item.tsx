@@ -1,15 +1,17 @@
 'use client'
 
 import { ProfileAvatar } from '@/shared/components'
+import CommunityFollowButton from '@/shared/components/community-follow-button'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
+import { CategoryFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
 import { Component, Newspaper, UserRoundPlus, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { useIntl } from 'react-intl'
 
 export interface CommunitiesCardItemProps {
+	categoryId: number
 	image?: string
 	name: string
 	description: string
@@ -27,15 +29,14 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 }
 
 export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
+	                                                                        categoryId,
 	                                                                        image,
 	                                                                        name,
 	                                                                        description,
 	                                                                        url,
 	                                                                        postCount,
-	                                                                        followersCount,
 	                                                                        className
                                                                         }) => {
-	const { formatMessage } = useIntl()
 	const router = useRouter()
 	const truncatedName = truncateText(name, 26)
 	const truncatedDescription = truncateText(description, 26)
@@ -70,19 +71,12 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 								<Newspaper size={20} />
 							</div>
 							<div className='flex gap-2 items-center'>
-								<p className='font-bold'>{followersCount}</p>
+								<CategoryFollowersCounter categoryId={categoryId || 0} />
 								<UserRoundPlus size={20} />
 							</div>
 						</div>
 						<div className='flex justify-end w-1/2'>
-							<Button
-								variant='blue'
-								className='h-6 w-26 text-sm font-bold mt-auto'
-								type='button'
-								// onClick={() => router.push('/write')}
-							>
-								{formatMessage({ id: 'profileHeader.profileSubscribeButton' })}
-							</Button>
+							<CommunityFollowButton categoryId={categoryId} />
 						</div>
 					</div>
 				</div>

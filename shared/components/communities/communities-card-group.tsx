@@ -15,6 +15,7 @@ export const CommunitiesCardGroup: React.FC<Props> = ({
 	const { categories, loading } = useCategories()
 	
 	const items = categories.map((item: any) => ({
+		categoryId: item.category_id,
 		image: item.category_image,
 		name: item.category_name,
 		description: item.category_description,

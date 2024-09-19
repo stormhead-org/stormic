@@ -19,6 +19,7 @@ export const CategoryProfilePostGroup: React.FC<Props> = ({
 	const { posts, loading } = useCategoryPosts(categoryId)
 	
 	const items = posts.map((item: any) => ({
+		authorId: item.author_id,
 		postId: item.post_id,
 		postTitle: item.title,
 		postContent: item.content,
