@@ -1,5 +1,6 @@
 import { ProfileAvatar } from '@/shared/components'
 import { Button } from '@/shared/components/ui/button'
+import UserFollowButton from '@/shared/components/user-follow-button'
 import { cn } from '@/shared/lib/utils'
 import { GripHorizontal } from 'lucide-react'
 import Link from 'next/link'
@@ -7,6 +8,7 @@ import React from 'react'
 import { useIntl } from 'react-intl'
 
 export interface PostHeaderProps {
+	authorId: number
 	authorName: string
 	authorAvatar?: string
 	authorUrl: string
@@ -17,6 +19,7 @@ export interface PostHeaderProps {
 }
 
 export const PostHeader: React.FC<PostHeaderProps> = ({
+	                                                      authorId,
 	                                                      authorName,
 	                                                      authorAvatar,
 	                                                      authorUrl,
@@ -33,7 +36,6 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 					<ProfileAvatar avatarImage={String(authorAvatar)} />
 				</Link>
 				<div className='ml-2'>
-					
 					<Link className='hover:text-a-color-hover' href={authorUrl}>{authorName}</Link>
 					<br />
 					<Link className='text-sm hover:text-a-color-hover' href={categoryUrl}>{categoryName}</Link>
@@ -42,14 +44,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 			
 			</div>
 			<div className='flex items-center'>
-				<Button
-					variant='blue'
-					className='h-6 w-26 text-sm font-bold'
-					type='button'
-					// onClick={() => router.push('/write')}
-				>
-					{formatMessage({ id: 'postHeader.subscribeButton' })}
-				</Button>
+				<UserFollowButton userId={authorId} />
 				<div className='group'>
 					<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
 						<GripHorizontal className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />

@@ -42,6 +42,7 @@ export const FullPostPage: React.FC<Props> = ({ postId, className }) => {
 	// Если post существует и преобразование успешно
 	const items = singlePost
 		? {
+			authorId: singlePost.author_id,
 			postId: singlePost.post_id,
 			postTitle: singlePost.title,
 			postContent: singlePost.content,

@@ -39,7 +39,7 @@ export const PostForm: React.FC<Props> = ({
 				{items.map((item, index) => (
 					<PostItem
 						key={index}
-						endAdornment={item.endAdornment}
+						authorId={item.authorId}
 						postId={item.postId}
 						postTitle={item.postTitle}
 						postContent={item.postContent}
@@ -54,6 +54,7 @@ export const PostForm: React.FC<Props> = ({
 						bookmarksCount={item.bookmarksCount}
 						viewsCount={item.viewsCount}
 						postTime={item.postTime}
+						endAdornment={item.endAdornment}
 					/>
 				))}
 			</div>

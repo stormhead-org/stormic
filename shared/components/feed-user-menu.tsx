@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { BookmarkCheck, CheckCheck, Dot, Flame, Zap } from 'lucide-react'
 import Link from 'next/link'
@@ -21,48 +22,49 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			id: 1,
 			text: formatMessage({ id: 'feedUserMenu.popular' }),
 			icon: <Flame size={22} />,
-			path: '/'
+			path: '/',
+			disabled: true
 		},
 		{
 			id: 2,
 			text: formatMessage({ id: 'feedUserMenu.hot' }),
 			icon: <Zap size={22} />,
 			path: '/new',
-			dot: <Dot size={32} className='text-blue-400' />
+			disabled: false
 		},
 		{
 			id: 3,
 			text: formatMessage({ id: 'feedUserMenu.myFeed' }),
 			icon: <CheckCheck size={22} />,
-			path: '/my'
+			path: '/my',
+			disabled: false
 		},
 		{
 			id: 4,
 			text: formatMessage({ id: 'feedUserMenu.bookmarks' }),
 			icon: <BookmarkCheck size={22} />,
-			path: '/bookmarks'
+			path: '/bookmarks',
+			disabled: false
 		}
 	]
 	
 	return (
 		<div className={cn('', className)}>
 			{userMenu.map(item => (
-				<li
+				<Button
 					key={item.id}
+					variant='blue'
+					type='button'
+					disabled={item.disabled}
 					className={cn(
-						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-700 hover:text-white cursor-pointer mb-1',
-						pathname === item.path ? 'bg-blue-800 text-white hover:bg-blue-800' : ''
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-blue-700 text-primary hover:text-white',
+						`${pathname === item.path ? 'bg-blue-800 hover:bg-blue-800 text-white' : ''}`
 					)}
 					onClick={() => router.push(item.path)}
 				>
-					<div className='flex items-center gap-2 ml-2'>
-						{item.icon}
-						<Link href={item.path} className='text-lg font-bold'>
-							{item.text}
-						</Link>
-					</div>
-					{item.dot}
-				</li>
+					{item.icon}
+					{item.text}
+				</Button>
 			))}
 		</div>
 	)

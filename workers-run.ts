@@ -1,9 +1,11 @@
 import { spawn } from 'child_process'
 
 const workers = [
-	'shared/workers/postViewCounterWorker.ts',
-	'shared/workers/postLikeWorker.ts',
-	'shared/workers/commentLikeWorker.ts'
+	'shared/workers/post-view-counter-worker.ts',
+	'shared/workers/post-like-worker.ts',
+	'shared/workers/comment-like-worker.ts',
+	'shared/workers/user-follow-worker.ts',
+	'shared/workers/community-follow-worker.ts',
 ]
 
 workers.forEach(workerPath => {

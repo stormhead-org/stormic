@@ -30,6 +30,7 @@ export const FullPostForm: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<FullPostItem
+				authorId={items.authorId}
 				postId={items.postId}
 				postTitle={items.postTitle}
 				postContent={items.postContent}

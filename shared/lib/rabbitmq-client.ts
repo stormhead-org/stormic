@@ -78,3 +78,21 @@ export async function sendCommentLikeMessage(message: { action: string, commentI
 export async function consumeCommentLikeQueue(onMessage: (msg: Message) => Promise<void>) {
 	await consumeFromQueue('commentLikeQueue', onMessage)
 }
+
+// Добавление новой очереди для подписок на пользователей
+export async function sendFollowMessage(message: { action: string, followerId: number, followedId: number }) {
+	await sendMessageToQueue('userFollowQueue', message);
+}
+
+export async function consumeFollowQueue(onMessage: (msg: Message) => Promise<void>) {
+	await consumeFromQueue('userFollowQueue', onMessage);
+}
+
+// Добавление новой очереди для подписок на сообщества
+export async function sendCommunityFollowMessage(message: { action: string, userId: number, categoryId: number }) {
+	await sendMessageToQueue('communityFollowQueue', message);
+}
+
+export async function consumeCommunityFollowQueue(onMessage: (msg: Message) => Promise<void>) {
+	await consumeFromQueue('communityFollowQueue', onMessage);
+}

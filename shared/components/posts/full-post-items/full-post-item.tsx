@@ -5,6 +5,7 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 export interface FullPostItemProps {
+	authorId: number
 	postId: number
 	postTitle: string
 	postContent: string
@@ -23,6 +24,7 @@ export interface FullPostItemProps {
 }
 
 export const FullPostItem: React.FC<FullPostItemProps> = ({
+	                                                          authorId,
 	                                                          postId,
 	                                                          postTitle,
 	                                                          postContent,
@@ -41,7 +43,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
                                                           }) => {
 	return (
 		<div className={cn('bg-secondary rounded-md mb-4 p-4', className)}>
-			<PostHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
+			<PostHeader authorId={authorId} authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
 			            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
 			<PostFullBody className='cursor-default' postTitle={postTitle} postContent={postContent} postImage={postImage} />
 			<PostFooter
