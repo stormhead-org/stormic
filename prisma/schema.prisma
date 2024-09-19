@@ -406,6 +406,8 @@ model CategorySubscription {
   // Определение связей
   user     User     @relation(fields: [user_id], references: [id])
   category Category @relation("CategorySubscriptions", fields: [category_id], references: [category_id])
+
+  @@unique([user_id, category_id]) // Уникальность комбинации user_id и category_id
 }
 
 model Recommendation {
