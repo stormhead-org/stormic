@@ -70,7 +70,6 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 	
 	return (
 		<div className={cn('', className)}>
-			<ul>
 				{sideSettingsMenu.map(item => (
 					<Button
 						key={item.id}
@@ -93,7 +92,6 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 						{item.text}
 					</Button>
 				))}
-			</ul>
 		</div>
 	)
 }

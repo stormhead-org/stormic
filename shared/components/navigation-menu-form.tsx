@@ -19,21 +19,17 @@ export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 	return (
 		<div className={cn('', className)}>
 			{data.map(item => (
-				<li
+				<div
 					key={item.id}
 					className={cn(
-						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-700 hover:text-white cursor-pointer mb-1',
+						'flex gap-2 pl-2 text-lg font-bold items-center justify-start w-full h-12 rounded-md hover:bg-blue-700 hover:text-white cursor-pointer mb-1',
 						`${pathname === item.pageUrl ? 'bg-blue-800 text-white hover:bg-blue-800' : ''}`
 					)}
 					onClick={() => router.push(item.pageUrl)}
 				>
-					<Link href={item.pageUrl}>
-						<div className='flex items-center gap-2 ml-2 text-lg font-bold'>
-							<LinkIcon size={22} />
-							{item.name}
-						</div>
-					</Link>
-				</li>
+					<LinkIcon size={22} />
+					{item.name}
+				</div>
 			))}
 		</div>
 	)
