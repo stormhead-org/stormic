@@ -113,7 +113,8 @@
 		"commentReplay": "Ответить"
 	},
 	"profileHeader": {
-		"profileSubscribeButton": "Подписаться"
+		"profileSubscribeButton": "Подписаться",
+		"profileUnsubscribeButton": "Отписаться"
 	},
 	"profileBody": {
 		"joined": "Присоединился",

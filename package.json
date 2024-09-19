@@ -1,6 +1,6 @@
 {
 	"name": "stormic",
-	"version": "0.0.2-preview",
+	"version": "0.0.3-preview",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
