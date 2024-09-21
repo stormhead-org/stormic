@@ -5,7 +5,7 @@ import { consumeBookmarkAddMQueue } from '../lib/rabbitmq-client'
 async function handleAddBookmarksMessage(msg: Message) {
 	const { action, postId, userId } = JSON.parse(msg.content.toString())
 	
-	if (action === 'add') {
+	if (action === 'post') {
 		// Проверяем, добавлена ли уже закладка
 		const existingLike = await prisma.bookmark.findUnique({
 			where: {

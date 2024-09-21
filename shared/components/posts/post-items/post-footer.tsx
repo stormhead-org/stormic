@@ -1,4 +1,4 @@
-import { BookmarkButton } from '@/shared/components/add-bookmark-button'
+import { BookmarkButton } from '@/shared/components/bookmark-button'
 import { PostLikeButton } from '@/shared/components/post-like-button'
 import { cn } from '@/shared/lib/utils'
 import { Bookmark, Eye, MessageCircle, Redo } from 'lucide-react'

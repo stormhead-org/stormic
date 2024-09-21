@@ -34,12 +34,12 @@ export const useBookmarksStore = create<BookmarksStoreState>((set, get) => ({
 						bookmarksCount: { ...state.bookmarksCount, [postId]: (state.bookmarksCount[postId] || 0) - 1 }
 					}))
 				} else {
-					const response = await fetch(`/api/bookmarks/${postId}/add`, { method: 'POST' })
+					const response = await fetch(`/api/bookmarks/${postId}/post`, { method: 'POST' })
 					if (response.status === 401) {
 						toast.error('Необходимо авторизоваться', { icon: '❌' })
 						return
 					}
-					if (!response.ok) throw new Error('Failed to add bookmark')
+					if (!response.ok) throw new Error('Failed to post bookmark')
 					set(state => ({
 						hasAdded: { ...state.hasAdded, [postId]: true },
 						bookmarksCount: { ...state.bookmarksCount, [postId]: (state.bookmarksCount[postId] || 0) + 1 }

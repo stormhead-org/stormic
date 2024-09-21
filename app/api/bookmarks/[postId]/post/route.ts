@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 		}
 		
 		// Отправляем сообщение в очередь для обработки лайка
-		await sendBookmarkAddMessage({ action: 'add', postId, userId })
+		await sendBookmarkAddMessage({ action: 'post', postId, userId })
 		
 		return NextResponse.json({ message: 'Add bookmark request sent to worker' })
 	} catch (error) {
