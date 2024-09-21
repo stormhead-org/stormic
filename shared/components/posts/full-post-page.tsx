@@ -54,7 +54,6 @@ export const FullPostPage: React.FC<Props> = ({ postId, className }) => {
 			categoryUrl: '/c/' + singlePost.category_id,
 			postTags: singlePost.tags,
 			commentsCount: singlePost.commentsCount,
-			bookmarksCount: singlePost.bookmarksCount,
 			likesCount: singlePost.likes_count,
 			viewsCount: singlePost.views_count,
 			postTime: String(singlePost.publication_date)

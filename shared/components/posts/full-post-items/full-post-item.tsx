@@ -17,7 +17,6 @@ export interface FullPostItemProps {
 	categoryUrl: string
 	postTags?: string[]
 	commentsCount: number
-	bookmarksCount: number
 	viewsCount: number
 	postTime: string
 	className?: string
@@ -36,7 +35,6 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 	                                                          categoryUrl,
 	                                                          postTags,
 	                                                          commentsCount,
-	                                                          bookmarksCount,
 	                                                          viewsCount,
 	                                                          postTime,
 	                                                          className
@@ -50,7 +48,6 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 				postId={postId}
 				postTags={postTags}
 				commentsCount={commentsCount}
-				bookmarksCount={bookmarksCount}
 				viewsCount={viewsCount}
 				className='mt-4'
 			/>

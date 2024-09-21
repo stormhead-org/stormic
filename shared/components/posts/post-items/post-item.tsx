@@ -20,7 +20,6 @@ export interface PostItemProps {
 	categoryName: string
 	categoryUrl: string
 	commentsCount: number
-	bookmarksCount: number
 	viewsCount: number
 	postTime: string
 	className?: string
@@ -40,7 +39,6 @@ export const PostItem: React.FC<PostItemProps> = ({
 	                                                  categoryName,
 	                                                  categoryUrl,
 	                                                  commentsCount,
-	                                                  bookmarksCount,
 	                                                  viewsCount,
 	                                                  postTime,
 	                                                  endAdornment,
@@ -70,7 +68,7 @@ export const PostItem: React.FC<PostItemProps> = ({
 				            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
 				<PostBody postTitle={postTitle} postContent={postContent} postImage={postImage} maxLength={300}
 				          postUrl={postUrl} />
-				<PostFooter postId={postId} commentsCount={commentsCount} bookmarksCount={bookmarksCount}
+				<PostFooter postId={postId} commentsCount={commentsCount}
 				            viewsCount={viewsCount} className='mt-4' />
 				{endAdornment}
 			</div>

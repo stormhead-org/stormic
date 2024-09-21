@@ -51,7 +51,6 @@ export const PostForm: React.FC<Props> = ({
 						categoryName={item.categoryName}
 						categoryUrl={item.categoryUrl}
 						commentsCount={item.commentsCount}
-						bookmarksCount={item.bookmarksCount}
 						viewsCount={item.viewsCount}
 						postTime={item.postTime}
 						endAdornment={item.endAdornment}

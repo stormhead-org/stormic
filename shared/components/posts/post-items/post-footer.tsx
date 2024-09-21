@@ -8,7 +8,6 @@ export interface PostHeaderProps {
 	postId: number
 	postTags?: string[]
 	commentsCount: number
-	bookmarksCount: number
 	viewsCount: number
 	className?: string
 }
@@ -17,7 +16,6 @@ export const PostFooter: React.FC<PostHeaderProps> = ({
 	                                                      postId,
 	                                                      postTags,
 	                                                      commentsCount,
-	                                                      bookmarksCount,
 	                                                      viewsCount,
 	                                                      className
                                                       }) => {

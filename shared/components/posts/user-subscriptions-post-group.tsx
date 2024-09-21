@@ -31,7 +31,6 @@ export const UserSubscriptionsPostGroup: React.FC<Props> = ({
 		categoryName: item.category_name,
 		categoryUrl: '/c/' + item.category_id,
 		commentsCount: item.commentsCount,
-		bookmarksCount: item.bookmarksCount,
 		likesCount: item.likes_count,
 		viewsCount: item.views_count,
 		postTime: String(item.publication_date)

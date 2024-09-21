@@ -63,11 +63,6 @@ export async function GET(request: NextRequest) {
 	// Проходим по каждому посту и добавляем количество закладок и комментариев
 	const postsWithDetails = await Promise.all(
 		bookmarkedPosts.map(async (post) => {
-			const bookmarksCount = await prisma.bookmark.count({
-				where: {
-					post_id: post.post_id
-				}
-			})
 			const commentsCount = await prisma.comment.count({
 				where: {
 					post_id: post.post_id
@@ -90,7 +85,6 @@ export async function GET(request: NextRequest) {
 				category_id: post.category_id,
 				category_name: post.category.category_name,
 				commentsCount,
-				bookmarksCount,
 				tags: post.tags.map(pt => pt.tag.tag_name) // Массив имен тегов
 			}
 		})

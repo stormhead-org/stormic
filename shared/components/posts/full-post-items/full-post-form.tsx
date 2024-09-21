@@ -42,7 +42,6 @@ export const FullPostForm: React.FC<Props> = ({
 				categoryUrl={items.categoryUrl}
 				postTags={items.postTags}
 				commentsCount={items.commentsCount}
-				bookmarksCount={items.bookmarksCount}
 				viewsCount={items.viewsCount}
 				postTime={items.postTime}
 			/>

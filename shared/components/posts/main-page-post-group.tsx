@@ -25,7 +25,6 @@ export const MainPagePostGroup: React.FC<Props> = ({ className }) => {
 		categoryName: item.category_name,
 		categoryUrl: '/c/' + item.category_id,
 		commentsCount: item.commentsCount,
-		bookmarksCount: item.bookmarksCount,
 		viewsCount: item.views_count,
 		postTime: String(item.publication_date)
 	}))
