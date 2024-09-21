@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sendMessageToQueue } from '@/shared/lib/rabbitmq-client';
+import { sendFollowMessage, sendMessageToQueue } from '@/shared/lib/rabbitmq-client'
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/shared/constants/auth-options';
 
@@ -17,11 +17,13 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ error: 'followingId is required' }, { status: 400 });
 		}
 		
-		await sendMessageToQueue('userFollowQueue', {
-			followerId,
-			followingId,
-			action: 'follow',
-		});
+		// await sendMessageToQueue('userFollowQueue', {
+		// 	followerId,
+		// 	followingId,
+		// 	action: 'follow',
+		// });
+		
+		await sendFollowMessage({ action: 'follow', followerId, followingId })
 		
 		return NextResponse.json({ success: true });
 	} catch (error) {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sendMessageToQueue } from '@/shared/lib/rabbitmq-client';
+import { sendFollowMessage, sendMessageToQueue } from '@/shared/lib/rabbitmq-client'
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/shared/constants/auth-options';
 
@@ -18,11 +18,13 @@ export async function DELETE(request: NextRequest) {
 		}
 		
 		// Отправляем сообщение в RabbitMQ для отписки
-		await sendMessageToQueue('userFollowQueue', {
-			followerId,
-			followingId,
-			action: 'unfollow',
-		});
+		// await sendMessageToQueue('userFollowQueue', {
+		// 	followerId,
+		// 	followingId,
+		// 	action: 'unfollow',
+		// });
+		
+		await sendFollowMessage({ action: 'unfollow', followerId, followingId })
 		
 		return NextResponse.json({ success: true });
 	} catch (error) {

@@ -1,4 +1,4 @@
-import { usePostLikesStore } from '@/shared/stores/postLikesStore'
+import { usePostLikesStore } from '@/shared/stores/post-likes-store'
 import { Heart } from 'lucide-react'
 import React, { useEffect } from 'react'
 
