@@ -1,3 +1,4 @@
+import { BookmarkButton } from '@/shared/components/add-bookmark-button'
 import { PostLikeButton } from '@/shared/components/post-like-button'
 import { cn } from '@/shared/lib/utils'
 import { Bookmark, Eye, MessageCircle, Redo } from 'lucide-react'
@@ -41,11 +42,7 @@ export const PostFooter: React.FC<PostHeaderProps> = ({
 							<MessageCircle className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {commentsCount}
 						</p>
 					</div>
-					<div className='group mr-4 cursor-pointer'>
-						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
-							<Bookmark className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' /> {bookmarksCount}
-						</p>
-					</div>
+					<BookmarkButton postId={postId} />
 					<div className='group cursor-pointer'>
 						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
 							<Redo className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' />

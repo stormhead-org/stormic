@@ -53,16 +53,15 @@ export async function consumeFromQueue(queue: string, onMessage: (msg: Message) 
 }
 
 // Функция для обработки сообщений о просмотрах постов
-export async function consumePostViewQueue(onMessage: (msg: Message) => Promise<void>) {
-	await consumeFromQueue('postViewQueue', onMessage)
-}
-
-// Функция для отправки сообщения о просмотрах поста
 export const sendPostViewMessage = async (postId: number) => {
 	await sendMessageToQueue('postViewQueue', { postId })
 }
 
-// Функции для работы с очередями лайков постов и комментариев
+export async function consumePostViewQueue(onMessage: (msg: Message) => Promise<void>) {
+	await consumeFromQueue('postViewQueue', onMessage)
+}
+
+// Добавление лайков к постам
 export async function sendPostLikeMessage(message: { action: string, postId: number, userId: number }) {
 	await sendMessageToQueue('postLikeQueue', message)
 }
@@ -71,6 +70,16 @@ export async function consumePostLikeQueue(onMessage: (msg: Message) => Promise<
 	await consumeFromQueue('postLikeQueue', onMessage)
 }
 
+// Добавление постов в закладки
+export async function sendBookmarkAddMessage(message: { action: string, postId: number, userId: number }) {
+	await sendMessageToQueue('bookmarkAddQueue', message)
+}
+
+export async function consumeBookmarkAddMQueue(onMessage: (msg: Message) => Promise<void>) {
+	await consumeFromQueue('bookmarkAddQueue', onMessage)
+}
+
+// Добавление лайков комментам
 export async function sendCommentLikeMessage(message: { action: string, commentId: number, userId: number }) {
 	await sendMessageToQueue('commentLikeQueue', message)
 }
@@ -80,7 +89,7 @@ export async function consumeCommentLikeQueue(onMessage: (msg: Message) => Promi
 }
 
 // Добавление новой очереди для подписок на пользователей
-export async function sendFollowMessage(message: { action: string, followerId: number, followedId: number }) {
+export async function sendFollowMessage(message: { action: string, followerId: number, followingId: number }) {
 	await sendMessageToQueue('userFollowQueue', message);
 }
 

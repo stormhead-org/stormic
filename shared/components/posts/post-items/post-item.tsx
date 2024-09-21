@@ -4,7 +4,7 @@ import { PostBody } from '@/shared/components/posts/post-items/post-body'
 import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
 import { cn } from '@/shared/lib/utils'
-import { createVisibilityObserver } from '@/shared/utils/visibilityObserver'
+import { createVisibilityObserver } from '@/shared/utils/visibility-observer'
 import React, { useEffect, useRef } from 'react'
 
 export interface PostItemProps {
