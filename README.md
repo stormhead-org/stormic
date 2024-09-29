@@ -1,6 +1,6 @@
 <div>
   <h1 align="center">Stormic Community Management System⚡</h1>
-<i align="center">Цель проекта - децентрализировать общение людей и дать альтернативу контролируемым социальным сетям.</i>
+<i align="center">Цель проекта - децентрализировать общение людей и дать альтернативу социальным сетям.</i>
 <br />
 <br />
 <b>Stormic</b> состоит из трех основных модулей:
@@ -41,6 +41,7 @@ Stormic написан на NextJS, использует TypeScript, TailwindCSS
 <br />
 <br />
   <img src="/public/preview.png">
+  <br/>
   <br/>
   <p align="center">
   <strong>Stormic</strong> - мой небольшой пет-проект, который я делаю в свободное время.
