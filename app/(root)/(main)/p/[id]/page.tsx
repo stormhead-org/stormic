@@ -1,7 +1,9 @@
 import { prisma } from '@/prisma/prisma-client'
 import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { FullPostPage } from '@/shared/components/posts/full-post-page'
+import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 export const metadata: Metadata = {
@@ -13,6 +15,11 @@ export default async function PostPage({
                                        }: {
 	params: { id: string }
 }) {
+	
+	const session = await getUserSession()
+	
+	const user = session && await prisma.user.findFirst({ where: { id: Number(session?.id) } })
+	
 	// Преобразуем id в число
 	const postId = Number(id)
 	
@@ -27,7 +34,6 @@ export default async function PostPage({
 	}
 	
 	return (
-		
-		<FullPostPage postId={String(postId)} />
+		<FullPostPage postId={postId}  user={user || undefined}/>
 	)
 }

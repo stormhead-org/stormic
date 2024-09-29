@@ -2,7 +2,7 @@ import { Api } from '@/shared/services/api-client'
 import { Post } from '@prisma/client'
 import React from 'react'
 
-export const usePostById = (postId: string) => {
+export const usePostById = (postId: number) => {
 	const [post, setPost] = React.useState<Post[]>([])
 	const [loading, setLoading] = React.useState(true)
 	

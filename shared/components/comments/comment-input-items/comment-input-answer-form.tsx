@@ -1,18 +1,17 @@
 import type { Comment } from '@/shared/components/comments/comment-full-post-group';
 import { FormTextarea } from '@/shared/components/form';
 import { cn } from '@/shared/lib/utils';
-import { ListFilter } from 'lucide-react';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 
 interface Props {
 	postId: number;
-	commentsHeader: string;
+	parentCommentId?: number;
 	className?: string;
 	onCommentAdded: (newComment: Comment) => void;
 }
 
-export const CommentInputForm: React.FC<Props> = ({ postId, commentsHeader, className, onCommentAdded }) => {
+export const CommentInputAnswerForm: React.FC<Props> = ({ postId, parentCommentId, className, onCommentAdded }) => {
 	const { formatMessage } = useIntl();
 	const [newComment, setNewComment] = useState('');
 	
@@ -27,6 +26,7 @@ export const CommentInputForm: React.FC<Props> = ({ postId, commentsHeader, clas
 			body: JSON.stringify({
 				content: newComment,
 				post_id: postId,
+				parent_comment_id: parentCommentId,
 			}),
 		});
 		
@@ -48,22 +48,6 @@ export const CommentInputForm: React.FC<Props> = ({ postId, commentsHeader, clas
 	
 	return (
 		<div className={cn('', className)}>
-			<div className='flex justify-between items-center'>
-				{commentsHeader > String(0) ? (
-					<p className='pl-1 text-lg cursor-default'>
-						{commentsHeader} {formatMessage({ id: 'commentInputForm.commentsHeaderCount' })}
-					</p>
-				) : (
-					<p className='pl-1 text-lg cursor-default'>
-						{formatMessage({ id: 'commentInputForm.commentsHeaderEmpty' })}
-					</p>
-				)}
-				<div className='group'>
-					<p className='flex items-center group-hover:text-blue-600 font-bold'>
-						<ListFilter className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer' />
-					</p>
-				</div>
-			</div>
 			<FormTextarea
 				name='comment'
 				className='text-base mt-2'

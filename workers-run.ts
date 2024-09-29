@@ -6,7 +6,6 @@ const workers = [
 	'shared/workers/comment-like-worker.ts',
 	'shared/workers/user-follow-worker.ts',
 	'shared/workers/community-follow-worker.ts',
-	'shared/workers/post-bookmark-worker.ts',
 ]
 
 workers.forEach(workerPath => {

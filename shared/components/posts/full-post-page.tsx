@@ -4,6 +4,7 @@ import { CommentFullPostGroup } from '@/shared/components/comments/comment-full-
 import { FullPostForm } from '@/shared/components/posts/full-post-items/full-post-form'
 import { usePostById } from '@/shared/hooks/use-post-by-id'
 import { cn } from '@/shared/lib/utils'
+import type { User } from '@prisma/client'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -29,11 +30,12 @@ interface ExtendedPost {
 
 
 interface Props {
-	postId: string
+	postId: number
+	user?: User | undefined;
 	className?: string
 }
 
-export const FullPostPage: React.FC<Props> = ({ postId, className }) => {
+export const FullPostPage: React.FC<Props> = ({ postId, user, className }) => {
 	const { post, loading } = usePostById(postId)
 	
 	// Проверяем, что post не является массивом и имеет содержимое
@@ -71,7 +73,8 @@ export const FullPostPage: React.FC<Props> = ({ postId, className }) => {
 						<FullPostForm items={items} loading={loading} />
 						<CommentFullPostGroup
 							className='mb-4'
-							postId={String(postId)}
+							postId={postId}
+							user={user}
 							commentsHeader={String(items.commentsCount)}
 						/>
 					</>

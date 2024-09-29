@@ -1,58 +1,98 @@
-'use client'
+'use client';
 
-import { CommentInputForm } from '@/shared/components/comments/comment-input-items/comment-input-form'
-import { FullPostCommentForm } from '@/shared/components/comments/full-post-comments-items/full-post-comment-form'
-import { usePostsComments } from '@/shared/hooks/use-post-comments'
-import { cn } from '@/shared/lib/utils'
-import React from 'react'
+import { CommentInputForm } from '@/shared/components/comments/comment-input-items/comment-input-form';
+import { FullPostCommentForm } from '@/shared/components/comments/full-post-comments-items/full-post-comment-form';
+import { cn } from '@/shared/lib/utils';
+import type { User } from '@prisma/client';
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
+
+export interface Comment {
+	postId: number;
+	comment_id: number;
+	content: string;
+	author_id: number;
+	author_fullName: string;
+	author_profile_picture: string;
+	publication_date: string;
+	parent_comment_id: number | null;
+	children: Comment[];
+}
 
 interface Props {
-	postId: string
-	commentsHeader: string
-	className?: string
+	postId: number;
+	user?: User | undefined;
+	commentsHeader: string;
+	className?: string;
 }
+
+const socket = io('http://localhost:3001');
 
 export const CommentFullPostGroup: React.FC<Props> = ({
 	                                                      postId,
+	                                                      user,
 	                                                      commentsHeader,
-	                                                      className
+	                                                      className,
                                                       }) => {
+	const [comments, setComments] = useState<Comment[]>([]);
 	
-	const { comments, loading } = usePostsComments(postId)
+	const handleCommentAdded = (newComment: Comment) => {
+		setComments((prev) => [...prev, newComment]);
+	};
 	
-	const items = comments.map((item: any) => ({
-		comment_id: item.comment_id,
-		post_id: item.post_id,
-		content: item.content,
-		author_id: item.author_id,
-		likesCount: item.likes_count,
-		author: {
-			fullName: item.author_fullName,
-			profile_picture: item.author_profile_picture
-		},
-		publication_date: String(item.publication_date),
-		children: item.children ? item.children.map((child: any) => ({
-			comment_id: child.comment_id,
-			post_id: child.post_id,
-			content: child.content,
-			author_id: child.author_id,
-			likesCount: child.likes_count,
-			author: {
-				fullName: child.author_fullName,
-				profile_picture: child.author_profile_picture
+	const handleDeleteComment = async (commentId: number) => {
+		const response = await fetch(`/api/posts/${postId}/comments/delete`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
 			},
-			publication_date: String(child.publication_date),
-			children: [] // У дочерних комментариев children может быть пустым
-		})) : []
-	}))
+			body: JSON.stringify({ commentId }),
+		});
+		
+		if (response.ok) {
+			setComments((prev) => prev.filter((comment) => comment.comment_id !== commentId));
+		} else {
+			console.error('Не удалось удалить комментарий');
+		}
+	};
+	
+	useEffect(() => {
+		const fetchComments = async () => {
+			const response = await fetch(`/api/posts/${postId}/comments`);
+			const data: Comment[] = await response.json();
+			setComments(data);
+		};
+		
+		fetchComments();
+		socket.emit('joinPost', postId);
+		
+		socket.on('newComment', (newComment: Comment) => {
+			handleCommentAdded(newComment);
+		});
+		
+		socket.on('commentDeleted', (commentId: number) => {
+			setComments((prev) => prev.filter(comment => comment.comment_id !== commentId));
+		});
+		
+		return () => {
+			socket.off('newComment');
+			socket.off('commentDeleted');
+		};
+	}, [postId]);
 	
 	return (
 		<div className={cn('bg-secondary rounded-md p-4', className)}>
-			<CommentInputForm commentsHeader={commentsHeader} loading={loading} />
-			<FullPostCommentForm
-				items={items}
-				loading={loading}
+			<CommentInputForm
+				commentsHeader={commentsHeader}
+				postId={postId}
+				onCommentAdded={handleCommentAdded}
 			/>
+			<FullPostCommentForm
+				postId={postId}
+				comments={comments}
+				onClickDeleteValue={handleDeleteComment}
+				user={user}
+			  onCommentAdded={handleCommentAdded}/>
 		</div>
-	)
-}
+	);
+};

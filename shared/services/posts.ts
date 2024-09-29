@@ -17,7 +17,7 @@ export const getPostsByCategoryId = async (categoryId: string): Promise<Post[]> 
 }
 
 // Функция для получения конкретного поста по ID
-export const getPostById = async (postId: string): Promise<Post[]> => {
+export const getPostById = async (postId: number): Promise<Post[]> => {
 	return (await axiosInstance.get<Post[]>(`${ApiRoutes.POSTS}?postId=${postId}`)).data
 }
 

@@ -7,26 +7,26 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(req: any, res: any) {
 	try {
-		const user = await getServerSession(req, res, authOptions)
-		
+		const user = await getServerSession(req, res, authOptions);
 		if (!user) {
-			return NextResponse.json({ message: 'Вы не авторизованы' }, { status: 401 })
+			return NextResponse.json({ message: 'Вы не авторизованы' }, { status: 401 });
 		}
 		
 		const data = await prisma.user.findUnique({
 			where: {
-				id: Number(user.user.id)
+				id: Number(user.user.id),
 			},
 			select: {
+				id: true,
 				fullName: true,
-				email: true,
-				password: false
-			}
-		})
+				profile_picture: true,
+				password: false,
+			},
+		});
 		
-		return NextResponse.json(data)
+		return NextResponse.json(data);
 	} catch (error) {
-		console.log(error)
-		return NextResponse.json({ message: '[USER_GET] Server error' }, { status: 500 })
+		console.error(error); // Логирование ошибки
+		return NextResponse.json({ message: '[USER_GET] Server error' }, { status: 500 });
 	}
 }

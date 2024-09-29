@@ -6,6 +6,7 @@ import React from 'react'
 
 export interface CommentItemProps {
 	endAdornment?: React.ReactNode
+	postId: number
 	hasPost?: boolean
 	postTitle?: string | null
 	content: string
@@ -14,6 +15,9 @@ export interface CommentItemProps {
 	authorUrl: string
 	authorAvatar?: string | null
 	commentId?: number
+	onCommentAdded: () => void;
+	onClickDeleteValue?: () => void
+	hasMe: boolean
 	publicationDate?: string
 	maxLengthHeader?: number
 	maxLengthBody?: number
@@ -22,6 +26,7 @@ export interface CommentItemProps {
 
 export const CommentItem: React.FC<CommentItemProps> = ({
 	                                                        endAdornment,
+																													postId,
 	                                                        hasPost,
 	                                                        postTitle,
 	                                                        content,
@@ -30,6 +35,9 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	                                                        authorUrl,
 	                                                        authorAvatar,
 	                                                        commentId,
+	                                                        onClickDeleteValue,
+																													onCommentAdded,
+	                                                        hasMe,
 	                                                        publicationDate,
 	                                                        maxLengthHeader,
 	                                                        maxLengthBody,
@@ -42,9 +50,13 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 			               postUrl={postUrl} />
 			<CommentBody content={content} maxLength={maxLengthBody} postUrl={postUrl} />
 			{hasPost && <FullPostCommentFooter
-				commentId={Number(commentId)}
 				className='mt-2'
-			/>}
+				postId={postId}
+				commentId={Number(commentId)}
+				onCommentAdded={onCommentAdded}
+				onClickDeleteValue={onClickDeleteValue}
+				hasMe={hasMe}/>
+			}
 			{endAdornment}
 		</div>
 	)

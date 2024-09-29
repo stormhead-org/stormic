@@ -11,6 +11,7 @@ interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
 	label?: string
 	required?: boolean
 	sideButton?: boolean
+	onClickValue?: () => void
 	className?: string
 }
 
@@ -19,6 +20,7 @@ export const FormTextarea: React.FC<Props> = ({
 	                                              label,
 	                                              required,
 	                                              sideButton,
+	                                              onClickValue,
 	                                              className,
 	                                              ...props
                                               }) => {
@@ -46,21 +48,19 @@ export const FormTextarea: React.FC<Props> = ({
 				<Textarea
 					className={sideButton ? 'min-h-24 text-md pb-14' : 'min-h-24 text-md'} {...register(name)} {...props} />
 				
-				{value && value.length > 0 ? (
-					<>
-						<ClearButton className='absolute top-4 right-2' onClick={onClickClear} />
-						{
-							sideButton &&
-							<Button
-								variant='secondary'
-								className='absolute bottom-2 right-2 h-10 w-26 text-sm font-bold bg-blue-600 hover:bg-blue-500'
-								type='button'
-							>
-								Отправить
-							</Button>
-						}
-					</>
-				) : null}
+				
+				<ClearButton className='absolute top-4 right-2' onClick={onClickClear} />
+				{
+					sideButton &&
+					<Button
+						variant='secondary'
+						className='absolute bottom-2 right-2 h-10 w-26 text-sm font-bold bg-blue-600 hover:bg-blue-500'
+						onClick={onClickValue}
+						type='button'
+					>
+						Отправить
+					</Button>
+				}
 			</div>
 			
 			{errorText && <p className='text-red-500 text-sm mt-2'>{errorText}</p>}
