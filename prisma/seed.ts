@@ -314,8 +314,8 @@ async function up() {
 				publication_date: generateDate(10),
 				last_edit_date: generateDate(5),
 				PostStatus: PostStatus.PUBLISHED,
-				views_count: 150,
-				likes_count: 30,
+				views_count: 0,
+				likes_count: 1,
 				category_id: 1
 			},
 			{
@@ -331,8 +331,8 @@ async function up() {
 				author_id: 2,
 				publication_date: generateDate(5),
 				PostStatus: PostStatus.PUBLISHED,
-				views_count: 200,
-				likes_count: 50,
+				views_count: 0,
+				likes_count: 2,
 				category_id: 2
 			},
 			{
@@ -348,8 +348,8 @@ async function up() {
 				author_id: 3,
 				publication_date: generateDate(1),
 				PostStatus: PostStatus.PUBLISHED,
-				views_count: 300,
-				likes_count: 70,
+				views_count: 0,
+				likes_count: 3,
 				category_id: 3
 			}
 		]
