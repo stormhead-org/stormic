@@ -7,11 +7,11 @@ import React, { useState } from 'react'
 import { useIntl } from 'react-intl'
 
 interface PostFooterProps {
-	postId: number
+	postId?: number
 	commentId: number
 	onClickDeleteValue?: () => void
-	onCommentAdded: () => void;
-	hasMe: boolean
+	onCommentAdded?: () => void;
+	hasMe?: boolean
 	className?: string
 }
 

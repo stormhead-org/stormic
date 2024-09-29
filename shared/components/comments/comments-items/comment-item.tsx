@@ -6,7 +6,7 @@ import React from 'react'
 
 export interface CommentItemProps {
 	endAdornment?: React.ReactNode
-	postId: number
+	postId?: number
 	hasPost?: boolean
 	postTitle?: string | null
 	content: string
@@ -15,9 +15,9 @@ export interface CommentItemProps {
 	authorUrl: string
 	authorAvatar?: string | null
 	commentId?: number
-	onCommentAdded: () => void;
+	onCommentAdded?: () => void;
 	onClickDeleteValue?: () => void
-	hasMe: boolean
+	hasMe?: boolean
 	publicationDate?: string
 	maxLengthHeader?: number
 	maxLengthBody?: number

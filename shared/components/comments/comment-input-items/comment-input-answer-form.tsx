@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 
 interface Props {
-	postId: number;
+	postId?: number;
 	parentCommentId?: number;
 	className?: string;
-	onCommentAdded: (newComment: Comment) => void;
+	onCommentAdded?: (newComment: Comment) => void;
 }
 
 export const CommentInputAnswerForm: React.FC<Props> = ({ postId, parentCommentId, className, onCommentAdded }) => {
@@ -33,7 +33,7 @@ export const CommentInputAnswerForm: React.FC<Props> = ({ postId, parentCommentI
 		if (response.ok) {
 			const addedComment: Comment = await response.json();
 			setNewComment(''); // Очищаем поле ввода
-			onCommentAdded(addedComment);
+			onCommentAdded && onCommentAdded(addedComment);
 		} else {
 			console.error('Не удалось добавить комментарий');
 		}
