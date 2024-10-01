@@ -1,7 +1,7 @@
 <div>
   <h1 align="center">Stormic Community Management System⚡</h1>
 <p align="center">
-  <a href='https://github.com/stormhead-org/stormic?tab=readme-ov-file'>English</a> | <a href='https://github.com/stormhead-org/stormic/README.RU.md'>Русский</a>
+  <a href='https://github.com/stormhead-org/stormic?tab=readme-ov-file'>English</a> | <a href='https://github.com/stormhead-org/stormic/blob/main/README.RU.md'>Русский</a>
 </p>
 <p align="center"><i>Цель проекта - децентрализировать общение людей и дать альтернативу социальным сетям.</i></p>
 <div align="center">
