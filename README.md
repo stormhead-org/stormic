@@ -1,7 +1,13 @@
 <div>
   <h1 align="center">Stormic Community Management System⚡</h1>
-<i align="center">Цель проекта - децентрализировать общение людей и дать альтернативу социальным сетям.</i>
+<p align="center"><i>Цель проекта - децентрализировать общение людей и дать альтернативу социальным сетям.</i></p>
+<div align="center">
+<b>Новости Stormic в telegram</b>
 <br />
+<a href='https://t.me/stormicapp'>https://t.me/stormicapp</a>
+<br />
+<i>будем жить тут, пока не запустится платформа.</i>
+</div>
 <br />
 <b>Stormic</b> состоит из трех основных модулей:
 <br />
