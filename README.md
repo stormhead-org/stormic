@@ -1,67 +1,71 @@
 <div>
-  <h1 align="center">Stormic Community Management System⚡</h1>
-<p align="center"><i>Цель проекта - децентрализировать общение людей и дать альтернативу социальным сетям.</i></p>
-<div align="center">
-<b>Новости Stormic в telegram</b>
-<br />
-<a href='https://t.me/stormicapp'>https://t.me/stormicapp</a>
-<br />
-<i>будем жить тут, пока не запустится платформа.</i>
-</div>
-<br />
-<b>Stormic</b> состоит из трех основных модулей:
-<br />
-<b>1.</b> Платформа мультиблогов (dtf.ru, dev.to и т.д.);
-<br />
-<b>2.</b> Система мгновенных сообщений (discord);
-<br />
-<b>3.</b> Wiki-модуль.
-<br />
-<br />
-Как это работает? - 3 модуля призваны решить проблемы каждого из них, когда они используются по отдельности и дать пользователям инструмент для создания полноценных сообществ. Теперь, когда вы ведете свой блог, вам не нужно держать сайт и отдельно еще discord-сервер или tg-канал, для поддержания активности сообщества.
-<br />
-<br />
-Пара вещей, помимо базовых (функционал dtf.ru, dev.to):
-<br />
-<b>1.</b> Пользователи могут создавать и администрировать категории и назначать своих модераторов на нее;
-<br />
-<b>2.</b> При создании категории для постов, автоматически создается сервер аналогичный Discord;
-<br />
-<b>3.</b> Создатель категории становится администратором сервера и назначает людей для модерации сервера;
-<br />
-<b>4.</b> Категория и сервер жестко завязаны друг на друге. Это одно целое. Когда в категории появляются новые посты, то информация о них появляется и на сервере. Уведомления о комментариях, ответах и прочих вещах. Это дает возможности нативного взаимодействия с постами, без необходимости ходить по разным платформам. Такое решение позволяет держать комментарии постов своей категории чистыми и по делу, а поддерживать активность сообщества на своих серверах. Stormic разграничивает людей на тех, кто хочет обсудить сабж по теме в комментариях в продолжение поста и на тех, кто носит свои смешные картинки и бесконечно спамит локальные мемы для своей локальной аудитории. Как правило, эти две категории людей не особо друг друга переносят и Stormic решает эту проблему. Максимальная нативность в рамках одной экосистемы;
-<br />
-<b>5.</b> Wiki-модуль позволяет писать объемные руководства и документацию. Этот модуль так же завязан на вашем сервере и на модуле блогов. Отвечая на один и тот же вопрос в 100й раз, вы можете легко ссылаться на предложения и абзаци из wiki-статьи цитируя их, находясь при этом на сервере или в блоге. Это удобно и устраняет некоторую излишнюю токсичность в общении, когда опытные юзеры устают отвечать на однотипные вопросы новичков.
-<br />
-<br />
-Эти и другие инструменты, дают вам возможности для создания настоящего, полноценного сообщества и все это в рамках одной платформы.
-При разработке Stormic делается большой упор на возможности администрирования отдельных сообществ и платформы в целом. Черные списки категорий и пользователей, баны, кики, муты и многое другое в ваших руках.
-<br />
-<br />
-<b>ЧТО ВНУТРИ?</b>
-<br />
-Stormic написан на NextJS, использует TypeScript, TailwindCSS и shadcn/ui, а так же Auth.js, Zustand, PrismaORM, PostgreSQL, Websocket, RabbitMQ, Redis, EditorJS (редактор), SMTP (для e-mail) и S3 (для хранения медиа).
-<br />
-<br />
-Запускается в Docker-контейнере под прокси-сервером Nginx.
-<br />
-<br />
-  <img src="/public/preview.png">
-  <br/>
-  <br/>
-  <p align="center">
-  <strong>Stormic</strong> - мой небольшой пет-проект, который я делаю в свободное время.
-  </p>
-  <p align="center">
-  Контакты для связи:
-  <br/>
-  <a href='https://discord.com/users/.nims/'>Discord</a> | <a href='https://t.me/nimscore'>Telegram</a>
-<br/>
-<b>nimscore@gmail.com</b>
-<br/>
-<br/>
-<b>ПОДДЕРЖАТЬ ПРОЕКТ:</b>
-<br/>
+    <h1 align="center">Stormic Community Management System⚡</h1>
+<p align="center">
+  <a href='https://github.com/stormhead-org/stormic?tab=readme-ov-file'>English</a> | <a href='https://github.com/stormhead-org/stormic/README.RU.md'>Русский</a>
+</p>
+    <p align="center"><i>The goal of the project is to decentralize people's communication and provide an alternative to social networks.</i></p>
+    <div align="center">
+      <b>Stormic News on Telegram</b>
+      <br />
+      <a href='https://t.me/stormicapp'>https://t.me/stormicapp</a>
+      <br />
+      <i>We will be here until the platform launches.</i>
+    </div>
+    <br />
+    <b>Stormic</b> consists of three main modules:
+    <br />
+    <b>1.</b> Multi-blogging platform (like dtf.ru, dev.to, etc.);
+    <br />
+    <b>2.</b> Instant messaging system (like Discord);
+    <br />
+    <b>3.</b> Wiki module.
+    <br />
+    <br />
+    How does it work? - These three modules aim to solve the problems that arise when used individually and give users tools to create full-fledged communities. Now, when you run your blog, you don't need to maintain a website and separately a Discord server or a Telegram channel to keep your community active.
+    <br />
+    <br />
+    A few features beyond the basics (similar to dtf.ru, dev.to):
+    <br />
+    <b>1.</b> Users can create and administer categories and assign their moderators;
+    <br />
+    <b>2.</b> When a category is created for posts, a server similar to Discord is automatically created;
+    <br />
+    <b>3.</b> The creator of the category becomes the server administrator and can assign moderators for the server;
+    <br />
+    <b>4.</b> The category and server are tightly connected. It's one entity. When new posts appear in the category, information about them also appears on the server, including notifications about comments, replies, and other interactions. This allows for native interaction with posts without needing to switch between platforms. This solution keeps post comments clean and relevant while maintaining community activity on your servers. Stormic separates users who want to discuss the topic in the post's comments from those who want to share funny pictures or spam local memes. These two types of users often don't get along, and Stormic addresses this issue. Maximum native interaction within one ecosystem;
+    <br />
+    <b>5.</b> The Wiki module allows for writing detailed guides and documentation. This module is also connected to your server and blog module. When answering the same question for the 100th time, you can easily refer to paragraphs from the wiki article by quoting them, whether you're on the server or in the blog. This is convenient and reduces toxicity when experienced users get tired of answering the same questions from newcomers.
+    <br />
+    <br />
+    These and other tools give you the ability to create a real, full-fledged community, all within one platform.
+    Stormic emphasizes administrative capabilities for both individual communities and the platform as a whole. Blacklists for categories and users, bans, kicks, mutes, and much more are in your hands.
+    <br />
+    <br />
+    <b>WHAT'S INSIDE?</b>
+    <br />
+    Stormic is built with NextJS, uses TypeScript, TailwindCSS, shadcn/ui, along with Auth.js, Zustand, PrismaORM, PostgreSQL, Websocket, RabbitMQ, Redis, EditorJS (editor), SMTP (for email), and S3 (for media storage).
+    <br />
+    <br />
+    It runs in a Docker container under an Nginx proxy server.
+    <br />
+    <br />
+    <img src="/public/preview.png">
+    <br/>
+    <br/>
+    <p align="center">
+      <strong>Stormic</strong> is my small pet project that I work on in my free time.
+    </p>
+    <p align="center">
+      Contact me:
+      <br/>
+      <a href='https://discord.com/users/.nims/'>Discord</a> | <a href='https://t.me/nimscore'>Telegram</a>
+      <br/>
+      <b>nimscore@gmail.com</b>
+      <br/>
+</p>
+ <p align="center">
+      <b>SUPPORT THE PROJECT:</b>
+      <br/>
 <b>Bitcoin (BTC):</b> bc1q0l6nenv6ts072y3dc98hmm4fcly4wwj4umnq95
 <br/>
 <b>TON (TON):</b> UQBjnghaVNCvGmQRby8iBVNl9ifNCQV35YAKLxL6P0YuYrsh
@@ -73,6 +77,6 @@ Stormic написан на NextJS, использует TypeScript, TailwindCSS
 <b>USDT (TON):</b> UQBjnghaVNCvGmQRby8iBVNl9ifNCQV35YAKLxL6P0YuYrsh
 <br/>
 <a href='https://boosty.to/nims'>Boosty</a>
+</p>
 <br/>
-</div>
-<br>
+  </div>
