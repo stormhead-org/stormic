@@ -31,14 +31,16 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 				size='sm'
 				className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-l-blue-700'
 			/>
-			<CommentForm
-				limit={10}
-				items={items}
-				loading={loading}
-				className='mt-4'
-				maxLengthHeader={28}
-				maxLengthBody={56}
-			/>
+			<div className='flex flex-col h-[87vh] overflow-auto no-scrollbar'>
+				<CommentForm
+					limit={10}
+					items={items}
+					loading={loading}
+					className='mt-4'
+					maxLengthHeader={28}
+					maxLengthBody={56}
+				/>
+			</div>
 		</div>
 	)
 }
