@@ -21,6 +21,8 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 		postUrl: '/p/' + item.post_id,
 		authorName: item.author_fullName,
 		authorUrl: '/u/' + item.author_id,
+		deleted: item.deleted,
+		fileUrl: item.fileUrl,
 		authorAvatar: item.author_profile_picture
 	}))
 	

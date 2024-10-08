@@ -14,6 +14,8 @@ export interface CommentItemProps {
 	publicationDate?: string
 	maxLengthHeader?: number
 	maxLengthBody?: number
+	fileUrl: string | null
+	deleted: boolean
 	className?: string
 }
 
@@ -28,6 +30,8 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	                                                        publicationDate,
 	                                                        maxLengthHeader,
 	                                                        maxLengthBody,
+	                                                        fileUrl,
+	                                                        deleted,
 	                                                        className
                                                         }) => {
 	return (
@@ -35,7 +39,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 			<CommentHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
 			               postTitle={String(postTitle)} maxLength={maxLengthHeader} publicationDate={publicationDate}
 			               postUrl={postUrl} />
-			<CommentBody content={content} maxLength={maxLengthBody} postUrl={postUrl} />
+			<CommentBody content={content} maxLength={maxLengthBody} postUrl={postUrl} fileUrl={fileUrl} deleted={deleted} />
 			{endAdornment}
 		</div>
 	)

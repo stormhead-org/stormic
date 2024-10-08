@@ -53,6 +53,8 @@ export const CommentForm: React.FC<Props> = ({
 							authorAvatar={item.authorAvatar}
 							maxLengthHeader={maxLengthHeader}
 							maxLengthBody={maxLengthBody}
+							fileUrl={item.fileUrl}
+							deleted={item.deleted}
 							className='bg-secondary/25 hover:bg-primary/5 mb-4'
 						/>
 					</div>

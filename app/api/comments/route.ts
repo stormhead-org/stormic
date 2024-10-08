@@ -27,6 +27,8 @@ export async function GET() {
 		update_date: comment.update_date ? format(new Date(comment.update_date), 'dd.MM.yy') : null,
 		post_id: comment.post_id,
 		post_title: comment.post?.title,
+		deleted: comment.deleted,
+		fileUrl: comment.fileUrl,
 		author_id: comment.author_id,
 		author_fullName: comment.author.fullName,
 		author_profile_picture: comment.author.profile_picture,
