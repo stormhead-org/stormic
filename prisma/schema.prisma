@@ -209,6 +209,8 @@ model Comment {
   post_id           Int // Идентификатор поста, к которому относится комментарий
   author_id         Int // Идентификатор автора комментария
   content           String // Содержимое комментария
+  fileUrl           String?  @db.Text // Прикрепленный файл
+  deleted           Boolean  @default(false)
   publication_date  DateTime @default(now()) // Дата публикации комментария
   update_date       DateTime @default(now()) // Дата обновления комментария
   parent_comment_id Int? // Идентификатор родительского комментария (для ответов)
