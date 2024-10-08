@@ -106,12 +106,6 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 							>
 								<Link2 />
 							</a>
-							{/* <img */}
-							{/* 	src={fileUrl} */}
-							{/* 	alt={content} */}
-							{/* 	sizes='100%' */}
-							{/* 	className='object-contain rounded-md' */}
-							{/* /> */}
 						</div>
 					
 					</div>

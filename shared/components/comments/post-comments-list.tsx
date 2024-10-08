@@ -124,7 +124,7 @@ export const PostCommentsList = ({
 	}
 	
 	return (
-		<div ref={chatRef} className={cn('flex flex-col flex-1 overflow-y-auto no-scrollbar', className)}>
+		<div ref={chatRef} className={cn('flex flex-col flex-1 overflow-y-auto h-screen no-scrollbar', className)}>
 			<div className='flex flex-col mt-auto'>
 				{data?.pages?.map((group, i) => (
 					<Fragment key={i}>

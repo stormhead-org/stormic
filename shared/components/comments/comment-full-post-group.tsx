@@ -66,19 +66,17 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 					postId: postId
 				}}
 			/>
-			<div className='flex flex-col h-[100vh] overflow-auto'>
-				<PostCommentsList
-					currentUser={currentUser}
-					postId={String(postId)}
-					apiUrl={`/api/posts/${postId}/comments`}
-					socketUrl={'/api/socket/posts/comments'}
-					socketQuery={{
-						postId: String(postId)
-					}}
-					paramKey='postId'
-					paramValue={String(postId)}
-				/>
-			</div>
+			<PostCommentsList
+				currentUser={currentUser}
+				postId={String(postId)}
+				apiUrl={`/api/posts/${postId}/comments`}
+				socketUrl={'/api/socket/posts/comments'}
+				socketQuery={{
+					postId: String(postId)
+				}}
+				paramKey='postId'
+				paramValue={String(postId)}
+			/>
 		</div>
 	)
 }
