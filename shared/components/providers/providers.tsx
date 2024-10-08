@@ -1,14 +1,17 @@
 'use client'
 
-import { LocaleProvider, useLocale } from '@/shared/components/locale-provider'
+import { LocaleProvider, useLocale } from '@/shared/components/providers/items/locale-provider'
+import { ModalProvider } from '@/shared/components/providers/items/modal-provider'
+import { QueryProvider } from '@/shared/components/providers/items/query-provider'
+import { SocketProvider } from '@/shared/components/providers/items/socket-provider'
 import { Toaster } from '@/shared/components/ui/sonner'
 import { messages } from '@/shared/lib/messages'
 import { SessionProvider } from 'next-auth/react'
+
+import dynamic from 'next/dynamic'
 import NextTopLoader from 'nextjs-toploader'
 import React from 'react'
 import { IntlProvider } from 'react-intl'
-
-import dynamic from 'next/dynamic'
 
 {
 	/*The Warning: Extra attributes from the server: class,style error occurs when server-side rendering (SSR) 
@@ -24,7 +27,7 @@ Using next/dynamic to dynamically load ThemeProvider solves the problem
 }
 
 const ThemeProvider = dynamic(
-	() => import('./theme-provider').then(mod => mod.ThemeProvider),
+	() => import('../theme-provider').then(mod => mod.ThemeProvider),
 	{
 		ssr: false
 	}
@@ -39,9 +42,16 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
 		<LocaleProvider>
 			<IntlProviderWrapper>
 				<ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
-					<SessionProvider>{children}</SessionProvider>
-					<Toaster />
-					<NextTopLoader />
+					<SessionProvider>
+						<SocketProvider>
+							<QueryProvider>
+								{children}
+							</QueryProvider>
+							<Toaster />
+							<NextTopLoader />
+							<ModalProvider />
+						</SocketProvider>
+					</SessionProvider>
 				</ThemeProvider>
 			</IntlProviderWrapper>
 		</LocaleProvider>
@@ -49,10 +59,10 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
 }
 
 const IntlProviderWrapper: React.FC<{ children: React.ReactNode }> = ({
-	children
-}) => {
+	                                                                      children
+                                                                      }) => {
 	const { locale } = useLocale()
-
+	
 	return (
 		<IntlProvider locale={locale} messages={messages[locale]}>
 			{children}
