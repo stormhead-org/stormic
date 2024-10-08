@@ -1,63 +1,95 @@
-import { prisma } from '@/prisma/prisma-client';
-import { format } from 'date-fns';
-import { NextResponse } from 'next/server';
+import { prisma } from '@/prisma/prisma-client'
+import { Comment } from '@prisma/client'
+import { NextResponse } from 'next/server'
 
-export async function GET(request: Request, { params }: { params: { postId: string } }) {
-	const { postId } = params;
+const MESSAGES_BATCH = 40
+
+// Функция для организации комментариев в иерархическую структуру
+const buildCommentTree = (comments: Comment[]) => {
+	const map = new Map<number, Comment & { children: Comment[] }>()
+	const roots: (Comment & { children: Comment[] })[] = []
 	
-	const comments = await prisma.comment.findMany({
-		where: {
-			post_id: Number(postId)
-		},
-		include: {
-			author: {
-				select: {
-					fullName: true,
-					profile_picture: true
-				}
-			},
-			post: {
-				select: {
-					title: true
-				}
-			},
-			likes: true // Включаем лайки для каждого комментария
-		}
-	});
+	// Инициализируем карту и добавляем каждому комментарию массив для детей
+	comments.forEach((comment) => {
+		map.set(comment.comment_id, { ...comment, children: [] })
+	})
 	
-	// Создаем словарь для быстрого доступа к комментариям по id
-	const commentMap = new Map<number, any>();
-	
-	// Преобразуем плоский список комментариев в иерархическую структуру
-	comments.forEach(comment => {
-		commentMap.set(comment.comment_id, {
-			comment_id: comment.comment_id,
-			content: comment.content,
-			publication_date: format(new Date(comment.publication_date), 'dd.MM.yy'),
-			update_date: comment.update_date ? format(new Date(comment.update_date), 'dd.MM.yy') : null,
-			post_id: comment.post_id,
-			post_title: comment.post?.title,
-			author_id: comment.author_id,
-			author_fullName: comment.author.fullName,
-			author_profile_picture: comment.author.profile_picture,
-			parent_comment_id: comment.parent_comment_id,
-			likes_count: comment.likes.length, // Количество лайков
-			children: []  // Изначально дети пустые
-		});
-	});
-	
-	// Заполняем детей для каждого комментария
-	commentMap.forEach(comment => {
+	comments.forEach((comment) => {
 		if (comment.parent_comment_id) {
-			const parentComment = commentMap.get(comment.parent_comment_id);
-			if (parentComment) {
-				parentComment.children.push(comment);
+			const parent = map.get(comment.parent_comment_id)
+			if (parent) {
+				parent.children.push(map.get(comment.comment_id)!)
 			}
+		} else {
+			roots.push(map.get(comment.comment_id)!)
 		}
-	});
+	})
 	
-	// Получаем корневые комментарии (те, у которых нет родителя)
-	const rootComments = Array.from(commentMap.values()).filter(comment => !comment.parent_comment_id);
-	
-	return NextResponse.json(rootComments);
+	return roots
+}
+
+export async function GET(req: Request) {
+	try {
+		const { searchParams } = new URL(req.url)
+		const cursor = searchParams.get('cursor')
+		const url = new URL(req.url)
+		const postId = Number(url.pathname.split('/')[3])
+		
+		if (!postId) {
+			return new NextResponse('Post ID не найден', { status: 400 })
+		}
+		
+		let allComments: Comment[] = []
+		
+		// Запрашиваем комментарии поста с пагинацией
+		if (cursor) {
+			// Если курсор есть, используем его для запроса
+			allComments = await prisma.comment.findMany({
+				where: {
+					post_id: postId,
+					publication_date: {
+						gt: new Date(cursor) // Фильтруем по дате публикации больше курсора
+					}
+				},
+				include: {
+					author: true
+				},
+				orderBy: {
+					publication_date: 'asc'
+				},
+				take: MESSAGES_BATCH // Ограничиваем количество возвращаемых комментариев
+			})
+		} else {
+			// Если курсор отсутствует, запрашиваем первые 40 комментариев
+			allComments = await prisma.comment.findMany({
+				where: {
+					post_id: postId
+				},
+				include: {
+					author: true
+				},
+				orderBy: {
+					publication_date: 'asc'
+				},
+				take: MESSAGES_BATCH // Ограничиваем количество возвращаемых комментариев
+			})
+		}
+		
+		// Строим дерево комментариев
+		const commentTree = buildCommentTree(allComments)
+		
+		// Определяем следующий курсор для пагинации
+		let nextCursor = null
+		if (allComments.length === MESSAGES_BATCH) {
+			nextCursor = allComments[MESSAGES_BATCH - 1].publication_date.toISOString() // Используем дату публикации как курсор
+		}
+		
+		return NextResponse.json({
+			items: commentTree,
+			nextCursor
+		})
+	} catch (error) {
+		console.log('[MESSAGES_GET]', error)
+		return new NextResponse('Ошибка сервера', { status: 500 })
+	}
 }
