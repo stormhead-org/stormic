@@ -30,7 +30,7 @@ export const Header: React.FC<Props> = ({
 	React.useEffect(() => {
 		let toastMessage = ''
 		
-		if (searchParams.has('verified')) {
+		if (searchParams?.has('verified')) {
 			toastMessage = 'Почта успешно подтверждена!'
 		}
 		
