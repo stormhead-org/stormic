@@ -3,7 +3,6 @@ import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { FullPostPage } from '@/shared/components/posts/full-post-page'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
-import { redirect } from 'next/navigation'
 import React from 'react'
 
 export const metadata: Metadata = {
@@ -18,7 +17,7 @@ export default async function PostPage({
 	
 	const session = await getUserSession()
 	
-	const user = session && await prisma.user.findFirst({ where: { id: Number(session?.id) } })
+	const currentUser = session && await prisma.user.findFirst({ where: { id: Number(session?.id) } })
 	
 	// Преобразуем id в число
 	const postId = Number(id)
@@ -34,6 +33,8 @@ export default async function PostPage({
 	}
 	
 	return (
-		<FullPostPage postId={postId}  user={user || undefined}/>
+		<div className='flex flex-col h-[91vh] overflow-auto no-scrollbar rounded-md'>
+			<FullPostPage postId={postId} currentUser={currentUser} />
+		</div>
 	)
 }

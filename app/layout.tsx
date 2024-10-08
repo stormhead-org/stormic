@@ -1,8 +1,9 @@
 'use client'
 
-import { Providers } from '@/shared/components/providers'
+import { Providers } from '@/shared/components/providers/providers'
 import { Nunito } from 'next/font/google'
 import React, { useEffect, useState } from 'react'
+import 'photoswipe/dist/photoswipe.css'
 import './globals.css'
 
 const nunito = Nunito({

@@ -1,11 +1,13 @@
-'use client';
+'use client'
 
-import { CommentInputForm } from '@/shared/components/comments/comment-input-items/comment-input-form';
-import { FullPostCommentForm } from '@/shared/components/comments/full-post-comments-items/full-post-comment-form';
-import { cn } from '@/shared/lib/utils';
-import type { User } from '@prisma/client';
-import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import { CommentInput } from '@/shared/components/comments/comment-input-items/comment-input'
+import { PostCommentsList } from '@/shared/components/comments/post-comments-list'
+import { SocketIndicator } from '@/shared/components/socket-indicator'
+import { cn } from '@/shared/lib/utils'
+import type { User } from '@prisma/client'
+import { ListFilter } from 'lucide-react'
+import React from 'react'
+import { useIntl } from 'react-intl'
 
 export interface Comment {
 	postId: number;
@@ -21,78 +23,62 @@ export interface Comment {
 
 interface Props {
 	postId: number;
-	user?: User | undefined;
+	currentUser: User | null;
 	commentsHeader: string;
 	className?: string;
 }
 
-const socket = io('http://localhost:3001');
-
 export const CommentFullPostGroup: React.FC<Props> = ({
 	                                                      postId,
-	                                                      user,
+	                                                      currentUser,
 	                                                      commentsHeader,
-	                                                      className,
+	                                                      className
                                                       }) => {
-	const [comments, setComments] = useState<Comment[]>([]);
 	
-	const handleCommentAdded = (newComment: Comment) => {
-		setComments((prev) => [...prev, newComment]);
-	};
-	
-	const handleDeleteComment = async (commentId: number) => {
-		const response = await fetch(`/api/posts/${postId}/comments/delete`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ commentId }),
-		});
-		
-		if (response.ok) {
-			setComments((prev) => prev.filter((comment) => comment.comment_id !== commentId));
-		} else {
-			console.error('Не удалось удалить комментарий');
-		}
-	};
-	
-	useEffect(() => {
-		const fetchComments = async () => {
-			const response = await fetch(`/api/posts/${postId}/comments`);
-			const data: Comment[] = await response.json();
-			setComments(data);
-		};
-		
-		fetchComments();
-		socket.emit('joinPost', postId);
-		
-		socket.on('newComment', (newComment: Comment) => {
-			handleCommentAdded(newComment);
-		});
-		
-		socket.on('commentDeleted', (commentId: number) => {
-			setComments((prev) => prev.filter(comment => comment.comment_id !== commentId));
-		});
-		
-		return () => {
-			socket.off('newComment');
-			socket.off('commentDeleted');
-		};
-	}, [postId]);
+	const { formatMessage } = useIntl()
 	
 	return (
 		<div className={cn('bg-secondary rounded-md p-4', className)}>
-			<CommentInputForm
-				commentsHeader={commentsHeader}
-				postId={postId}
-				onCommentAdded={handleCommentAdded}
+			
+			<div className='flex justify-between items-center'>
+				{commentsHeader > String(0) ? (
+					<p className='pl-1 text-lg cursor-default'>
+						{commentsHeader} {formatMessage({ id: 'commentInputForm.commentsHeaderCount' })}
+					</p>
+				) : (
+					<p className='pl-1 text-lg cursor-default'>
+						{formatMessage({ id: 'commentInputForm.commentsHeaderEmpty' })}
+					</p>
+				)}
+				<div className='flex items-center gap-2'>
+					<SocketIndicator />
+					<div className='group'>
+						<p className='flex items-center group-hover:text-blue-600 font-bold'>
+							<ListFilter className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer' />
+						</p>
+					</div>
+				</div>
+			</div>
+			
+			<CommentInput
+				apiUrl={'/api/socket/posts/comments'}
+				query={{
+					postId: postId
+				}}
 			/>
-			<FullPostCommentForm
-				postId={postId}
-				comments={comments}
-				onClickDeleteValue={handleDeleteComment}
-				user={user}
-			  onCommentAdded={handleCommentAdded}/>
+			<div className='flex flex-col h-[100vh] overflow-auto'>
+				<PostCommentsList
+					currentUser={currentUser}
+					postId={String(postId)}
+					apiUrl={`/api/posts/${postId}/comments`}
+					socketUrl={'/api/socket/posts/comments'}
+					socketQuery={{
+						postId: String(postId)
+					}}
+					paramKey='postId'
+					paramValue={String(postId)}
+				/>
+			</div>
 		</div>
-	);
-};
+	)
+}

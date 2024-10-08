@@ -31,11 +31,11 @@ interface ExtendedPost {
 
 interface Props {
 	postId: number
-	user?: User | undefined;
+	currentUser: User | null;
 	className?: string
 }
 
-export const FullPostPage: React.FC<Props> = ({ postId, user, className }) => {
+export const FullPostPage: React.FC<Props> = ({ postId, currentUser, className }) => {
 	const { post, loading } = usePostById(postId)
 	
 	// Проверяем, что post не является массивом и имеет содержимое
@@ -74,7 +74,7 @@ export const FullPostPage: React.FC<Props> = ({ postId, user, className }) => {
 						<CommentFullPostGroup
 							className='mb-4'
 							postId={postId}
-							user={user}
+							currentUser={currentUser}
 							commentsHeader={String(items.commentsCount)}
 						/>
 					</>

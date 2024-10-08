@@ -1,6 +1,6 @@
 'use client'
 
-import { useLocale } from '@/shared/components/locale-provider'
+import { useLocale } from '@/shared/components/providers/items/locale-provider'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
