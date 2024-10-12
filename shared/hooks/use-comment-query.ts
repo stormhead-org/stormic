@@ -6,7 +6,7 @@ import qs from 'query-string'
 interface ChatQueryProps {
 	queryKey: string
 	apiUrl: string
-	paramKey: 'postId' | 'conversationId'
+	paramKey: 'postId' | 'conversationId' | 'global'
 	paramValue: string
 }
 
