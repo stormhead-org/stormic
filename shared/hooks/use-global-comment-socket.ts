@@ -8,7 +8,7 @@ type CommentWithUser = Comment & {
 	children?: CommentWithUser[];
 };
 
-export const UseGlobalCommentSocket = (queryKey: string) => {
+export const UseGlobalCommentSocket = (queryKey: string, globalUpdateKey: string) => {
 	const { socket } = useSocket()
 	const queryClient = useQueryClient()
 	
@@ -44,8 +44,55 @@ export const UseGlobalCommentSocket = (queryKey: string) => {
 			queryClient.invalidateQueries({ queryKey: [queryKey] })
 		})
 		
+		// Событие обновления комментария
+		socket.on(globalUpdateKey, (updatedComment: CommentWithUser) => {
+			queryClient.setQueryData([queryKey], (oldData: any) => {
+				if (!oldData || !oldData.pages) {
+					return oldData // Если нет старых данных, просто возвращаем их
+				}
+				
+				const newData = oldData.pages.map((page: any) => {
+					return {
+						...page,
+						items: updateCommentRecursively(page.items, updatedComment) // Функция для обновления
+					}
+				})
+				
+				return {
+					...oldData,
+					pages: newData
+				}
+			})
+			
+			// Инвалидация кеша для обновления через сервер
+			queryClient.invalidateQueries({ queryKey: [queryKey] })
+		})
+		
 		return () => {
 			socket.off(globalKey)
+			socket.off(globalUpdateKey)
 		}
-	}, [queryClient, queryKey, socket])
+	}, [queryClient, queryKey, socket, globalUpdateKey])
+}
+
+// Рекурсивное обновление комментария
+function updateCommentRecursively(
+	items: CommentWithUser[],
+	updatedComment: CommentWithUser
+): CommentWithUser[] {
+	return items.map((item) => {
+		if (item.comment_id === updatedComment.comment_id) {
+			return updatedComment
+		}
+		
+		// Если у комментария есть дочерние комментарии, обновляем их рекурсивно
+		if (item.children && item.children.length > 0) {
+			return {
+				...item,
+				children: updateCommentRecursively(item.children, updatedComment)
+			}
+		}
+		
+		return item
+	})
 }

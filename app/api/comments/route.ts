@@ -70,14 +70,31 @@ export async function GET(req: Request) {
 			})
 		}
 		
+		// Преобразуем комментарии, поднимая информацию об авторе и посте на уровень выше
+		const formattedComments = allComments.map((comment: any) => ({
+			comment_id: comment.comment_id,
+			postTitle: comment.post.title,
+			post_id: comment.post_id,
+			author_id: comment.author_id,
+			author_fullName: comment.author.fullName,
+			author_profile_picture: comment.author.profile_picture,
+			content: comment.content,
+			fileUrl: comment.fileUrl,
+			deleted: comment.deleted,
+			publication_date: comment.publication_date,
+			update_date: comment.update_date,
+			parent_comment_id: comment.parent_comment_id,
+			likes_count: comment.likes_count
+		}))
+		
 		// Определяем следующий курсор для пагинации
 		let nextCursor = null
-		if (allComments.length === MESSAGES_BATCH) {
-			nextCursor = allComments[MESSAGES_BATCH - 1].publication_date.toISOString() // Используем дату публикации как курсор
+		if (formattedComments.length === MESSAGES_BATCH) {
+			nextCursor = formattedComments[MESSAGES_BATCH - 1].publication_date.toISOString() // Используем дату публикации как курсор
 		}
 		
 		return NextResponse.json({
-			items: allComments, // Возвращаем все комментарии без иерархии
+			items: formattedComments, // Возвращаем преобразованные комментарии
 			nextCursor
 		})
 	} catch (error) {
@@ -85,3 +102,6 @@ export async function GET(req: Request) {
 		return new NextResponse('Ошибка сервера', { status: 500 })
 	}
 }
+
+// Указание, что этот маршрут не должен быть статическим
+export const dynamic = 'force-dynamic'

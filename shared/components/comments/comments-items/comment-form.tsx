@@ -35,6 +35,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
                                                         }) => {
 	
 	const queryKey = 'global:comments'
+	const globalUpdateKey = `global:comments:update`
 	
 	const chatRef = useRef<ElementRef<'div'>>(null)
 	const bottomRef = useRef<ElementRef<'div'>>(null)
@@ -47,7 +48,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 			paramValue
 		})
 	
-	UseGlobalCommentSocket(queryKey)
+	UseGlobalCommentSocket(queryKey, globalUpdateKey)
 	
 	useCommentScroll({
 		chatRef,
@@ -73,15 +74,15 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 			<div className='flex flex-col pr-2'>
 				{data?.pages?.map((group, i) => (
 					<Fragment key={i}>
-						{group.items.map((message: CommentWithUserAndPost) =>
+						{group.items.map((message: any) =>
 							<CommentItem
 								key={message.comment_id}
-								postTitle={message.post.title}
+								postTitle={message.postTitle}
 								content={message.content}
 								postId={message.post_id}
-								authorName={message.author.fullName}
+								authorName={message.author_fullName}
 								authorId={message.author_id}
-								authorAvatar={message.author.profile_picture}
+								authorAvatar={message.author_profile_picture}
 								maxLengthHeader={maxLengthHeader}
 								maxLengthBody={maxLengthBody}
 								fileUrl={message.fileUrl}

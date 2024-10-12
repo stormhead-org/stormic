@@ -40,3 +40,5 @@ export async function GET(req: NextRequest) {
 		console.log('[VERIFY_GET] Server error', error)
 	}
 }
+
+export const dynamic = 'force-dynamic'

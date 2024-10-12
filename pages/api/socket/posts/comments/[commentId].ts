@@ -99,8 +99,10 @@ export default async function handler(
 		}
 		
 		const updateKey = `chat:${postId}:messages:update`
-		
 		res?.socket?.server?.io?.emit(updateKey, comment)
+		
+		const globalUpdateKey = `global:comments:update`
+		res?.socket?.server?.io?.emit(globalUpdateKey, comment)
 		
 		return res.status(200).json(comment)
 	} catch (error) {

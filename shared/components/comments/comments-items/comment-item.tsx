@@ -4,7 +4,7 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 interface CommentItemProps {
-	postTitle?: string | null
+	postTitle: string
 	content: string
 	postId?: number
 	authorName: string
