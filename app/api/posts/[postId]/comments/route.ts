@@ -52,7 +52,16 @@ export async function GET(req: Request) {
 					}
 				},
 				include: {
-					author: true
+					author: {
+						select: {
+							id: true,
+							fullName: true,
+							role: true,
+							profile_banner: true,
+							profile_picture: true,
+							bio: true
+						}
+					}
 				},
 				orderBy: {
 					publication_date: 'asc'
@@ -66,7 +75,16 @@ export async function GET(req: Request) {
 					post_id: postId
 				},
 				include: {
-					author: true
+					author: {
+						select: {
+							id: true,
+							fullName: true,
+							role: true,
+							profile_banner: true,
+							profile_picture: true,
+							bio: true
+						}
+					}
 				},
 				orderBy: {
 					publication_date: 'asc'

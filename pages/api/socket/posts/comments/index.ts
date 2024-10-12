@@ -55,6 +55,11 @@ export default async function handler(
 		
 		res?.socket?.server?.io?.emit(postKey, newComment)
 		
+		const globalKey = `global:comments`
+		
+		res?.socket?.server?.io?.emit(globalKey, newComment)
+		
+		
 		return res.status(200).json(newComment)
 	} catch (error) {
 		console.log('MESSAGE_POST', error)

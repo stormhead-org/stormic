@@ -1,41 +1,87 @@
 import { prisma } from '@/prisma/prisma-client'
-import { format } from 'date-fns'
+import { Comment } from '@prisma/client'
 import { NextResponse } from 'next/server'
 
-export async function GET() {
-	const comments = await prisma.comment.findMany({
-		include: {
-			author: {
-				select: {
-					fullName: true,
-					profile_picture: true
-				}
-			},
-			post: {
-				select: {
-					title: true
-				}
-			},
-			likes: true // Включаем лайки для каждого комментария
+// Количество комментариев на страницу
+const MESSAGES_BATCH = 40
+
+export async function GET(req: Request) {
+	try {
+		const { searchParams } = new URL(req.url)
+		const cursor = searchParams.get('cursor')
+		
+		let allComments: Comment[] = []
+		
+		// Запрашиваем все комментарии с пагинацией
+		if (cursor) {
+			// Если курсор есть, используем его для запроса
+			allComments = await prisma.comment.findMany({
+				where: {
+					publication_date: {
+						gt: new Date(cursor) // Фильтруем по дате публикации больше курсора
+					}
+				},
+				include: {
+					author: {
+						select: {
+							id: true,
+							fullName: true,
+							role: true,
+							profile_banner: true,
+							profile_picture: true,
+							bio: true
+						}
+					},
+					post: {
+						select: {
+							title: true
+						}
+					}
+				},
+				orderBy: {
+					publication_date: 'desc' // Сортируем по дате публикации
+				},
+				take: MESSAGES_BATCH // Ограничиваем количество возвращаемых комментариев
+			})
+		} else {
+			// Если курсор отсутствует, запрашиваем первые 40 комментариев
+			allComments = await prisma.comment.findMany({
+				include: {
+					author: {
+						select: {
+							id: true,
+							fullName: true,
+							role: true,
+							profile_banner: true,
+							profile_picture: true,
+							bio: true
+						}
+					},
+					post: {
+						select: {
+							title: true
+						}
+					}
+				},
+				orderBy: {
+					publication_date: 'desc' // Сортируем по дате публикации
+				},
+				take: MESSAGES_BATCH // Ограничиваем количество возвращаемых комментариев
+			})
 		}
-	})
-	
-	const commentsFlat = comments.map(comment => ({
-		comment_id: comment.comment_id,
-		content: comment.content,
-		publication_date: format(new Date(comment.publication_date), 'dd.MM.yy'),
-		update_date: comment.update_date ? format(new Date(comment.update_date), 'dd.MM.yy') : null,
-		post_id: comment.post_id,
-		post_title: comment.post?.title,
-		deleted: comment.deleted,
-		fileUrl: comment.fileUrl,
-		author_id: comment.author_id,
-		author_fullName: comment.author.fullName,
-		author_profile_picture: comment.author.profile_picture,
-		parent_comment_id: comment.parent_comment_id,
-		likes_count: comment.likes.length, // Количество лайков
-		children: []  // Дети пустые, так как мы не показываем иерархию
-	}))
-	
-	return NextResponse.json(commentsFlat)
+		
+		// Определяем следующий курсор для пагинации
+		let nextCursor = null
+		if (allComments.length === MESSAGES_BATCH) {
+			nextCursor = allComments[MESSAGES_BATCH - 1].publication_date.toISOString() // Используем дату публикации как курсор
+		}
+		
+		return NextResponse.json({
+			items: allComments, // Возвращаем все комментарии без иерархии
+			nextCursor
+		})
+	} catch (error) {
+		console.log('GET_ALL_COMMENTS', error)
+		return new NextResponse('Ошибка сервера', { status: 500 })
+	}
 }
