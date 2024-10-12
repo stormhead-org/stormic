@@ -3,13 +3,12 @@ import { CommentHeader } from '@/shared/components/comments/comments-items/comme
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
-export interface CommentItemProps {
-	endAdornment?: React.ReactNode
+interface CommentItemProps {
 	postTitle?: string | null
 	content: string
-	postUrl?: string
+	postId?: number
 	authorName: string
-	authorUrl: string
+	authorId: number
 	authorAvatar?: string | null
 	publicationDate?: string
 	maxLengthHeader?: number
@@ -20,12 +19,11 @@ export interface CommentItemProps {
 }
 
 export const CommentItem: React.FC<CommentItemProps> = ({
-	                                                        endAdornment,
 	                                                        postTitle,
 	                                                        content,
-	                                                        postUrl,
+	                                                        postId,
 	                                                        authorName,
-	                                                        authorUrl,
+	                                                        authorId,
 	                                                        authorAvatar,
 	                                                        publicationDate,
 	                                                        maxLengthHeader,
@@ -36,11 +34,11 @@ export const CommentItem: React.FC<CommentItemProps> = ({
                                                         }) => {
 	return (
 		<div className={cn('rounded-md p-2 w-full', className)}>
-			<CommentHeader authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
+			<CommentHeader authorAvatar={String(authorAvatar)} authorUrl={`u/${authorId}`} authorName={authorName}
 			               postTitle={String(postTitle)} maxLength={maxLengthHeader} publicationDate={publicationDate}
-			               postUrl={postUrl} />
-			<CommentBody content={content} maxLength={maxLengthBody} postUrl={postUrl} fileUrl={fileUrl} deleted={deleted} />
-			{endAdornment}
+			               postUrl={`p/${postId}`} />
+			<CommentBody content={content} maxLength={maxLengthBody} postUrl={`p/${postId}`} fileUrl={fileUrl}
+			             deleted={deleted} />
 		</div>
 	)
 }

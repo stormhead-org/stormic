@@ -2,6 +2,7 @@
 
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { usePosts } from '@/shared/hooks/use-posts'
+import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 interface Props {
@@ -31,12 +32,13 @@ export const MainPagePostGroup: React.FC<Props> = ({ className }) => {
 	
 	return (
 		<>
-			<PostForm
-				limit={5}
-				items={items}
-				loading={loading}
-				className='mt-4'
-			/>
+			<div className={cn('', className)}>
+				<PostForm
+					limit={5}
+					items={items}
+					loading={loading}
+				/>
+			</div>
 		</>
 	)
 }

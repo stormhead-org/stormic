@@ -23,7 +23,7 @@ interface CommentItemsProps {
 	apiUrl: string;
 	socketUrl: string;
 	socketQuery: Record<string, string>;
-	paramKey: 'postId' | 'conversationId';
+	paramKey: 'postId' | 'conversationId' | 'global';
 	paramValue: string;
 	className?: string;
 }
@@ -106,7 +106,7 @@ export const PostCommentsList = ({
 			<div className='flex flex-col flex-1 justify-center items-center'>
 				<Loader2 className='h-7 w-7 text-zinc-500 animate-spin my-4' />
 				<p className='text-xs text-zinc-500 dark:text-zinc-400'>
-					Загрузка сообщений...
+					Загрузка комментариев...
 				</p>
 			</div>
 		)
@@ -144,7 +144,7 @@ export const PostCommentsList = ({
 							onClick={() => fetchNextPage()}
 							className='text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition'
 						>
-							Загрузить сообщения
+							Загрузить комментарии
 						</button>
 					)}
 				</div>

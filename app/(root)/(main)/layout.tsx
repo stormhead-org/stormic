@@ -36,7 +36,7 @@ export default async function MainLayout({
 			<Container className='mt-4'>
 				<div className='flex gap-4'>
 					{/* Левая часть */}
-					<div className='w-1/4'>
+					<div className='w-1/4 h-[91vh] overflow-auto no-scrollbar rounded-md'>
 						<FeedUserMenu />
 						<SocialMenu
 							className='my-2'
@@ -54,15 +54,12 @@ export default async function MainLayout({
 					</div>
 					
 					{/* Центральная часть */}
-					<div className='w-2/4'>
+					<div className='w-2/4 h-[91vh] overflow-auto no-scrollbar rounded-md'>
 						{children}
 					</div>
 					
 					{/* Правая часть */}
-					{/* <div className='w-1/4 flex flex-col h-[90vh] overflow-auto no-scrollbar'> */}
-					{/* 	<CommentFeedGroup /> */}
-					{/* </div> */}
-					<div className='w-1/4'>
+					<div className='w-1/4 flex flex-col h-[91vh] overflow-auto no-scrollbar'>
 						<CommentFeedGroup />
 					</div>
 				</div>

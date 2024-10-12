@@ -35,28 +35,26 @@ export const PostForm: React.FC<Props> = ({
 	
 	return (
 		<div className={cn('', className)}>
-			<div className='flex flex-col pr-2 overflow-auto scrollbar'>
-				{items.map((item, index) => (
-					<PostItem
-						key={index}
-						authorId={item.authorId}
-						postId={item.postId}
-						postTitle={item.postTitle}
-						postContent={item.postContent}
-						postImage={item.postImage}
-						postUrl={item.postUrl}
-						authorName={item.authorName}
-						authorUrl={item.authorUrl}
-						authorAvatar={item.authorAvatar}
-						categoryName={item.categoryName}
-						categoryUrl={item.categoryUrl}
-						commentsCount={item.commentsCount}
-						viewsCount={item.viewsCount}
-						postTime={item.postTime}
-						endAdornment={item.endAdornment}
-					/>
-				))}
-			</div>
+			{items.map((item, index) => (
+				<PostItem
+					key={index}
+					authorId={item.authorId}
+					postId={item.postId}
+					postTitle={item.postTitle}
+					postContent={item.postContent}
+					postImage={item.postImage}
+					postUrl={item.postUrl}
+					authorName={item.authorName}
+					authorUrl={item.authorUrl}
+					authorAvatar={item.authorAvatar}
+					categoryName={item.categoryName}
+					categoryUrl={item.categoryUrl}
+					commentsCount={item.commentsCount}
+					viewsCount={item.viewsCount}
+					postTime={item.postTime}
+					endAdornment={item.endAdornment}
+				/>
+			))}
 		</div>
 	)
 }
