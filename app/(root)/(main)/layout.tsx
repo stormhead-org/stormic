@@ -59,7 +59,7 @@ export default async function MainLayout({
 					</div>
 					
 					{/* Правая часть */}
-					<div className='w-1/4 flex flex-col h-[91vh] overflow-auto no-scrollbar'>
+					<div className='w-1/4'>
 						<CommentFeedGroup />
 					</div>
 				</div>

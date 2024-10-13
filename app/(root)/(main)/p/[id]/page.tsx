@@ -9,9 +9,7 @@ export const metadata: Metadata = {
 	title: 'Stormic Community'
 }
 
-export default async function PostPage({
-	                                       params: { id }
-                                       }: {
+export default async function PostPage({ params: { id } }: {
 	params: { id: string }
 }) {
 	
@@ -19,12 +17,9 @@ export default async function PostPage({
 	
 	const currentUser = session && await prisma.user.findFirst({ where: { id: Number(session?.id) } })
 	
-	// Преобразуем id в число
-	const postId = Number(id)
-	
 	// Ищем пост по id
 	const post = await prisma.post.findUnique({
-		where: { post_id: postId }
+		where: { post_id: Number(id) }
 	})
 	
 	// Проверяем, найдена ли публикация
@@ -34,7 +29,7 @@ export default async function PostPage({
 	
 	return (
 		<div className='flex flex-col h-[91vh] overflow-auto no-scrollbar rounded-md'>
-			<FullPostPage postId={postId} currentUser={currentUser} />
+			<FullPostPage postId={Number(id)} currentUser={currentUser} />
 		</div>
 	)
 }

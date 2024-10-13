@@ -34,10 +34,10 @@ export const CommentItem: React.FC<CommentItemProps> = ({
                                                         }) => {
 	return (
 		<div className={cn('rounded-md p-2 w-full', className)}>
-			<CommentHeader authorAvatar={String(authorAvatar)} authorUrl={`u/${authorId}`} authorName={authorName}
+			<CommentHeader authorAvatar={String(authorAvatar)} authorUrl={`/u/${authorId}`} authorName={authorName}
 			               postTitle={String(postTitle)} maxLength={maxLengthHeader} publicationDate={publicationDate}
-			               postUrl={`p/${postId}`} />
-			<CommentBody content={content} maxLength={maxLengthBody} postUrl={`p/${postId}`} fileUrl={fileUrl}
+			               postUrl={`/p/${postId}`} />
+			<CommentBody content={content} maxLength={maxLengthBody} postUrl={`/p/${postId}`} fileUrl={fileUrl}
 			             deleted={deleted} />
 		</div>
 	)

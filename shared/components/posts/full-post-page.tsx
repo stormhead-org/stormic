@@ -6,7 +6,6 @@ import { usePostById } from '@/shared/hooks/use-post-by-id'
 import { cn } from '@/shared/lib/utils'
 import type { User } from '@prisma/client'
 import React from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
 
 interface ExtendedPost {
 	post_id: number
@@ -62,26 +61,19 @@ export const FullPostPage: React.FC<Props> = ({ postId, currentUser, className }
 		}
 		: null
 	
-	// Инициализируем useForm
-	const form = useForm()
-	
 	return (
 		<div className={cn('', className)}>
-			<FormProvider {...form}>
-				{items ? (
-					<>
-						<FullPostForm items={items} loading={loading} />
-						<CommentFullPostGroup
-							className='mb-4'
-							postId={postId}
-							currentUser={currentUser}
-							commentsHeader={String(items.commentsCount)}
-						/>
-					</>
-				) : (
-					<div>Post not found or loading...</div>
-				)}
-			</FormProvider>
+			{items && (
+				<>
+					<FullPostForm items={items} loading={loading} />
+					<CommentFullPostGroup
+						className='mb-4'
+						postId={postId}
+						currentUser={currentUser}
+						commentsHeader={String(items.commentsCount)}
+					/>
+				</>
+			)}
 		</div>
 	)
 }

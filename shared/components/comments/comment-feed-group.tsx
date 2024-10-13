@@ -20,7 +20,7 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 				size='sm'
 				className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-l-blue-700'
 			/>
-			<div className=''>
+			<div className='flex flex-col h-[87vh] overflow-auto no-scrollbar rounded-md'>
 				<CommentForm
 					className='mt-4'
 					maxLengthHeader={28}
