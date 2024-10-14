@@ -2,7 +2,6 @@
 
 import { CommentInput } from '@/shared/components/comments/comment-input-items/comment-input'
 import { PostCommentsList } from '@/shared/components/comments/post-comments-list'
-import { SocketIndicator } from '@/shared/components/socket-indicator'
 import { cn } from '@/shared/lib/utils'
 import type { User } from '@prisma/client'
 import { ListFilter } from 'lucide-react'
@@ -51,7 +50,6 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 					</p>
 				)}
 				<div className='flex items-center gap-2'>
-					<SocketIndicator />
 					<div className='group'>
 						<p className='flex items-center group-hover:text-blue-600 font-bold'>
 							<ListFilter className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer' />

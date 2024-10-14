@@ -80,7 +80,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 							maxLengthBody={maxLengthBody}
 							fileUrl={message.fileUrl}
 							deleted={message.deleted}
-							className='bg-secondary/25 hover:bg-primary/5 mb-4'
+							className='bg-secondary/25 hover:bg-primary/5 mt-4'
 						/>
 					)}
 				</Fragment>
