@@ -28,16 +28,35 @@ interface CommentItemsProps {
 	className?: string;
 }
 
-// Функция для рендера комментариев и их детей рекурсивно
+// Классы для отступов
+const getIndentationClass = (level: number) => {
+	switch (level) {
+		case 1:
+			return 'pl-6';
+		case 2:
+			return 'pl-6';
+		case 3:
+			return 'pl-6';
+		case 4:
+			return 'pl-6';
+		case 5:
+			return 'pl-6';
+		default:
+			return 'pl-0'; // после 5 уровня отступ не увеличивается
+	}
+}
+
+// Функция для рендера комментариев и их детей рекурсивно с ограничением отступа до 5 уровня
 const renderCommentWithChildren = (
 	message: CommentWithUser,
 	currentUser: User | null,
 	postId: string,
 	socketUrl: string,
-	socketQuery: Record<string, string>
+	socketQuery: Record<string, string>,
+	level = 0 // добавляем уровень вложенности
 ) => {
 	return (
-		<div key={message.comment_id} className=''>
+		<div key={message.comment_id} className={getIndentationClass(level)}>
 			<PostCommentListItem
 				key={message.comment_id}
 				postId={postId}
@@ -54,13 +73,13 @@ const renderCommentWithChildren = (
 				className='mt-4 p-0 pl-4 cursor-default border-l-4 border-blue-600'
 			/>
 			{Array.isArray(message.children) && message.children.length > 0 && (
-				<div className='pl-4'>
+				<>
 					{message.children.map((child) => (
 						<Fragment key={child.comment_id}>
-							{renderCommentWithChildren(child, currentUser, postId, socketUrl, socketQuery)}
+							{renderCommentWithChildren(child, currentUser, postId, socketUrl, socketQuery, level + 1)}
 						</Fragment>
 					))}
-				</div>
+				</>
 			)}
 		</div>
 	)
