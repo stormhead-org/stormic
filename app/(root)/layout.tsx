@@ -19,7 +19,7 @@ export default async function HomeLayout({
 	const session = await getUserSession()
 	const user = session && await prisma.user.findUnique({ where: { id: Number(session?.id) } })
 	
-	const [logoImage, stormicName, description] = await Promise.all([
+	const [logoImage, stormicName, stormicBanner, authImage, description] = await Promise.all([
 		await prisma.stormicMedia.findFirst({
 			where: {
 				mediaType: 'LOGO'
@@ -28,6 +28,16 @@ export default async function HomeLayout({
 		await prisma.stormicSettings.findFirst({
 			where: {
 				settingsType: 'NAME'
+			}
+		}),
+		await prisma.stormicMedia.findFirst({
+			where: {
+				mediaType: 'BANNER'
+			}
+		}),
+		await prisma.stormicMedia.findFirst({
+			where: {
+				mediaType: 'AUTH_IMAGE'
 			}
 		}),
 		await prisma.stormicSettings.findFirst({
@@ -43,13 +53,14 @@ export default async function HomeLayout({
 				<Header
 					logoImage={logoImage?.url || '/logo.png'}
 					stormicName={stormicName?.content || 'Stormic'}
+					authImage={authImage ? authImage?.url : stormicBanner?.url}
 					description={description?.content || 'код, GitHub и ты'}
 					avatarImage={user?.profile_picture || ''}
 					userUrl={'/u/' + String(user?.id) || ''}
 				/>
 			</Suspense>
 			{children}
-			{modal}
+			{/* {modal} */}
 		</main>
 	)
 }

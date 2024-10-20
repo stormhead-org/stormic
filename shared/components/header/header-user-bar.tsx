@@ -8,12 +8,15 @@ import React from 'react'
 import { AuthModal } from '../modals'
 
 interface Props {
+	stormicName: string
+	logoImage?: string
+	authImage?: string
 	userUrl: string
 	avatarImage: string
 	className?: string
 }
 
-export const HeaderUserBar: React.FC<Props> = ({ userUrl, avatarImage, className }) => {
+export const HeaderUserBar: React.FC<Props> = ({ stormicName, logoImage, authImage, userUrl, avatarImage, className }) => {
 	
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 	
@@ -22,6 +25,9 @@ export const HeaderUserBar: React.FC<Props> = ({ userUrl, avatarImage, className
 			<AuthModal
 				open={openAuthModal}
 				onClose={() => setOpenAuthModal(false)}
+				logoImage={logoImage}
+				authImage={authImage}
+				stormicName={stormicName}
 			/>
 			
 			<LocaleToggle />

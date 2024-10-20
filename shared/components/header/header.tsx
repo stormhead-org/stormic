@@ -12,6 +12,7 @@ interface Props {
 	userUrl: string
 	logoImage: string
 	stormicName: string
+	authImage?: string
 	description: string
 	className?: string
 }
@@ -21,6 +22,7 @@ export const Header: React.FC<Props> = ({
 	                                        userUrl,
 	                                        logoImage,
 	                                        stormicName,
+	                                        authImage,
 	                                        description,
 	                                        className
                                         }) => {
@@ -67,7 +69,7 @@ export const Header: React.FC<Props> = ({
 				
 				{/* Правая часть */}
 				<div className='flex items-center gap-3 w-[250px] justify-end'>
-					<HeaderUserBar avatarImage={avatarImage} userUrl={userUrl} />
+					<HeaderUserBar avatarImage={avatarImage} userUrl={userUrl}  logoImage={logoImage} authImage={authImage} stormicName={stormicName}/>
 				</div>
 			</Container>
 		</header>

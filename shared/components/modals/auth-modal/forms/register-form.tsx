@@ -13,9 +13,10 @@ import { formRegisterSchema, TFormRegisterValues } from './schemas'
 interface Props {
 	onClose?: VoidFunction
 	onClickLogin?: VoidFunction
+	setType: React.Dispatch<React.SetStateAction<'login' | 'email' | 'register' | 'passwordReset'>>;
 }
 
-export const RegisterForm: React.FC<Props> = ({ onClose, onClickLogin }) => {
+export const RegisterForm: React.FC<Props> = ({ setType, onClose, onClickLogin }) => {
 	const { formatMessage } = useIntl()
 	const form = useForm<TFormRegisterValues>({
 		resolver: zodResolver(formRegisterSchema),
@@ -53,6 +54,10 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onClickLogin }) => {
 				className='flex flex-col gap-4'
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
+				<p className='text-xl font-bold text-center'>Регистрация</p>
+				<p className='text-gray-400'>
+					На данный момент, регистрация через почту отключена для всех, кроме владельца. Используйте регистрацию через соц. сети
+				</p>
 				<FormInput
 					name='email'
 					label={formatMessage({ id: 'registerForm.formInputEmailLabel' })}
@@ -87,6 +92,10 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onClickLogin }) => {
 				>
 					{formatMessage({ id: 'registerForm.regButton' })}
 				</Button>
+				<p className='text-gray-400 text-center'>
+					Есть есть аккаунт? <span className='text-a-color hover:text-a-color-hover cursor-pointer'
+					                    onClick={() => setType('login')}>Войти</span>
+				</p>
 			</form>
 		</FormProvider>
 	)
