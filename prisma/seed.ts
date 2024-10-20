@@ -86,6 +86,12 @@ async function up() {
 				url: 'https://i.pinimg.com/564x/f8/1e/7d/f81e7dde45454fcb1a61bf676e3e95b0.jpg',
 				description: 'Баннер для рекламы новых статей.',
 				stormicSettingsId: 1
+			},
+			{
+				mediaType: MediaType.AUTH_IMAGE,
+				url: 'https://i.pinimg.com/564x/f8/1e/7d/f81e7dde45454fcb1a61bf676e3e95b0.jpg',
+				description: 'Баннер для окна авторизации.',
+				stormicSettingsId: 1
 			}
 		]
 	})
