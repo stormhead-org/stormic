@@ -31,6 +31,30 @@ export default async function MainLayout({
 		await prisma.navigationMenu.findMany()
 	])
 	
+	const [logoImage, stormicName, stormicBanner, authImage] = await Promise.all([
+		await prisma.stormicMedia.findFirst({
+			where: {
+				mediaType: 'LOGO'
+			}
+		}),
+		await prisma.stormicSettings.findFirst({
+			where: {
+				settingsType: 'NAME'
+			}
+		}),
+		await prisma.stormicMedia.findFirst({
+			where: {
+				mediaType: 'BANNER'
+			}
+		}),
+		await prisma.stormicMedia.findFirst({
+			where: {
+				mediaType: 'AUTH_IMAGE'
+			}
+		})
+	])
+	
+	
 	return (
 		<>
 			<Container className='mt-4'>
@@ -47,6 +71,9 @@ export default async function MainLayout({
 							authorName={String(user && user.fullName)}
 							authorUrl={String(user && '/u/' + user.id)}
 							hasSession={!!user}
+							logoImage={logoImage?.url || '/logo.png'}
+							stormicName={stormicName?.content || 'Stormic'}
+							authImage={authImage ? authImage?.url : stormicBanner?.url}
 						/>
 						<NavigationMenuForm className='mt-4' data={menu} />
 						<CommunitiesListGroup className='mt-4' hasPost={false} />

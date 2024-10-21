@@ -10,6 +10,9 @@ interface Props {
 	authorAvatar: string
 	authorName: string
 	authorUrl: string
+	stormicName: string
+	logoImage?: string
+	authImage?: string
 	hasSession: boolean
 	className?: string
 }
@@ -18,6 +21,9 @@ export const NewPostButton: React.FC<Props> = ({
 	                                               authorAvatar,
 	                                               authorName,
 	                                               authorUrl,
+	                                               logoImage,
+	                                               authImage,
+	                                               stormicName,
 	                                               hasSession,
 	                                               className
                                                }) => {
@@ -34,9 +40,13 @@ export const NewPostButton: React.FC<Props> = ({
 			{/* 	authorName={authorName} */}
 			{/* 	authorUrl={authorUrl} */}
 			{/* /> */}
+			
 			<AuthModal
 				open={openAuthModal}
 				onClose={() => setOpenAuthModal(false)}
+				logoImage={logoImage}
+				authImage={authImage}
+				stormicName={stormicName}
 			/>
 			
 			<Button
