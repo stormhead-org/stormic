@@ -56,7 +56,7 @@ export const RegisterForm: React.FC<Props> = ({ setType, onClose, onClickLogin }
 			>
 				<p className='text-xl font-bold text-center'>Регистрация</p>
 				<p className='text-gray-400'>
-					На данный момент, регистрация через почту отключена для всех, кроме владельца. Используйте регистрацию через соц. сети
+					Регистрация через почту отключена для всех, кроме кроме разработчика. Используйте регистрацию через соц. сети
 				</p>
 				<FormInput
 					name='email'
@@ -94,7 +94,7 @@ export const RegisterForm: React.FC<Props> = ({ setType, onClose, onClickLogin }
 				</Button>
 				<p className='text-gray-400 text-center'>
 					Есть есть аккаунт? <span className='text-a-color hover:text-a-color-hover cursor-pointer'
-					                    onClick={() => setType('login')}>Войти</span>
+					                         onClick={() => setType('login')}>Войти</span>
 				</p>
 			</form>
 		</FormProvider>
