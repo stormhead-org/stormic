@@ -93,8 +93,8 @@ export const RegisterForm: React.FC<Props> = ({ setType, onClose, onClickLogin }
 					{formatMessage({ id: 'registerForm.regButton' })}
 				</Button>
 				<p className='text-gray-400 text-center'>
-					Есть есть аккаунт? <span className='text-a-color hover:text-a-color-hover cursor-pointer'
-					                         onClick={() => setType('login')}>Войти</span>
+					Уже есть аккаунт? <span className='text-a-color hover:text-a-color-hover cursor-pointer'
+					                        onClick={() => setType('login')}>Войти</span>
 				</p>
 			</form>
 		</FormProvider>
