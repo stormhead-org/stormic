@@ -50,7 +50,7 @@ export const Header: React.FC<Props> = ({
 		<header className={cn('border-b', className)}>
 			<Container className='flex items-center justify-between py-4'>
 				{/* Левая часть */}
-				<Link href='/'>
+				<Link href='/public'>
 					<div className='flex items-center gap-4 w-[250px]'>
 						<img src={logoImage} alt='Logo' width={42} height={42} />
 						<div>

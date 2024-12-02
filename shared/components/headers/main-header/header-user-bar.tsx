@@ -5,7 +5,7 @@ import { LocaleToggle } from '@/shared/components/ui/locale-toggle'
 import { ModeToggle } from '@/shared/components/ui/mode-toggle'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
-import { AuthModal } from '../modals'
+import { AuthModal } from '../../modals'
 
 interface Props {
 	stormicName: string
