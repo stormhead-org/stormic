@@ -1,6 +1,7 @@
 'use client'
 
 import { AuthModal } from '@/shared/components/modals'
+import { NewCommunityModal } from '@/shared/components/modals/new-community-modal'
 import { WriteModal } from '@/shared/components/modals/write-modal'
 import React from 'react'
 import { useIntl } from 'react-intl'
@@ -18,7 +19,7 @@ interface Props {
 	className?: string
 }
 
-export const NewPostButton: React.FC<Props> = ({
+export const NewCommunityButton: React.FC<Props> = ({
 	                                               authorAvatar,
 	                                               authorName,
 	                                               authorUrl,
@@ -29,18 +30,18 @@ export const NewPostButton: React.FC<Props> = ({
 	                                               className
                                                }) => {
 	const { formatMessage } = useIntl()
-	const [openWriteModal, setOpenWriteModal] = React.useState(false)
+	const [openWriteModal, setopenWriteModal] = React.useState(false)
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 	
 	return (
 		<div className={cn('', className)}>
-			{/* <WriteModal */}
-			{/* 	open={openWriteModal} */}
-			{/* 	onClose={() => setOpenWriteModal(false)} */}
-			{/* 	authorAvatar={authorAvatar} */}
-			{/* 	authorName={authorName} */}
-			{/* 	authorUrl={authorUrl} */}
-			{/* /> */}
+			<NewCommunityModal
+				open={openWriteModal}
+				onClose={() => setopenWriteModal(false)}
+				authorAvatar={authorAvatar}
+				authorName={authorName}
+				authorUrl={authorUrl}
+			/>
 			
 			<AuthModal
 				open={openAuthModal}
@@ -54,9 +55,9 @@ export const NewPostButton: React.FC<Props> = ({
 				variant='blue'
 				className='h-12 w-full text-lg font-bold'
 				type='button'
-				onClick={hasSession ? () => setOpenWriteModal(true) : () => setOpenAuthModal(true)}
+				onClick={hasSession ? () => setopenWriteModal(true) : () => setOpenAuthModal(true)}
 			>
-				{formatMessage({ id: 'newPostButton' })}
+				Создать сообщество
 			</Button>
 		</div>
 	)

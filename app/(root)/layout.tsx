@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
-import { Header } from '@/shared/components/header/header'
+import { Header } from '@/shared/components/headers/main-header/header'
 import { getUserSession } from '@/shared/lib'
 import type { Metadata } from 'next'
 import React, { Suspense } from 'react'
