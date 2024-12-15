@@ -38,9 +38,6 @@ export const NewCommunityButton: React.FC<Props> = ({
 			<NewCommunityModal
 				open={openWriteModal}
 				onClose={() => setopenWriteModal(false)}
-				authorAvatar={authorAvatar}
-				authorName={authorName}
-				authorUrl={authorUrl}
 			/>
 			
 			<AuthModal
