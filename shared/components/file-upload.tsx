@@ -1,17 +1,21 @@
 'use client'
 
-import { UploadDropzone } from '@/shared/lib/uploadthing'
+import { UploadButton, UploadDropzone } from '@/shared/lib/uploadthing'
+import { cn } from '@/shared/lib/utils'
 import { FileIcon, X } from 'lucide-react'
 
 import '@uploadthing/react/styles.css'
 
 interface FileUploadProps {
+	className?: string
+	description?: boolean
+	label?: boolean
 	onChange: (url?: string) => void
 	value: string
 	endpoint: 'messageFile' | 'serverImage'
 }
 
-export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
+export const FileUpload = ({ className, description, label = true, onChange, value, endpoint }: FileUploadProps) => {
 	const fileType = value?.split('.').pop()
 	
 	if (value && fileType !== 'pdf') {
@@ -58,7 +62,28 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
 	}
 	
 	return (
-		// <UploadButton
+		<UploadButton
+			className={cn('', className)}
+			endpoint='imageUploader'
+			onClientUploadComplete={res => {
+				onChange(res?.[0].url)
+			}}
+			onUploadError={(error: Error) => {
+				console.log(error)
+			}}
+			content={{
+				button({ ready }) {
+					if (ready) return <div>{label && 'Загрузить'}</div>;
+					return "Секундочку...";
+				},
+				allowedContent({ ready, fileTypes, isUploading }) {
+					if (!ready) return "Готовим загрузчик...";
+					if (isUploading) return "Загрузка...";
+					return `Доступно для загрузки: ${fileTypes.join(", ")}`;
+				},
+			}}
+		/>
+		// <UploadDropzone
 		// 	endpoint='imageUploader'
 		// 	onClientUploadComplete={res => {
 		// 		onChange(res?.[0].url)
@@ -67,14 +92,5 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
 		// 		console.log(error)
 		// 	}}
 		// />
-		<UploadDropzone
-			endpoint='imageUploader'
-			onClientUploadComplete={res => {
-				onChange(res?.[0].url)
-			}}
-			onUploadError={(error: Error) => {
-				console.log(error)
-			}}
-		/>
 	)
 }
