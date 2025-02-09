@@ -13,6 +13,7 @@
 	"profileButton": {
 		"login": "Войти",
 		"profile": "Профиль",
+		"drafts": "Черновики",
 		"Settings": "Настройки",
 		"logout": "Выйти"
 	},
