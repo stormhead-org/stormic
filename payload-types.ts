@@ -13,8 +13,8 @@ export interface Config {
   collections: {
     users: User;
     posts: Post;
-    comments: Comment;
     communities: Community;
+    comments: Comment;
     media: Media;
     roles: Role;
     search: Search;
@@ -27,26 +27,25 @@ export interface Config {
   collectionsJoins: {
     users: {
       relatedPosts: 'posts';
-      relatedComments: 'comments';
       ownerCommunities: 'communities';
       moderationCommunities: 'communities';
     };
     posts: {
       relatedComments: 'comments';
     };
-    comments: {
-      childrenComments: 'comments';
-    };
     communities: {
       relatedPosts: 'posts';
       relatedComments: 'comments';
+    };
+    comments: {
+      childrenComments: 'comments';
     };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    comments: CommentsSelect<false> | CommentsSelect<true>;
     communities: CommunitiesSelect<false> | CommunitiesSelect<true>;
+    comments: CommentsSelect<false> | CommentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     roles: RolesSelect<false> | RolesSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
@@ -120,10 +119,6 @@ export interface User {
   userRoles?: (number | Role)[] | null;
   relatedPosts?: {
     docs?: (number | Post)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  relatedComments?: {
-    docs?: (number | Comment)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   ownerCommunities?: {
@@ -290,11 +285,8 @@ export interface Post {
      */
     image?: (number | null) | Media;
   };
-  publishedAt?: string | null;
   owner?: (number | null) | User;
   author?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -316,8 +308,6 @@ export interface Comment {
     docs?: (number | Comment)[] | null;
     hasNextPage?: boolean | null;
   } | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -516,12 +506,12 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
-        relationTo: 'comments';
-        value: number | Comment;
-      } | null)
-    | ({
         relationTo: 'communities';
         value: number | Community;
+      } | null)
+    | ({
+        relationTo: 'comments';
+        value: number | Comment;
       } | null)
     | ({
         relationTo: 'media';
@@ -603,7 +593,6 @@ export interface UsersSelect<T extends boolean = true> {
       };
   userRoles?: T;
   relatedPosts?: T;
-  relatedComments?: T;
   ownerCommunities?: T;
   moderationCommunities?: T;
   updatedAt?: T;
@@ -634,32 +623,11 @@ export interface PostsSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
-  publishedAt?: T;
   owner?: T;
   author?: T;
-  slug?: T;
-  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "comments_select".
- */
-export interface CommentsSelect<T extends boolean = true> {
-  parentPost?: T;
-  community?: T;
-  owner?: T;
-  author?: T;
-  content?: T;
-  commentMedia?: T;
-  parentComment?: T;
-  childrenComments?: T;
-  slug?: T;
-  slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -703,6 +671,22 @@ export interface CommunitiesSelect<T extends boolean = true> {
   relatedComments?: T;
   slug?: T;
   slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments_select".
+ */
+export interface CommentsSelect<T extends boolean = true> {
+  parentPost?: T;
+  community?: T;
+  owner?: T;
+  author?: T;
+  content?: T;
+  commentMedia?: T;
+  parentComment?: T;
+  childrenComments?: T;
   updatedAt?: T;
   createdAt?: T;
 }

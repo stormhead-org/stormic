@@ -29,7 +29,7 @@ export default buildConfig({
 	admin: {
 		user: Users.slug,
 		importMap: {
-			baseDir: path.resolve(dirname),
+			baseDir: path.resolve(dirname)
 		},
 		livePreview: {
 			breakpoints: [
@@ -37,30 +37,30 @@ export default buildConfig({
 					label: 'Mobile',
 					name: 'mobile',
 					width: 375,
-					height: 667,
+					height: 667
 				},
 				{
 					label: 'Tablet',
 					name: 'tablet',
 					width: 768,
-					height: 1024,
+					height: 1024
 				},
 				{
 					label: 'Desktop',
 					name: 'desktop',
 					width: 1440,
-					height: 900,
-				},
-			],
-		},
+					height: 900
+				}
+			]
+		}
 	},
-	collections: [Users, Posts, Comments, Communities, Media, Roles],
+	collections: [Users, Posts, Communities, Comments, Media, Roles],
 	globals: [HostSettings, SidebarNavigation],
 	cors: [getServerSideURL()].filter(Boolean),
 	editor: lexicalEditor(),
 	secret: process.env.PAYLOAD_SECRET || '',
 	typescript: {
-		outputFile: path.resolve(dirname, 'payload-types.ts'),
+		outputFile: path.resolve(dirname, 'payload-types.ts')
 	},
 	jobs: {
 		access: {
@@ -73,20 +73,20 @@ export default buildConfig({
 				// Authorization header:
 				const authHeader = req.headers.get('authorization')
 				return authHeader === `Bearer ${process.env.CRON_SECRET}`
-			},
+			}
 		},
-		tasks: [],
+		tasks: []
 	},
 
 	i18n: {
 		fallbackLanguage: 'en',
-		supportedLanguages: { en, ru },
+		supportedLanguages: { en, ru }
 	},
 
 	db: postgresAdapter({
 		pool: {
-			connectionString: process.env.DATABASE_URI || '',
-		},
+			connectionString: process.env.DATABASE_URI || ''
+		}
 	}),
 
 	email: nodemailerAdapter({
@@ -97,16 +97,16 @@ export default buildConfig({
 			port: 587,
 			auth: {
 				user: process.env.SMTP_USER,
-				pass: process.env.SMTP_PASS,
-			},
-		},
+				pass: process.env.SMTP_PASS
+			}
+		}
 	}),
 
 	sharp,
 	plugins: [
 		s3Storage({
 			collections: {
-				media: true,
+				media: true
 			},
 			bucket: process.env.S3_BUCKET || '',
 			config: {
@@ -114,29 +114,29 @@ export default buildConfig({
 				endpoint: process.env.S3_ENDPOINT || '',
 				credentials: {
 					accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-					secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+					secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || ''
 				},
-				forcePathStyle: true,
-			},
+				forcePathStyle: true
+			}
 		}),
 		seoPlugin({
 			collections: ['posts'],
-			globals: ['get-started'],
-			uploadsCollection: 'media',
+			// globals: ['get-started'],
+			uploadsCollection: 'media'
 		}),
 		searchPlugin({
 			collections: ['posts'],
 			defaultPriorities: {
-				posts: 20,
-			},
+				posts: 20
+			}
 		}),
 		redirectsPlugin({
 			collections: ['posts'],
 			overrides: {
 				hooks: {
-					afterChange: [revalidateRedirects],
-				},
-			},
-		}),
-	],
+					afterChange: [revalidateRedirects]
+				}
+			}
+		})
+	]
 })

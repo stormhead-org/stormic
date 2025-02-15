@@ -11,39 +11,39 @@ export const Communities: CollectionConfig = {
 		create: authenticated,
 		delete: authenticated,
 		read: anyone,
-		update: authenticated,
+		update: authenticated
 	},
 	admin: {
-		useAsTitle: 'title',
+		useAsTitle: 'title'
 	},
 	fields: [
 		{
 			label: 'Логотип',
 			name: 'communityLogo',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'Баннер',
 			name: 'communityBanner',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'Название сообщества',
 			name: 'title',
 			type: 'text',
-			required: true,
+			required: true
 		},
 		{
 			label: 'E-mail для связи',
 			name: 'communityContactEmail',
-			type: 'text',
+			type: 'text'
 		},
 		{
 			label: 'Описание сообщества',
 			name: 'communityDescription',
-			type: 'textarea',
+			type: 'textarea'
 		},
 		{
 			label: 'Таблица деталей',
@@ -60,8 +60,8 @@ export const Communities: CollectionConfig = {
 							type: 'text',
 							required: true,
 							admin: {
-								width: '50%',
-							},
+								width: '50%'
+							}
 						},
 						{
 							label: 'Значение',
@@ -69,45 +69,45 @@ export const Communities: CollectionConfig = {
 							type: 'text',
 							required: true,
 							admin: {
-								width: '50%',
-							},
-						},
-					],
-				},
-			],
+								width: '50%'
+							}
+						}
+					]
+				}
+			]
 		},
 		{
 			label: 'Владелец сообщества',
 			name: 'owner',
 			type: 'relationship',
 			hasMany: false,
-			relationTo: 'users',
+			relationTo: 'users'
 		},
 		{
 			label: 'Модераторы сообщества',
 			name: 'moderators',
 			type: 'relationship',
 			hasMany: true,
-			relationTo: 'users',
+			relationTo: 'users'
 		},
 		{
 			name: 'communityModerators',
 			type: 'array',
 			access: {
-				update: () => false,
+				update: () => false
 			},
 			admin: {
 				disabled: true,
-				readOnly: true,
+				readOnly: true
 			},
 			fields: [
 				{
 					name: 'id',
-					type: 'text',
+					type: 'text'
 				},
 				{
 					name: 'name',
-					type: 'text',
+					type: 'text'
 				},
 				{
 					name: 'authorAvatar',
@@ -115,11 +115,11 @@ export const Communities: CollectionConfig = {
 					fields: [
 						{
 							name: 'url',
-							type: 'text',
-						},
-					],
-				},
-			],
+							type: 'text'
+						}
+					]
+				}
+			]
 		},
 		{
 			label: 'Правила',
@@ -129,14 +129,14 @@ export const Communities: CollectionConfig = {
 				{
 					label: 'Название',
 					name: 'communityNameRule',
-					type: 'text',
+					type: 'text'
 				},
 				{
 					label: 'Описание',
 					name: 'communityDescriptionRule',
-					type: 'textarea',
-				},
-			],
+					type: 'textarea'
+				}
+			]
 		},
 		{
 			label: 'Посты в сообществе',
@@ -154,7 +154,7 @@ export const Communities: CollectionConfig = {
 			defaultSort: '-title',
 			defaultLimit: 5,
 			on: 'community',
-			maxDepth: 1,
+			maxDepth: 1
 		},
 		{
 			label: 'Комментарии в сообществе',
@@ -162,11 +162,11 @@ export const Communities: CollectionConfig = {
 			type: 'join',
 			collection: 'comments',
 			on: 'community',
-			maxDepth: 1,
+			maxDepth: 1
 		},
-		...slugField(),
+		...slugField()
 	],
 	hooks: {
-		afterRead: [communityModerators],
-	},
+		afterRead: [communityModerators]
+	}
 }

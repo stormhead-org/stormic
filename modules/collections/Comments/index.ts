@@ -1,6 +1,4 @@
 import type { CollectionConfig } from 'payload'
-
-import { slugField } from '@/fields/slug'
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { Author } from './hooks/author'
@@ -11,8 +9,11 @@ export const Comments: CollectionConfig = {
 		create: authenticated,
 		delete: authenticated,
 		read: anyone,
-		update: authenticated,
+		update: authenticated
 	},
+	// admin: {
+	// 	useAsTitle: 'content'
+	// },
 	fields: [
 		{
 			label: 'Родительский пост',
@@ -20,7 +21,7 @@ export const Comments: CollectionConfig = {
 			type: 'relationship',
 			hasMany: false,
 			relationTo: 'posts',
-			required: true,
+			required: true
 		},
 		{
 			label: 'Сообщество',
@@ -28,7 +29,7 @@ export const Comments: CollectionConfig = {
 			type: 'relationship',
 			hasMany: false,
 			relationTo: 'communities',
-			required: true,
+			required: true
 		},
 		{
 			label: 'Автор комментария',
@@ -36,30 +37,30 @@ export const Comments: CollectionConfig = {
 			type: 'relationship',
 			hasMany: false,
 			relationTo: 'users',
-			required: true,
+			required: true
 		},
 		{
 			name: 'author',
 			type: 'text',
 			access: {
-				update: () => false,
+				update: () => false
 			},
 			admin: {
 				disabled: true,
-				readOnly: true,
-			},
+				readOnly: true
+			}
 		},
 		{
 			label: 'Текст комментария',
 			name: 'content',
 			type: 'textarea',
-			required: true,
+			required: true
 		},
 		{
 			label: 'Медиа',
 			name: 'commentMedia',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'Родительский комментарий',
@@ -67,10 +68,7 @@ export const Comments: CollectionConfig = {
 			type: 'relationship',
 			hasMany: false,
 			relationTo: 'comments',
-			required: false,
-			filterOptions: ({ id }) => ({
-				id: { not_in: [id] },
-			}),
+			required: false
 		},
 		{
 			label: 'Дочерние комментарии',
@@ -79,11 +77,10 @@ export const Comments: CollectionConfig = {
 			collection: 'comments',
 			on: 'parentComment',
 			maxDepth: 1,
-			required: false,
-		},
-		...slugField(),
+			required: false
+		}
 	],
 	hooks: {
-		afterRead: [Author],
-	},
+		afterRead: [Author]
+	}
 }

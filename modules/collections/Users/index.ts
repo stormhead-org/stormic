@@ -17,35 +17,35 @@ export const Users: CollectionConfig = {
 		create: authenticated,
 		delete: authenticated,
 		read: authenticated,
-		update: authenticated,
+		update: authenticated
 	},
 	admin: {
 		defaultColumns: ['name', 'email'],
-		useAsTitle: 'name',
+		useAsTitle: 'name'
 	},
 	auth: true,
 	fields: [
 		{
 			label: 'Имя',
 			name: 'name',
-			type: 'text',
+			type: 'text'
 		},
 		{
 			label: 'Аватар',
 			name: 'userAvatar',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'Баннер профиля',
 			name: 'userBanner',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'О себе',
 			name: 'userDescription',
-			type: 'textarea',
+			type: 'textarea'
 		},
 		{
 			label: 'Таблица деталей',
@@ -62,8 +62,8 @@ export const Users: CollectionConfig = {
 							type: 'text',
 							required: true,
 							admin: {
-								width: '50%',
-							},
+								width: '50%'
+							}
 						},
 						{
 							label: 'Значение',
@@ -71,12 +71,12 @@ export const Users: CollectionConfig = {
 							type: 'text',
 							required: true,
 							admin: {
-								width: '50%',
-							},
-						},
-					],
-				},
-			],
+								width: '50%'
+							}
+						}
+					]
+				}
+			]
 		},
 		{
 			label: 'Роли',
@@ -90,7 +90,7 @@ export const Users: CollectionConfig = {
 			// 	}
 			// },
 			hasMany: true,
-			relationTo: 'roles',
+			relationTo: 'roles'
 		},
 		{
 			label: 'Посты пользователя',
@@ -99,23 +99,23 @@ export const Users: CollectionConfig = {
 			collection: 'posts',
 			defaultSort: '-title',
 			on: 'owner',
-			maxDepth: 1,
+			maxDepth: 1
 		},
-		{
-			label: 'Комментарии пользователя',
-			name: 'relatedComments',
-			type: 'join',
-			collection: 'comments',
-			on: 'owner',
-			maxDepth: 1,
-		},
+		// {
+		// 	label: 'Комментарии пользователя',
+		// 	name: 'relatedComments',
+		// 	type: 'join',
+		// 	collection: 'comments',
+		// 	on: 'owner',
+		// 	maxDepth: 1
+		// },
 		{
 			label: 'Администрируемые сообщества',
 			name: 'ownerCommunities',
 			type: 'join',
 			collection: 'communities',
 			on: 'owner',
-			maxDepth: 1,
+			maxDepth: 1
 		},
 		{
 			label: 'Модерируемые сообщества',
@@ -123,11 +123,11 @@ export const Users: CollectionConfig = {
 			type: 'join',
 			collection: 'communities',
 			on: 'moderators',
-			maxDepth: 1,
-		},
+			maxDepth: 1
+		}
 	],
 	hooks: {
-		afterRead: [userData],
+		afterRead: [userData]
 	},
-	timestamps: true,
+	timestamps: true
 }

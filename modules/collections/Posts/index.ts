@@ -1,14 +1,12 @@
 import type { CollectionConfig } from 'payload'
-
 import {
 	BlocksFeature,
 	FixedToolbarFeature,
 	HeadingFeature,
 	HorizontalRuleFeature,
 	InlineToolbarFeature,
-	lexicalEditor,
+	lexicalEditor
 } from '@payloadcms/richtext-lexical'
-
 import { authenticated } from '@/modules/access/authenticated'
 import { authenticatedOrPublished } from '@/modules/access/authenticatedOrPublished'
 import { Banner } from '@/modules/collections/blocks/Banner/config'
@@ -17,14 +15,13 @@ import { MediaBlock } from '@/modules/collections/blocks/MediaBlock/config'
 import { generatePreviewPath } from '@/shared/lib/generatePreviewPath'
 import { Author } from './hooks/author'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
-
 import { slugField } from '@/fields/slug'
 import {
 	MetaDescriptionField,
 	MetaImageField,
 	MetaTitleField,
 	OverviewField,
-	PreviewField,
+	PreviewField
 } from '@payloadcms/plugin-seo/fields'
 import { RelatedPost } from './hooks/relatedPost'
 
@@ -34,11 +31,8 @@ export const Posts: CollectionConfig<'posts'> = {
 		create: authenticated,
 		delete: authenticated,
 		read: authenticatedOrPublished,
-		update: authenticated,
+		update: authenticated
 	},
-	// This config controls what's populated by default when a post is referenced
-	// https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
-	// Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'posts'>
 	defaultPopulate: {
 		content: true,
 		heroImage: true,
@@ -50,8 +44,8 @@ export const Posts: CollectionConfig<'posts'> = {
 		community: true,
 		meta: {
 			image: true,
-			description: true,
-		},
+			description: true
+		}
 	},
 	admin: {
 		defaultColumns: ['title', 'slug', 'updatedAt'],
@@ -60,35 +54,37 @@ export const Posts: CollectionConfig<'posts'> = {
 				const path = generatePreviewPath({
 					slug: typeof data?.slug === 'string' ? data.slug : '',
 					collection: 'posts',
-					req,
+					req
 				})
 
 				return path
-			},
+			}
 		},
 		preview: (data, { req }) =>
 			generatePreviewPath({
 				slug: typeof data?.slug === 'string' ? data.slug : '',
 				collection: 'posts',
-				req,
+				req
 			}),
-		useAsTitle: 'title',
+		useAsTitle: 'title'
 	},
 	fields: [
 		{
+			label: 'Название',
 			name: 'title',
 			type: 'text',
-			required: true,
+			required: true
 		},
 		{
 			type: 'tabs',
 			tabs: [
 				{
+					label: 'Content',
 					fields: [
 						{
 							name: 'heroImage',
 							type: 'upload',
-							relationTo: 'media',
+							relationTo: 'media'
 						},
 						{
 							name: 'content',
@@ -98,17 +94,17 @@ export const Posts: CollectionConfig<'posts'> = {
 									return [
 										...rootFeatures,
 										HeadingFeature({
-											enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'],
+											enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4']
 										}),
 										BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
 										FixedToolbarFeature(),
 										InlineToolbarFeature(),
-										HorizontalRuleFeature(),
+										HorizontalRuleFeature()
 									]
-								},
+								}
 							}),
 							label: false,
-							required: true,
+							required: true
 						},
 						{
 							label: 'Комментарии к посту',
@@ -116,40 +112,39 @@ export const Posts: CollectionConfig<'posts'> = {
 							type: 'join',
 							collection: 'comments',
 							on: 'parentPost',
-							maxDepth: 1,
-						},
-					],
-					label: 'Content',
+							maxDepth: 1
+						}
+					]
 				},
 				{
+					label: 'Meta',
 					fields: [
 						{
 							name: 'relatedPost',
 							type: 'relationship',
 							admin: {
-								position: 'sidebar',
+								position: 'sidebar'
 							},
 							filterOptions: ({ id }) => {
 								return {
 									id: {
-										not_in: [id],
-									},
+										not_in: [id]
+									}
 								}
 							},
 							hasMany: false,
-							relationTo: 'posts',
+							relationTo: 'posts'
 						},
 						{
 							name: 'community',
 							type: 'relationship',
 							admin: {
-								position: 'sidebar',
+								position: 'sidebar'
 							},
 							hasMany: false,
-							relationTo: 'communities',
-						},
-					],
-					label: 'Meta',
+							relationTo: 'communities'
+						}
+					]
 				},
 				{
 					name: 'meta',
@@ -158,57 +153,57 @@ export const Posts: CollectionConfig<'posts'> = {
 						OverviewField({
 							titlePath: 'meta.title',
 							descriptionPath: 'meta.description',
-							imagePath: 'meta.image',
+							imagePath: 'meta.image'
 						}),
 						MetaTitleField({
-							hasGenerateFn: true,
+							hasGenerateFn: true
 						}),
 						MetaImageField({
-							relationTo: 'media',
+							relationTo: 'media'
 						}),
 
-						MetaDescriptionField({}),
-						PreviewField({
-							// if the `generateUrl` function is configured
-							hasGenerateFn: true,
+						MetaDescriptionField({})
+						// PreviewField({
+						// 	if the `generateUrl` function is configured
+						// 	hasGenerateFn: true,
 
-							// field paths to match the target field for data
-							titlePath: 'meta.title',
-							descriptionPath: 'meta.description',
-						}),
-					],
-				},
-			],
+						// 	field paths to match the target field for data
+						// 	titlePath: 'meta.title',
+						// 	descriptionPath: 'meta.description'
+						// })
+					]
+				}
+			]
 		},
-		{
-			name: 'publishedAt',
-			type: 'date',
-			admin: {
-				date: {
-					pickerAppearance: 'dayAndTime',
-				},
-				position: 'sidebar',
-			},
-			hooks: {
-				beforeChange: [
-					({ siblingData, value }) => {
-						if (siblingData._status === 'published' && !value) {
-							return new Date()
-						}
-						return value
-					},
-				],
-			},
-		},
+		// {
+		// 	name: 'publishedAt',
+		// 	type: 'date',
+		// 	admin: {
+		// 		date: {
+		// 			pickerAppearance: 'dayAndTime'
+		// 		},
+		// 		position: 'sidebar'
+		// 	},
+		// 	hooks: {
+		// 		beforeChange: [
+		// 			({ siblingData, value }) => {
+		// 				if (siblingData._status === 'published' && !value) {
+		// 					return new Date()
+		// 				}
+		// 				return value
+		// 			}
+		// 		]
+		// 	}
+		// },
 		{
 			label: 'Автор',
 			name: 'owner',
 			type: 'relationship',
 			admin: {
-				position: 'sidebar',
+				position: 'sidebar'
 			},
 			hasMany: false,
-			relationTo: 'users',
+			relationTo: 'users'
 		},
 		// This field is only used to populate the user data via the `author` hook
 		// This is because the `user` collection has access control locked to protect user privacy
@@ -217,27 +212,27 @@ export const Posts: CollectionConfig<'posts'> = {
 			name: 'author',
 			type: 'text',
 			access: {
-				update: () => false,
+				update: () => false
 			},
 			admin: {
 				disabled: true,
-				readOnly: true,
-			},
-		},
-		...slugField(),
+				readOnly: true
+			}
+		}
+		// ...slugField()
 	],
 	hooks: {
 		afterChange: [revalidatePost],
 		afterRead: [Author, RelatedPost],
-		afterDelete: [revalidateDelete],
+		afterDelete: [revalidateDelete]
 	},
 	versions: {
 		drafts: {
 			autosave: {
-				interval: 100,
+				interval: 100
 			},
-			schedulePublish: true,
+			schedulePublish: true
 		},
-		maxPerDoc: 50,
-	},
+		maxPerDoc: 50
+	}
 }
