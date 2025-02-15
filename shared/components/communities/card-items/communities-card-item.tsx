@@ -1,7 +1,7 @@
 'use client'
 
 import { ProfileAvatar } from '@/shared/components'
-import CommunityFollowButton from '@/shared/components/community-follow-button'
+// import CommunityFollowButton from '@/shared/components/community-follow-button'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { CategoryFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
@@ -11,10 +11,10 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export interface CommunitiesCardItemProps {
-	categoryId: number
+	communityId: number
 	image?: string
 	name: string
-	description: string
+	description: string | null | undefined
 	url?: string
 	postCount: number
 	followersCount: number
@@ -29,17 +29,17 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 }
 
 export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
-	                                                                        categoryId,
-	                                                                        image,
-	                                                                        name,
-	                                                                        description,
-	                                                                        url,
-	                                                                        postCount,
-	                                                                        className
-                                                                        }) => {
+	communityId,
+	image,
+	name,
+	description,
+	url,
+	postCount,
+	className,
+}) => {
 	const router = useRouter()
 	const truncatedName = truncateText(name, 26)
-	const truncatedDescription = truncateText(description, 26)
+	const truncatedDescription = truncateText(description || '', 26)
 	return (
 		<div className={cn('bg-secondary rounded-md', className)}>
 			<div className='h-full flex'>
@@ -50,15 +50,12 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 								<ProfileAvatar
 									className='w-16 h-16 border-none bg-secondary hover:bg-secondary'
 									avatarImage={String(image)}
-									avatarSize={Number(64)} />
+									avatarSize={Number(64)}
+								/>
 								<div className='flex h-full my-auto'>
 									<div>
-										<p className='font-bold text-md'>
-											{truncatedName}
-										</p>
-										<p className='mt-1'>
-											{truncatedDescription}
-										</p>
+										<p className='font-bold text-md'>{truncatedName}</p>
+										<p className='mt-1'>{truncatedDescription}</p>
 									</div>
 								</div>
 							</div>
@@ -71,12 +68,12 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 								<Newspaper size={20} />
 							</div>
 							<div className='flex gap-2 items-center'>
-								<CategoryFollowersCounter categoryId={categoryId || 0} />
+								<CategoryFollowersCounter categoryId={communityId || 0} />
 								<UserRoundPlus size={20} />
 							</div>
 						</div>
 						<div className='flex justify-end w-1/2'>
-							<CommunityFollowButton categoryId={categoryId} />
+							{/* <CommunityFollowButton categoryId={categoryId} /> */}
 						</div>
 					</div>
 				</div>

@@ -19,21 +19,24 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 }
 
 export const ProfileCustomFieldItem: React.FC<Props> = ({
-	                                                        fieldsKey,
-	                                                        fieldsValue,
-	                                                        loading,
-	                                                        className
-                                                        }) => {
-	
+	fieldsKey,
+	fieldsValue,
+	loading,
+	className,
+}) => {
 	const truncatedContent = truncateText(fieldsValue, 54)
-	
+
 	return (
 		<div className={cn('', className)}>
 			<p className='text-md font-bold mt-2 pt-2 border-t-secondary border-t-2'>
 				{fieldsKey}
 			</p>
-			<Link className='text-md mt-1 text-a-color hover:text-a-color-hover'
-			      href={truncatedContent}>{truncatedContent}</Link>
+			<Link
+				className='text-md mt-1 text-a-color hover:text-a-color-hover'
+				href={truncatedContent}
+			>
+				{truncatedContent}
+			</Link>
 		</div>
 	)
 }

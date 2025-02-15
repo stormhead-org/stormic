@@ -1,0 +1,226 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  @apply no-scrollbar;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --bg-color-ui-item: 216 39.13% 22.55%;
+    --txt-color: 210 5.36% 78.04%;
+    --txt-color-headers: 210 5.88% 80%;
+    --a-color: 218, 70%, 67%;
+    --a-color-hover: 218, 100%, 67%;
+    --notification-color-red: 0 100% 33.33%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 94.6%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.22, 47.37%, 11.18%;
+    --foreground: 210 40% 98%;
+
+    --card: 217.24, 32.58%, 17.45%;
+    --card-foreground: 210 40% 98%;
+
+    --bg-color-ui-item: 216 39.13% 22.55%;
+    --txt-color: 210 5.36% 78.04%;
+    --txt-color-headers: 210 5.88% 80%;
+    --a-color: 218, 70%, 67%;
+    --a-color-hover: 218, 100%, 67%;
+    --notification-color-red: 0 100% 33.33%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+/*Editor.JS*/
+.dark {
+  background-color: var(--secondary);
+}
+
+.dark .ce-toolbar__plus,
+.dark .ce-toolbar__settings-btn,
+.dark .ce-popover-item__title,
+.dark .ce-popover-item__icon {
+  color: var(--secondary);
+}
+
+.dark .cdx-search-field.ce-popover__search {
+  background-color: #1e293b4d;
+  border-color: var(--border);
+}
+
+.dark .cdx-search-field__input {
+  color: var(--secondary);
+}
+
+.dark .cdx-block,
+.dark .ce-block {
+  color: var(--secondary);
+}
+
+.dark .ce-inline-toolbar,
+.dark .ce-conversion-tool__icon,
+.dark .ce-popover-item__icon,
+.dark .tc-popover__item-icon {
+  color: var(--secondary);
+  background-color: var(--primary);
+  border-color: var(--border);
+}
+
+.dark .ce-popover,
+.dark .ce-conversion-toolbar,
+.dark .ce-inline-toolbar,
+.dark .tc-popover {
+  background-color: var(--primary);
+  border-color: var(--border);
+  box-shadow: 0 3px 15px -3px var(--border);
+}
+
+.dark .ce-inline-tool:hover,
+.dark .ce-inline-toolbar__dropdown:hover,
+.dark .ce-toolbar__plus:hover,
+.dark .ce-toolbar__settings-btn:hover,
+.dark .ce-conversion-tool:hover,
+.dark .ce-popover-item:hover {
+  background-color: var(--a-color);
+}
+
+/*.dark *::selection,*/
+/*.dark .ce-block.ce-block--selected .ce-block__content {*/
+/*	background-color: var(--a-color);*/
+/*}*/
+
+.dark .ce-popover__items {
+  scrollbar-color: var(--border) var(--secondary);
+}
+
+/* table class wrapper */
+.dark .tc-wrap,
+.dark .tc-wrap * {
+  --color-border: var(--border);
+  --color-text-secondary: var(--a-color);
+  --color-background: var(--a-color);
+  --toggler-dots-color: var(--a-color);
+  --toggler-dots-color-hovered: var(--a-color);
+}
+
+/*Editor.JS*/
+
+* {
+  font-family: var(--font-nunito), sans-serif;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  border-radius: 6px;
+  @apply bg-secondary;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-primary;
+  border-radius: 6px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+#nprogress .bar {
+  @apply bg-primary !important;
+}
+
+#nprogress .peg {
+  @apply shadow-md shadow-primary !important;
+}
+
+#nprogress .spinner-icon {
+  @apply border-t-primary border-l-primary !important;
+}

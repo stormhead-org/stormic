@@ -1,56 +1,51 @@
-import { PostFullBody } from '@/shared/components/posts/full-post-items/post-full-body'
-import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
-import { PostHeader } from '@/shared/components/posts/post-items/post-header'
-import { cn } from '@/shared/lib/utils'
-import React from 'react'
+import { Post } from "@/payload-types";
+import { PostFullBody } from "@/shared/components/posts/full-post-items/post-full-body";
+import { PostFooter } from "@/shared/components/posts/post-items/post-footer";
+import { PostHeader } from "@/shared/components/posts/post-items/post-header";
+import { formatDateTime } from "@/shared/lib/formatDateTime";
+import { cn } from "@/shared/lib/utils";
+import React from "react";
+import { PostItem } from "../post-items/post-item";
 
-export interface FullPostItemProps {
-	authorId: number
-	postId: number
-	postTitle: string
-	postContent: string
-	postImage?: string | null
-	authorName: string
-	authorUrl: string
-	authorAvatar?: string | null
-	categoryName: string
-	categoryUrl: string
-	postTags?: string[]
-	commentsCount: number
-	viewsCount: number
-	postTime: string
-	className?: string
+interface FullPostItemProps {
+  post: Post;
+  className?: string;
 }
 
 export const FullPostItem: React.FC<FullPostItemProps> = ({
-	                                                          authorId,
-	                                                          postId,
-	                                                          postTitle,
-	                                                          postContent,
-	                                                          postImage,
-	                                                          authorName,
-	                                                          authorUrl,
-	                                                          authorAvatar,
-	                                                          categoryName,
-	                                                          categoryUrl,
-	                                                          postTags,
-	                                                          commentsCount,
-	                                                          viewsCount,
-	                                                          postTime,
-	                                                          className
-                                                          }) => {
-	return (
-		<div className={cn('bg-secondary rounded-md mb-4 p-4', className)}>
-			<PostHeader authorId={authorId} authorAvatar={String(authorAvatar)} authorUrl={authorUrl} authorName={authorName}
-			            categoryName={categoryName} categoryUrl={categoryUrl} postTime={postTime} />
-			<PostFullBody className='cursor-default' postTitle={postTitle} postContent={postContent} postImage={postImage} />
-			<PostFooter
-				postId={postId}
-				postTags={postTags}
-				commentsCount={commentsCount}
-				viewsCount={viewsCount}
-				className='mt-4'
-			/>
-		</div>
-	)
-}
+  post,
+  className,
+}) => {
+  return (
+    <div className={cn("bg-secondary rounded-md mb-4 p-4", className)}>
+      <PostHeader
+        authorUrl={`/users/${post.author?.id}` || "#"}
+        authorName={post.author?.name || "#"}
+        authorAvatar={post.author?.authorAvatar?.url}
+        categoryName={post.community?.title || "#"}
+        categoryUrl={post.community ? `/communities/${post.community.id}` : "#"}
+        postTime={formatDateTime(post.publishedAt ? post.publishedAt : "#")}
+      />
+      <PostFullBody
+        className="cursor-default"
+        postTitle={post.title}
+        postContent={post.content}
+        postHero={post}
+      />
+      {post.relatedPost && (
+        <PostItem
+          post={post.relatedPost as Post}
+          relatedPost={true}
+          className={"mt-6"}
+        />
+      )}
+      <PostFooter
+        // postId={post.id}
+        // postTags={postTags}
+        // commentsCount={commentsCount}
+        // viewsCount={viewsCount}
+        className="mt-4"
+      />
+    </div>
+  );
+};

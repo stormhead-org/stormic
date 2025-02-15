@@ -1,62 +1,53 @@
 'use client'
 
+import { Community, User } from '@/payload-types'
 import { ProfileBody } from '@/shared/components/profiles/community-profiles-items/profile-body'
 import { ProfileHeader } from '@/shared/components/profiles/community-profiles-items/profile-header'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 interface Props {
-	userId?: string
-	categoryId?: string
-	profileBanner?: string
-	profileAvatar?: string
-	profileName: string
-	profileDescription?: string
-	profileRep?: number
-	profileRegTime?: string
-	profileFollowers: number
-	profileFollowing?: number
+	data: User | Community
 	hasUser: boolean
 	className?: string
 }
 
-export const ProfileItem: React.FC<Props> = ({
-	                                             userId,
-	                                             categoryId,
-	                                             profileBanner,
-	                                             profileAvatar,
-	                                             profileName,
-	                                             profileDescription,
-	                                             profileRep,
-	                                             profileRegTime,
-	                                             profileFollowers,
-	                                             profileFollowing,
-	                                             hasUser,
-	                                             className
-                                             }) => {
-	
-	
+export const ProfileItem: React.FC<Props> = ({ data, hasUser, className }) => {
 	return (
 		<div className={cn('', className)}>
 			<div className='rounded-md bg-secondary'>
 				<ProfileHeader
-					userId={Number(userId)}
-					categoryId={Number(categoryId)}
-					profileBanner={profileBanner}
-				  profileName={profileName}
-				  profileRep={profileRep}
-				  profileAvatar={profileAvatar}
-				  hasUser={hasUser}
+					userId={Number(data.id)}
+					// categoryId={Number(categoryId)}
+					profileBanner={
+						'userBanner' in data &&
+						typeof data.userBanner === 'object' &&
+						data.userBanner !== null
+							? data.userBanner.url
+							: 'communityBanner' in data &&
+							  typeof data.communityBanner === 'object' &&
+							  data.communityBanner !== null
+							? data.communityBanner.url
+							: undefined
+					}
+					profileAvatar={
+						'userAvatar' in data &&
+						typeof data.userAvatar === 'object' &&
+						data.userAvatar !== null
+							? data.userAvatar.url
+							: 'communityLogo' in data &&
+							  typeof data.communityLogo === 'object' &&
+							  data.communityLogo !== null
+							? data.communityLogo.url
+							: undefined
+					}
+					profileName={
+						'name' in data ? data.name : (data as Community).title || '#'
+					}
+					profileRep={0}
+					hasUser={hasUser}
 				/>
-				<ProfileBody
-					userId={Number(userId)}
-					categoryId={Number(categoryId)}
-					profileFollowing={profileFollowing}
-				  profileFollowers={profileFollowers}
-				  profileDescription={profileDescription}
-				  profileRegTime={profileRegTime}
-				  hasUser={hasUser}
-				/>
+				<ProfileBody data={data} hasUser={hasUser} />
 			</div>
 		</div>
 	)

@@ -6,8 +6,8 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
 export interface Item {
-	fieldsValue: string
-	fieldsKey: string
+	label: string
+	value: string
 }
 
 interface Props {
@@ -17,21 +17,21 @@ interface Props {
 }
 
 export const ProfileCustomField: React.FC<Props> = ({
-	                                                    items,
-	                                                    loading,
-	                                                    className
-                                                    }) => {
+	items,
+	loading,
+	className,
+}) => {
 	if (loading) {
 		return <Skeleton className='h-6 my-2 rounded-[8px]' />
 	}
-	
+
 	return (
 		<div className={cn('', className)}>
 			{items.map((item, index) => (
 				<ProfileCustomFieldItem
 					key={index}
-					fieldsKey={item.fieldsKey}
-					fieldsValue={item.fieldsValue}
+					fieldsKey={item.label}
+					fieldsValue={item.value}
 				/>
 			))}
 		</div>

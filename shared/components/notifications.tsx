@@ -1,5 +1,5 @@
 import { BellDot } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+// import { useSession } from 'next-auth/react'
 import React from 'react'
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const Notifications: React.FC<Props> = ({ className }) => {
-	const { data: session } = useSession()
-	
-	return session && <BellDot className='hover:text-blue-700 cursor-pointer' />
+	// const { data: session } = useSession()
+
+	return <BellDot className='hover:text-blue-700 cursor-pointer' />
 }

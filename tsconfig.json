@@ -1,19 +1,14 @@
 {
 	"compilerOptions": {
-		"lib": [
-			"dom",
-			"dom.iterable",
-			"esnext"
-		],
+		"target": "ES2017",
+		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"noEmit": true,
 		"esModuleInterop": true,
-		"module": "CommonJS",
-		//esnext
-		"moduleResolution": "node",
-		//bundler
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"jsx": "preserve",
@@ -24,18 +19,18 @@
 			}
 		],
 		"paths": {
-			"@/*": [
-				"./*"
-			]
+			"@/*": ["./*"],
+			"@payload-config": ["./payload.config.ts"]
 		}
 	},
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		".next/types/**/*.ts"
+		".next/types/**/*.ts",
+		"shared/endpoints/seed/index.ts",
+		"app/(web)/(main)/next/seed/route",
+		"shared/endpoints/seed/index"
 	],
-	"exclude": [
-		"node_modules"
-	]
+	"exclude": ["node_modules"]
 }

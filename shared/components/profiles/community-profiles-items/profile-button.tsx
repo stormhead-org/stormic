@@ -1,42 +1,46 @@
 'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar'
-import { Button } from '@/shared/components/ui/button'
+import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
+} from '@/shared/components/ui/avatar'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuTrigger
+	DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import { CircleUser } from 'lucide-react'
-import { signOut, useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+// import { signOut, useSession } from 'next-auth/react'
 import React from 'react'
-import { useIntl } from 'react-intl'
+import { Button } from '../../ui/button'
+// import { useIntl } from 'react-intl'
 
 interface Props {
 	avatarImage: string
 	userUrl: string
+	session: boolean
 	onClickSignIn?: () => void
 	className?: string
 }
 
 export const ProfileButton: React.FC<Props> = ({
-	                                               avatarImage,
-	                                               userUrl,
-	                                               onClickSignIn,
-	                                               className
-                                               }) => {
-	const { formatMessage } = useIntl()
-	const { data: session } = useSession()
-	const router = useRouter()
-	
-	const onClickSignOut = () => {
-		signOut({
-			callbackUrl: '/'
-		})
-	}
-	
+	avatarImage,
+	userUrl,
+	session,
+	onClickSignIn,
+	className,
+}) => {
+	// const { formatMessage } = useIntl()
+	// const router = useRouter()
+
+	// const onClickSignOut = () => {
+	// 	signOut({
+	// 		callbackUrl: '/'
+	// 	})
+	// }
+
 	return (
 		<div className={className}>
 			{!session ? (
@@ -46,14 +50,14 @@ export const ProfileButton: React.FC<Props> = ({
 					className='flex items-center gap-2 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white rounded-full'
 				>
 					<CircleUser size={18} />
-					{formatMessage({ id: 'profileButton.login' })}
+					{/* {formatMessage({ id: 'profileButton.login' })} */}
+					Войти
 				</Button>
 			) : (
 				<>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Avatar
-								className='border-2 border-transparent rounded-full cursor-pointer hover:border-blue-800 hover:bg-blue-800'>
+							<Avatar className='border-2 border-transparent rounded-full cursor-pointer hover:border-blue-800 hover:bg-blue-800'>
 								<AvatarImage
 									className='m-auto rounded-full'
 									src={avatarImage}
@@ -66,21 +70,24 @@ export const ProfileButton: React.FC<Props> = ({
 						<DropdownMenuContent align='end' className='bg-secondary'>
 							<DropdownMenuItem
 								className='cursor-pointer'
-								onClick={() => router.push(userUrl)}
+								// onClick={() => router.push(userUrl)}
 							>
-								{formatMessage({ id: 'profileButton.profile' })}
+								{/* {formatMessage({ id: 'profileButton.profile' })} */}
+								Профиль
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								className='cursor-pointer'
-								onClick={() => router.push('/settings/profile')}
+								// onClick={() => router.push('/settings/profile')}
 							>
-								{formatMessage({ id: 'profileButton.Settings' })}
+								{/* {formatMessage({ id: 'profileButton.Settings' })} */}
+								Настройки
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								className='cursor-pointer'
-								onClick={() => onClickSignOut()}
+								// onClick={() => onClickSignOut()}
 							>
-								{formatMessage({ id: 'profileButton.logout' })}
+								{/* {formatMessage({ id: 'profileButton.logout' })} */}
+								Выйти
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

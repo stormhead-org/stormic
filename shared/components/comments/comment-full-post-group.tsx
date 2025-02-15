@@ -1,52 +1,53 @@
 'use client'
 
+import { User } from '@/payload-types'
 import { CommentInput } from '@/shared/components/comments/comment-input-items/comment-input'
 import { PostCommentsList } from '@/shared/components/comments/post-comments-list'
 import { cn } from '@/shared/lib/utils'
-import type { User } from '@prisma/client'
 import { ListFilter } from 'lucide-react'
 import React from 'react'
-import { useIntl } from 'react-intl'
+// import { useIntl } from 'react-intl'
 
 export interface Comment {
-	postId: number;
-	comment_id: number;
-	content: string;
-	author_id: number;
-	author_fullName: string;
-	author_profile_picture: string;
-	publication_date: string;
-	parent_comment_id: number | null;
-	children: Comment[];
+	postId: number
+	comment_id: number
+	content: string
+	author_id: number
+	author_fullName: string
+	author_profile_picture: string
+	publication_date: string
+	parent_comment_id: number | null
+	children: Comment[]
 }
 
 interface Props {
-	postId: number;
-	currentUser: User | null;
-	commentsHeader: string;
-	className?: string;
+	postId: number
+	currentUser: User | null
+	commentsHeader: string
+	className?: string
 }
 
 export const CommentFullPostGroup: React.FC<Props> = ({
-	                                                      postId,
-	                                                      currentUser,
-	                                                      commentsHeader,
-	                                                      className
-                                                      }) => {
-	
-	const { formatMessage } = useIntl()
-	
+	postId,
+	currentUser,
+	commentsHeader,
+	className,
+}) => {
+	// const { formatMessage } = useIntl()
+
 	return (
 		<div className={cn('bg-secondary rounded-md p-4', className)}>
-			
 			<div className='flex justify-between items-center'>
 				{commentsHeader > String(0) ? (
 					<p className='pl-1 text-lg cursor-default'>
-						{commentsHeader} {formatMessage({ id: 'commentInputForm.commentsHeaderCount' })}
+						{commentsHeader}
+						{/* {formatMessage({ id: 'commentInputForm.commentsHeaderCount' })} */}
+						комментариев
 					</p>
 				) : (
 					<p className='pl-1 text-lg cursor-default'>
-						{formatMessage({ id: 'commentInputForm.commentsHeaderEmpty' })}
+						{/* {formatMessage({ id: 'commentInputForm.commentsHeaderEmpty' })} */}
+						Тут пока никого нет...
 					</p>
 				)}
 				<div className='flex items-center gap-2'>
@@ -57,11 +58,11 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 					</div>
 				</div>
 			</div>
-			
+
 			<CommentInput
 				apiUrl={'/api/socket/posts/comments'}
 				query={{
-					postId: postId
+					postId: postId,
 				}}
 			/>
 			<PostCommentsList
@@ -70,7 +71,7 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 				apiUrl={`/api/posts/${postId}/comments`}
 				socketUrl={'/api/socket/posts/comments'}
 				socketQuery={{
-					postId: String(postId)
+					postId: String(postId),
 				}}
 				paramKey='postId'
 				paramValue={String(postId)}

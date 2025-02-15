@@ -3,17 +3,22 @@ import React from 'react'
 import { SearchInput } from './search-input'
 
 interface Props {
-	stormicName: string | null
-	bannerUrl: string | null
+	stormicName: string | null | undefined
+	bannerUrl: string | null | undefined
 	search?: boolean
 	className?: string
 }
 
-export const MainBannerForm: React.FC<Props> = ({ stormicName, bannerUrl, search = true, className }) => {
+export const MainBannerForm: React.FC<Props> = ({
+	stormicName,
+	bannerUrl,
+	search = true,
+	className,
+}) => {
 	const styling = {
-		backgroundImage: `url('${String(bannerUrl)}')`
+		backgroundImage: `url('${String(bannerUrl)}')`,
 	}
-	
+
 	return (
 		<div className={cn(className)}>
 			<div

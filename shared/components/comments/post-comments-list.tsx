@@ -1,48 +1,47 @@
 'use client'
 
+import { User } from '@/payload-types'
 import { PostCommentListItem } from '@/shared/components/comments/post-comment-list-item'
 import { useCommentQuery } from '@/shared/hooks/use-comment-query'
 import { useCommentScroll } from '@/shared/hooks/use-comment-scroll'
 import { UseCommentSocket } from '@/shared/hooks/use-comment-socket'
 import { cn } from '@/shared/lib/utils'
-import { Comment, User } from '@prisma/client'
-import { format } from 'date-fns'
 import { Loader2, ServerCrash } from 'lucide-react'
 import { ElementRef, Fragment, useRef } from 'react'
 
 const DATE_FORMAT = 'd MMM yyyy, HH:mm'
 
 type CommentWithUser = Comment & {
-	author: User;
-	children: CommentWithUser[]; // рекурсивный тип для вложенных комментариев
-};
+	author: User
+	children: CommentWithUser[] // рекурсивный тип для вложенных комментариев
+}
 
 interface CommentItemsProps {
-	currentUser: User | null;
-	postId: string;
-	apiUrl: string;
-	socketUrl: string;
-	socketQuery: Record<string, string>;
-	paramKey: 'postId' | 'conversationId' | 'global';
-	paramValue: string;
-	className?: string;
+	currentUser: User | null
+	postId: string
+	apiUrl: string
+	socketUrl: string
+	socketQuery: Record<string, string>
+	paramKey: 'postId' | 'conversationId' | 'global'
+	paramValue: string
+	className?: string
 }
 
 // Классы для отступов
 const getIndentationClass = (level: number) => {
 	switch (level) {
 		case 1:
-			return 'pl-6';
+			return 'pl-6'
 		case 2:
-			return 'pl-6';
+			return 'pl-6'
 		case 3:
-			return 'pl-6';
+			return 'pl-6'
 		case 4:
-			return 'pl-6';
+			return 'pl-6'
 		case 5:
-			return 'pl-6';
+			return 'pl-6'
 		default:
-			return 'pl-0'; // после 5 уровня отступ не увеличивается
+			return 'pl-0' // после 5 уровня отступ не увеличивается
 	}
 }
 
@@ -74,9 +73,16 @@ const renderCommentWithChildren = (
 			/>
 			{Array.isArray(message.children) && message.children.length > 0 && (
 				<>
-					{message.children.map((child) => (
+					{message.children.map(child => (
 						<Fragment key={child.comment_id}>
-							{renderCommentWithChildren(child, currentUser, postId, socketUrl, socketQuery, level + 1)}
+							{renderCommentWithChildren(
+								child,
+								currentUser,
+								postId,
+								socketUrl,
+								socketQuery,
+								level + 1
+							)}
 						</Fragment>
 					))}
 				</>
@@ -86,40 +92,40 @@ const renderCommentWithChildren = (
 }
 
 export const PostCommentsList = ({
-	                                 currentUser,
-	                                 postId,
-	                                 apiUrl,
-	                                 socketUrl,
-	                                 socketQuery,
-	                                 paramKey,
-	                                 paramValue,
-	                                 className
-                                 }: CommentItemsProps) => {
+	currentUser,
+	postId,
+	apiUrl,
+	socketUrl,
+	socketQuery,
+	paramKey,
+	paramValue,
+	className,
+}: CommentItemsProps) => {
 	const queryKey = `chat:${postId}`
 	const addKey = `chat:${postId}:messages`
 	const updateKey = `chat:${postId}:messages:update`
-	
+
 	const chatRef = useRef<ElementRef<'div'>>(null)
 	const bottomRef = useRef<ElementRef<'div'>>(null)
-	
+
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
 		useCommentQuery({
 			queryKey,
 			apiUrl,
 			paramKey,
-			paramValue
+			paramValue,
 		})
-	
+
 	UseCommentSocket({ queryKey, addKey, updateKey })
-	
+
 	useCommentScroll({
 		chatRef,
 		bottomRef,
 		loadMore: fetchNextPage,
 		shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
-		count: data?.pages?.[0]?.items?.length ?? 0
+		count: data?.pages?.[0]?.items?.length ?? 0,
 	})
-	
+
 	if (status === 'pending') {
 		return (
 			<div className='flex flex-col flex-1 justify-center items-center'>
@@ -130,7 +136,7 @@ export const PostCommentsList = ({
 			</div>
 		)
 	}
-	
+
 	if (status === 'error') {
 		return (
 			<div className='flex flex-col flex-1 justify-center items-center'>
@@ -141,14 +147,26 @@ export const PostCommentsList = ({
 			</div>
 		)
 	}
-	
+
 	return (
-		<div ref={chatRef} className={cn('flex flex-col flex-1 overflow-y-auto h-screen no-scrollbar', className)}>
+		<div
+			ref={chatRef}
+			className={cn(
+				'flex flex-col flex-1 overflow-y-auto h-screen no-scrollbar',
+				className
+			)}
+		>
 			<div className='flex flex-col mt-auto'>
 				{data?.pages?.map((group, i) => (
 					<Fragment key={i}>
 						{group.items.map((message: CommentWithUser) =>
-							renderCommentWithChildren(message, currentUser, postId, socketUrl, socketQuery)
+							renderCommentWithChildren(
+								message,
+								currentUser,
+								postId,
+								socketUrl,
+								socketQuery
+							)
 						)}
 					</Fragment>
 				))}

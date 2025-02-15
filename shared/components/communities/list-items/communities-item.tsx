@@ -7,8 +7,7 @@ import React from 'react'
 
 export interface CategoryItemProps {
 	text: string
-	value: string
-	endAdornment?: React.ReactNode
+	// value: string
 	name?: string
 	url?: string
 	image?: string
@@ -16,35 +15,33 @@ export interface CategoryItemProps {
 }
 
 export const CommunitiesItem: React.FC<CategoryItemProps> = ({
-	                                                             text,
-	                                                             value,
-	                                                             endAdornment,
-	                                                             name,
-	                                                             image,
-	                                                             url,
-	                                                             className
-                                                             }) => {
-	
+	text,
+	// value,
+	name,
+	url,
+	image,
+	className,
+}) => {
 	const pathname = usePathname()
-	
+
 	return (
 		<div className={cn('', className)}>
 			<Link href={String(url)}>
 				<div
 					className={cn(
 						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-700 hover:text-white cursor-pointer mb-1 space-x-2',
-						`${pathname === url ? 'bg-blue-800 text-white hover:bg-blue-800' : ''}`
-					)}>
-					
+						`${
+							pathname === url ? 'bg-blue-800 text-white hover:bg-blue-800' : ''
+						}`
+					)}
+				>
 					<img className='w-8 h-8 rounded-full ml-2' src={image} alt={name} />
 					<label
-						htmlFor={`checkbox-${String(name)}-${String(value)}`}
+						// htmlFor={`checkbox-${String(name)}-${String(value)}`}
 						className='leading-none cursor-pointer flex-1'
 					>
 						{text}
 					</label>
-					
-					{endAdornment}
 				</div>
 			</Link>
 		</div>
