@@ -8,17 +8,17 @@ import { ListFilter } from 'lucide-react'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 
-export interface Comment {
-	postId: number
-	comment_id: number
-	content: string
-	author_id: number
-	author_fullName: string
-	author_profile_picture: string
-	publication_date: string
-	parent_comment_id: number | null
-	children: Comment[]
-}
+// export interface Comment {
+// 	postId: number
+// 	comment_id: number
+// 	content: string
+// 	author_id: number
+// 	author_fullName: string
+// 	author_profile_picture: string
+// 	publication_date: string
+// 	parent_comment_id: number | null
+// 	children: Comment[]
+// }
 
 interface Props {
 	postId: number

@@ -20,18 +20,18 @@ export const metadata: Metadata = {
 	title: 'Stormic Community',
 	twitter: {
 		card: 'summary_large_image',
-		creator: '@nimscore',
-	},
+		creator: '@nimscore'
+	}
 }
 
 const nunito = Nunito({
 	subsets: ['cyrillic'],
 	variable: '--font-nunito',
-	weight: ['400', '500', '600', '700', '800', '900'],
+	weight: ['400', '500', '600', '700', '800', '900']
 })
 
 export default async function HomeLayout({
-	children,
+	children
 }: {
 	children: React.ReactNode
 }) {
@@ -42,7 +42,7 @@ export default async function HomeLayout({
 
 	const resultGlobalHost = await payload.findGlobal({
 		slug: 'host-settings', // required
-		depth: 1,
+		depth: 1
 	})
 
 	const counterId = process.env.NEXT_PUBLIC_YANDEX_METRIKA
@@ -104,7 +104,7 @@ export default async function HomeLayout({
 										? user.userAvatar.url
 										: ''
 								}
-								userUrl={`/users/${session?.user.id}`}
+								userUrl={`/u/${session?.user.id}`}
 							/>
 						</Suspense>
 						{children}

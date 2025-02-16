@@ -9,37 +9,37 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 import PageClient from './page.client'
 
-export async function generateStaticParams() {
-	const payload = await getPayload({ config: configPromise })
-	const posts = await payload.find({
-		collection: 'posts',
-		draft: false,
-		limit: 1000,
-		overrideAccess: false,
-		pagination: false,
-		select: {
-			slug: true,
-		},
-	})
-
-	const params = posts.docs.map(({ slug }) => {
-		return { slug }
-	})
-
-	return params
-}
+// export async function generateStaticParams() {
+// 	const payload = await getPayload({ config: configPromise })
+// 	const posts = await payload.find({
+// 		collection: 'posts',
+// 		draft: false,
+// 		limit: 1000,
+// 		overrideAccess: false,
+// 		pagination: false,
+// 		select: {
+// 			id: true,
+// 		},
+// 	})
+//
+// 	const params = posts.docs.map(({ id }) => {
+// 		return { id }
+// 	})
+//
+// 	return params
+// }
 
 type Args = {
 	params: Promise<{
-		slug?: string
+		id?: number
 	}>
 }
 
 export default async function Post({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
-	const { slug = '' } = await paramsPromise
-	const url = '/posts/' + slug
-	const post = await queryPostBySlug({ slug })
+	const { id = null } = await paramsPromise
+	// const url = '/p/' + id
+	const post = await queryPostById({ id })
 
 	if (!post) {
 		return <PostNotFound />
@@ -57,15 +57,15 @@ export default async function Post({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({
-	params: paramsPromise,
+	params: paramsPromise
 }: Args): Promise<Metadata> {
-	const { slug = '' } = await paramsPromise
-	const post = await queryPostBySlug({ slug })
+	const { id = null } = await paramsPromise
+	const post = await queryPostById({ id })
 
 	return generateMeta({ doc: post })
 }
 
-const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPostById = cache(async ({ id }: { id: number | null }) => {
 	const { isEnabled: draft } = await draftMode()
 
 	const payload = await getPayload({ config: configPromise })
@@ -77,10 +77,10 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 		overrideAccess: draft,
 		pagination: false,
 		where: {
-			slug: {
-				equals: slug,
-			},
-		},
+			id: {
+				equals: id
+			}
+		}
 	})
 
 	return result.docs?.[0] || null

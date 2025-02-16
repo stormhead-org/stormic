@@ -9,12 +9,10 @@ import { Plugin } from 'payload'
 const generateTitle: GenerateTitle<Post> = ({ doc }) => {
 	return doc?.title ? `${doc.title} | Stormic Community` : 'Stormic Community'
 }
-
-// TODO изменить генерацию слага на ид
 const generateURL: GenerateURL<Post> = ({ doc }) => {
 	const url = getServerSideURL()
 
-	return doc?.slug ? `${url}/${doc.slug}` : url
+	return doc?.id ? `${url}/${doc.id}` : url
 }
 
 export const plugins: Plugin[] = [

@@ -1,6 +1,6 @@
 'use client'
 
-import { Post } from '@/payload-types'
+import { Post, type User } from '@/payload-types'
 import { CommentFullPostGroup } from '@/shared/components/comments/comment-full-post-group'
 import { cn } from '@/shared/lib/utils'
 import { useSession } from '@/shared/providers/SessionProvider'
@@ -14,7 +14,7 @@ interface Props {
 
 export const FullPostPage: React.FC<Props> = ({ post, className }) => {
 	const session = useSession()
-	const currentUser = session && session.user.id
+	const currentUser = session && session.user as User
 
 	return (
 		<div className={cn('', className)}>
@@ -24,9 +24,9 @@ export const FullPostPage: React.FC<Props> = ({ post, className }) => {
 			/>
 			<CommentFullPostGroup
 				className='mb-4'
-				postId={postId}
+				postId={post.id}
 				currentUser={currentUser}
-				commentsHeader={String(items.commentsCount)}
+				commentsHeader={String(0)}
 			/>
 		</div>
 	)

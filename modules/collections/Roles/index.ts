@@ -19,6 +19,7 @@ export const Roles: CollectionConfig = {
 			label: 'Название',
 			name: 'roleName',
 			type: 'text',
+			required: true,
 		},
 		{
 			label: 'Бадж',
@@ -31,6 +32,42 @@ export const Roles: CollectionConfig = {
 			name: 'roleColor',
 			defaultValue: '#eeedf5',
 			type: 'text',
+		},
+		{
+			name: 'roleType', // required
+			type: 'select', // required
+			hasMany: false,
+			admin: {
+				isClearable: true,
+				isSortable: true,
+			},
+			required: true,
+			options: [
+				{
+					label: 'Владелец',
+					value: 'owner',
+				},
+				{
+					label: 'Администратор',
+					value: 'admin',
+				},
+				{
+					label: 'Модератор',
+					value: 'moderator',
+				},
+				{
+					label: 'everyone',
+					value: 'everyone',
+				},
+			],
+		},
+		{
+			label: 'Пользователи с этой ролью',
+			name: 'relatedUsers',
+			type: 'join',
+			collection: 'users',
+			on: 'userRoles',
+			maxDepth: 1
 		},
 		{
 			label: 'Блокировать пользователей в сообществе',
@@ -70,7 +107,6 @@ export const Roles: CollectionConfig = {
 				layout: 'horizontal',
 			},
 		},
-		...slugField(),
 	],
 	// hooks: {
 	// 	afterRead: [communityModerators],

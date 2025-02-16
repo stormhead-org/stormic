@@ -38,12 +38,12 @@ export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 					className={cn(
 						'flex gap-2 pl-2 text-lg font-bold items-center justify-start w-full h-12 rounded-md hover:bg-blue-700 hover:text-white cursor-pointer mb-1',
 						`${
-							pathname === `/posts/${item.post.slug}`
+							pathname === `/p/${item.post.id}`
 								? 'bg-blue-800 text-white hover:bg-blue-800'
 								: ''
 						}`
 					)}
-					onClick={() => router.push(`/posts/${item.post.slug}`)}
+					onClick={() => router.push(`/p/${item.post.id}`)}
 				>
 					<LinkIcon size={22} />
 					{item.post.title}

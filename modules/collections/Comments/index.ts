@@ -42,6 +42,7 @@ export const Comments: CollectionConfig = {
 		{
 			name: 'author',
 			type: 'text',
+			required: true,
 			access: {
 				update: () => false
 			},
@@ -61,6 +62,13 @@ export const Comments: CollectionConfig = {
 			name: 'commentMedia',
 			type: 'upload',
 			relationTo: 'media'
+		},
+		{
+			label: 'Комментарий удален?',
+			name: 'hasDeleted',
+			type: 'checkbox',
+			defaultValue: false,
+			required: true,
 		},
 		{
 			label: 'Родительский комментарий',

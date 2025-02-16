@@ -16,7 +16,7 @@ type Args = {
 export default async function Community({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
 	const { id = null } = await paramsPromise
-	const url = '/communities/' + id
+	// const url = '/c/' + id
 	const community = await queryCommunityById({ id })
 	const posts = await queryPostByCommunityId({ id })
 
@@ -28,7 +28,7 @@ export default async function Community({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({
-	params: paramsPromise,
+	params: paramsPromise
 }: Args): Promise<Metadata> {
 	const { id = null } = await paramsPromise
 	const community = await queryCommunityById({ id })
@@ -44,7 +44,7 @@ const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
 	const community = await payload.findByID({
 		collection: 'communities',
 		id: String(id),
-		depth: 1,
+		depth: 1
 	})
 
 	return community || null
@@ -66,11 +66,11 @@ const queryPostByCommunityId = cache(async ({ id }: { id: number | null }) => {
 			community: {
 				some: {
 					id: {
-						equals: id,
-					},
-				},
-			},
-		} as any,
+						equals: id
+					}
+				}
+			}
+		} as any
 	})
 
 	return result.docs || null

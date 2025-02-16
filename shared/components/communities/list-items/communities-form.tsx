@@ -32,7 +32,7 @@ export const CommunitiesForm: React.FC<Props> = ({
 	name,
 	className,
 	hasPost,
-	loading,
+	loading
 }) => {
 	// const { formatMessage } = useIntl()
 	const [showAll, setShowAll] = React.useState(false)
@@ -60,13 +60,13 @@ export const CommunitiesForm: React.FC<Props> = ({
 	const list = showAll
 		? items.filter(item =>
 				item.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
-		  )
+			)
 		: (defaultItems || items).slice(0, limit)
 
 	return (
 		<div className={cn(hasPost && 'max-w-[200px]', className)}>
 			{!hasPost && (
-				<Link href={`/communities`}>
+				<Link href={`/c`}>
 					<Title
 						text={title}
 						size='xs'
@@ -90,7 +90,7 @@ export const CommunitiesForm: React.FC<Props> = ({
 						key={index}
 						text={item.title}
 						image={item.communityLogo?.url}
-						url={`/communities/${item.slug}`}
+						url={`/c/${item.id}`}
 						name={item.title}
 					/>
 				))}

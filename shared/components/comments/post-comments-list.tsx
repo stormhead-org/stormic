@@ -1,10 +1,11 @@
 'use client'
 
-import { User } from '@/payload-types'
+import { type Comment, User } from '@/payload-types'
 import { PostCommentListItem } from '@/shared/components/comments/post-comment-list-item'
 import { useCommentQuery } from '@/shared/hooks/use-comment-query'
 import { useCommentScroll } from '@/shared/hooks/use-comment-scroll'
 import { UseCommentSocket } from '@/shared/hooks/use-comment-socket'
+import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { cn } from '@/shared/lib/utils'
 import { Loader2, ServerCrash } from 'lucide-react'
 import { ElementRef, Fragment, useRef } from 'react'
@@ -13,7 +14,7 @@ const DATE_FORMAT = 'd MMM yyyy, HH:mm'
 
 type CommentWithUser = Comment & {
 	author: User
-	children: CommentWithUser[] // рекурсивный тип для вложенных комментариев
+	childrenComments: CommentWithUser[]
 }
 
 interface CommentItemsProps {
@@ -55,26 +56,26 @@ const renderCommentWithChildren = (
 	level = 0 // добавляем уровень вложенности
 ) => {
 	return (
-		<div key={message.comment_id} className={getIndentationClass(level)}>
+		<div key={message.id} className={getIndentationClass(level)}>
 			<PostCommentListItem
-				key={message.comment_id}
+				key={message.id}
 				postId={postId}
-				id={String(message.comment_id)}
+				id={String(message.id)}
 				currentUser={currentUser}
 				author={message.author}
 				content={message.content}
-				fileUrl={message.fileUrl}
-				deleted={message.deleted}
-				timestamp={format(new Date(message.publication_date), DATE_FORMAT)}
-				isUpdated={message.update_date !== message.publication_date}
+				fileUrl={message.commentMedia?.url}
+				deleted={message.hasDeleted}
+				timestamp={formatDateTime(message.createdAt)}
+				isUpdated={message.updatedAt !== message.createdAt}
 				socketUrl={socketUrl}
 				socketQuery={socketQuery}
 				className='mt-4 p-0 pl-4 cursor-default border-l-4 border-blue-600'
 			/>
-			{Array.isArray(message.children) && message.children.length > 0 && (
+			{Array.isArray(message.childrenComments.docs) && message.childrenComments.docs.length > 0 && (
 				<>
-					{message.children.map(child => (
-						<Fragment key={child.comment_id}>
+					{message.childrenComments.docs.map(child => (
+						<Fragment key={child.id}>
 							{renderCommentWithChildren(
 								child,
 								currentUser,

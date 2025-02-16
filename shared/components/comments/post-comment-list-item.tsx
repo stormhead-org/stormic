@@ -1,10 +1,10 @@
 'use client'
 
+import type { User } from '@/payload-types'
 import { FullPostCommentBody } from '@/shared/components/comments/full-post-comments-items/full-post-comment-body'
 import { FullPostCommentFooter } from '@/shared/components/comments/full-post-comments-items/full-post-comment-footer'
 import { FullPostCommentHeader } from '@/shared/components/comments/full-post-comments-items/full-post-comment-header'
 import { cn } from '@/shared/lib/utils'
-import { User, UserRoleType } from '@prisma/client'
 import React, { useState } from 'react'
 
 interface PostCommentListItemProps {
@@ -38,11 +38,12 @@ export const PostCommentListItem = ({
                                     }: PostCommentListItemProps) => {
 	const [isEditing, setIsEditing] = useState(false)
 	
-	const isOwner = currentUser != null && currentUser.role === UserRoleType.OWNER
-	const isAdmin = currentUser != null && currentUser.role === UserRoleType.ADMIN
-	const isAuthor = currentUser != null && currentUser.id === author.id
-	const canDeleteMessage = !deleted && (isOwner || isAdmin || isAuthor)
-	const canEditMessage = !deleted && isAuthor && !fileUrl
+	const isMessageOwner = currentUser != null && currentUser.id === author.id
+	const isOwner = currentUser != null && currentUser.userRoles.roleType === 'owner'
+	const isAdmin = currentUser != null && currentUser.userRoles.roleType === 'admin'
+	const isModerator = currentUser != null && currentUser.userRoles.roleType === 'moderator'
+	const canDeleteMessage = !deleted && (isOwner || isAdmin || isMessageOwner || isModerator)
+	const canEditMessage = !deleted && isMessageOwner && !fileUrl
 	
 	return (
 		<>
@@ -67,7 +68,7 @@ export const PostCommentListItem = ({
 				<FullPostCommentFooter
 					postId={Number(postId)}
 					id={id}
-					parentCommentAuthorName={author.fullName}
+					parentCommentAuthorName={author.name}
 					canDeleteMessage={canDeleteMessage}
 					canEditMessage={canEditMessage}
 					socketUrl={socketUrl}

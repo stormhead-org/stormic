@@ -15,13 +15,11 @@ import { MediaBlock } from '@/modules/collections/blocks/MediaBlock/config'
 import { generatePreviewPath } from '@/shared/lib/generatePreviewPath'
 import { Author } from './hooks/author'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
-import { slugField } from '@/fields/slug'
 import {
 	MetaDescriptionField,
 	MetaImageField,
 	MetaTitleField,
-	OverviewField,
-	PreviewField
+	OverviewField
 } from '@payloadcms/plugin-seo/fields'
 import { RelatedPost } from './hooks/relatedPost'
 
@@ -40,7 +38,6 @@ export const Posts: CollectionConfig<'posts'> = {
 		relatedPost: true,
 		createdAt: true,
 		title: true,
-		slug: true,
 		community: true,
 		meta: {
 			image: true,
@@ -48,11 +45,11 @@ export const Posts: CollectionConfig<'posts'> = {
 		}
 	},
 	admin: {
-		defaultColumns: ['title', 'slug', 'updatedAt'],
+		defaultColumns: ['title', 'updatedAt'],
 		livePreview: {
 			url: ({ data, req }) => {
 				const path = generatePreviewPath({
-					slug: typeof data?.slug === 'string' ? data.slug : '',
+					id: typeof data?.id === 'number' ? data.id : null,
 					collection: 'posts',
 					req
 				})
@@ -62,7 +59,7 @@ export const Posts: CollectionConfig<'posts'> = {
 		},
 		preview: (data, { req }) =>
 			generatePreviewPath({
-				slug: typeof data?.slug === 'string' ? data.slug : '',
+				id: typeof data?.id === 'number' ? data.id : null,
 				collection: 'posts',
 				req
 			}),
@@ -142,7 +139,8 @@ export const Posts: CollectionConfig<'posts'> = {
 								position: 'sidebar'
 							},
 							hasMany: false,
-							relationTo: 'communities'
+							relationTo: 'communities',
+							required: true,
 						}
 					]
 				},
@@ -175,26 +173,26 @@ export const Posts: CollectionConfig<'posts'> = {
 				}
 			]
 		},
-		// {
-		// 	name: 'publishedAt',
-		// 	type: 'date',
-		// 	admin: {
-		// 		date: {
-		// 			pickerAppearance: 'dayAndTime'
-		// 		},
-		// 		position: 'sidebar'
-		// 	},
-		// 	hooks: {
-		// 		beforeChange: [
-		// 			({ siblingData, value }) => {
-		// 				if (siblingData._status === 'published' && !value) {
-		// 					return new Date()
-		// 				}
-		// 				return value
-		// 			}
-		// 		]
-		// 	}
-		// },
+		{
+			name: 'publishedAt',
+			type: 'date',
+			admin: {
+				date: {
+					pickerAppearance: 'dayAndTime'
+				},
+				position: 'sidebar'
+			},
+			hooks: {
+				beforeChange: [
+					({ siblingData, value }) => {
+						if (siblingData._status === 'published' && !value) {
+							return new Date()
+						}
+						return value
+					}
+				]
+			}
+		},
 		{
 			label: 'Автор',
 			name: 'owner',

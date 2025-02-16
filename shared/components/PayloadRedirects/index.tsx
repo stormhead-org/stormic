@@ -1,4 +1,4 @@
-import type { Page, Post } from '@/payload-types'
+import type { Post } from '@/payload-types'
 import type React from 'react'
 
 import { getCachedDocument } from '@/shared/lib/getDocument'
@@ -13,7 +13,7 @@ interface Props {
 /* This component helps us with SSR based dynamic redirects */
 export const PayloadRedirects: React.FC<Props> = async ({
 	disableNotFound,
-	url,
+	url
 }) => {
 	const redirects = await getCachedRedirects()()
 
@@ -30,30 +30,14 @@ export const PayloadRedirects: React.FC<Props> = async ({
 			const collection = redirectItem.to?.reference?.relationTo
 			const id = redirectItem.to?.reference?.value
 
-			const document = (await getCachedDocument(collection, id)()) as
-				| Page
-				| Post
-			redirectUrl = `${
-				redirectItem.to?.reference?.relationTo !== 'pages'
-					? `/${redirectItem.to?.reference?.relationTo}`
-					: ''
-			}/${document?.slug}`
-		} else {
-			redirectUrl = `${
-				redirectItem.to?.reference?.relationTo !== 'pages'
-					? `/${redirectItem.to?.reference?.relationTo}`
-					: ''
-			}/${
-				typeof redirectItem.to?.reference?.value === 'object'
-					? redirectItem.to?.reference?.value?.slug
-					: ''
-			}`
+			const document = (await getCachedDocument(collection, id)()) as Post
+			redirectUrl = `/p/${document?.id || redirectItem.to?.reference?.value?.id || null}`
+
+			if (redirectUrl) redirect(redirectUrl)
 		}
 
-		if (redirectUrl) redirect(redirectUrl)
+		if (disableNotFound) return null
+
+		notFound()
 	}
-
-	if (disableNotFound) return null
-
-	notFound()
 }

@@ -40,6 +40,9 @@ export interface Config {
     comments: {
       childrenComments: 'comments';
     };
+    roles: {
+      relatedUsers: 'users';
+    };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
@@ -105,7 +108,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  name?: string | null;
+  name: string;
   userAvatar?: (number | null) | Media;
   userBanner?: (number | null) | Media;
   userDescription?: string | null;
@@ -116,7 +119,7 @@ export interface User {
         id?: string | null;
       }[]
     | null;
-  userRoles?: (number | Role)[] | null;
+  userRoles: (number | Role)[];
   relatedPosts?: {
     docs?: (number | Post)[] | null;
     hasNextPage?: boolean | null;
@@ -238,13 +241,16 @@ export interface Media {
  */
 export interface Role {
   id: number;
-  roleName?: string | null;
+  roleName: string;
   roleBadge?: (number | null) | Media;
   roleColor?: string | null;
+  roleType: 'owner' | 'admin' | 'moderator' | 'everyone';
+  relatedUsers?: {
+    docs?: (number | User)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   COMMUNITY_USER_BUN?: ('true' | 'false') | null;
   COMMUNITY_POST_DELETE?: ('true' | 'false') | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -276,7 +282,7 @@ export interface Post {
     hasNextPage?: boolean | null;
   } | null;
   relatedPost?: (number | null) | Post;
-  community?: (number | null) | Community;
+  community: number | Community;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -285,6 +291,7 @@ export interface Post {
      */
     image?: (number | null) | Media;
   };
+  publishedAt?: string | null;
   owner?: (number | null) | User;
   author?: string | null;
   updatedAt: string;
@@ -300,9 +307,10 @@ export interface Comment {
   parentPost: number | Post;
   community: number | Community;
   owner: number | User;
-  author?: string | null;
+  author: string;
   content: string;
   commentMedia?: (number | null) | Media;
+  hasDeleted: boolean;
   parentComment?: (number | null) | Comment;
   childrenComments?: {
     docs?: (number | Comment)[] | null;
@@ -623,6 +631,7 @@ export interface PostsSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
+  publishedAt?: T;
   owner?: T;
   author?: T;
   updatedAt?: T;
@@ -685,6 +694,7 @@ export interface CommentsSelect<T extends boolean = true> {
   author?: T;
   content?: T;
   commentMedia?: T;
+  hasDeleted?: T;
   parentComment?: T;
   childrenComments?: T;
   updatedAt?: T;
@@ -791,10 +801,10 @@ export interface RolesSelect<T extends boolean = true> {
   roleName?: T;
   roleBadge?: T;
   roleColor?: T;
+  roleType?: T;
+  relatedUsers?: T;
   COMMUNITY_USER_BUN?: T;
   COMMUNITY_POST_DELETE?: T;
-  slug?: T;
-  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }

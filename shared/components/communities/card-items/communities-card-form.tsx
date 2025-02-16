@@ -16,7 +16,7 @@ interface Props {
 export const CommunitiesCardForm: React.FC<Props> = ({
 	data,
 	className,
-	loading,
+	loading
 }) => {
 	// const { formatMessage } = useIntl()
 
@@ -42,7 +42,7 @@ export const CommunitiesCardForm: React.FC<Props> = ({
 						image={item.communityLogo.url || ''}
 						name={item.title}
 						description={item.communityDescription}
-						url={`/communities/${item.id}`}
+						url={`/c/${item.id}`}
 						postCount={0}
 						followersCount={0}
 					/>

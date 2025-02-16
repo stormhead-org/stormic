@@ -8,7 +8,7 @@ import type { Post } from '@/payload-types'
 
 import { Media } from '@/shared/components/Media'
 
-export type CardPostData = Pick<Post, 'slug' | 'communities' | 'meta' | 'title'>
+export type CardPostData = Pick<Post, 'id' | 'community' | 'meta' | 'title'>
 
 export const Card: React.FC<{
 	alignItems?: 'center'
@@ -24,17 +24,17 @@ export const Card: React.FC<{
 		doc,
 		relationTo,
 		showCommunities,
-		title: titleFromProps,
+		title: titleFromProps
 	} = props
 
-	const { slug, communities, meta, title } = doc || {}
+	const { id, community, meta, title } = doc || {}
 	const { description, image: metaImage } = meta || {}
 
 	const hasCommunities =
-		communities && Array.isArray(communities) && communities.length > 0
+		community && Array.isArray(community) && community.length > 0
 	const titleToUse = titleFromProps || title
 	const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
-	const href = `/${relationTo}/${slug}`
+	const href = `/${relationTo}/${id}`
 
 	return (
 		<article
@@ -55,14 +55,14 @@ export const Card: React.FC<{
 					<div className='uppercase text-sm mb-4'>
 						{showCommunities && hasCommunities && (
 							<div>
-								{communities?.map((community, index) => {
+								{community?.map((community, index) => {
 									if (typeof community === 'object') {
 										const { title: titleFromCommunity } = community
 
 										const communityTitle =
 											titleFromCommunity || 'Untitled community'
 
-										const isLast = index === communities.length - 1
+										const isLast = index === community.length - 1
 
 										return (
 											<Fragment key={index}>

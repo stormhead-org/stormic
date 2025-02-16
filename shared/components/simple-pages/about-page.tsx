@@ -6,7 +6,7 @@ import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
-	AccordionTrigger,
+	AccordionTrigger
 } from '@/shared/components/ui/accordion'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
@@ -71,7 +71,7 @@ export const AboutPage: React.FC<Props> = ({ hostInfo, className }) => {
 						{/* {formatMessage({ id: 'aboutPage.managed' })} */}
 						Управляется
 					</p>
-					<Link href={'/users/' + hostInfo.hostOwner?.id}>
+					<Link href={'/u/' + hostInfo.hostOwner?.id}>
 						<div className='flex gap-4 mt-4'>
 							<ProfileAvatar
 								className='w-11 h-11 border-none bg-secondary hover:bg-secondary'

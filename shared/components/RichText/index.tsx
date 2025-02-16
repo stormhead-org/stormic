@@ -2,18 +2,18 @@ import { MediaBlock } from '@/modules/collections/blocks/MediaBlock/Component'
 import {
 	DefaultNodeTypes,
 	SerializedBlockNode,
-	SerializedLinkNode,
+	SerializedLinkNode
 } from '@payloadcms/richtext-lexical'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import {
 	JSXConvertersFunction,
 	LinkJSXConverter,
-	RichText as RichTextWithoutBlocks,
+	RichText as RichTextWithoutBlocks
 } from '@payloadcms/richtext-lexical/react'
 
 import {
 	CodeBlock,
-	CodeBlockProps,
+	CodeBlockProps
 } from '@/modules/collections/blocks/Code/Component'
 
 import { BannerBlock } from '@/modules/collections/blocks/Banner/Component'
@@ -21,7 +21,7 @@ import { CallToActionBlock } from '@/modules/collections/blocks/CallToAction/Com
 import type {
 	BannerBlock as BannerBlockProps,
 	CallToActionBlock as CTABlockProps,
-	MediaBlock as MediaBlockProps,
+	MediaBlock as MediaBlockProps
 } from '@/payload-types'
 import { cn } from '@/shared/lib/utils'
 
@@ -36,12 +36,12 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 	if (typeof value !== 'object') {
 		throw new Error('Expected value to be an object')
 	}
-	const slug = value.slug
-	return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`
+	const id = value.id
+	return relationTo === 'posts' ? `/p/${id}` : `/${id}`
 }
 
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
-	defaultConverters,
+	defaultConverters
 }) => ({
 	...defaultConverters,
 	...LinkJSXConverter({ internalDocToHref }),
@@ -60,8 +60,8 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
 			/>
 		),
 		code: ({ node }) => <CodeBlock className='col-start-2' {...node.fields} />,
-		cta: ({ node }) => <CallToActionBlock {...node.fields} />,
-	},
+		cta: ({ node }) => <CallToActionBlock {...node.fields} />
+	}
 })
 
 type Props = {
@@ -79,7 +79,7 @@ export default function RichText(props: Props) {
 				{
 					'container ': enableGutter,
 					'max-w-none': !enableGutter,
-					'mx-auto prose md:prose-md dark:prose-invert ': enableProse,
+					'mx-auto prose md:prose-md dark:prose-invert ': enableProse
 				},
 				className
 			)}

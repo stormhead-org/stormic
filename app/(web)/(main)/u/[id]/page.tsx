@@ -16,7 +16,7 @@ type Args = {
 export default async function User({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
 	const { id = null } = await paramsPromise
-	const url = '/users/' + id
+	// const url = '/u/' + id
 	const user = await queryUserById({ id })
 	const posts = await queryPostByUserId({ id })
 
@@ -32,7 +32,7 @@ export default async function User({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({
-	params: paramsPromise,
+	params: paramsPromise
 }: Args): Promise<Metadata> {
 	const { id = null } = await paramsPromise
 	const user = await queryUserById({ id })
@@ -48,7 +48,7 @@ const queryUserById = cache(async ({ id }: { id: number | null }) => {
 	const user = await payload.findByID({
 		collection: 'users',
 		id: String(id),
-		depth: 1,
+		depth: 1
 	})
 
 	return user || null
@@ -70,11 +70,11 @@ const queryPostByUserId = cache(async ({ id }: { id: number | null }) => {
 			author: {
 				some: {
 					id: {
-						equals: id,
-					},
-				},
-			},
-		} as any,
+						equals: id
+					}
+				}
+			}
+		} as any
 	})
 
 	return result.docs || null

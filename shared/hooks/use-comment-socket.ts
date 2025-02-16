@@ -1,4 +1,4 @@
-// import { useSocket } from '@/shared/components/providers/items/socket-provider'
+
 import { User } from '@/payload-types'
 import { useSocket } from '@/shared/providers/SocketProvider'
 import { useQueryClient } from '@tanstack/react-query'
@@ -94,7 +94,7 @@ function updateCommentRecursively(
 	updatedComment: CommentWithUser
 ): CommentWithUser[] {
 	return items.map(item => {
-		if (item.comment_id === updatedComment.comment_id) {
+		if (item.id === updatedComment.id) {
 			return updatedComment
 		}
 
