@@ -5,10 +5,11 @@ import { FullPostCommentBody } from '@/shared/components/comments/full-post-comm
 import { FullPostCommentFooter } from '@/shared/components/comments/full-post-comments-items/full-post-comment-footer'
 import { FullPostCommentHeader } from '@/shared/components/comments/full-post-comments-items/full-post-comment-header'
 import { cn } from '@/shared/lib/utils'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 interface PostCommentListItemProps {
 	postId: string
+	communityId: number
 	id: string
 	content: string
 	author: User
@@ -23,36 +24,38 @@ interface PostCommentListItemProps {
 }
 
 export const PostCommentListItem = ({
-	                                    postId,
-	                                    id,
-	                                    content,
-	                                    author,
-	                                    timestamp,
-	                                    fileUrl,
-	                                    deleted,
-	                                    currentUser,
-	                                    isUpdated,
-	                                    socketUrl,
-	                                    socketQuery,
-	                                    className
-                                    }: PostCommentListItemProps) => {
+	postId,
+	communityId,
+	id,
+	content,
+	author,
+	timestamp,
+	fileUrl,
+	deleted,
+	currentUser,
+	isUpdated,
+	socketUrl,
+	socketQuery,
+	className
+}: PostCommentListItemProps) => {
 	const [isEditing, setIsEditing] = useState(false)
-	
+
 	const isMessageOwner = currentUser != null && currentUser.id === author.id
-	const isOwner = currentUser != null && currentUser.userRoles.roleType === 'owner'
-	const isAdmin = currentUser != null && currentUser.userRoles.roleType === 'admin'
-	const isModerator = currentUser != null && currentUser.userRoles.roleType === 'moderator'
-	const canDeleteMessage = !deleted && (isOwner || isAdmin || isMessageOwner || isModerator)
+	const isOwner =
+		currentUser != null && currentUser.userRoles.roleType === 'owner'
+	const isAdmin =
+		currentUser != null && currentUser.userRoles.roleType === 'admin'
+	const isModerator =
+		currentUser != null && currentUser.userRoles.roleType === 'moderator'
+	const canDeleteMessage =
+		!deleted && (isOwner || isAdmin || isMessageOwner || isModerator)
 	const canEditMessage = !deleted && isMessageOwner && !fileUrl
-	
+
 	return (
 		<>
 			<div className={cn('rounded-md p-2 w-full', className)}>
-				<FullPostCommentHeader
-					author={author}
-					publicationDate={timestamp}
-				/>
-				
+				<FullPostCommentHeader author={author} publicationDate={timestamp} />
+
 				<FullPostCommentBody
 					id={id}
 					content={content}
@@ -64,9 +67,10 @@ export const PostCommentListItem = ({
 					setIsEditing={setIsEditing}
 					socketQuery={socketQuery}
 				/>
-				
+
 				<FullPostCommentFooter
 					postId={Number(postId)}
+					communityId={Number(communityId)}
 					id={id}
 					parentCommentAuthorName={author.name}
 					canDeleteMessage={canDeleteMessage}

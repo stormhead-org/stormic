@@ -1,5 +1,5 @@
 import { ActionTooltip } from '@/shared/components/action-tooltip'
-import { CommentLikeButton } from '@/shared/components/comment-like-button'
+// import { CommentLikeButton } from '@/shared/components/comment-like-button'
 import { CommentInputAnswer } from '@/shared/components/comments/comment-input-items/comment-input-answer'
 import { Button } from '@/shared/components/ui/button'
 import { useModal } from '@/shared/hooks/use-modal-store'
@@ -11,42 +11,44 @@ import React, { useState } from 'react'
 interface PostFooterProps {
 	id: string
 	postId?: number
+	communityId?: number
 	parentCommentAuthorName: string
 	canDeleteMessage: boolean
 	canEditMessage: boolean
 	socketUrl: string
 	socketQuery: Record<string, string>
 	isEditing: boolean
-	setIsEditing: (isEditing: boolean) => void;
+	setIsEditing: (isEditing: boolean) => void
 	className?: string
 }
 
 export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
-	                                                                 id,
-	                                                                 postId,
-	                                                                 parentCommentAuthorName,
-	                                                                 canDeleteMessage,
-	                                                                 canEditMessage,
-	                                                                 socketUrl,
-	                                                                 socketQuery,
-	                                                                 isEditing,
-	                                                                 setIsEditing,
-	                                                                 className
-                                                                 }) => {
+	id,
+	postId,
+	communityId,
+	parentCommentAuthorName,
+	canDeleteMessage,
+	canEditMessage,
+	socketUrl,
+	socketQuery,
+	isEditing,
+	setIsEditing,
+	className
+}) => {
 	const { onOpen } = useModal()
 	// const { formatMessage } = useIntl()
 	const [isReplying, setIsReplying] = useState(false)
-	
+
 	return (
 		<div className={cn('', className)}>
 			<div className='flex items-center justify-between'>
 				<div className='flex items-center'>
-					<CommentLikeButton commentId={Number(id)} />
+					{/* <CommentLikeButton commentId={Number(id)} /> */}
 					<Button
 						variant='blue'
 						className='h-6 text-sm font-bold p-0 -mb-1 border-b-4 border-transparent bg-transparent hover:border-blue-700 hover:bg-transparent rounded-none text-primary'
 						type='button'
-						onClick={() => setIsReplying((prev) => !prev)}
+						onClick={() => setIsReplying(prev => !prev)}
 					>
 						{/* {formatMessage({ id: 'commentFooter.commentReplay' })} */}
 						Ответить
@@ -59,10 +61,17 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 								<ActionTooltip label='Редактировать'>
 									<div className='flex group cursor-pointer items-center'>
 										<div
-											className={cn('flex p-1 items-center group-hover:text-blue-700 font-bold', isEditing && 'text-blue-700')}>
+											className={cn(
+												'flex p-1 items-center group-hover:text-blue-700 font-bold',
+												isEditing && 'text-blue-700'
+											)}
+										>
 											<Edit
 												onClick={() => setIsEditing(true)}
-												className={cn('group-hover:bg-blue-800/20 rounded-full w-7 h-7 p-1 cursor-pointer', isEditing && 'bg-blue-800/20')}
+												className={cn(
+													'group-hover:bg-blue-800/20 rounded-full w-7 h-7 p-1 cursor-pointer',
+													isEditing && 'bg-blue-800/20'
+												)}
 											/>
 										</div>
 									</div>
@@ -97,10 +106,12 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 					apiUrl={'/api/socket/posts/comments'}
 					query={{
 						postId: postId,
-						parentCommentId: id
+						parentCommentId: id,
+						communityId: communityId
 					}}
 					setIsReplying={setIsReplying}
-					parentCommentAuthorName={parentCommentAuthorName} />
+					parentCommentAuthorName={parentCommentAuthorName}
+				/>
 			)}
 		</div>
 	)

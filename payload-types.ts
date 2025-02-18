@@ -307,7 +307,7 @@ export interface Comment {
   parentPost: number | Post;
   community: number | Community;
   owner: number | User;
-  author: string;
+  author?: string | null;
   content: string;
   commentMedia?: (number | null) | Media;
   hasDeleted: boolean;

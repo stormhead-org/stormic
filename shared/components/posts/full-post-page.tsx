@@ -14,7 +14,7 @@ interface Props {
 
 export const FullPostPage: React.FC<Props> = ({ post, className }) => {
 	const session = useSession()
-	const currentUser = session && session.user as User
+	const currentUser = session && (session.user as User)
 
 	return (
 		<div className={cn('', className)}>
@@ -25,6 +25,7 @@ export const FullPostPage: React.FC<Props> = ({ post, className }) => {
 			<CommentFullPostGroup
 				className='mb-4'
 				postId={post.id}
+				communityId={post.community.id}
 				currentUser={currentUser}
 				commentsHeader={String(0)}
 			/>

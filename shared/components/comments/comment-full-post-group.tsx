@@ -22,6 +22,7 @@ import React from 'react'
 
 interface Props {
 	postId: number
+	communityId: number
 	currentUser: User | null
 	commentsHeader: string
 	className?: string
@@ -29,9 +30,10 @@ interface Props {
 
 export const CommentFullPostGroup: React.FC<Props> = ({
 	postId,
+	communityId,
 	currentUser,
 	commentsHeader,
-	className,
+	className
 }) => {
 	// const { formatMessage } = useIntl()
 
@@ -63,15 +65,17 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 				apiUrl={'/api/socket/posts/comments'}
 				query={{
 					postId: postId,
+					communityId: communityId
 				}}
 			/>
 			<PostCommentsList
 				currentUser={currentUser}
 				postId={String(postId)}
+				communityId={communityId}
 				apiUrl={`/api/posts/${postId}/comments`}
 				socketUrl={'/api/socket/posts/comments'}
 				socketQuery={{
-					postId: String(postId),
+					postId: String(postId)
 				}}
 				paramKey='postId'
 				paramValue={String(postId)}

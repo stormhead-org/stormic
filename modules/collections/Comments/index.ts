@@ -1,6 +1,6 @@
-import type { CollectionConfig } from 'payload'
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
+import type { CollectionConfig } from 'payload'
 import { Author } from './hooks/author'
 
 export const Comments: CollectionConfig = {
@@ -42,7 +42,6 @@ export const Comments: CollectionConfig = {
 		{
 			name: 'author',
 			type: 'text',
-			required: true,
 			access: {
 				update: () => false
 			},
@@ -68,7 +67,7 @@ export const Comments: CollectionConfig = {
 			name: 'hasDeleted',
 			type: 'checkbox',
 			defaultValue: false,
-			required: true,
+			required: true
 		},
 		{
 			label: 'Родительский комментарий',

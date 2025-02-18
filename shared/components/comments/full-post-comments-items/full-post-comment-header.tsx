@@ -1,6 +1,5 @@
 import type { User } from '@/payload-types'
 import { ProfileAvatar } from '@/shared/components'
-import { ActionTooltip } from '@/shared/components/action-tooltip'
 import { cn } from '@/shared/lib/utils'
 import { Crown, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
@@ -20,10 +19,10 @@ const roleIconMap = {
 }
 
 export const FullPostCommentHeader: React.FC<CommentHeaderProps> = ({
-	                                                                    author,
-	                                                                    publicationDate,
-	                                                                    className
-                                                                    }) => {
+	author,
+	publicationDate,
+	className
+}) => {
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
 			<div className='flex items-center'>
@@ -32,14 +31,15 @@ export const FullPostCommentHeader: React.FC<CommentHeaderProps> = ({
 				</Link>
 				<div className='ml-2'>
 					<div className='flex items-center'>
-						<Link className='hover:text-a-color-hover' href={`/u/${author.id}`}>{author.name}</Link>
-						<ActionTooltip label={author.userRoles.roleType}>
+						<Link className='hover:text-a-color-hover' href={`/u/${author.id}`}>
+							{author.name}
+						</Link>
+						{/* <ActionTooltip label={author?.userRoles?.[0]?.roleType && author.userRoles[0].roleType}>
 							{roleIconMap[author.userRoles.roleType]}
-						</ActionTooltip>
+						</ActionTooltip> */}
 					</div>
 					<p className='text-sm'>{publicationDate}</p>
 				</div>
-			
 			</div>
 		</div>
 	)

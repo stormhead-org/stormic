@@ -2,10 +2,10 @@ import { toast } from 'sonner'
 import { create } from 'zustand'
 
 interface LikeStoreState {
-	likesCount: Record<number, number>; // Объект для хранения количества лайков по postId
-	hasLiked: Record<number, boolean>; // Объект для хранения состояния лайка по postId
-	toggleLike: (postId: number) => Promise<void>;
-	initialize: (postId: number) => Promise<void>;
+	likesCount: Record<number, number> // Объект для хранения количества лайков по postId
+	hasLiked: Record<number, boolean> // Объект для хранения состояния лайка по postId
+	toggleLike: (postId: number) => Promise<void>
+	initialize: (postId: number) => Promise<void>
 }
 
 let debounceTimers: Record<number, NodeJS.Timeout | null> = {} // Объект для хранения таймеров по postId
@@ -15,15 +15,17 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 	hasLiked: {},
 	async toggleLike(postId: number) {
 		const { hasLiked, likesCount } = get()
-		
+
 		if (debounceTimers[postId]) {
 			clearTimeout(debounceTimers[postId]!)
 		}
-		
+
 		debounceTimers[postId] = setTimeout(async () => {
 			try {
 				if (hasLiked[postId]) {
-					const response = await fetch(`/api/posts/${postId}/unlike`, { method: 'DELETE' })
+					const response = await fetch(`/api/posts/${postId}/unlike`, {
+						method: 'DELETE'
+					})
 					if (response.status === 401) {
 						toast.error('Необходимо авторизоваться', { icon: '❌' })
 						return
@@ -31,10 +33,15 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 					if (!response.ok) throw new Error('Failed to unlike')
 					set(state => ({
 						hasLiked: { ...state.hasLiked, [postId]: false },
-						likesCount: { ...state.likesCount, [postId]: (state.likesCount[postId] || 0) - 1 }
+						likesCount: {
+							...state.likesCount,
+							[postId]: (state.likesCount[postId] || 0) - 1
+						}
 					}))
 				} else {
-					const response = await fetch(`/api/posts/${postId}/like`, { method: 'POST' })
+					const response = await fetch(`/api/posts/${postId}/like`, {
+						method: 'POST'
+					})
 					if (response.status === 401) {
 						toast.error('Необходимо авторизоваться', { icon: '❌' })
 						return
@@ -42,14 +49,16 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 					if (!response.ok) throw new Error('Failed to like')
 					set(state => ({
 						hasLiked: { ...state.hasLiked, [postId]: true },
-						likesCount: { ...state.likesCount, [postId]: (state.likesCount[postId] || 0) + 1 }
+						likesCount: {
+							...state.likesCount,
+							[postId]: (state.likesCount[postId] || 0) + 1
+						}
 					}))
 				}
 			} catch (error) {
 				console.error(error)
 			}
 		}, 200) // Задержка 200 миллисекунд
-		
 	},
 	async initialize(postId: number) {
 		try {

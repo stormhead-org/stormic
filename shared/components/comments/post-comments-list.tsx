@@ -8,7 +8,7 @@ import { UseCommentSocket } from '@/shared/hooks/use-comment-socket'
 import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { cn } from '@/shared/lib/utils'
 import { Loader2, ServerCrash } from 'lucide-react'
-import { ElementRef, Fragment, useRef } from 'react'
+import { ElementRef, useRef } from 'react'
 
 const DATE_FORMAT = 'd MMM yyyy, HH:mm'
 
@@ -20,6 +20,7 @@ type CommentWithUser = Comment & {
 interface CommentItemsProps {
 	currentUser: User | null
 	postId: string
+	communityId: number
 	apiUrl: string
 	socketUrl: string
 	socketQuery: Record<string, string>
@@ -28,7 +29,6 @@ interface CommentItemsProps {
 	className?: string
 }
 
-// Классы для отступов
 const getIndentationClass = (level: number) => {
 	switch (level) {
 		case 1:
@@ -42,24 +42,29 @@ const getIndentationClass = (level: number) => {
 		case 5:
 			return 'pl-6'
 		default:
-			return 'pl-0' // после 5 уровня отступ не увеличивается
+			return 'pl-0'
 	}
 }
 
-// Функция для рендера комментариев и их детей рекурсивно с ограничением отступа до 5 уровня
 const renderCommentWithChildren = (
 	message: CommentWithUser,
 	currentUser: User | null,
 	postId: string,
+	communityId: number,
 	socketUrl: string,
 	socketQuery: Record<string, string>,
-	level = 0 // добавляем уровень вложенности
+	level = 0,
+	keyProp?: string | number
 ) => {
+	const children = Array.isArray(message.childrenComments)
+		? message.childrenComments
+		: []
+
 	return (
-		<div key={message.id} className={getIndentationClass(level)}>
+		<div key={keyProp ?? message.id} className={getIndentationClass(level)}>
 			<PostCommentListItem
-				key={message.id}
 				postId={postId}
+				communityId={communityId}
 				id={String(message.id)}
 				currentUser={currentUser}
 				author={message.author}
@@ -72,22 +77,19 @@ const renderCommentWithChildren = (
 				socketQuery={socketQuery}
 				className='mt-4 p-0 pl-4 cursor-default border-l-4 border-blue-600'
 			/>
-			{Array.isArray(message.childrenComments.docs) && message.childrenComments.docs.length > 0 && (
-				<>
-					{message.childrenComments.docs.map(child => (
-						<Fragment key={child.id}>
-							{renderCommentWithChildren(
-								child,
-								currentUser,
-								postId,
-								socketUrl,
-								socketQuery,
-								level + 1
-							)}
-						</Fragment>
-					))}
-				</>
-			)}
+			{children.length > 0 &&
+				children.map(child =>
+					renderCommentWithChildren(
+						child,
+						currentUser,
+						postId,
+						communityId,
+						socketUrl,
+						socketQuery,
+						level + 1,
+						child.id
+					)
+				)}
 		</div>
 	)
 }
@@ -95,12 +97,13 @@ const renderCommentWithChildren = (
 export const PostCommentsList = ({
 	currentUser,
 	postId,
+	communityId,
 	apiUrl,
 	socketUrl,
 	socketQuery,
 	paramKey,
 	paramValue,
-	className,
+	className
 }: CommentItemsProps) => {
 	const queryKey = `chat:${postId}`
 	const addKey = `chat:${postId}:messages`
@@ -114,7 +117,7 @@ export const PostCommentsList = ({
 			queryKey,
 			apiUrl,
 			paramKey,
-			paramValue,
+			paramValue
 		})
 
 	UseCommentSocket({ queryKey, addKey, updateKey })
@@ -124,7 +127,7 @@ export const PostCommentsList = ({
 		bottomRef,
 		loadMore: fetchNextPage,
 		shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
-		count: data?.pages?.[0]?.items?.length ?? 0,
+		count: data?.pages?.[0]?.items?.length ?? 0
 	})
 
 	if (status === 'pending') {
@@ -158,19 +161,20 @@ export const PostCommentsList = ({
 			)}
 		>
 			<div className='flex flex-col mt-auto'>
-				{data?.pages?.map((group, i) => (
-					<Fragment key={i}>
-						{group.items.map((message: CommentWithUser) =>
-							renderCommentWithChildren(
-								message,
-								currentUser,
-								postId,
-								socketUrl,
-								socketQuery
-							)
-						)}
-					</Fragment>
-				))}
+				{data?.pages?.map((group, groupIndex) =>
+					group.items.map((message: CommentWithUser) =>
+						renderCommentWithChildren(
+							message,
+							currentUser,
+							postId,
+							communityId,
+							socketUrl,
+							socketQuery,
+							0,
+							message.id
+						)
+					)
+				)}
 			</div>
 			{!hasNextPage && <div className='flex-1' />}
 			{hasNextPage && (

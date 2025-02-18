@@ -1,11 +1,7 @@
 import { NextApiResponseServerIo } from '@/@types/socket'
-import { User } from '@/payload-types'
-import { getSession } from '@/shared/lib/auth'
+import { getPagesSession } from '@/shared/lib/pagesAuth'
 import configPromise from '@payload-config'
-// import { getUserSessionPages } from '@/shared/lib/get-user-session-pages'
 import { NextApiRequest } from 'next'
-import { draftMode } from 'next/headers'
-import path from 'path'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
@@ -18,10 +14,13 @@ export default async function handler(
 	}
 
 	try {
-		// const profile = await getUserSessionPages(req, res)
-		const profile = (await getSession()) as { user: User } | null
+		const profile = await getPagesSession(req, res)
 		const { content, fileUrl } = req.body
-		const { communityId, postId, parentCommentId } = req.query
+		const communityId = Number(req.query.communityId)
+		const postId = Number(req.query.postId)
+		const parentCommentId = req.query.parentCommentId
+			? Number(req.query.parentCommentId)
+			: null
 		const payload = await getPayload({ config: configPromise })
 
 		if (!profile) {
@@ -35,58 +34,27 @@ export default async function handler(
 		if (!content) {
 			return res.status(400).json({ error: 'Content not found' })
 		}
-		
+
 		const post = await queryPostById({ postId })
-		
-		// const post = await prisma.post.findFirst({
-		// 	where: {
-		// 		post_id: Number(postId)
-		// 	}
-		// })
 
 		if (!post) {
 			return res.status(404).json({ error: 'Post not found' })
 		}
-		
+
 		const newComment = await payload.create({
-			collection: 'comments', // required
+			collection: 'comments',
 			data: {
 				content,
-				parentPost: Number(postId),
-				community: Number(communityId),
-				owner: Number(profile.user.id),
-				parentComment: parentCommentId ? Number(parentCommentId) : null
+				parentPost: postId,
+				community: communityId,
+				owner: profile.user.id,
+				parentComment: parentCommentId
 			},
 			overrideAccess: true,
 			showHiddenFields: false,
-			
-			// If creating verification-enabled auth doc,
-			// you can optionally disable the email that is auto-sent
 			disableVerificationEmail: false,
-			
-			// If your collection supports uploads, you can upload
-			// a file directly through the Local API by providing
-			// its full, absolute file path.
-			
-			// filePath: path.resolve(__dirname, './path-to-image.jpg'),
-			
-			// Alternatively, you can directly pass a File,
-			// if file is provided, filePath will be omitted
-			file: fileUrl,
+			file: fileUrl
 		})
-		
-		// const newComment = await prisma.comment.create({
-		// 	data: {
-		// 		content,
-		// 		fileUrl,
-		// 		post_id: Number(postId),
-		// 		author_id: Number(profile.id),
-		// 		parent_comment_id: parentCommentId ? Number(parentCommentId) : null
-		// 	},
-		// 	include: {
-		// 		author: true
-		// 	}
-		// })
 
 		const postKey = `chat:${postId}:messages`
 
@@ -104,16 +72,9 @@ export default async function handler(
 }
 
 const queryPostById = cache(async ({ postId }: { postId: number }) => {
-	const { isEnabled: draft } = await draftMode()
-	
 	const payload = await getPayload({ config: configPromise })
-	
 	const result = await payload.find({
 		collection: 'posts',
-		draft,
-		limit: 1,
-		overrideAccess: draft,
-		pagination: false,
 		where: {
 			id: {
 				equals: postId
