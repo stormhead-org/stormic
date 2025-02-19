@@ -1,35 +1,27 @@
-import { User } from '@/payload-types'
-import { useSocket } from '@/shared/providers/SocketProvider'
+import { Comment, User } from '@prisma/client'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
-
-type CommentSocketProps = {
-	addKey: string
-	updateKey: string
-	queryKey: string
-}
+import { useSocket } from '../providers/SocketProvider'
 
 type CommentWithUser = Comment & {
 	user: User
 	children?: CommentWithUser[]
 }
 
-export const UseCommentSocket = ({
-	addKey,
-	updateKey,
-	queryKey
-}: CommentSocketProps) => {
+export const UseGlobalCommentSocket = (
+	queryKey: string,
+	globalUpdateKey: string
+) => {
 	const { socket } = useSocket()
 	const queryClient = useQueryClient()
 
 	useEffect(() => {
-		if (!socket) {
-			return
-		}
+		if (!socket) return
 
-		// Событие добавления комментария
-		socket.on(addKey, (newComment: CommentWithUser) => {
-			// Обновляем локальные данные
+		const globalKey = 'global:comments'
+
+		// Событие добавления нового комментария
+		socket.on(globalKey, (newComment: CommentWithUser) => {
 			queryClient.setQueryData([queryKey], (oldData: any) => {
 				if (!oldData || !oldData.pages) {
 					return {
@@ -56,8 +48,7 @@ export const UseCommentSocket = ({
 		})
 
 		// Событие обновления комментария
-		socket.on(updateKey, (updatedComment: CommentWithUser) => {
-			// Обновляем локальные данные
+		socket.on(globalUpdateKey, (updatedComment: CommentWithUser) => {
 			queryClient.setQueryData([queryKey], (oldData: any) => {
 				if (!oldData || !oldData.pages) {
 					return oldData // Если нет старых данных, просто возвращаем их
@@ -81,10 +72,10 @@ export const UseCommentSocket = ({
 		})
 
 		return () => {
-			socket.off(addKey)
-			socket.off(updateKey)
+			socket.off(globalKey)
+			socket.off(globalUpdateKey)
 		}
-	}, [queryClient, addKey, queryKey, socket, updateKey])
+	}, [queryClient, queryKey, socket, globalUpdateKey])
 }
 
 // Рекурсивное обновление комментария

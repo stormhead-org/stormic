@@ -1,7 +1,10 @@
 'use client'
 
+import { Toaster } from '@/shared/components/ui/sonner'
+import NextTopLoader from 'nextjs-toploader'
 import React from 'react'
 import { HeaderThemeProvider } from './HeaderTheme'
+import { ModalProvider } from './ModalProvider'
 import { QueryProvider } from './QueryProvider'
 import SessionProvider from './SessionProvider'
 import { SocketProvider } from './SocketProvider'
@@ -17,6 +20,9 @@ export const Providers: React.FC<{
 				<HeaderThemeProvider>
 					<SocketProvider>
 						<QueryProvider>{children}</QueryProvider>
+						<Toaster />
+						<ModalProvider />
+						<NextTopLoader />
 					</SocketProvider>
 				</HeaderThemeProvider>
 			</ThemeProvider>

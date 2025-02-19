@@ -18,6 +18,7 @@ interface PostCommentListItemProps {
 	deleted: boolean
 	currentUser: User | null
 	isUpdated: boolean
+	updatedAt: string
 	socketUrl: string
 	socketQuery: Record<string, string>
 	className?: string
@@ -34,22 +35,35 @@ export const PostCommentListItem = ({
 	deleted,
 	currentUser,
 	isUpdated,
+	updatedAt,
 	socketUrl,
 	socketQuery,
 	className
 }: PostCommentListItemProps) => {
 	const [isEditing, setIsEditing] = useState(false)
 
-	const isMessageOwner = currentUser != null && currentUser.id === author.id
+	const isMessageOwner =
+		currentUser != null && Number(currentUser.id) === Number(author.id)
+
 	const isOwner =
-		currentUser != null && currentUser.userRoles.roleType === 'owner'
+		currentUser != null &&
+		Array.isArray(currentUser.userRoles) &&
+		currentUser.userRoles.some(role => role.roleType === 'owner')
+
 	const isAdmin =
-		currentUser != null && currentUser.userRoles.roleType === 'admin'
+		currentUser != null &&
+		Array.isArray(currentUser.userRoles) &&
+		currentUser.userRoles.some(role => role.roleType === 'admin')
+
 	const isModerator =
-		currentUser != null && currentUser.userRoles.roleType === 'moderator'
+		currentUser != null &&
+		Array.isArray(currentUser.userRoles) &&
+		currentUser.userRoles.some(role => role.roleType === 'moderator')
+
+	const canModify = isMessageOwner || isAdmin || isOwner || isModerator
+
 	const canDeleteMessage =
 		!deleted && (isOwner || isAdmin || isMessageOwner || isModerator)
-	const canEditMessage = !deleted && isMessageOwner && !fileUrl
 
 	return (
 		<>
@@ -62,6 +76,7 @@ export const PostCommentListItem = ({
 					fileUrl={fileUrl}
 					deleted={deleted}
 					isUpdated={isUpdated}
+					updatedAt={updatedAt}
 					socketUrl={socketUrl}
 					isEditing={isEditing}
 					setIsEditing={setIsEditing}
@@ -74,7 +89,7 @@ export const PostCommentListItem = ({
 					id={id}
 					parentCommentAuthorName={author.name}
 					canDeleteMessage={canDeleteMessage}
-					canEditMessage={canEditMessage}
+					canEditMessage={canModify}
 					socketUrl={socketUrl}
 					socketQuery={socketQuery}
 					isEditing={isEditing}

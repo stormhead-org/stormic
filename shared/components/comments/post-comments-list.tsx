@@ -59,7 +59,6 @@ const renderCommentWithChildren = (
 	const children = Array.isArray(message.childrenComments)
 		? message.childrenComments
 		: []
-
 	return (
 		<div key={keyProp ?? message.id} className={getIndentationClass(level)}>
 			<PostCommentListItem
@@ -73,6 +72,7 @@ const renderCommentWithChildren = (
 				deleted={message.hasDeleted}
 				timestamp={formatDateTime(message.createdAt)}
 				isUpdated={message.updatedAt !== message.createdAt}
+				updatedAt={message.updatedAt}
 				socketUrl={socketUrl}
 				socketQuery={socketQuery}
 				className='mt-4 p-0 pl-4 cursor-default border-l-4 border-blue-600'

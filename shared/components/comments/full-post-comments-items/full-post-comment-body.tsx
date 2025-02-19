@@ -1,8 +1,14 @@
 import CommentImageGallery from '@/shared/components/comments/comment-image-gallery'
 import { EmojiPicker } from '@/shared/components/emoji-picker'
 import { Button } from '@/shared/components/ui/button'
-import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem
+} from '@/shared/components/ui/form'
 import { Input } from '@/shared/components/ui/input'
+import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
@@ -11,6 +17,7 @@ import qs from 'query-string'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { ActionTooltip } from '../../action-tooltip'
 
 export interface CommentItemProps {
 	id: string
@@ -18,10 +25,11 @@ export interface CommentItemProps {
 	fileUrl: string | null
 	deleted: boolean
 	isUpdated: boolean
+	updatedAt: string
 	socketUrl: string
 	socketQuery: Record<string, string>
 	isEditing: boolean
-	setIsEditing: (isEditing: boolean) => void;
+	setIsEditing: (isEditing: boolean) => void
 	className?: string
 }
 
@@ -30,18 +38,18 @@ const formSchema = z.object({
 })
 
 export const FullPostCommentBody: React.FC<CommentItemProps> = ({
-	                                                                id,
-	                                                                content,
-	                                                                fileUrl,
-	                                                                deleted,
-	                                                                isUpdated,
-	                                                                socketUrl,
-	                                                                socketQuery,
-	                                                                isEditing,
-	                                                                setIsEditing,
-	                                                                className
-                                                                }) => {
-	
+	id,
+	content,
+	fileUrl,
+	deleted,
+	isUpdated,
+	updatedAt,
+	socketUrl,
+	socketQuery,
+	isEditing,
+	setIsEditing,
+	className
+}) => {
 	useEffect(() => {
 		const handleKeyDown = (event: any) => {
 			if (event.key === 'Escape' || event.keyCode === 27) {
@@ -49,54 +57,51 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 			}
 		}
 		window.addEventListener('keydown', handleKeyDown)
-		
+
 		return () => window.removeEventListener('keyDown', handleKeyDown)
 	}, [])
-	
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			content: content
 		}
 	})
-	
+
 	const isLoading = form.formState.isSubmitting
-	
+
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		try {
 			const url = qs.stringifyUrl({
 				url: `${socketUrl}/${id}`,
 				query: socketQuery
 			})
-			
+
 			await axios.patch(url, values)
-			
+
 			form.reset()
 			setIsEditing(false)
 		} catch (error) {
 			console.log(error)
 		}
 	}
-	
+
 	useEffect(() => {
 		form.reset({
 			content: content
 		})
 	}, [content])
-	
+
 	const fileType = fileUrl?.split('.').pop()
 	const isPDF = fileType === 'pdf' && fileUrl
 	const isImage = !isPDF && fileUrl
-	
+
 	return (
 		<>
 			<div className={cn('mt-2', className)}>
 				{isImage && (
-					<div
-						className=''
-					>
-						<div
-							className='relative rounded-md overflow-hidden flex items-center justify-center bg-primary/10 p-1 mb-1'>
+					<div className=''>
+						<div className='relative rounded-md overflow-hidden flex items-center justify-center bg-primary/10 p-1 mb-1'>
 							<CommentImageGallery images={fileUrl ? [fileUrl] : []} />
 							<a
 								href={fileUrl}
@@ -107,9 +112,7 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 								<Link2 />
 							</a>
 						</div>
-					
 					</div>
-				
 				)}
 				{isPDF && (
 					<div className='relative flex items-center p-2 mt-2 rounded-md bg-background/10'>
@@ -126,14 +129,15 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 				)}
 				{!fileUrl && !isEditing && (
 					<p
-						className={cn(deleted && 'italic text-zinc-500 dark:text-zinc-400'
-						)}
+						className={cn(deleted && 'italic text-zinc-500 dark:text-zinc-400')}
 					>
 						{content}
-						{isUpdated && deleted && (
-							<span className='text-[10px] mx-2 text-zinc-500 dark:text-zinc-400'>
-										(ред.)
-							</span>
+						{isUpdated && !deleted && (
+							<ActionTooltip label={formatDateTime(updatedAt)}>
+								<span className='text-[10px] mx-2 text-zinc-500 dark:text-zinc-400'>
+									(ред.)
+								</span>
+							</ActionTooltip>
 						)}
 					</p>
 				)}
@@ -173,8 +177,8 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 							</Button>
 						</form>
 						<span className='text-[10px] mt-1 text-zinc-400'>
-									Нажмите Esc для отмены, enter чтобы сохранить
-								</span>
+							Нажмите Esc для отмены, enter чтобы сохранить
+						</span>
 					</Form>
 				)}
 			</div>

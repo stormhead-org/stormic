@@ -29,7 +29,7 @@ export const Users: CollectionConfig = {
 			label: 'Имя',
 			name: 'name',
 			type: 'text',
-			required: true,
+			required: true
 		},
 		{
 			label: 'Аватар',
@@ -92,7 +92,7 @@ export const Users: CollectionConfig = {
 			// },
 			hasMany: true,
 			relationTo: 'roles',
-			required: true,
+			required: true
 		},
 		{
 			label: 'Посты пользователя',
