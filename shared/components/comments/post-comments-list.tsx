@@ -1,50 +1,63 @@
 'use client'
 
-import { type Comment, User } from '@/payload-types'
-import { PostCommentListItem } from '@/shared/components/comments/post-comment-list-item'
-import { useCommentQuery } from '@/shared/hooks/use-comment-query'
-import { useCommentScroll } from '@/shared/hooks/use-comment-scroll'
-import { UseCommentSocket } from '@/shared/hooks/use-comment-socket'
-import { formatDateTime } from '@/shared/lib/formatDateTime'
-import { cn } from '@/shared/lib/utils'
-import { Loader2, ServerCrash } from 'lucide-react'
-import { ElementRef, useRef } from 'react'
+import { type Comment, User } from '@/payload-types';
+import { PostCommentListItem } from '@/shared/components/comments/post-comment-list-item';
+import { useCommentQuery } from '@/shared/hooks/use-comment-query';
+import { useCommentScroll } from '@/shared/hooks/use-comment-scroll';
+import { UseCommentSocket } from '@/shared/hooks/use-comment-socket';
+import { formatDateTime } from '@/shared/lib/formatDateTime';
+import { cn } from '@/shared/lib/utils';
+import { Loader2, ServerCrash } from 'lucide-react';
+import { ElementRef, useRef } from 'react';
 
-const DATE_FORMAT = 'd MMM yyyy, HH:mm'
+const DATE_FORMAT = 'd MMM yyyy, HH:mm';
 
 type CommentWithUser = Comment & {
-	author: User
-	childrenComments: CommentWithUser[]
-}
+	author: User;
+	childrenComments: CommentWithUser[];
+};
 
 interface CommentItemsProps {
-	currentUser: User | null
-	postId: string
-	communityId: number
-	apiUrl: string
-	socketUrl: string
-	socketQuery: Record<string, string>
-	paramKey: 'postId' | 'conversationId' | 'global'
-	paramValue: string
-	className?: string
+	currentUser: User | null;
+	postId: string;
+	communityId: number;
+	apiUrl: string;
+	socketUrl: string;
+	socketQuery: Record<string, string>;
+	paramKey: 'postId' | 'conversationId' | 'global';
+	paramValue: string;
+	className?: string;
 }
 
 const getIndentationClass = (level: number) => {
 	switch (level) {
 		case 1:
-			return 'pl-6'
+			return 'pl-6';
 		case 2:
-			return 'pl-6'
+			return 'pl-6';
 		case 3:
-			return 'pl-6'
+			return 'pl-6';
 		case 4:
-			return 'pl-6'
+			return 'pl-6';
 		case 5:
-			return 'pl-6'
+			return 'pl-6';
 		default:
-			return 'pl-0'
+			return 'pl-0';
 	}
-}
+};
+
+// Функция преобразования Comment в CommentWithUser
+const transformComment = (comment: Comment): CommentWithUser => ({
+	...comment,
+	author:
+		typeof comment.owner === 'object'
+			? (comment.owner as User)
+			: { id: comment.owner as number, name: comment.author || 'Unknown' } as User, // Используем owner и author
+	childrenComments:
+		comment.childrenComments?.docs?.map(child =>
+			transformComment(typeof child === 'object' ? child : { id: child as number } as Comment)
+		) ?? [],
+});
 
 const renderCommentWithChildren = (
 	message: CommentWithUser,
@@ -56,9 +69,7 @@ const renderCommentWithChildren = (
 	level = 0,
 	keyProp?: string | number
 ) => {
-	const children = Array.isArray(message.childrenComments)
-		? message.childrenComments
-		: []
+	const children = Array.isArray(message.childrenComments) ? message.childrenComments : [];
 	return (
 		<div key={keyProp ?? message.id} className={getIndentationClass(level)}>
 			<PostCommentListItem
@@ -68,7 +79,7 @@ const renderCommentWithChildren = (
 				currentUser={currentUser}
 				author={message.author}
 				content={message.content}
-				fileUrl={message.commentMedia?.url}
+				fileUrl={message.commentMedia && typeof message.commentMedia === 'object' ? message.commentMedia.url : undefined}
 				deleted={message.hasDeleted}
 				timestamp={formatDateTime(message.createdAt)}
 				isUpdated={message.updatedAt !== message.createdAt}
@@ -91,45 +102,44 @@ const renderCommentWithChildren = (
 					)
 				)}
 		</div>
-	)
-}
+	);
+};
 
 export const PostCommentsList = ({
-	currentUser,
-	postId,
-	communityId,
-	apiUrl,
-	socketUrl,
-	socketQuery,
-	paramKey,
-	paramValue,
-	className
-}: CommentItemsProps) => {
-	const queryKey = `chat:${postId}`
-	const addKey = `chat:${postId}:messages`
-	const updateKey = `chat:${postId}:messages:update`
-
-	const chatRef = useRef<ElementRef<'div'>>(null)
-	const bottomRef = useRef<ElementRef<'div'>>(null)
-
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-		useCommentQuery({
-			queryKey,
-			apiUrl,
-			paramKey,
-			paramValue
-		})
-
-	UseCommentSocket({ queryKey, addKey, updateKey })
-
+	                                 currentUser,
+	                                 postId,
+	                                 communityId,
+	                                 apiUrl,
+	                                 socketUrl,
+	                                 socketQuery,
+	                                 paramKey,
+	                                 paramValue,
+	                                 className,
+                                 }: CommentItemsProps) => {
+	const queryKey = `chat:${postId}`;
+	const addKey = `chat:${postId}:messages`;
+	const updateKey = `chat:${postId}:messages:update`;
+	
+	const chatRef = useRef<ElementRef<'div'>>(null);
+	const bottomRef = useRef<ElementRef<'div'>>(null);
+	
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useCommentQuery({
+		queryKey,
+		apiUrl,
+		paramKey,
+		paramValue,
+	});
+	
+	UseCommentSocket({ queryKey, addKey, updateKey });
+	
 	useCommentScroll({
 		chatRef,
 		bottomRef,
 		loadMore: fetchNextPage,
 		shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
-		count: data?.pages?.[0]?.items?.length ?? 0
-	})
-
+		count: data?.pages?.[0]?.docs?.length ?? 0, // Используем docs
+	});
+	
 	if (status === 'pending') {
 		return (
 			<div className='flex flex-col flex-1 justify-center items-center'>
@@ -138,9 +148,9 @@ export const PostCommentsList = ({
 					Загрузка комментариев...
 				</p>
 			</div>
-		)
+		);
 	}
-
+	
 	if (status === 'error') {
 		return (
 			<div className='flex flex-col flex-1 justify-center items-center'>
@@ -149,9 +159,9 @@ export const PostCommentsList = ({
 					Что-то пошло не так...
 				</p>
 			</div>
-		)
+		);
 	}
-
+	
 	return (
 		<div
 			ref={chatRef}
@@ -162,9 +172,9 @@ export const PostCommentsList = ({
 		>
 			<div className='flex flex-col mt-auto'>
 				{data?.pages?.map((group, groupIndex) =>
-					group.items.map((message: CommentWithUser) =>
+					group.docs.map((message: Comment) => // Используем Comment вместо CommentWithUser
 						renderCommentWithChildren(
-							message,
+							transformComment(message), // Преобразуем Comment в CommentWithUser
 							currentUser,
 							postId,
 							communityId,
@@ -193,5 +203,5 @@ export const PostCommentsList = ({
 			)}
 			<div ref={bottomRef} />
 		</div>
-	)
-}
+	);
+};

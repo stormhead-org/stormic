@@ -77,8 +77,6 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 				socketQuery={{
 					postId: String(postId)
 				}}
-				paramKey='postId'
-				paramValue={String(postId)}
 			/>
 		</div>
 	)
