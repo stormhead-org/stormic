@@ -12,8 +12,8 @@ interface CommentFormProps {
 	maxLengthHeader?: number
 	maxLengthBody?: number
 	apiUrl: string
-	paramKey: 'postId' | 'conversationId' | 'global'
-	paramValue: string
+	// paramKey: 'postId' | 'conversationId' | 'global'
+	// paramValue: string
 	className?: string
 }
 
@@ -21,8 +21,8 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 	maxLengthHeader,
 	maxLengthBody,
 	apiUrl,
-	paramKey,
-	paramValue,
+	// paramKey,
+	// paramValue,
 	className
 }) => {
 	const queryKey = 'global:comments'
@@ -34,9 +34,9 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
 		useCommentQuery({
 			queryKey,
-			apiUrl,
-			paramKey,
-			paramValue
+			apiUrl
+			// paramKey,
+			// paramValue
 		})
 
 	UseGlobalCommentSocket(queryKey, globalUpdateKey)

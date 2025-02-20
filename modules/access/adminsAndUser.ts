@@ -1,18 +1,18 @@
-import { Access } from 'payload'
-import { checkRole } from './checkRole'
+// import { Access } from 'payload'
+// import { checkRole } from './checkRole'
 
-const adminsAndUser: Access = ({ req: { user } }) => {
-	if (user) {
-		if (checkRole(['admin'], user)) {
-			return true
-		}
+// const adminsAndUser: Access = ({ req: { user } }) => {
+// 	if (user) {
+// 		if (checkRole(['admin'], user)) {
+// 			return true
+// 		}
 
-		return {
-			id: user.id,
-		}
-	}
+// 		return {
+// 			id: user.id,
+// 		}
+// 	}
 
-	return false
-}
+// 	return false
+// }
 
-export default adminsAndUser
+// export default adminsAndUser

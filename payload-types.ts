@@ -119,7 +119,7 @@ export interface User {
         id?: string | null;
       }[]
     | null;
-  userRoles: (number | Role)[];
+  userRoles?: (number | Role)[] | null;
   relatedPosts?: {
     docs?: (number | Post)[] | null;
     hasNextPage?: boolean | null;
@@ -292,7 +292,7 @@ export interface Post {
     image?: (number | null) | Media;
   };
   publishedAt?: string | null;
-  owner?: (number | null) | User;
+  owner: number | User;
   author?: string | null;
   updatedAt: string;
   createdAt: string;

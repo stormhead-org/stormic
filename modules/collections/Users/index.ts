@@ -91,8 +91,8 @@ export const Users: CollectionConfig = {
 			// 	}
 			// },
 			hasMany: true,
-			relationTo: 'roles',
-			required: true
+			relationTo: 'roles'
+			// required: true
 		},
 		{
 			label: 'Посты пользователя',

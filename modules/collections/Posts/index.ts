@@ -229,7 +229,8 @@ export const Posts: CollectionConfig<'posts'> = {
 				position: 'sidebar'
 			},
 			hasMany: false,
-			relationTo: 'users'
+			relationTo: 'users',
+			required: true
 		},
 		// This field is only used to populate the user data via the `author` hook
 		// This is because the `user` collection has access control locked to protect user privacy

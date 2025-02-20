@@ -7,16 +7,14 @@ import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
-type Args = {
-	params: {
-		id?: number
-	}
-}
+export default async function Community({
+	params
+}: {
+	params: Promise<{ id?: string }>
+}) {
+	const resolvedParams = await params
+	const id = resolvedParams.id ? Number(resolvedParams.id) : null
 
-export default async function Community({ params: paramsPromise }: Args) {
-	const { isEnabled: draft } = await draftMode()
-	const { id = null } = await paramsPromise
-	// const url = '/c/' + id
 	const community = await queryCommunityById({ id })
 	const posts = await queryPostByCommunityId({ id })
 
@@ -27,15 +25,21 @@ export default async function Community({ params: paramsPromise }: Args) {
 	return <CommunityProfileGroup posts={posts || []} community={community} />
 }
 
+// Генерация метаданных
 export async function generateMetadata({
-	params: paramsPromise
-}: Args): Promise<Metadata> {
-	const { id = null } = await paramsPromise
+	params
+}: {
+	params: Promise<{ id?: string }>
+}): Promise<Metadata> {
+	const resolvedParams = await params
+	const id = resolvedParams.id ? Number(resolvedParams.id) : null
+
 	const community = await queryCommunityById({ id })
 
 	return generateMeta({ doc: community })
 }
 
+// Функция для запроса сообщества по ID
 const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
 	if (!id) return null
 
@@ -50,6 +54,7 @@ const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
 	return community || null
 })
 
+// Функция для запроса постов по ID сообщества
 const queryPostByCommunityId = cache(async ({ id }: { id: number | null }) => {
 	if (!id) return null
 

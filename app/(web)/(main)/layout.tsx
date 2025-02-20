@@ -3,7 +3,6 @@ import {
 	CommunitiesListGroup,
 	Container,
 	FeedUserMenu,
-	// FeedUserMenu,
 	NavigationMenuForm,
 	SideFooter,
 	SocialMenu
@@ -20,10 +19,9 @@ export const metadata: Metadata = {
 
 export default async function MainLayout({
 	children
-}: Readonly<{
+}: {
 	children: React.ReactNode
-	modal: React.ReactNode
-}>) {
+}) {
 	const payload = await getPayload({ config })
 
 	const globalSideBarNavigation = await payload.findGlobal({
@@ -49,19 +47,10 @@ export default async function MainLayout({
 					<div className='w-1/4 h-[91vh] overflow-auto no-scrollbar rounded-md'>
 						<FeedUserMenu />
 						<SocialMenu className='my-2' />
-						{/* <NewPostButton
-							className='my-4'
-							authorAvatar={String(user && user.profile_picture)}
-							authorName={String(user && user.fullName)}
-							authorUrl={String(user && '/u/' + user.id)}
-							hasSession={!!user}
-							logoImage={logoImage?.url || '/logo.png'}
-							stormicName={stormicName?.content || 'Stormic'}
-							authImage={authImage ? authImage?.url : stormicBanner?.url}
-						/> */}
 						<NavigationMenuForm
 							className='mt-4'
-							data={globalSideBarNavigation.items || []}
+							data={[globalSideBarNavigation]}
+							// data={globalSideBarNavigation.items || []}
 						/>
 						<CommunitiesListGroup
 							data={communities}
@@ -74,7 +63,6 @@ export default async function MainLayout({
 					<div className='w-2/4 h-[91vh] overflow-auto no-scrollbar rounded-md'>
 						{children}
 					</div>
-
 					{/* Правая часть */}
 					<div className='w-1/4'>
 						<CommentFeedGroup />

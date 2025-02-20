@@ -5,38 +5,36 @@ import { useSocket } from '../providers/SocketProvider'
 interface ChatQueryProps {
 	queryKey: string
 	apiUrl: string
-	paramKey: 'postId' | 'conversationId' | 'global'
-	paramValue: string
 }
 
-export const useCommentQuery = ({
-	queryKey,
-	apiUrl,
-	paramKey,
-	paramValue
-}: ChatQueryProps) => {
+export const useCommentQuery = ({ queryKey, apiUrl }: ChatQueryProps) => {
 	const { isConnected } = useSocket()
 
-	const fetchMessages = async ({ pageParam = undefined }) => {
+	const fetchMessages = async ({ pageParam = null }) => {
 		const url = qs.stringifyUrl(
 			{
 				url: apiUrl,
-				query: {
-					cursor: pageParam,
-					[paramKey]: paramValue
-				}
+				query: { cursor: pageParam }
 			},
 			{ skipNull: true }
 		)
 
 		console.log('Fetching:', url)
-		const res = await fetch(url)
-		const data = await res.json()
-		console.log('Response:', data)
 
-		return {
-			docs: data.docs || [],
-			nextCursor: data.nextPage ?? null // если API иногда возвращает null
+		try {
+			const res = await fetch(url)
+			if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`)
+
+			const data = await res.json()
+			console.log('Response:', data)
+
+			return {
+				docs: data.docs ?? [],
+				nextCursor: data.nextPage ?? null
+			}
+		} catch (error) {
+			console.error('Fetch error:', error)
+			return { docs: [], nextCursor: null }
 		}
 	}
 
@@ -44,18 +42,15 @@ export const useCommentQuery = ({
 		useInfiniteQuery({
 			queryKey: [queryKey],
 			queryFn: fetchMessages,
-			getNextPageParam: lastPage => {
-				console.log('Last page:', lastPage)
-				return lastPage?.nextCursor ?? undefined
-			},
+			getNextPageParam: lastPage => lastPage?.nextCursor ?? undefined,
 			refetchInterval: isConnected ? false : 1000,
-			initialPageParam: undefined
+			initialPageParam: null
 		})
 
 	console.log('Query data:', data)
 
 	return {
-		data: data?.pages.flatMap(page => page.docs) ?? [], // Теперь это массив всех комментариев
+		data: data?.pages?.flatMap(page => page.docs) ?? [],
 		fetchNextPage,
 		hasNextPage,
 		isFetchingNextPage,

@@ -31,8 +31,8 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 					maxLengthHeader={28}
 					maxLengthBody={56}
 					apiUrl='/api/comments'
-					paramKey='global'
-					paramValue={String('true')}
+					// paramKey='global'
+					// paramValue={String('true')}
 				/>
 			</div>
 		</div>

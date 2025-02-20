@@ -7,16 +7,15 @@ import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
-type Args = {
-	params: {
-		id?: number
-	}
-}
-
-export default async function User({ params: paramsPromise }: Args) {
+export default async function User({
+	params
+}: {
+	params: Promise<{ id?: string }>
+}) {
 	const { isEnabled: draft } = await draftMode()
-	const { id = null } = await paramsPromise
-	// const url = '/u/' + id
+	const resolvedParams = await params
+	const id = resolvedParams.id ? Number(resolvedParams.id) : null
+
 	const user = await queryUserById({ id })
 	const posts = await queryPostByUserId({ id })
 
@@ -31,15 +30,21 @@ export default async function User({ params: paramsPromise }: Args) {
 	)
 }
 
+// Генерация метаданных
 export async function generateMetadata({
-	params: paramsPromise
-}: Args): Promise<Metadata> {
-	const { id = null } = await paramsPromise
+	params
+}: {
+	params: Promise<{ id?: string }>
+}): Promise<Metadata> {
+	const resolvedParams = await params
+	const id = resolvedParams.id ? Number(resolvedParams.id) : null
+
 	const user = await queryUserById({ id })
 
 	return generateMeta({ doc: user })
 }
 
+// Функция для запроса пользователя по ID
 const queryUserById = cache(async ({ id }: { id: number | null }) => {
 	if (!id) return null
 
@@ -54,6 +59,7 @@ const queryUserById = cache(async ({ id }: { id: number | null }) => {
 	return user || null
 })
 
+// Функция для запроса постов по ID пользователя
 const queryPostByUserId = cache(async ({ id }: { id: number | null }) => {
 	if (!id) return null
 
