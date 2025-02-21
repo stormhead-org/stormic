@@ -1,22 +1,34 @@
 import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
+
 import { UserProfileGroup } from '@/shared/components/profiles/user-profile-group'
+
 import { generateMeta } from '@/shared/lib/generateMeta'
+
 import configPromise from '@payload-config'
+
 import type { Metadata } from 'next'
+
 import { draftMode } from 'next/headers'
+
 import { getPayload } from 'payload'
+
 import { cache } from 'react'
 
-export default async function User({
-	params
-}: {
-	params: Promise<{ id?: string }>
-}) {
+type Args = {
+	params: {
+		id?: number
+	}
+}
+
+export default async function User({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
-	const resolvedParams = await params
-	const id = resolvedParams.id ? Number(resolvedParams.id) : null
+
+	const { id = null } = await paramsPromise
+
+	// const url = '/u/' + id
 
 	const user = await queryUserById({ id })
+
 	const posts = await queryPostByUserId({ id })
 
 	if (!user) {
@@ -30,21 +42,16 @@ export default async function User({
 	)
 }
 
-// Генерация метаданных
 export async function generateMetadata({
-	params
-}: {
-	params: Promise<{ id?: string }>
-}): Promise<Metadata> {
-	const resolvedParams = await params
-	const id = resolvedParams.id ? Number(resolvedParams.id) : null
+	params: paramsPromise
+}: Args): Promise<Metadata> {
+	const { id = null } = await paramsPromise
 
 	const user = await queryUserById({ id })
 
 	return generateMeta({ doc: user })
 }
 
-// Функция для запроса пользователя по ID
 const queryUserById = cache(async ({ id }: { id: number | null }) => {
 	if (!id) return null
 
@@ -52,14 +59,15 @@ const queryUserById = cache(async ({ id }: { id: number | null }) => {
 
 	const user = await payload.findByID({
 		collection: 'users',
+
 		id: String(id),
+
 		depth: 1
 	})
 
 	return user || null
 })
 
-// Функция для запроса постов по ID пользователя
 const queryPostByUserId = cache(async ({ id }: { id: number | null }) => {
 	if (!id) return null
 
@@ -69,9 +77,13 @@ const queryPostByUserId = cache(async ({ id }: { id: number | null }) => {
 
 	const result = await payload.find({
 		collection: 'posts',
+
 		draft,
+
 		overrideAccess: draft,
+
 		pagination: false,
+
 		where: {
 			author: {
 				some: {

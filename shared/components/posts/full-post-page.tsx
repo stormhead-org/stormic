@@ -1,7 +1,7 @@
 'use client'
 
 import { Post, type User } from '@/payload-types'
-import { CommentFullPostGroup } from '@/shared/components/comments/comment-full-post-group'
+// import { CommentFullPostGroup } from '@/shared/components/comments/comment-full-post-group'
 import { cn } from '@/shared/lib/utils'
 import { useSession } from '@/shared/providers/SessionProvider'
 import React from 'react'
@@ -22,13 +22,13 @@ export const FullPostPage: React.FC<Props> = ({ post, className }) => {
 				post={post}
 				// loading={loading}
 			/>
-			<CommentFullPostGroup
+			{/* <CommentFullPostGroup
 				className='mb-4'
 				postId={post.id}
 				communityId={post.community.id}
 				currentUser={currentUser}
 				commentsHeader={String(0)}
-			/>
+			/> */}
 		</div>
 	)
 }

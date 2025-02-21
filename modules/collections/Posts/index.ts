@@ -4,7 +4,7 @@ import { Banner } from '@/modules/collections/blocks/Banner/config'
 import { Code } from '@/modules/collections/blocks/Code/config'
 import { MediaBlock } from '@/modules/collections/blocks/MediaBlock/config'
 import { generatePreviewPath } from '@/shared/lib/generatePreviewPath'
-import { getCommentTree } from '@/shared/utils/getCommentTree'
+// import { getCommentTree } from '@/shared/utils/getCommentTree'
 import {
 	MetaDescriptionField,
 	MetaImageField,
@@ -66,33 +66,33 @@ export const Posts: CollectionConfig<'posts'> = {
 			}),
 		useAsTitle: 'title'
 	},
-	endpoints: [
-		{
-			path: '/:id/comments',
-			method: 'get',
-			handler: async req => {
-				try {
-					if (!req.routeParams || !req.routeParams.id) {
-						return Response.json(
-							{ error: 'Post ID не найден' },
-							{ status: 400 }
-						)
-					}
+	// endpoints: [
+	// 	{
+	// 		path: '/:id/comments',
+	// 		method: 'get',
+	// 		handler: async req => {
+	// 			try {
+	// 				if (!req.routeParams || !req.routeParams.id) {
+	// 					return Response.json(
+	// 						{ error: 'Post ID не найден' },
+	// 						{ status: 400 }
+	// 					)
+	// 				}
 
-					const postId = Number(req.routeParams.id)
+	// 				const postId = Number(req.routeParams.id)
 
-					const commentTree = await getCommentTree(postId)
-					return commentTree
-				} catch (error) {
-					console.error('[CUSTOM_ENDPOINT]', error)
-					return Response.json(
-						{ error: 'Ошибка сервера при получении комментариев к посту' },
-						{ status: 500 }
-					)
-				}
-			}
-		}
-	],
+	// 				const commentTree = await getCommentTree(postId)
+	// 				return commentTree
+	// 			} catch (error) {
+	// 				console.error('[CUSTOM_ENDPOINT]', error)
+	// 				return Response.json(
+	// 					{ error: 'Ошибка сервера при получении комментариев к посту' },
+	// 					{ status: 500 }
+	// 				)
+	// 			}
+	// 		}
+	// 	}
+	// ],
 	fields: [
 		{
 			label: 'Название',
