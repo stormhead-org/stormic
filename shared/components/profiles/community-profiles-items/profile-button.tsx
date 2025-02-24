@@ -3,17 +3,20 @@
 import {
 	Avatar,
 	AvatarFallback,
-	AvatarImage,
+	AvatarImage
 } from '@/shared/components/ui/avatar'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuTrigger,
+	DropdownMenuTrigger
 } from '@/shared/components/ui/dropdown-menu'
 import { CircleUser } from 'lucide-react'
 // import { signOut, useSession } from 'next-auth/react'
-import React from 'react'
+import { signOut } from '@/shared/utils/signOut'
+import { useRouter } from 'next/navigation'
+import React, { useCallback } from 'react'
+import { toast } from 'sonner'
 import { Button } from '../../ui/button'
 // import { useIntl } from 'react-intl'
 
@@ -30,16 +33,31 @@ export const ProfileButton: React.FC<Props> = ({
 	userUrl,
 	session,
 	onClickSignIn,
-	className,
+	className
 }) => {
 	// const { formatMessage } = useIntl()
-	// const router = useRouter()
+	const router = useRouter()
 
-	// const onClickSignOut = () => {
-	// 	signOut({
-	// 		callbackUrl: '/'
-	// 	})
-	// }
+	const handleSignOut = useCallback(async () => {
+		let toastMessage = ''
+		try {
+			const result = await signOut()
+			if (result.message) {
+				toastMessage = 'Вы успешно вышли из аккаунта!'
+				toast.error(toastMessage, {
+					duration: 3000
+				})
+				router.push('/')
+				router.refresh()
+			}
+		} catch (error) {
+			console.error('Не удалось выйти:', error)
+			toastMessage = 'Ошибка при выходе из аккаунта!'
+			toast.error(toastMessage, {
+				duration: 3000
+			})
+		}
+	}, [router])
 
 	return (
 		<div className={className}>
@@ -70,7 +88,7 @@ export const ProfileButton: React.FC<Props> = ({
 						<DropdownMenuContent align='end' className='bg-secondary'>
 							<DropdownMenuItem
 								className='cursor-pointer'
-								// onClick={() => router.push(userUrl)}
+								onClick={() => router.push(userUrl)}
 							>
 								{/* {formatMessage({ id: 'profileButton.profile' })} */}
 								Профиль
@@ -91,7 +109,7 @@ export const ProfileButton: React.FC<Props> = ({
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								className='cursor-pointer'
-								// onClick={() => onClickSignOut()}
+								onClick={() => handleSignOut()}
 							>
 								{/* {formatMessage({ id: 'profileButton.logout' })} */}
 								Выйти

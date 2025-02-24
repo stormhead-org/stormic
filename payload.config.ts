@@ -90,7 +90,7 @@ export default buildConfig({
 	}),
 
 	email: nodemailerAdapter({
-		defaultFromAddress: 'staff@stormic.app',
+		defaultFromAddress: 'staff@stormhead.org',
 		defaultFromName: 'Stormic',
 		transportOptions: {
 			host: process.env.SMTP_HOST,

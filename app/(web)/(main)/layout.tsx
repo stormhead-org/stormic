@@ -6,20 +6,20 @@ import {
 	// FeedUserMenu,
 	NavigationMenuForm,
 	SideFooter,
-	SocialMenu,
+	SocialMenu
 } from '@/shared/components/'
-// import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
+import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
 import config from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import React from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic Community',
+	title: 'Stormic Community'
 }
 
 export default async function MainLayout({
-	children,
+	children
 }: Readonly<{
 	children: React.ReactNode
 	modal: React.ReactNode
@@ -30,15 +30,15 @@ export default async function MainLayout({
 		slug: 'sidebar-navigation', // required
 		depth: 1,
 		select: {
-			items: true,
-		},
+			items: true
+		}
 	})
 
 	const resultCommunities = await payload.find({
 		collection: 'communities',
 		depth: 1,
 		// limit: 12,
-		overrideAccess: false,
+		overrideAccess: false
 		// select: {
 		// 	id: true,
 		//   title: true,
@@ -86,7 +86,9 @@ export default async function MainLayout({
 					</div>
 
 					{/* Правая часть */}
-					<div className='w-1/4'>{/* <CommentFeedGroup /> */}</div>
+					<div className='w-1/4'>
+						<CommentFeedGroup />
+					</div>
 				</div>
 			</Container>
 		</>
