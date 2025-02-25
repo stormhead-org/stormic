@@ -1,6 +1,11 @@
 'use client'
 
-import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle
+} from '@/shared/components/ui/dialog'
 import React from 'react'
 import { CommunityNameForm } from './forms/name-form'
 import { CommunityStyleForm } from './forms/style-form'
@@ -26,6 +31,9 @@ export const NewCommunityModal: React.FC<Props> = ({ open, onClose }) => {
 	return (
 		<Dialog open={open} onOpenChange={onClose}>
 			<DialogContent className='bg-secondary transition-all duration-300-p-2'>
+				<DialogHeader className='hidden'>
+					<DialogTitle />
+				</DialogHeader>
 				<div className='flex mx-auto'>
 					<div className=''>
 						<div className='my-2'>

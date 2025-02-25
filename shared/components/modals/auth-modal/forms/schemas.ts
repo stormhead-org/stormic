@@ -7,9 +7,13 @@ export const customFieldSchema = z.object({
 	value: z.string()
 })
 
-export const emailSchema = z.string().email({ message: 'Введите корректную почту' })
+export const emailSchema = z
+	.string()
+	.email({ message: 'Введите корректную почту' })
 export const fullName = z.string().min(2, { message: 'Введите имя и фамилию' })
-export const passwordSchema = z.string().min(8, { message: 'Введите корректный пароль' })
+export const passwordSchema = z
+	.string()
+	.min(8, { message: 'Введите корректный пароль' })
 
 export const formLoginSchema = z.object({
 	email: emailSchema,
@@ -23,7 +27,7 @@ export const formRegisterSchema = formLoginSchema
 			confirmPassword: passwordSchema
 		})
 	)
-	.refine((data) => data.password === data.confirmPassword, {
+	.refine(data => data.password === data.confirmPassword, {
 		message: 'Пароли не совпадают',
 		path: ['confirmPassword']
 	})
@@ -47,8 +51,10 @@ export const formNewPasswordUpdateSchema = z.object({
 	confirmPassword: passwordSchema.optional()
 })
 
-export type TFormNewPasswordUpdateValues = z.infer<typeof formNewPasswordUpdateSchema>
+export type TFormNewPasswordUpdateValues = z.infer<
+	typeof formNewPasswordUpdateSchema
+>
 export type TFormAccountUpdateValues = z.infer<typeof formAccountUpdateSchema>
 export type TFormProfileUpdateValues = z.infer<typeof formProfileUpdateSchema>
-export type TFormLoginValues = z.infer<typeof formLoginSchema>;
-export type TFormRegisterValues = z.infer<typeof formRegisterSchema>;
+export type TFormLoginValues = z.infer<typeof formLoginSchema>
+export type TFormRegisterValues = z.infer<typeof formRegisterSchema>

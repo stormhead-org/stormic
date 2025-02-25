@@ -119,7 +119,8 @@ export interface User {
         id?: string | null;
       }[]
     | null;
-  userRoles: (number | Role)[];
+  systemRoles: ('owner' | 'everyone')[];
+  roles?: (number | Role)[] | null;
   relatedPosts?: {
     docs?: (number | Post)[] | null;
     hasNextPage?: boolean | null;
@@ -241,16 +242,15 @@ export interface Media {
  */
 export interface Role {
   id: number;
-  roleName: string;
-  roleBadge?: (number | null) | Media;
-  roleColor?: string | null;
-  roleType: 'owner' | 'admin' | 'moderator' | 'everyone';
+  name: string;
+  badge?: (number | null) | Media;
+  color?: string | null;
   relatedUsers?: {
     docs?: (number | User)[] | null;
     hasNextPage?: boolean | null;
   } | null;
-  COMMUNITY_USER_BUN?: ('true' | 'false') | null;
-  COMMUNITY_POST_DELETE?: ('true' | 'false') | null;
+  COMMUNITY_USER_BAN?: boolean | null;
+  COMMUNITY_POST_DELETE?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -599,7 +599,8 @@ export interface UsersSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
-  userRoles?: T;
+  systemRoles?: T;
+  roles?: T;
   relatedPosts?: T;
   ownerCommunities?: T;
   moderationCommunities?: T;
@@ -798,12 +799,11 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "roles_select".
  */
 export interface RolesSelect<T extends boolean = true> {
-  roleName?: T;
-  roleBadge?: T;
-  roleColor?: T;
-  roleType?: T;
+  name?: T;
+  badge?: T;
+  color?: T;
   relatedUsers?: T;
-  COMMUNITY_USER_BUN?: T;
+  COMMUNITY_USER_BAN?: T;
   COMMUNITY_POST_DELETE?: T;
   updatedAt?: T;
   createdAt?: T;

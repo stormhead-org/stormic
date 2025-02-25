@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { userData } from './hooks/userData'
 
@@ -14,10 +15,10 @@ export const Users: CollectionConfig = {
 	// },
 	access: {
 		admin: authenticated,
-		create: authenticated,
-		delete: authenticated,
+		create: anyone,
 		read: authenticated,
-		update: authenticated
+		update: authenticated,
+		delete: authenticated
 	},
 	admin: {
 		defaultColumns: ['name', 'email'],
@@ -80,20 +81,32 @@ export const Users: CollectionConfig = {
 			]
 		},
 		{
-			label: 'Роли',
-			name: 'userRoles',
-			type: 'relationship',
-			// filterOptions: ({ id }) => {
-			// 	return {
-			// 		id: {
-			// 			not_in: [id],
-			// 		},
-			// 	}
-			// },
-			// TODO дефолтная роль эвриван через defaultValue
+			label: 'Системные роли',
+			name: 'systemRoles',
+			type: 'select',
 			hasMany: true,
-			relationTo: 'roles',
-			required: true
+			// hooks: {
+			// 	beforeChange: [protectRoles]
+			// },
+			required: true,
+			options: [
+				{
+					label: 'Основатель',
+					value: 'owner'
+				},
+				{
+					label: 'everyone',
+					value: 'everyone'
+				}
+			]
+		},
+		{
+			label: 'Роли',
+			name: 'roles',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'roles'
+			// required: true
 		},
 		{
 			label: 'Посты пользователя',

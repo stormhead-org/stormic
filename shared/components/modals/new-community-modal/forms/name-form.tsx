@@ -5,8 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useIntl } from 'react-intl'
-import { toast } from 'sonner'
+// import { useIntl } from 'react-intl'
 import { formLoginSchema, TFormLoginValues } from './schemas'
 
 interface Props {
@@ -17,7 +16,7 @@ interface Props {
 }
 
 export const CommunityNameForm: React.FC<Props> = ({ setType, onClose }) => {
-	const { formatMessage } = useIntl()
+	// const { formatMessage } = useIntl()
 	const form = useForm<TFormLoginValues>({
 		resolver: zodResolver(formLoginSchema),
 		defaultValues: {
@@ -37,16 +36,16 @@ export const CommunityNameForm: React.FC<Props> = ({ setType, onClose }) => {
 				throw Error()
 			}
 
-			toast.success(String(formatMessage({ id: 'loginForm.toastSuccess' })), {
-				icon: '✅'
-			})
+			// toast.success(String(formatMessage({ id: 'loginForm.toastSuccess' })), {
+			// 	icon: '✅'
+			// })
 
 			onClose?.()
 		} catch (error) {
 			console.error('Error [LOGIN]', error)
-			toast.error(String(formatMessage({ id: 'loginForm.toastError' })), {
-				icon: '❌'
-			})
+			// toast.error(String(formatMessage({ id: 'loginForm.toastError' })), {
+			// 	icon: '❌'
+			// })
 		}
 	}
 

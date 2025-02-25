@@ -7,6 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 // import { useIntl } from 'react-intl'
+import { registerUser } from '@/shared/utils/registerUser'
+import { toast } from 'sonner'
 import { formRegisterSchema, TFormRegisterValues } from './schemas'
 
 interface Props {
@@ -33,37 +35,36 @@ export const RegisterForm: React.FC<Props> = ({
 		}
 	})
 
-	// const onSubmit = async (data: TFormRegisterValues) => {
-	// 	try {
-	// 		await registerUser({
-	// 			email: data.email,
-	// 			fullName: data.fullName,
-	// 			password: data.password
-	// 		})
+	const onSubmit = async (data: TFormRegisterValues) => {
+		try {
+			await registerUser({
+				email: data.email,
+				fullName: data.fullName,
+				password: data.password,
+				confirmPassword: data.confirmPassword
+			})
 
-	// 		toast.success(String(formatMessage({ id: 'registerForm.toastSuccess' })), {
-	// 			icon: '✅'
-	// 		})
+			// toast.success(String(formatMessage({ id: 'registerForm.toastSuccess' })), {
+			toast.success('Регистрация успешна. Подтвердите свою почту', {
+				icon: '✅'
+			})
 
-	// 		onClose?.()
-	// 	} catch (error) {
-	// 		return toast.error(String(formatMessage({ id: 'registerForm.toastError' })), {
-	// 			icon: '❌'
-	// 		})
-	// 	}
-	// }
+			onClose?.()
+		} catch (error) {
+			// return toast.error(String(formatMessage({ id: 'registerForm.toastError' })), {
+			return toast.error('Неверная почта или пароль', {
+				icon: '❌'
+			})
+		}
+	}
 
 	return (
 		<FormProvider {...form}>
 			<form
 				className='flex flex-col gap-4'
-				// onSubmit={form.handleSubmit(onSubmit)}
+				onSubmit={form.handleSubmit(onSubmit)}
 			>
 				<p className='text-xl font-bold text-center'>Регистрация</p>
-				{/* <p className='text-gray-400'>
-					Регистрация через почту отключена для всех, кроме кроме разработчика.
-					Используйте регистрацию через соц. сети
-				</p> */}
 				<FormInput
 					name='email'
 					// label={formatMessage({ id: 'registerForm.formInputEmailLabel' })}

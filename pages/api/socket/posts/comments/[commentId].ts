@@ -43,18 +43,18 @@ export default async function handler(
 			Number(comment?.author?.id) === Number(profile?.user.id)
 
 		const isOwner =
-			Array.isArray(profile?.user.userRoles) &&
-			profile.user.userRoles.some(role => role.roleType === 'owner')
+			Array.isArray(profile?.user.systemRoles) &&
+			profile.user.systemRoles.includes('owner')
 
-		const isAdmin =
-			Array.isArray(profile?.user.userRoles) &&
-			profile.user.userRoles.some(role => role.roleType === 'admin')
+		// const isAdmin =
+		// 	Array.isArray(profile?.user.userRoles) &&
+		// 	profile.user.userRoles.some(role => role.roleType === 'admin')
 
-		const isModerator =
-			Array.isArray(profile?.user.userRoles) &&
-			profile.user.userRoles.some(role => role.roleType === 'moderator')
+		// const isModerator =
+		// 	Array.isArray(profile?.user.userRoles) &&
+		// 	profile.user.userRoles.some(role => role.roleType === 'moderator')
 
-		const canModify = isMessageOwner || isAdmin || isOwner || isModerator
+		const canModify = isMessageOwner || isOwner
 
 		if (!canModify) {
 			return res.status(401).json({ error: 'Не авторизован' })
@@ -67,7 +67,7 @@ export default async function handler(
 					content: 'Комментарий был удален',
 					hasDeleted: true
 				},
-				file: null,
+				// file: null,
 				where: {
 					id: {
 						equals: commentId

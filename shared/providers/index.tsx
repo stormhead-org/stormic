@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Toaster } from 'sonner'
+import { Toaster } from '../components/ui/sonner'
 import { HeaderThemeProvider } from './HeaderTheme'
 import { ModalProvider } from './ModalProvider'
 import { QueryProvider } from './QueryProvider'

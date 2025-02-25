@@ -1,19 +1,20 @@
-import { User } from "@/payload-types";
-import { FieldHook } from "payload";
-// ensure there is always a `user` role
-// do not let non-admins change roles
+import { User } from '@/payload-types'
+import { FieldHook } from 'payload'
+// у всех юзеров должна быть роль everyone
+// не админы не могут менять роль
 export const protectRoles: FieldHook<{ id: string } & User> = ({
-  data,
-  req,
+	data,
+	req
 }) => {
-  const isOwner =
-    req.user?.roles.includes("owner") || data.email === "demo@payloadcms.com"; // for the seed script
+	const isOwner =
+		req.user?.systemRoles.includes('owner') ||
+		data.email === 'nims@stormhead.org'
 
-  if (!isOwner) {
-    return ["user"];
-  }
+	if (!isOwner) {
+		return ['user']
+	}
 
-  const userRoles = new Set(data?.roles || []);
-  userRoles.add("user");
-  return [...userRoles];
-};
+	const userRoles = new Set(data?.systemRoles || [])
+	userRoles.add('everyone')
+	return [...userRoles]
+}

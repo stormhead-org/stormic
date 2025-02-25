@@ -1,7 +1,5 @@
-import type { CollectionConfig } from 'payload'
-
-import { slugField } from '@/fields/slug'
 import { authenticated } from '@/modules/access/authenticated'
+import type { CollectionConfig } from 'payload'
 
 export const Roles: CollectionConfig = {
 	slug: 'roles',
@@ -9,105 +7,51 @@ export const Roles: CollectionConfig = {
 		create: authenticated,
 		delete: authenticated,
 		read: authenticated,
-		update: authenticated,
+		update: authenticated
 	},
 	admin: {
-		useAsTitle: 'roleName',
+		useAsTitle: 'name'
 	},
 	fields: [
 		{
 			label: 'Название',
-			name: 'roleName',
+			name: 'name',
 			type: 'text',
-			required: true,
+			required: true
 		},
 		{
-			label: 'Бадж',
-			name: 'roleBadge',
+			label: 'Значок',
+			name: 'badge',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'Цвет роли',
-			name: 'roleColor',
+			name: 'color',
 			defaultValue: '#eeedf5',
-			type: 'text',
-		},
-		{
-			name: 'roleType', // required
-			type: 'select', // required
-			hasMany: false,
-			admin: {
-				isClearable: true,
-				isSortable: true,
-			},
-			required: true,
-			options: [
-				{
-					label: 'Владелец',
-					value: 'owner',
-				},
-				{
-					label: 'Администратор',
-					value: 'admin',
-				},
-				{
-					label: 'Модератор',
-					value: 'moderator',
-				},
-				{
-					label: 'everyone',
-					value: 'everyone',
-				},
-			],
+			type: 'text'
 		},
 		{
 			label: 'Пользователи с этой ролью',
 			name: 'relatedUsers',
 			type: 'join',
 			collection: 'users',
-			on: 'userRoles',
+			on: 'roles',
 			maxDepth: 1
 		},
 		{
 			label: 'Блокировать пользователей в сообществе',
-			name: 'COMMUNITY_USER_BUN',
-			type: 'radio',
-			options: [
-				{
-					label: 'Да',
-					value: 'true',
-				},
-				{
-					label: 'Нет',
-					value: 'false',
-				},
-			],
-			defaultValue: 'false',
-			admin: {
-				layout: 'horizontal',
-			},
+			name: 'COMMUNITY_USER_BAN',
+			type: 'checkbox',
+			defaultValue: false
 		},
 		{
 			label: 'Удалять посты в сообществе',
 			name: 'COMMUNITY_POST_DELETE',
-			type: 'radio',
-			options: [
-				{
-					label: 'Да',
-					value: 'true',
-				},
-				{
-					label: 'Нет',
-					value: 'false',
-				},
-			],
-			defaultValue: 'false',
-			admin: {
-				layout: 'horizontal',
-			},
-		},
-	],
+			type: 'checkbox',
+			defaultValue: false
+		}
+	]
 	// hooks: {
 	// 	afterRead: [communityModerators],
 	// },

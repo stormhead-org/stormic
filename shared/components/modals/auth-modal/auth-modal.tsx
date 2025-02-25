@@ -3,7 +3,12 @@
 import { EmailForm } from '@/shared/components/modals/auth-modal/forms/email-form'
 import { LoginForm } from '@/shared/components/modals/auth-modal/forms/login-form'
 import { RegisterForm } from '@/shared/components/modals/auth-modal/forms/register-form'
-import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle
+} from '@/shared/components/ui/dialog'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 
@@ -38,6 +43,9 @@ export const AuthModal: React.FC<Props> = ({
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
 			<DialogContent className='min-w-[700px] min-h-[700px] p-0'>
+				<DialogHeader className='hidden'>
+					<DialogTitle />
+				</DialogHeader>
 				<div className='flex w-full'>
 					<div className='w-[40%]'>
 						<img

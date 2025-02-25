@@ -42,13 +42,12 @@ export const PostCommentListItem = ({
 
 	const isMessageOwner = currentUser != null && currentUser.id === author.id
 	const isOwner =
-		currentUser != null && currentUser.userRoles.roleType === 'owner'
-	const isAdmin =
-		currentUser != null && currentUser.userRoles.roleType === 'admin'
-	const isModerator =
-		currentUser != null && currentUser.userRoles.roleType === 'moderator'
-	const canDeleteMessage =
-		!deleted && (isOwner || isAdmin || isMessageOwner || isModerator)
+		currentUser != null && currentUser.systemRoles.includes('owner')
+	// const isAdmin =
+	// 	currentUser != null && currentUser.userRoles.roleType === 'admin'
+	// const isModerator =
+	// 	currentUser != null && currentUser.userRoles.roleType === 'moderator'
+	const canDeleteMessage = !deleted && (isOwner || isMessageOwner)
 	const canEditMessage = !deleted && isMessageOwner && !fileUrl
 
 	return (
