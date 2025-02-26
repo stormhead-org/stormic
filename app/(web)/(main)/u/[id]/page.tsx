@@ -18,7 +18,7 @@ export default async function User({ params: paramsPromise }: Args) {
 	const { id = null } = await paramsPromise
 	// const url = '/u/' + id
 	const user = await queryUserById({ id })
-	const posts = await queryPostByUserId({ id })
+	// const posts = await queryPostByUserId({ id })
 
 	if (!user) {
 		return <UserNotFound />
@@ -26,7 +26,10 @@ export default async function User({ params: paramsPromise }: Args) {
 
 	return (
 		<>
-			<UserProfileGroup posts={posts || []} user={user} />
+			<UserProfileGroup
+				//  posts={posts || []}
+				user={user}
+			/>
 		</>
 	)
 }
@@ -47,35 +50,35 @@ const queryUserById = cache(async ({ id }: { id: number | null }) => {
 
 	const user = await payload.findByID({
 		collection: 'users',
-		id: String(id),
+		id: id,
 		depth: 1
 	})
 
 	return user || null
 })
 
-const queryPostByUserId = cache(async ({ id }: { id: number | null }) => {
-	if (!id) return null
+// const queryPostByUserId = cache(async ({ id }: { id: number | null }) => {
+// 	if (!id) return null
 
-	const { isEnabled: draft } = await draftMode()
+// 	const { isEnabled: draft } = await draftMode()
 
-	const payload = await getPayload({ config: configPromise })
+// 	const payload = await getPayload({ config: configPromise })
 
-	const result = await payload.find({
-		collection: 'posts',
-		draft,
-		overrideAccess: draft,
-		pagination: false,
-		where: {
-			author: {
-				some: {
-					id: {
-						equals: id
-					}
-				}
-			}
-		} as any
-	})
+// 	const result = await payload.find({
+// 		collection: 'posts',
+// 		draft,
+// 		overrideAccess: draft,
+// 		pagination: false,
+// 		where: {
+// 			author: {
+// 				some: {
+// 					id: {
+// 						equals: id
+// 					}
+// 				}
+// 			}
+// 		} as any
+// 	})
 
-	return result.docs || null
-})
+// 	return result.docs || null
+// })

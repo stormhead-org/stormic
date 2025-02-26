@@ -1,5 +1,6 @@
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
+import { getCommentStatus } from '@/shared/utils/getCommentStatus'
 import type { CollectionConfig } from 'payload'
 import { Author } from './hooks/author'
 
@@ -11,9 +12,37 @@ export const Comments: CollectionConfig = {
 		read: anyone,
 		update: authenticated
 	},
-	// admin: {
-	// 	useAsTitle: 'content'
-	// },
+	endpoints: [
+		{
+			path: '/:id/status',
+			method: 'get',
+			handler: async req => {
+				if (!req.routeParams || !req.routeParams.id) {
+					return Response.json(
+						{ error: 'Comment ID is missing' },
+						{ status: 400 }
+					)
+				}
+				const commentId = req.routeParams.id as string
+				try {
+					const status = await getCommentStatus(commentId, req)
+					if (!status) {
+						return Response.json(
+							{ error: 'Comment not found' },
+							{ status: 404 }
+						)
+					}
+					console.log(status)
+					return Response.json(status)
+				} catch (error) {
+					return Response.json(
+						{ error: 'Something went wrong' },
+						{ status: 500 }
+					)
+				}
+			}
+		}
+	],
 	fields: [
 		{
 			label: 'Родительский пост',
@@ -84,6 +113,14 @@ export const Comments: CollectionConfig = {
 			collection: 'comments',
 			on: 'parentComment',
 			maxDepth: 1,
+			required: false
+		},
+		{
+			label: 'Лайки',
+			name: 'likes',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users',
 			required: false
 		}
 	],

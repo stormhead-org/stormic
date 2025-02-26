@@ -1,16 +1,16 @@
 'use client'
 
 import { ProfileAvatar } from '@/shared/components'
-// import UserFollowButton from '@/shared/components/user-follow-button'
+import UserFollowButton from '@/shared/components/user-follow-button'
 import { cn } from '@/shared/lib/utils'
 import { GripHorizontal } from 'lucide-react'
 import React from 'react'
 // import { useIntl } from 'react-intl'
-// import CommunityFollowButton from '../../community-follow-button'
+import CommunityFollowButton from '../../community-follow-button'
 
 interface Props {
 	userId: number
-	// categoryId: number
+	communityId: number
 	profileBanner?: string | null | undefined
 	profileAvatar?: string | null | undefined
 	profileName: string | undefined | null
@@ -21,13 +21,13 @@ interface Props {
 
 export const ProfileHeader: React.FC<Props> = ({
 	userId,
-	// categoryId,
+	communityId,
 	profileBanner,
 	profileAvatar,
 	profileName,
 	profileRep,
 	hasUser,
-	className,
+	className
 }) => {
 	// const { formatMessage } = useIntl()
 	return (
@@ -46,11 +46,11 @@ export const ProfileHeader: React.FC<Props> = ({
 					/>
 					<div className='flex items-center'>
 						<div className='mt-16'>
-							{/* {hasUser ?
+							{hasUser ? (
 								<UserFollowButton userId={userId} />
-								:
-								<CommunityFollowButton categoryId={categoryId} />
-								} */}
+							) : (
+								<CommunityFollowButton communityId={communityId} />
+							)}
 						</div>
 						<p className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
 							<GripHorizontal className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />

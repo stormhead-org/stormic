@@ -8,9 +8,9 @@ import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 
 interface PostCommentListItemProps {
+	id: string
 	postId: string
 	communityId: number
-	id: string
 	content: string
 	author: User
 	timestamp: string
@@ -24,9 +24,9 @@ interface PostCommentListItemProps {
 }
 
 export const PostCommentListItem = ({
+	id,
 	postId,
 	communityId,
-	id,
 	content,
 	author,
 	timestamp,

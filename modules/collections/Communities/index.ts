@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
+import { getCommunityStatus } from '@/shared/utils/getCommunityStatus'
 import { communityModerators } from './hooks/communityModerators'
 
 export const Communities: CollectionConfig = {
@@ -16,6 +17,37 @@ export const Communities: CollectionConfig = {
 	admin: {
 		useAsTitle: 'title'
 	},
+	endpoints: [
+		{
+			path: '/:id/status',
+			method: 'get',
+			handler: async req => {
+				if (!req.routeParams || !req.routeParams.id) {
+					return Response.json(
+						{ error: 'Community ID is missing' },
+						{ status: 400 }
+					)
+				}
+				const communityId = req.routeParams.id as string
+				try {
+					const status = await getCommunityStatus(communityId, req)
+					if (!status) {
+						return Response.json(
+							{ error: 'Community not found' },
+							{ status: 404 }
+						)
+					}
+					console.log(status)
+					return Response.json(status)
+				} catch (error) {
+					return Response.json(
+						{ error: 'Something went wrong' },
+						{ status: 500 }
+					)
+				}
+			}
+		}
+	],
 	fields: [
 		{
 			label: 'Логотип',
@@ -137,6 +169,13 @@ export const Communities: CollectionConfig = {
 					type: 'textarea'
 				}
 			]
+		},
+		{
+			label: 'Подписчики сообщества',
+			name: 'followers',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users'
 		},
 		{
 			label: 'Посты в сообществе',

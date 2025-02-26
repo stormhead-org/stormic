@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
+import { getUserStatus } from '@/shared/utils/getUserStatus'
 import { userData } from './hooks/userData'
 
 export const Users: CollectionConfig = {
@@ -25,6 +26,31 @@ export const Users: CollectionConfig = {
 		useAsTitle: 'name'
 	},
 	auth: true,
+	endpoints: [
+		{
+			path: '/:id/status',
+			method: 'get',
+			handler: async req => {
+				if (!req.routeParams || !req.routeParams.id) {
+					return Response.json({ error: 'User ID is missing' }, { status: 400 })
+				}
+				const userId = req.routeParams.id as string
+				try {
+					const status = await getUserStatus(userId, req)
+					if (!status) {
+						return Response.json({ error: 'User not found' }, { status: 404 })
+					}
+					console.log(status)
+					return Response.json(status)
+				} catch (error) {
+					return Response.json(
+						{ error: 'Something went wrong' },
+						{ status: 500 }
+					)
+				}
+			}
+		}
+	],
 	fields: [
 		{
 			label: 'Имя',
@@ -126,6 +152,28 @@ export const Users: CollectionConfig = {
 		// 	maxDepth: 1
 		// },
 		{
+			label: 'Подписчики',
+			name: 'followers',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users'
+		},
+		{
+			label: 'Подписки на пользователей',
+			name: 'follow',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users'
+		},
+		{
+			label: 'Подписки на сообщества',
+			name: 'followCommunities',
+			type: 'join',
+			collection: 'communities',
+			on: 'followers',
+			maxDepth: 1
+		},
+		{
 			label: 'Администрируемые сообщества',
 			name: 'ownerCommunities',
 			type: 'join',
@@ -139,6 +187,14 @@ export const Users: CollectionConfig = {
 			type: 'join',
 			collection: 'communities',
 			on: 'moderators',
+			maxDepth: 1
+		},
+		{
+			label: 'Лайки комментариев',
+			name: 'commentsLikes',
+			type: 'join',
+			collection: 'comments',
+			on: 'likes',
 			maxDepth: 1
 		}
 	],

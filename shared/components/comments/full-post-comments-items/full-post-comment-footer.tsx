@@ -1,5 +1,5 @@
 import { ActionTooltip } from '@/shared/components/action-tooltip'
-// import { CommentLikeButton } from '@/shared/components/comment-like-button'
+import { CommentLikeButton } from '@/shared/components/comment-like-button'
 import { CommentInputAnswer } from '@/shared/components/comments/comment-input-items/comment-input-answer'
 import { Button } from '@/shared/components/ui/button'
 import { useModal } from '@/shared/hooks/use-modal-store'
@@ -43,7 +43,7 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 		<div className={cn('', className)}>
 			<div className='flex items-center justify-between'>
 				<div className='flex items-center'>
-					{/* <CommentLikeButton commentId={Number(id)} /> */}
+					<CommentLikeButton commentId={Number(id)} />
 					<Button
 						variant='blue'
 						className='h-6 text-sm font-bold p-0 -mb-1 border-b-4 border-transparent bg-transparent hover:border-blue-700 hover:bg-transparent rounded-none text-primary'

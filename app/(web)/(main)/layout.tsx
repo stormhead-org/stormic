@@ -1,10 +1,6 @@
-import { Community } from '@/payload-types'
 import {
-	CommunitiesListGroup,
 	Container,
 	FeedUserMenu,
-	// FeedUserMenu,
-	NavigationMenuForm,
 	SideFooter,
 	SocialMenu
 } from '@/shared/components/'
@@ -34,22 +30,22 @@ export default async function MainLayout({
 		}
 	})
 
-	const resultCommunities = await payload.find({
-		collection: 'communities',
-		depth: 1,
-		// limit: 12,
-		overrideAccess: false
-		// select: {
-		// 	id: true,
-		//   title: true,
-		// 	 content: true,
-		//   slug: true,
-		//   communities: true,
-		//   meta: true,
-		// },
-	})
+	// const resultCommunities = await payload.find({
+	// 	collection: 'communities',
+	// 	depth: 1,
+	// 	// limit: 12,
+	// 	overrideAccess: false
+	// 	// select: {
+	// 	// 	id: true,
+	// 	//   title: true,
+	// 	// 	 content: true,
+	// 	//   slug: true,
+	// 	//   communities: true,
+	// 	//   meta: true,
+	// 	// },
+	// })
 
-	const communities = resultCommunities.docs as Community[]
+	// const communities = resultCommunities.docs as Community[]
 
 	return (
 		<>
@@ -69,15 +65,15 @@ export default async function MainLayout({
 							stormicName={stormicName?.content || 'Stormic'}
 							authImage={authImage ? authImage?.url : stormicBanner?.url}
 						/> */}
-						<NavigationMenuForm
+						{/* <NavigationMenuForm
 							className='mt-4'
 							data={globalSideBarNavigation.items || []}
-						/>
-						<CommunitiesListGroup
+						/> */}
+						{/* <CommunitiesListGroup
 							data={communities}
 							className='mt-4'
 							hasPost={false}
-						/>
+						/> */}
 						<SideFooter className='mt-4' />
 					</div>
 					{/* Центральная часть */}

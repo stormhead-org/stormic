@@ -18,7 +18,7 @@ export const ProfileItem: React.FC<Props> = ({ data, hasUser, className }) => {
 			<div className='rounded-md bg-secondary'>
 				<ProfileHeader
 					userId={Number(data.id)}
-					// categoryId={Number(categoryId)}
+					communityId={Number(data.id)}
 					profileBanner={
 						'userBanner' in data &&
 						typeof data.userBanner === 'object' &&

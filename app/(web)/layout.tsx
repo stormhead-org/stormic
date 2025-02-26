@@ -41,7 +41,7 @@ export default async function HomeLayout({
 	const user = session && session.user
 
 	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings', // required
+		slug: 'host-settings',
 		depth: 1
 	})
 
@@ -108,7 +108,6 @@ export default async function HomeLayout({
 							/>
 						</Suspense>
 						{children}
-						{/* {modal} */}
 					</main>
 				</Providers>
 			</body>

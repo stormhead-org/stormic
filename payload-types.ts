@@ -27,8 +27,10 @@ export interface Config {
   collectionsJoins: {
     users: {
       relatedPosts: 'posts';
+      followCommunities: 'communities';
       ownerCommunities: 'communities';
       moderationCommunities: 'communities';
+      commentsLikes: 'comments';
     };
     posts: {
       relatedComments: 'comments';
@@ -125,12 +127,22 @@ export interface User {
     docs?: (number | Post)[] | null;
     hasNextPage?: boolean | null;
   } | null;
+  followers?: (number | User)[] | null;
+  follow?: (number | User)[] | null;
+  followCommunities?: {
+    docs?: (number | Community)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   ownerCommunities?: {
     docs?: (number | Community)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   moderationCommunities?: {
     docs?: (number | Community)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  commentsLikes?: {
+    docs?: (number | Comment)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   updatedAt: string;
@@ -316,6 +328,7 @@ export interface Comment {
     docs?: (number | Comment)[] | null;
     hasNextPage?: boolean | null;
   } | null;
+  likes?: (number | User)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -358,6 +371,7 @@ export interface Community {
         id?: string | null;
       }[]
     | null;
+  followers?: (number | User)[] | null;
   relatedPosts?: {
     docs?: (number | Post)[] | null;
     hasNextPage?: boolean | null;
@@ -602,8 +616,12 @@ export interface UsersSelect<T extends boolean = true> {
   systemRoles?: T;
   roles?: T;
   relatedPosts?: T;
+  followers?: T;
+  follow?: T;
+  followCommunities?: T;
   ownerCommunities?: T;
   moderationCommunities?: T;
+  commentsLikes?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -677,6 +695,7 @@ export interface CommunitiesSelect<T extends boolean = true> {
         communityDescriptionRule?: T;
         id?: T;
       };
+  followers?: T;
   relatedPosts?: T;
   relatedComments?: T;
   slug?: T;
@@ -698,6 +717,7 @@ export interface CommentsSelect<T extends boolean = true> {
   hasDeleted?: T;
   parentComment?: T;
   childrenComments?: T;
+  likes?: T;
   updatedAt?: T;
   createdAt?: T;
 }
