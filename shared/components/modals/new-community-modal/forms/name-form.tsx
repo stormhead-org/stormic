@@ -2,7 +2,7 @@ import { Title } from '@/shared/components'
 import { FormInput } from '@/shared/components/form/'
 import { Button } from '@/shared/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signIn } from 'next-auth/react'
+// import { signIn } from 'next-auth/react'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 // import { useIntl } from 'react-intl'
@@ -25,35 +25,35 @@ export const CommunityNameForm: React.FC<Props> = ({ setType, onClose }) => {
 		}
 	})
 
-	const onSubmit = async (data: TFormLoginValues) => {
-		try {
-			const resp = await signIn('credentials', {
-				...data,
-				redirect: false
-			})
-
-			if (!resp?.ok) {
-				throw Error()
-			}
-
-			// toast.success(String(formatMessage({ id: 'loginForm.toastSuccess' })), {
-			// 	icon: '✅'
-			// })
-
-			onClose?.()
-		} catch (error) {
-			console.error('Error [LOGIN]', error)
-			// toast.error(String(formatMessage({ id: 'loginForm.toastError' })), {
-			// 	icon: '❌'
-			// })
-		}
-	}
+	// const onSubmit = async (data: TFormLoginValues) => {
+	// 	try {
+	// 		const resp = await signIn('credentials', {
+	// 			...data,
+	// 			redirect: false
+	// 		})
+	//
+	// 		if (!resp?.ok) {
+	// 			throw Error()
+	// 		}
+	//
+	// 		// toast.success(String(formatMessage({ id: 'loginForm.toastSuccess' })), {
+	// 		// 	icon: '✅'
+	// 		// })
+	//
+	// 		onClose?.()
+	// 	} catch (error) {
+	// 		console.error('Error [LOGIN]', error)
+	// 		// toast.error(String(formatMessage({ id: 'loginForm.toastError' })), {
+	// 		// 	icon: '❌'
+	// 		// })
+	// 	}
+	// }
 
 	return (
 		<FormProvider {...form}>
 			<form
 				className='flex flex-col gap-4'
-				onSubmit={form.handleSubmit(onSubmit)}
+				// onSubmit={form.handleSubmit(onSubmit)}
 			>
 				<div className='flex justify-between items-center'>
 					<div className='mr-2'>

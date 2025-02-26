@@ -3,26 +3,26 @@ import { useCommunityFollowStore } from '@/shared/stores/community-follow-store'
 import React, { useEffect } from 'react'
 
 interface Props {
-	categoryId: number
+	communityId: number
 	className?: string
 }
 
-export const CategoryFollowersCounter: React.FC<Props> = ({
-	                                                      categoryId,
+export const CommunityFollowersCounter: React.FC<Props> = ({
+	                                                      communityId,
 	                                                      className
                                                           }) => {
 	const { initialize, followersCount } = useCommunityFollowStore();
 	
 	// Инициализация данных подписки при монтировании компонента
 	useEffect(() => {
-		if (categoryId !== undefined) {
-			initialize(categoryId); // Подгрузка текущего статуса подписки и количества подписчиков
+		if (communityId !== undefined) {
+			initialize(communityId); // Подгрузка текущего статуса подписки и количества подписчиков
 		}
-	}, [categoryId, initialize]);
+	}, [communityId, initialize]);
 	
 	return (
 		<div className={cn('', className)}>
-				<p className='text-md font-bold'>{categoryId !== undefined ? followersCount[categoryId] || 0 : 0}</p>
+				<p className='text-md font-bold'>{communityId !== undefined ? followersCount[communityId] || 0 : 0}</p>
 		</div>
 	)
 }

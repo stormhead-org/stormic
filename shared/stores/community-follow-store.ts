@@ -4,8 +4,8 @@ import { create } from 'zustand'
 interface CommunityFollowStoreState {
 	followersCount: Record<number, number>;
 	isFollowing: Record<number, boolean>;
-	toggleFollow: (categoryId: number) => Promise<void>;
-	initialize: (categoryId: number) => Promise<void>;
+	toggleFollow: (communityId: number) => Promise<void>;
+	initialize: (communityId: number) => Promise<void>;
 }
 
 let debounceTimers: Record<number, NodeJS.Timeout | null> = {}
@@ -14,23 +14,23 @@ export const useCommunityFollowStore = create<CommunityFollowStoreState>((set, g
 	followersCount: {},
 	isFollowing: {},
 	
-	async toggleFollow(categoryId: number) {
+	async toggleFollow(communityId: number) {
 		const { isFollowing, followersCount } = get()
 		
-		if (debounceTimers[categoryId]) {
-			clearTimeout(debounceTimers[categoryId]!)
+		if (debounceTimers[communityId]) {
+			clearTimeout(debounceTimers[communityId]!)
 		}
 		
-		debounceTimers[categoryId] = setTimeout(async () => {
+		debounceTimers[communityId] = setTimeout(async () => {
 			try {
-				const action = isFollowing[categoryId] ? 'unfollow' : 'follow'
+				const action = isFollowing[communityId] ? 'unfollow' : 'follow'
 				const method = action === 'follow' ? 'POST' : 'DELETE'
-				const response = await fetch(`/api/categories/${categoryId}/${action}`, {
+				const response = await fetch(`/api/communities/${communityId}/${action}`, {
 					method,
 					headers: {
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify({ categoryId }) // Передаём categoryId
+					body: JSON.stringify({ communityId })
 				})
 				
 				if (response.status === 401) {
@@ -46,33 +46,33 @@ export const useCommunityFollowStore = create<CommunityFollowStoreState>((set, g
 				set((state) => ({
 					isFollowing: {
 						...state.isFollowing,
-						[categoryId]: action === 'follow'
+						[communityId]: action === 'follow'
 					},
 					followersCount: {
 						...state.followersCount,
-						[categoryId]: action === 'follow'
-							? (state.followersCount[categoryId] || 0) + 1
-							: (state.followersCount[categoryId] || 0) - 1
+						[communityId]: action === 'follow'
+							? (state.followersCount[communityId] || 0) + 1
+							: (state.followersCount[communityId] || 0) - 1
 					}
 				}))
 			} catch (error: any) {
-				console.error(`Failed to toggle follow for category ${categoryId}:`, error)
+				console.error(`Failed to toggle follow for category ${communityId}:`, error)
 				toast.error(error.message || 'An error occurred', { icon: '❌' })
 			}
 		}, 200)
 	},
 	
-	async initialize(categoryId: number) {
+	async initialize(communityId: number) {
 		try {
-			const response = await fetch(`/api/categories/${categoryId}/status`)
+			const response = await fetch(`/api/communities/${communityId}/status`)
 			if (!response.ok) throw new Error('Failed to fetch follow status')
 			const { followersCount, isFollowing } = await response.json()
 			set((state) => ({
-				followersCount: { ...state.followersCount, [categoryId]: followersCount },
-				isFollowing: { ...state.isFollowing, [categoryId]: isFollowing }
+				followersCount: { ...state.followersCount, [communityId]: followersCount },
+				isFollowing: { ...state.isFollowing, [communityId]: isFollowing }
 			}))
 		} catch (error: any) {
-			// console.error(`Failed to initialize follow status for category ${categoryId}:`, error);
+			// console.error(`Failed to initialize follow status for category ${communityId}:`, error);
 			// toast.error(error.message || 'Failed to initialize follow status', { icon: '❌' });
 		}
 	}

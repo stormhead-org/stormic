@@ -1,10 +1,10 @@
 'use client'
 
 import { ProfileAvatar } from '@/shared/components'
-// import CommunityFollowButton from '@/shared/components/community-follow-button'
+import CommunityFollowButton from '@/shared/components/community-follow-button'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
-import { CategoryFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
+import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
 import { Component, Newspaper, UserRoundPlus, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -68,12 +68,12 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 								<Newspaper size={20} />
 							</div>
 							<div className='flex gap-2 items-center'>
-								<CategoryFollowersCounter categoryId={communityId || 0} />
+								<CommunityFollowersCounter communityId={communityId || 0} />
 								<UserRoundPlus size={20} />
 							</div>
 						</div>
 						<div className='flex justify-end w-1/2'>
-							{/* <CommunityFollowButton categoryId={categoryId} /> */}
+							<CommunityFollowButton communityId={communityId} />
 						</div>
 					</div>
 				</div>
