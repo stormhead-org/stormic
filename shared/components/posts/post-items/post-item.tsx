@@ -39,6 +39,7 @@ export const PostItem: React.FC<{
 		>
 			<div data-post-id={post.id} className='post'>
 				<PostHeader
+					authorId={post.author?.id}
 					authorUrl={`/u/${post.author?.id}` || '#'}
 					authorName={post.author?.name || '#'}
 					authorAvatar={post.author?.authorAvatar?.url}
@@ -55,6 +56,8 @@ export const PostItem: React.FC<{
 				/>
 				{!relatedPost ? (
 					<PostFooter
+						postId={Number(post.id)}
+						// commentsCount={}
 						// commentsCount={0}
 						// viewsCount={0}
 						className='mt-4'

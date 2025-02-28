@@ -2,14 +2,11 @@ import { User } from '@/payload-types'
 import { sendFollowMessage } from '@/shared/lib/rabbitmq-client'
 import { PayloadRequest } from 'payload'
 
-interface FollowResult {
+interface Result {
 	success: boolean
 }
 
-export const unfollowUser = async (
-	req: PayloadRequest
-): Promise<FollowResult> => {
-	// Проверяем авторизацию
+export const unfollowUser = async (req: PayloadRequest): Promise<Result> => {
 	if (!req.user) {
 		throw new Error('Unauthorized')
 	}
@@ -31,13 +28,11 @@ export const unfollowUser = async (
 	// ID текущего пользователя из req.user
 	const followerId = (req.user as User).id
 
-	// Отправляем сообщение в RabbitMQ
 	await sendFollowMessage({
 		action: 'unfollow',
 		followerId,
 		followingId: followingIdNum
 	})
 
-	// Успешный результат
 	return { success: true }
 }

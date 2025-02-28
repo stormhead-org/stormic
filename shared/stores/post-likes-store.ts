@@ -24,7 +24,7 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 			try {
 				if (hasLiked[postId]) {
 					const response = await fetch(`/api/posts/${postId}/unlike`, {
-						method: 'DELETE'
+						method: 'POST'
 					})
 					if (response.status === 401) {
 						toast.error('Необходимо авторизоваться', { icon: '❌' })

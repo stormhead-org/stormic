@@ -4,6 +4,9 @@ import { Banner } from '@/modules/collections/blocks/Banner/config'
 import { Code } from '@/modules/collections/blocks/Code/config'
 import { MediaBlock } from '@/modules/collections/blocks/MediaBlock/config'
 import { generatePreviewPath } from '@/shared/lib/generatePreviewPath'
+import { getPostStatus } from '@/shared/utils/api/posts/getPostStatus'
+import { likePost } from '@/shared/utils/api/posts/likePost'
+import { unlikePost } from '@/shared/utils/api/posts/unlikePost'
 import { getCommentTree } from '@/shared/utils/getCommentTree'
 import {
 	MetaDescriptionField,
@@ -89,6 +92,83 @@ export const Posts: CollectionConfig<'posts'> = {
 						{ error: 'Ошибка сервера при получении комментариев к посту' },
 						{ status: 500 }
 					)
+				}
+			}
+		},
+		{
+			path: '/:id/status',
+			method: 'get',
+			handler: async req => {
+				if (!req.routeParams || !req.routeParams.id) {
+					return Response.json({ error: 'Post ID is missing' }, { status: 400 })
+				}
+				const postId = req.routeParams.id as string
+				try {
+					const status = await getPostStatus(postId, req)
+					if (!status) {
+						return Response.json({ error: 'Post not found' }, { status: 404 })
+					}
+					console.log(status)
+					return Response.json(status)
+				} catch (error) {
+					return Response.json(
+						{ error: 'Something went wrong' },
+						{ status: 500 }
+					)
+				}
+			}
+		},
+		{
+			path: '/:id/like',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await likePost(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing like:', error)
+
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'User ID is required in path' ||
+						error.message === 'Valid Post Id is required'
+					) {
+						return Response.json(
+							{ error: 'Valid Post Id is required' },
+							{ status: 400 }
+						)
+					}
+
+					return Response.json({ error: 'Failed to like' }, { status: 500 })
+				}
+			}
+		},
+		{
+			path: '/:id/unlike',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await unlikePost(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing follow:', error)
+
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'User ID is required in path' ||
+						error.message === 'Valid followingId is required'
+					) {
+						return Response.json(
+							{ error: 'Valid followingId is required' },
+							{ status: 400 }
+						)
+					}
+
+					return Response.json({ error: 'Failed to unlike' }, { status: 500 })
 				}
 			}
 		}
@@ -244,6 +324,13 @@ export const Posts: CollectionConfig<'posts'> = {
 				disabled: true,
 				readOnly: true
 			}
+		},
+		{
+			label: 'Лайки',
+			name: 'likes',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users'
 		}
 		// ...slugField()
 	],

@@ -27,6 +27,7 @@ export interface Config {
   collectionsJoins: {
     users: {
       relatedPosts: 'posts';
+      postsLikes: 'posts';
       followCommunities: 'communities';
       ownerCommunities: 'communities';
       moderationCommunities: 'communities';
@@ -139,6 +140,10 @@ export interface User {
   } | null;
   moderationCommunities?: {
     docs?: (number | Community)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  postsLikes?: {
+    docs?: (number | Post)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   commentsLikes?: {
@@ -306,6 +311,7 @@ export interface Post {
   publishedAt?: string | null;
   owner?: (number | null) | User;
   author?: string | null;
+  likes?: (number | User)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -621,6 +627,7 @@ export interface UsersSelect<T extends boolean = true> {
   followCommunities?: T;
   ownerCommunities?: T;
   moderationCommunities?: T;
+  postsLikes?: T;
   commentsLikes?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -653,6 +660,7 @@ export interface PostsSelect<T extends boolean = true> {
   publishedAt?: T;
   owner?: T;
   author?: T;
+  likes?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

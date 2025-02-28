@@ -1,10 +1,11 @@
 // import { BookmarkButton } from '@/shared/components/bookmark-button'
-// import { PostLikeButton } from '@/shared/components/post-like-button'
+import { PostLikeButton } from '@/shared/components/post-like-button'
 import { cn } from '@/shared/lib/utils'
 import { Eye, MessageCircle, Redo } from 'lucide-react'
 import React from 'react'
 
 export interface PostFooterProps {
+	postId: number
 	postTags?: string[]
 	// commentsCount: number;
 	// viewsCount: number;
@@ -12,10 +13,11 @@ export interface PostFooterProps {
 }
 
 export const PostFooter: React.FC<PostFooterProps> = ({
+	postId,
 	postTags,
 	// commentsCount,
 	// viewsCount,
-	className,
+	className
 }) => {
 	return (
 		<div className={cn('', className)}>
@@ -33,7 +35,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({
 			) : null}
 			<div className='flex items-center justify-between mt-3'>
 				<div className='flex items-center'>
-					{/* <PostLikeButton postId={postId} /> */}
+					<PostLikeButton postId={postId} />
 					<div className='group mr-4 cursor-pointer'>
 						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
 							<MessageCircle className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' />{' '}

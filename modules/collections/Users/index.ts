@@ -102,7 +102,7 @@ export const Users: CollectionConfig = {
 						)
 					}
 
-					return Response.json({ error: 'Failed to follow' }, { status: 500 })
+					return Response.json({ error: 'Failed to unfollow' }, { status: 500 })
 				}
 			}
 		}
@@ -243,6 +243,14 @@ export const Users: CollectionConfig = {
 			type: 'join',
 			collection: 'communities',
 			on: 'moderators',
+			maxDepth: 1
+		},
+		{
+			label: 'Лайки постов',
+			name: 'postsLikes',
+			type: 'join',
+			collection: 'posts',
+			on: 'likes',
 			maxDepth: 1
 		},
 		{
