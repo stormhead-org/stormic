@@ -4,6 +4,7 @@ import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { followUser } from '@/shared/utils/followUser'
 import { getUserStatus } from '@/shared/utils/getUserStatus'
+import { unfollowUser } from '@/shared/utils/unfollowUser'
 import { userData } from './hooks/userData'
 
 export const Users: CollectionConfig = {
@@ -57,6 +58,33 @@ export const Users: CollectionConfig = {
 			handler: async req => {
 				try {
 					const result = await followUser(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing follow:', error)
+
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'User ID is required in path' ||
+						error.message === 'Valid followingId is required'
+					) {
+						return Response.json(
+							{ error: 'Valid followingId is required' },
+							{ status: 400 }
+						)
+					}
+
+					return Response.json({ error: 'Failed to follow' }, { status: 500 })
+				}
+			}
+		},
+		{
+			path: '/:id/unfollow',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await unfollowUser(req)
 					return Response.json(result)
 				} catch (error: any) {
 					req.payload.logger.error('Error while processing follow:', error)

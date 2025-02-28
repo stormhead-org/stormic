@@ -1,7 +1,7 @@
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { useFollowStore } from '@/shared/stores/user-follow-store'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 // import { useIntl } from 'react-intl'
 
 interface FollowButtonProps {
@@ -13,6 +13,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ userId }) => {
 
 	// Использование Zustand-стора для работы с подписками
 	const { isFollowing, toggleFollow, initialize } = useFollowStore()
+	const [isLoading, setIsLoading] = useState(true)
 
 	// Инициализация данных подписки при монтировании компонента
 	useEffect(() => {
@@ -27,6 +28,14 @@ const FollowButton: React.FC<FollowButtonProps> = ({ userId }) => {
 			console.error('Failed to toggle follow:', error)
 		}
 	}
+
+	// if (isLoading) {
+	// 	return (
+	// 		<Button variant='blue' type='submit' disabled>
+	// 			Loading...
+	// 		</Button>
+	// 	)
+	// }
 
 	return (
 		<Button

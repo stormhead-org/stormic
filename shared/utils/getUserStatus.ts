@@ -4,7 +4,7 @@ import { getPayload, PayloadRequest } from 'payload'
 export const getUserStatus = async (
 	userId: string,
 	req: PayloadRequest
-): Promise<{ followersCount: number; hasFollowed: boolean } | null> => {
+): Promise<{ followersCount: number; isFollowing: boolean } | null> => {
 	const payload = await getPayload({ config })
 
 	try {
@@ -24,12 +24,12 @@ export const getUserStatus = async (
 		}
 
 		const currentUser = req.user
-		let hasFollowed = false
+		let isFollowing = false
 
 		if (currentUser) {
 			// const userId = user.id as string
 			const userId = currentUser.id as unknown as string
-			hasFollowed =
+			isFollowing =
 				Array.isArray(user.followers) &&
 				user.followers.some((follow: any) => {
 					return typeof follow === 'string'
@@ -44,7 +44,7 @@ export const getUserStatus = async (
 
 		return {
 			followersCount,
-			hasFollowed
+			isFollowing
 		}
 	} catch (error) {
 		console.error('Error fetching user status:', error)
