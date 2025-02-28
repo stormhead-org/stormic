@@ -8,27 +8,28 @@ import React from 'react'
 import { FullPostForm } from './full-post-items/full-post-form'
 
 interface Props {
-	post: Post
+	post: Post[]
 	className?: string
 }
 
 export const FullPostPage: React.FC<Props> = ({ post, className }) => {
 	const session = useSession()
 	const currentUser = session && (session.user as User)
+	const currentPost = post[0];
 
 	return (
 		<div className={cn('', className)}>
 			<FullPostForm
-				post={post}
+				post={currentPost}
 				// loading={loading}
 			/>
-			<CommentFullPostGroup
-				className='mb-4'
-				postId={post.id}
-				communityId={post.community.id}
-				currentUser={currentUser}
-				commentsHeader={String(0)}
-			/>
+			{/* <CommentFullPostGroup */}
+			{/* 	className='mb-4' */}
+			{/* 	postId={currentPost.id} */}
+			{/* 	communityId={currentPost.community.id} */}
+			{/* 	currentUser={currentUser} */}
+			{/* 	commentsHeader={String(0)} */}
+			{/* /> */}
 		</div>
 	)
 }

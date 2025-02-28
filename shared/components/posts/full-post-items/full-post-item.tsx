@@ -19,6 +19,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 	return (
 		<div className={cn('bg-secondary rounded-md mb-4 p-4', className)}>
 			<PostHeader
+				authorId={post.author?.id}
 				authorUrl={`/u/${post.author?.id}` || '#'}
 				authorName={post.author?.name || '#'}
 				authorAvatar={post.author?.authorAvatar?.url}
@@ -40,7 +41,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 				/>
 			)}
 			<PostFooter
-				// postId={post.id}
+				postId={post.id}
 				// postTags={postTags}
 				// commentsCount={commentsCount}
 				// viewsCount={viewsCount}
