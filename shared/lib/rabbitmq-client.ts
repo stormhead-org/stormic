@@ -133,7 +133,7 @@ export async function consumeFollowQueue(
 export async function sendCommunityFollowMessage(message: {
 	action: string
 	userId: number
-	categoryId: number
+	communityId: number
 }) {
 	await sendMessageToQueue('communityFollowQueue', message)
 }

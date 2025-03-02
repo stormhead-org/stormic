@@ -242,7 +242,7 @@ export const Users: CollectionConfig = {
 			name: 'moderationCommunities',
 			type: 'join',
 			collection: 'communities',
-			on: 'moderators',
+			on: 'systemArrayModerators',
 			maxDepth: 1
 		},
 		{

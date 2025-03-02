@@ -4,8 +4,8 @@ const workers = [
 	//'shared/workers/post-view-counter-worker.ts',
 	'shared/workers/post-like-worker.ts',
 	//'shared/workers/comment-like-worker.ts',
-	'shared/workers/user-follow-worker.ts'
-	//'shared/workers/community-follow-worker.ts',
+	'shared/workers/user-follow-worker.ts',
+	'shared/workers/community-follow-worker.ts',
 	//'shared/workers/post-bookmark-worker.ts'
 ]
 

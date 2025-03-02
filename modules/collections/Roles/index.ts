@@ -53,6 +53,6 @@ export const Roles: CollectionConfig = {
 		}
 	]
 	// hooks: {
-	// 	afterRead: [communityModerators],
+	// 	afterRead: [moderators],
 	// },
 }

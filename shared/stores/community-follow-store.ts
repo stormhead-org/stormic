@@ -24,7 +24,7 @@ export const useCommunityFollowStore = create<CommunityFollowStoreState>((set, g
 		debounceTimers[communityId] = setTimeout(async () => {
 			try {
 				const action = isFollowing[communityId] ? 'unfollow' : 'follow'
-				const method = action === 'follow' ? 'POST' : 'DELETE'
+				const method = 'POST'
 				const response = await fetch(`/api/communities/${communityId}/${action}`, {
 					method,
 					headers: {

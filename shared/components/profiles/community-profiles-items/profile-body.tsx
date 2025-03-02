@@ -3,6 +3,7 @@ import { ProfileCustomFieldForm } from '@/shared/components/profiles/community-p
 import { Button } from '@/shared/components/ui/button'
 import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { cn } from '@/shared/lib/utils'
+import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
 import { UserFollowersCounter } from '@/shared/stores/state-counters/user-followers-counter'
 import React from 'react'
 // import { useIntl } from 'react-intl'
@@ -35,10 +36,10 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 			</div>
 
 			<div className='flex gap-1 items-center mt-4'>
-				{hasUser ? (
+				{hasUser ?
 					<UserFollowersCounter userId={data.id} />
-				) : // <CategoryFollowersCounter categoryId={categoryId || 0} />
-				null}
+				: <CommunityFollowersCounter communityId={data.id} />
+				}
 				<p className='font-bold text-md'>
 					{/* {formatMessage({ id: 'profileBody.followersCount' })} */}
 					подписчиков

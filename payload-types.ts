@@ -37,8 +37,8 @@ export interface Config {
       relatedComments: 'comments';
     };
     communities: {
-      relatedPosts: 'posts';
-      relatedComments: 'comments';
+      posts: 'posts';
+      comments: 'comments';
     };
     comments: {
       childrenComments: 'comments';
@@ -357,8 +357,8 @@ export interface Community {
       }[]
     | null;
   owner?: (number | null) | User;
-  moderators?: (number | User)[] | null;
-  communityModerators?:
+  systemArrayModerators?: (number | User)[] | null;
+  moderators?:
     | {
         id?: string | null;
         name?: string | null;
@@ -370,7 +370,7 @@ export interface Community {
           | null;
       }[]
     | null;
-  communityRules?:
+  rules?:
     | {
         communityNameRule?: string | null;
         communityDescriptionRule?: string | null;
@@ -378,16 +378,14 @@ export interface Community {
       }[]
     | null;
   followers?: (number | User)[] | null;
-  relatedPosts?: {
+  posts?: {
     docs?: (number | Post)[] | null;
     hasNextPage?: boolean | null;
   } | null;
-  relatedComments?: {
+  comments?: {
     docs?: (number | Comment)[] | null;
     hasNextPage?: boolean | null;
   } | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -683,8 +681,8 @@ export interface CommunitiesSelect<T extends boolean = true> {
         id?: T;
       };
   owner?: T;
-  moderators?: T;
-  communityModerators?:
+  systemArrayModerators?: T;
+  moderators?:
     | T
     | {
         id?: T;
@@ -696,7 +694,7 @@ export interface CommunitiesSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  communityRules?:
+  rules?:
     | T
     | {
         communityNameRule?: T;
@@ -704,10 +702,8 @@ export interface CommunitiesSelect<T extends boolean = true> {
         id?: T;
       };
   followers?: T;
-  relatedPosts?: T;
-  relatedComments?: T;
-  slug?: T;
-  slugLock?: T;
+  posts?: T;
+  comments?: T;
   updatedAt?: T;
   createdAt?: T;
 }

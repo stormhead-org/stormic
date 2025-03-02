@@ -1,10 +1,14 @@
+import { followCommunity } from '@/shared/utils/api/communities/followCommunity'
+import { unfollowCommunity } from '@/shared/utils/api/communities/unfollowCommunity'
+import { followUser } from '@/shared/utils/followUser'
+import { unfollowUser } from '@/shared/utils/unfollowUser'
 import type { CollectionConfig } from 'payload'
 
 import { slugField } from '@/fields/slug'
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
-import { getCommunityStatus } from '@/shared/utils/getCommunityStatus'
-import { communityModerators } from './hooks/communityModerators'
+import { getCommunityStatus } from '@/shared/utils/api/communities/getCommunityStatus'
+import { moderators } from './hooks/moderators'
 
 export const Communities: CollectionConfig = {
 	slug: 'communities',
@@ -44,6 +48,60 @@ export const Communities: CollectionConfig = {
 						{ error: 'Something went wrong' },
 						{ status: 500 }
 					)
+				}
+			}
+		},
+		{
+			path: '/:id/follow',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await followCommunity(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing follow community:', error)
+					
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'Community ID is required in path' ||
+						error.message === 'Valid following ID community is required'
+					) {
+						return Response.json(
+							{ error: 'Valid following ID community is required' },
+							{ status: 400 }
+						)
+					}
+					
+					return Response.json({ error: 'Failed to follow community' }, { status: 500 })
+				}
+			}
+		},
+		{
+			path: '/:id/unfollow',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await unfollowCommunity(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing unfollow community:', error)
+					
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'Community ID is required in path' ||
+						error.message === 'Valid following ID community is required'
+					) {
+						return Response.json(
+							{ error: 'Valid following ID community is required' },
+							{ status: 400 }
+						)
+					}
+					
+					return Response.json({ error: 'Failed to unfollow community' }, { status: 500 })
 				}
 			}
 		}
@@ -117,13 +175,13 @@ export const Communities: CollectionConfig = {
 		},
 		{
 			label: 'Модераторы сообщества',
-			name: 'moderators',
+			name: 'systemArrayModerators',
 			type: 'relationship',
 			hasMany: true,
 			relationTo: 'users'
 		},
 		{
-			name: 'communityModerators',
+			name: 'moderators',
 			type: 'array',
 			access: {
 				update: () => false
@@ -155,7 +213,7 @@ export const Communities: CollectionConfig = {
 		},
 		{
 			label: 'Правила',
-			name: 'communityRules',
+			name: 'rules',
 			type: 'array',
 			fields: [
 				{
@@ -179,16 +237,8 @@ export const Communities: CollectionConfig = {
 		},
 		{
 			label: 'Посты в сообществе',
-			name: 'relatedPosts',
+			name: 'posts',
 			type: 'join',
-			// admin: {
-			// 	components: {
-			// 		afterInput: ['/components/AfterInput.js#AfterInput'],
-			// 		beforeInput: ['/components/BeforeInput.js#BeforeInput'],
-			// 		Description:
-			// 			'/components/CustomDescription/index.js#FieldDescriptionComponent',
-			// 	},
-			// },
 			collection: 'posts',
 			defaultSort: '-title',
 			defaultLimit: 5,
@@ -197,15 +247,14 @@ export const Communities: CollectionConfig = {
 		},
 		{
 			label: 'Комментарии в сообществе',
-			name: 'relatedComments',
+			name: 'comments',
 			type: 'join',
 			collection: 'comments',
 			on: 'community',
 			maxDepth: 1
 		},
-		...slugField()
 	],
 	hooks: {
-		afterRead: [communityModerators]
+		afterRead: [moderators]
 	}
 }
