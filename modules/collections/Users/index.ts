@@ -260,6 +260,14 @@ export const Users: CollectionConfig = {
 			collection: 'comments',
 			on: 'likes',
 			maxDepth: 1
+		},
+		{
+			label: 'Закладки',
+			name: 'bookmarks',
+			type: 'join',
+			collection: 'posts',
+			on: 'bookmarks',
+			maxDepth: 1
 		}
 	],
 	hooks: {

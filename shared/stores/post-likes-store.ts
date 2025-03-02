@@ -3,7 +3,7 @@ import { create } from 'zustand'
 
 interface LikeStoreState {
 	likesCount: Record<number, number> // Объект для хранения количества лайков по postId
-	hasLiked: Record<number, boolean> // Объект для хранения состояния лайка по postId
+	isLiked: Record<number, boolean> // Объект для хранения состояния лайка по postId
 	toggleLike: (postId: number) => Promise<void>
 	initialize: (postId: number) => Promise<void>
 }
@@ -12,9 +12,9 @@ let debounceTimers: Record<number, NodeJS.Timeout | null> = {} // Объект �
 
 export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 	likesCount: {},
-	hasLiked: {},
+	isLiked: {},
 	async toggleLike(postId: number) {
-		const { hasLiked, likesCount } = get()
+		const { isLiked, likesCount } = get()
 
 		if (debounceTimers[postId]) {
 			clearTimeout(debounceTimers[postId]!)
@@ -22,7 +22,7 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 
 		debounceTimers[postId] = setTimeout(async () => {
 			try {
-				if (hasLiked[postId]) {
+				if (isLiked[postId]) {
 					const response = await fetch(`/api/posts/${postId}/unlike`, {
 						method: 'POST'
 					})
@@ -32,7 +32,7 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 					}
 					if (!response.ok) throw new Error('Failed to unlike')
 					set(state => ({
-						hasLiked: { ...state.hasLiked, [postId]: false },
+						isLiked: { ...state.isLiked, [postId]: false },
 						likesCount: {
 							...state.likesCount,
 							[postId]: (state.likesCount[postId] || 0) - 1
@@ -48,7 +48,7 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 					}
 					if (!response.ok) throw new Error('Failed to like')
 					set(state => ({
-						hasLiked: { ...state.hasLiked, [postId]: true },
+						isLiked: { ...state.isLiked, [postId]: true },
 						likesCount: {
 							...state.likesCount,
 							[postId]: (state.likesCount[postId] || 0) + 1
@@ -64,10 +64,10 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 		try {
 			const response = await fetch(`/api/posts/${postId}/status`)
 			if (!response.ok) throw new Error('Failed to fetch like status')
-			const { likesCount, hasLiked } = await response.json()
+			const { likesCount, isLiked } = await response.json()
 			set(state => ({
 				likesCount: { ...state.likesCount, [postId]: likesCount },
-				hasLiked: { ...state.hasLiked, [postId]: hasLiked }
+				isLiked: { ...state.isLiked, [postId]: isLiked }
 			}))
 		} catch (error) {
 			console.error(error)

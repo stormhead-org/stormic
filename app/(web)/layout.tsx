@@ -79,7 +79,7 @@ export default async function HomeLayout({
 					<main className='min-h-screen'>
 						<Suspense>
 							<Header
-								session={session ? true : false}
+								session={!!session}
 								logoImage={
 									'hostLogo' in resultGlobalHost &&
 									typeof resultGlobalHost.hostLogo === 'object' &&

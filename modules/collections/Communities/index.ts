@@ -1,7 +1,7 @@
 import { followCommunity } from '@/shared/utils/api/communities/followCommunity'
 import { unfollowCommunity } from '@/shared/utils/api/communities/unfollowCommunity'
-import { followUser } from '@/shared/utils/followUser'
-import { unfollowUser } from '@/shared/utils/unfollowUser'
+import { followUser } from '@/shared/utils/api/users/followUser'
+import { unfollowUser } from '@/shared/utils/api/users/unfollowUser'
 import type { CollectionConfig } from 'payload'
 
 import { slugField } from '@/fields/slug'

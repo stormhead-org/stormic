@@ -2,6 +2,7 @@
 
 import { Post, type User } from '@/payload-types'
 import { CommentFullPostGroup } from '@/shared/components/comments/comment-full-post-group'
+import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { cn } from '@/shared/lib/utils'
 import { useSession } from '@/shared/providers/SessionProvider'
 import React from 'react'
@@ -15,6 +16,11 @@ interface Props {
 export const FullPostPage: React.FC<Props> = ({ post, className }) => {
 	const session = useSession()
 	const currentUser = session && (session.user as User)
+	
+	if (!post || post.length === 0) {
+		return <PostNotFound />
+	}
+	
 	const currentPost = post[0];
 
 	return (

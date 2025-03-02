@@ -8,7 +8,7 @@ interface LikeButtonProps {
 
 export const PostLikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
 	const likesCount = usePostLikesStore(state => state.likesCount[postId] || 0)
-	const hasLiked = usePostLikesStore(state => state.hasLiked[postId] || false)
+	const isLiked = usePostLikesStore(state => state.isLiked[postId] || false)
 	const toggleLike = usePostLikesStore(state => state.toggleLike)
 	const initialize = usePostLikesStore(state => state.initialize)
 
@@ -26,7 +26,7 @@ export const PostLikeButton: React.FC<LikeButtonProps> = ({ postId }) => {
 			className='like-button focus:outline-none  mr-4'
 		>
 			<div className='flex group items-center cursor-pointer'>
-				{hasLiked ? (
+				{isLiked ? (
 					<>
 						<Heart className='bg-blue-800/20 text-blue-700 rounded-full mr-1 w-7 h-7 p-1' />
 						<span className='text-blue-700 font-bold'>{likesCount}</span>

@@ -1,10 +1,10 @@
 import config from '@payload-config'
 import { getPayload, PayloadRequest } from 'payload'
 
-export const getPostStatus = async (
+export const getBookmarkStatus = async (
 	postId: string,
 	req: PayloadRequest
-): Promise<{ likesCount: number; isLiked: boolean } | null> => {
+): Promise<{ bookmarksCount: number; isAdded: boolean } | null> => {
 	const payload = await getPayload({ config })
 
 	try {
@@ -22,24 +22,24 @@ export const getPostStatus = async (
 		if (!post) {
 			return null
 		}
-
+		
 		const currentUser = req.user
-		let isLiked = false
-
+		let isAdded = false
+		
 		if (currentUser) {
-			const userId = currentUser.id as unknown as string
-			isLiked =
-				Array.isArray(post.likes) &&
-				post.likes.some((like: any) => {
-					return typeof like === 'string' ? like === userId : like.id === userId
-				})
+			const userId = currentUser.id as unknown as string;
+			isAdded =
+				Array.isArray(post.bookmarks) &&
+				post.bookmarks.some((bookmark: any) =>
+					typeof bookmark === 'string' ? bookmark === userId : bookmark.id === userId
+				);
 		}
 
-		const likesCount = Array.isArray(post.likes) ? post.likes.length : 0
+		const bookmarksCount = Array.isArray(post.bookmarks) ? post.bookmarks.length : 0
 
 		return {
-			likesCount,
-			isLiked
+			bookmarksCount,
+			isAdded
 		}
 	} catch (error) {
 		console.error('Error fetching post status:', error)

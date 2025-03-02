@@ -15,13 +15,17 @@ import PageClient from './page.client'
 export default async function Post({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
 	
+	if (!id || isNaN(Number(id))) {
+		return <PostNotFound />;
+	}
+	
 		const payload = await getPayload({ config: configPromise })
 		const resultPost = await payload.find({
 			collection: 'posts',
 			overrideAccess: true,
 			where: {
 				id: {
-					equals: id
+					equals: Number(id),
 				}
 			}
 		})

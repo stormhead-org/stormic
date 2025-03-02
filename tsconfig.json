@@ -34,7 +34,7 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"payload-overrides.d.ts",
-		"shared/endpoints/seed/index.ts",
+		"shared/endpoints/seed/index",
 		"app/(web)/(main)/next/seed/route",
 		"shared/endpoints/seed/index"
 	],

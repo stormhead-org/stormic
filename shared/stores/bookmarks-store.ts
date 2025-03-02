@@ -3,7 +3,7 @@ import { create } from 'zustand'
 
 interface BookmarksStoreState {
 	bookmarksCount: Record<number, number>; // Объект для хранения количества лайков по postId
-	hasAdded: Record<number, boolean>; // Объект для хранения состояния лайка по postId
+	isAdded: Record<number, boolean>; // Объект для хранения состояния лайка по postId
 	toggleBookmark: (postId: number) => Promise<void>;
 	initialize: (postId: number) => Promise<void>;
 }
@@ -12,9 +12,9 @@ let debounceTimers: Record<number, NodeJS.Timeout | null> = {} // Объект �
 
 export const useBookmarksStore = create<BookmarksStoreState>((set, get) => ({
 	bookmarksCount: {},
-	hasAdded: {},
+	isAdded: {},
 	async toggleBookmark(postId: number) {
-		const { hasAdded, bookmarksCount } = get()
+		const { isAdded, bookmarksCount } = get()
 		
 		if (debounceTimers[postId]) {
 			clearTimeout(debounceTimers[postId]!)
@@ -22,26 +22,26 @@ export const useBookmarksStore = create<BookmarksStoreState>((set, get) => ({
 		
 		debounceTimers[postId] = setTimeout(async () => {
 			try {
-				if (hasAdded[postId]) {
-					const response = await fetch(`/api/bookmarks/${postId}/delete`, { method: 'DELETE' })
+				if (isAdded[postId]) {
+					const response = await fetch(`/api/posts/${postId}/bookmarks/delete`, { method: 'POST' })
 					if (response.status === 401) {
 						toast.error('Необходимо авторизоваться', { icon: '❌' })
 						return
 					}
 					if (!response.ok) throw new Error('Failed to delete')
 					set(state => ({
-						hasAdded: { ...state.hasAdded, [postId]: false },
+						isAdded: { ...state.isAdded, [postId]: false },
 						bookmarksCount: { ...state.bookmarksCount, [postId]: (state.bookmarksCount[postId] || 0) - 1 }
 					}))
 				} else {
-					const response = await fetch(`/api/bookmarks/${postId}/post`, { method: 'POST' })
+					const response = await fetch(`/api/posts/${postId}/bookmarks/post`, { method: 'POST' })
 					if (response.status === 401) {
 						toast.error('Необходимо авторизоваться', { icon: '❌' })
 						return
 					}
 					if (!response.ok) throw new Error('Failed to post bookmark')
 					set(state => ({
-						hasAdded: { ...state.hasAdded, [postId]: true },
+						isAdded: { ...state.isAdded, [postId]: true },
 						bookmarksCount: { ...state.bookmarksCount, [postId]: (state.bookmarksCount[postId] || 0) + 1 }
 					}))
 				}
@@ -53,12 +53,12 @@ export const useBookmarksStore = create<BookmarksStoreState>((set, get) => ({
 	},
 	async initialize(postId: number) {
 		try {
-			const response = await fetch(`/api/bookmarks/${postId}/status`)
+			const response = await fetch(`/api/posts/${postId}/bookmarks/status`)
 			if (!response.ok) throw new Error('Failed to fetch bookmark status')
-			const { bookmarksCount, hasAdded } = await response.json()
+			const { bookmarksCount, isAdded } = await response.json()
 			set(state => ({
 				bookmarksCount: { ...state.bookmarksCount, [postId]: bookmarksCount },
-				hasAdded: { ...state.hasAdded, [postId]: hasAdded }
+				isAdded: { ...state.isAdded, [postId]: isAdded }
 			}))
 		} catch (error) {
 			console.error(error)

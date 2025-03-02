@@ -4,6 +4,9 @@ import { Banner } from '@/modules/collections/blocks/Banner/config'
 import { Code } from '@/modules/collections/blocks/Code/config'
 import { MediaBlock } from '@/modules/collections/blocks/MediaBlock/config'
 import { generatePreviewPath } from '@/shared/lib/generatePreviewPath'
+import { addBookmark } from '@/shared/utils/api/bookmarks/addBookmark'
+import { getBookmarkStatus } from '@/shared/utils/api/bookmarks/getBookmarkStatus'
+import { removeBookmark } from '@/shared/utils/api/bookmarks/removeBookmark'
 import { getPostStatus } from '@/shared/utils/api/posts/getPostStatus'
 import { likePost } from '@/shared/utils/api/posts/likePost'
 import { unlikePost } from '@/shared/utils/api/posts/unlikePost'
@@ -36,13 +39,13 @@ export const Posts: CollectionConfig<'posts'> = {
 		update: authenticated
 	},
 	defaultPopulate: {
-		content: true,
-		heroImage: true,
-		author: true,
-		relatedPost: true,
-		createdAt: true,
 		title: true,
+		heroImage: true,
+		content: true,
+		relatedPost: true,
 		community: true,
+		author: true,
+		createdAt: true,
 		meta: {
 			image: true,
 			description: true
@@ -169,6 +172,83 @@ export const Posts: CollectionConfig<'posts'> = {
 					}
 
 					return Response.json({ error: 'Failed to unlike' }, { status: 500 })
+				}
+			}
+		},
+		{
+			path: '/:id/bookmarks/status',
+			method: 'get',
+			handler: async req => {
+				if (!req.routeParams || !req.routeParams.id) {
+					return Response.json({ error: 'Post ID is missing' }, { status: 400 })
+				}
+				const postId = req.routeParams.id as string
+				try {
+					const status = await getBookmarkStatus(postId, req)
+					if (!status) {
+						return Response.json({ error: 'Post not found' }, { status: 404 })
+					}
+					console.log(status)
+					return Response.json(status)
+				} catch (error) {
+					return Response.json(
+						{ error: 'Something went wrong' },
+						{ status: 500 }
+					)
+				}
+			}
+		},
+		{
+			path: '/:id/bookmarks/post',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await addBookmark(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing add bookmark:', error)
+					
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'User ID is required in path' ||
+						error.message === 'Valid Post Id is required'
+					) {
+						return Response.json(
+							{ error: 'Valid Post Id is required' },
+							{ status: 400 }
+						)
+					}
+					
+					return Response.json({ error: 'Failed to add bookmark' }, { status: 500 })
+				}
+			}
+		},
+		{
+			path: '/:id/bookmarks/delete',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await removeBookmark(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing add bookmark:', error)
+					
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'User ID is required in path' ||
+						error.message === 'Valid Post ID is required'
+					) {
+						return Response.json(
+							{ error: 'Valid Post ID is required' },
+							{ status: 400 }
+						)
+					}
+					
+					return Response.json({ error: 'Failed to add bookmark' }, { status: 500 })
 				}
 			}
 		}
@@ -331,7 +411,14 @@ export const Posts: CollectionConfig<'posts'> = {
 			type: 'relationship',
 			hasMany: true,
 			relationTo: 'users'
-		}
+		},
+		{
+			label: 'Закладки',
+			name: 'bookmarks',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users'
+		},
 		// ...slugField()
 	],
 	hooks: {

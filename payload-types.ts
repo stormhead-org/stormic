@@ -28,6 +28,7 @@ export interface Config {
     users: {
       relatedPosts: 'posts';
       postsLikes: 'posts';
+      bookmarks: 'posts';
       followCommunities: 'communities';
       ownerCommunities: 'communities';
       moderationCommunities: 'communities';
@@ -148,6 +149,10 @@ export interface User {
   } | null;
   commentsLikes?: {
     docs?: (number | Comment)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  bookmarks?: {
+    docs?: (number | Post)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   updatedAt: string;
@@ -312,6 +317,7 @@ export interface Post {
   owner?: (number | null) | User;
   author?: string | null;
   likes?: (number | User)[] | null;
+  bookmarks?: (number | User)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -627,6 +633,7 @@ export interface UsersSelect<T extends boolean = true> {
   moderationCommunities?: T;
   postsLikes?: T;
   commentsLikes?: T;
+  bookmarks?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -659,6 +666,7 @@ export interface PostsSelect<T extends boolean = true> {
   owner?: T;
   author?: T;
   likes?: T;
+  bookmarks?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
