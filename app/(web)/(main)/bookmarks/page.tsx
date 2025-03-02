@@ -37,7 +37,7 @@ export default async function Bookmarks() {
 	
 	const bookmarkIds = (user.bookmarks?.docs || []).map((post) => post.id);
 	if (!bookmarkIds || bookmarkIds.length === 0) {
-		return <PostNotFound />;
+		return <BookmarksEmpty />;
 	}
 	const resultPosts = await payload.find({
 		collection: 'posts',
@@ -46,14 +46,10 @@ export default async function Bookmarks() {
 				in: bookmarkIds,
 			},
 		},
-		depth: 1, // Убеждаемся, что вложенные данные разворачиваются
+		depth: 1,
 	});
 	
 	const posts = resultPosts.docs as Post[];
-	
-	if (posts.length <= 0) {
-		return <BookmarksEmpty />
-	}
 	
 	return (
 		<>
