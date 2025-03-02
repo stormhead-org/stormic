@@ -18,16 +18,15 @@ export default async function Community({ params: paramsPromise }: Args) {
 	const { id = null } = await paramsPromise
 	// const url = '/c/' + id
 	const community = await queryCommunityById({ id })
-	// const posts = await queryPostByUserId({ id })
+	// const posts = await queryPostByCommunityId({ id })
 
 	if (!community) {
 		return <CommunityNotFound />
 	}
-	console.log(community)
 	return (
 		<>
 			<CommunityProfileGroup
-				//  posts={posts || []}
+				// posts={posts || []}
 				community={community}
 			/>
 		</>
@@ -57,20 +56,20 @@ const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
 	return community || null
 })
 
-// const queryPostByUserId = cache(async ({ id }: { id: number | null }) => {
+// const queryPostByCommunityId = cache(async ({ id }: { id: number | null }) => {
 // 	if (!id) return null
-
+//
 // 	const { isEnabled: draft } = await draftMode()
-
+//
 // 	const payload = await getPayload({ config: configPromise })
-
+//
 // 	const result = await payload.find({
 // 		collection: 'posts',
 // 		draft,
 // 		overrideAccess: draft,
 // 		pagination: false,
 // 		where: {
-// 			author: {
+// 			community: {
 // 				some: {
 // 					id: {
 // 						equals: id
@@ -79,6 +78,6 @@ const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
 // 			}
 // 		} as any
 // 	})
-
+//
 // 	return result.docs || null
 // })

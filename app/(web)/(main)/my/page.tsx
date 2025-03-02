@@ -1,10 +1,7 @@
 import { Post, type User } from '@/payload-types'
 import { MainBannerForm } from '@/shared/components'
-import { BookmarksEmpty } from '@/shared/components/info-blocks/bookmarks-empty'
 import { MyFeedEmpty } from '@/shared/components/info-blocks/my-feed-empty'
-import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
-import { UserSubscriptionsPostGroup } from '@/shared/components/posts/user-subscriptions-post-group'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -16,7 +13,7 @@ export const metadata: Metadata = {
 	title: 'Stormic: Моя лента'
 }
 
-export default async function myPage() {
+export default async function Feed() {
 	
 	const payload = await getPayload({ config: configPromise })
 	const session = (await getSession()) as { user: User } | null

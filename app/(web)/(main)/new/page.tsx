@@ -1,9 +1,10 @@
 import { Post } from '@/payload-types'
 import { MainBannerForm } from '@/shared/components'
-import { MainPagePostGroup } from '@/shared/components/posts/main-page-post-group'
+import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
+import React from 'react'
 
 export const metadata: Metadata = {
 	title: 'Stormic: Свежее',
@@ -19,7 +20,7 @@ export default async function Home() {
 	})
 
 	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings', // required
+		slug: 'host-settings',
 		depth: 1,
 	})
 
@@ -39,7 +40,12 @@ export default async function Home() {
 						: ''
 				}
 			/>
-			<MainPagePostGroup data={posts} className='mt-4' />
+			<PostForm
+				limit={5}
+				post={posts}
+				className='mt-4'
+				// loading={loading}
+			/>
 		</>
 	)
 }

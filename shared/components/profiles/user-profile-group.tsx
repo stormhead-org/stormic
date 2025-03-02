@@ -19,7 +19,14 @@ export const UserProfileGroup: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<ProfileItem data={user} hasUser={true} />
-			{/* <UserProfilePostGroup data={posts} className='mt-1' /> */}
+			{/* <div className='ml-6 mb-2 mt-3'> */}
+			{/* 	<FeedToggle /> */}
+			{/* </div> */}
+			{/* <PostForm */}
+			{/* 	limit={5} */}
+			{/* 	post={posts} */}
+			{/* 	// loading={loading} */}
+			{/* /> */}
 		</div>
 	)
 }

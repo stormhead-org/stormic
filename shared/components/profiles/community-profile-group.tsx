@@ -1,7 +1,9 @@
 'use client'
 
-import { Community } from '@/payload-types'
+import { Community, type Post } from '@/payload-types'
+import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { ProfileItem } from '@/shared/components/profiles/community-profiles-items/profile-item'
+import { FeedToggle } from '@/shared/components/ui/feed-toggle'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 
@@ -19,7 +21,14 @@ export const CommunityProfileGroup: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<ProfileItem data={community} hasUser={false} />
-			{/* <CommunityProfilePostGroup data={posts} className='mt-1' /> */}
+			{/* <div className='ml-6 mb-2 mt-3'> */}
+			{/* 	<FeedToggle /> */}
+			{/* </div> */}
+			{/* <PostForm */}
+			{/* 	limit={5} */}
+			{/* 	post={posts} */}
+			{/* 	// loading={loading} */}
+			{/* /> */}
 		</div>
 	)
 }
