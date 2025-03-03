@@ -4,30 +4,27 @@ import { AuthModal } from '@/shared/components/modals'
 import { NewCommunityModal } from '@/shared/components/modals/new-community-modal'
 import React from 'react'
 // import { useIntl } from 'react-intl'
+import { User } from '@/payload-types'
 import { cn } from '../lib/utils'
+import { useSession } from '../providers/SessionProvider'
 import { Button } from './ui/button'
 
 interface Props {
-	authorAvatar: string
-	authorName: string
-	authorUrl: string
-	stormicName: string
-	logoImage?: string
-	authImage?: string
-	hasSession: boolean
+	logoImage: string | null | undefined
+	stormicName: string | null | undefined
+	authImage?: string | null | undefined
 	className?: string
 }
 
 export const NewCommunityButton: React.FC<Props> = ({
-	authorAvatar,
-	authorName,
-	authorUrl,
 	logoImage,
 	authImage,
 	stormicName,
-	hasSession,
 	className
 }) => {
+	const session = useSession()
+	const currentUser = session && (session.user as User)
+
 	// const { formatMessage } = useIntl()
 	const [openCreateCommunityModal, setCreateCommunityModal] =
 		React.useState(false)
@@ -35,25 +32,28 @@ export const NewCommunityButton: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<NewCommunityModal
-				open={openCreateCommunityModal}
-				onClose={() => setCreateCommunityModal(false)}
-			/>
-
-			<AuthModal
-				open={openAuthModal}
-				onClose={() => setOpenAuthModal(false)}
-				logoImage={logoImage}
-				authImage={authImage}
-				stormicName={stormicName}
-			/>
+			{currentUser ? (
+				<NewCommunityModal
+					userId={currentUser.id}
+					open={openCreateCommunityModal}
+					onClose={() => setCreateCommunityModal(false)}
+				/>
+			) : (
+				<AuthModal
+					open={openAuthModal}
+					onClose={() => setOpenAuthModal(false)}
+					logoImage={logoImage || ''}
+					authImage={authImage || ''}
+					stormicName={stormicName || ''}
+				/>
+			)}
 
 			<Button
 				variant='blue'
 				className='h-12 w-full text-lg font-bold'
 				type='button'
 				onClick={
-					hasSession
+					currentUser
 						? () => setCreateCommunityModal(true)
 						: () => setOpenAuthModal(true)
 				}

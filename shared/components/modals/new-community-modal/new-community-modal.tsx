@@ -7,23 +7,19 @@ import {
 	DialogTitle
 } from '@/shared/components/ui/dialog'
 import React from 'react'
-import { CommunityNameForm } from './forms/name-form'
-import { CommunityStyleForm } from './forms/style-form'
+import { NewCommunityForm } from './forms/new-community-form'
 
 interface Props {
+	userId: number
 	open: boolean
 	onClose: () => void
 }
 
-export const NewCommunityModal: React.FC<Props> = ({ open, onClose }) => {
-	const [type, setType] = React.useState<
-		'name' | 'style' | 'register' | 'passwordReset'
-	>('name')
-
-	const onSwitchType = () => {
-		setType(type === 'name' ? 'register' : 'name')
-	}
-
+export const NewCommunityModal: React.FC<Props> = ({
+	userId,
+	open,
+	onClose
+}) => {
 	const handleClose = () => {
 		onClose()
 	}
@@ -37,12 +33,7 @@ export const NewCommunityModal: React.FC<Props> = ({ open, onClose }) => {
 				<div className='flex mx-auto'>
 					<div className=''>
 						<div className='my-2'>
-							{type === 'name' && (
-								<CommunityNameForm onClose={handleClose} setType={setType} />
-							)}
-							{type === 'style' && (
-								<CommunityStyleForm onClose={handleClose} setType={setType} />
-							)}
+							<NewCommunityForm userId={userId} onClose={handleClose} />
 						</div>
 					</div>
 				</div>

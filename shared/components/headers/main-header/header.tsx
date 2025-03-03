@@ -11,9 +11,9 @@ interface Props {
 	avatarImage: string | null | undefined
 	userUrl: string
 	logoImage: string | null | undefined
-	session: boolean
 	stormicName: string | null | undefined
 	authImage?: string | null | undefined
+	session: boolean
 	description: string | null | undefined
 	className?: string
 }
@@ -26,7 +26,7 @@ export const Header: React.FC<Props> = ({
 	stormicName,
 	authImage,
 	description,
-	className,
+	className
 }) => {
 	const router = useRouter()
 	const searchParams = useSearchParams()
@@ -42,7 +42,7 @@ export const Header: React.FC<Props> = ({
 			setTimeout(() => {
 				router.replace('/')
 				toast.success(toastMessage, {
-					duration: 3000,
+					duration: 3000
 				})
 			}, 1000)
 		}

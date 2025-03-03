@@ -7,6 +7,11 @@ import { getPayload } from 'payload'
 export default async function CommunitiesPage() {
 	const payload = await getPayload({ config: configPromise })
 
+	const resultGlobalHost = await payload.findGlobal({
+		slug: 'host-settings',
+		depth: 1
+	})
+
 	const result = await payload.find({
 		collection: 'communities',
 		depth: 1,
@@ -21,11 +26,21 @@ export default async function CommunitiesPage() {
 				<div className='w-8/12 bg-primary/10 rounded-md'></div>
 				<div className='w-4/12'>
 					<NewCommunityButton
-						authorAvatar={''}
-						authorName={''}
-						authorUrl={''}
-						stormicName={''}
-						hasSession={true}
+						authImage={
+							'hostAuthBanner' in resultGlobalHost &&
+							typeof resultGlobalHost.hostAuthBanner === 'object' &&
+							resultGlobalHost.hostAuthBanner !== null
+								? resultGlobalHost.hostAuthBanner.url
+								: ''
+						}
+						logoImage={
+							'hostLogo' in resultGlobalHost &&
+							typeof resultGlobalHost.hostLogo === 'object' &&
+							resultGlobalHost.hostLogo !== null
+								? resultGlobalHost.hostLogo.url
+								: ''
+						}
+						stormicName={resultGlobalHost.hostTitle}
 					/>
 				</div>
 			</div>

@@ -362,7 +362,7 @@ export interface Community {
         id?: string | null;
       }[]
     | null;
-  owner?: (number | null) | User;
+  owner: number | User;
   systemArrayModerators?: (number | User)[] | null;
   moderators?:
     | {

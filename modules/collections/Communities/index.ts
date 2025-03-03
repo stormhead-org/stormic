@@ -1,10 +1,7 @@
 import { followCommunity } from '@/shared/utils/api/communities/followCommunity'
 import { unfollowCommunity } from '@/shared/utils/api/communities/unfollowCommunity'
-import { followUser } from '@/shared/utils/api/users/followUser'
-import { unfollowUser } from '@/shared/utils/api/users/unfollowUser'
 import type { CollectionConfig } from 'payload'
 
-import { slugField } from '@/fields/slug'
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { getCommunityStatus } from '@/shared/utils/api/communities/getCommunityStatus'
@@ -59,8 +56,11 @@ export const Communities: CollectionConfig = {
 					const result = await followCommunity(req)
 					return Response.json(result)
 				} catch (error: any) {
-					req.payload.logger.error('Error while processing follow community:', error)
-					
+					req.payload.logger.error(
+						'Error while processing follow community:',
+						error
+					)
+
 					if (error.message === 'Unauthorized') {
 						return Response.json({ error: 'Unauthorized' }, { status: 401 })
 					}
@@ -73,8 +73,11 @@ export const Communities: CollectionConfig = {
 							{ status: 400 }
 						)
 					}
-					
-					return Response.json({ error: 'Failed to follow community' }, { status: 500 })
+
+					return Response.json(
+						{ error: 'Failed to follow community' },
+						{ status: 500 }
+					)
 				}
 			}
 		},
@@ -86,8 +89,11 @@ export const Communities: CollectionConfig = {
 					const result = await unfollowCommunity(req)
 					return Response.json(result)
 				} catch (error: any) {
-					req.payload.logger.error('Error while processing unfollow community:', error)
-					
+					req.payload.logger.error(
+						'Error while processing unfollow community:',
+						error
+					)
+
 					if (error.message === 'Unauthorized') {
 						return Response.json({ error: 'Unauthorized' }, { status: 401 })
 					}
@@ -100,8 +106,11 @@ export const Communities: CollectionConfig = {
 							{ status: 400 }
 						)
 					}
-					
-					return Response.json({ error: 'Failed to unfollow community' }, { status: 500 })
+
+					return Response.json(
+						{ error: 'Failed to unfollow community' },
+						{ status: 500 }
+					)
 				}
 			}
 		}
@@ -171,7 +180,8 @@ export const Communities: CollectionConfig = {
 			name: 'owner',
 			type: 'relationship',
 			hasMany: false,
-			relationTo: 'users'
+			relationTo: 'users',
+			required: true
 		},
 		{
 			label: 'Модераторы сообщества',
@@ -233,15 +243,17 @@ export const Communities: CollectionConfig = {
 			name: 'followers',
 			type: 'relationship',
 			hasMany: true,
-			relationTo: 'users'
+			relationTo: 'users',
+			admin: {
+				readOnly: true
+			}
 		},
 		{
 			label: 'Посты в сообществе',
 			name: 'posts',
 			type: 'join',
 			collection: 'posts',
-			defaultSort: '-title',
-			defaultLimit: 5,
+			defaultSort: '-id',
 			on: 'community',
 			maxDepth: 1
 		},
@@ -250,9 +262,10 @@ export const Communities: CollectionConfig = {
 			name: 'comments',
 			type: 'join',
 			collection: 'comments',
+			defaultSort: '-id',
 			on: 'community',
 			maxDepth: 1
-		},
+		}
 	],
 	hooks: {
 		afterRead: [moderators]
