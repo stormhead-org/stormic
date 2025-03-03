@@ -1,13 +1,13 @@
 import { Community, User } from '@/payload-types'
 import {
-	CommunitiesListGroup,
 	Container,
 	FeedUserMenu,
 	NavigationMenuForm,
 	// NewPostButton,
 	SideFooter,
-	SocialMenu,
+	SocialMenu
 } from '@/shared/components'
+import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
 import { getSession } from '@/shared/lib/auth'
 // import { getUserSession } from '@/shared/lib'
 import configPromise from '@payload-config'
@@ -15,7 +15,7 @@ import { getPayload } from 'payload'
 import React from 'react'
 
 export default async function CommunitiesLayout({
-	children,
+	children
 }: Readonly<{
 	children: React.ReactNode
 }>) {
@@ -26,21 +26,21 @@ export default async function CommunitiesLayout({
 
 	const resultGlobalHost = await payload.findGlobal({
 		slug: 'host-settings', // required
-		depth: 1,
+		depth: 1
 	})
 
 	const globalSideBarNavigation = await payload.findGlobal({
 		slug: 'sidebar-navigation', // required
 		depth: 1,
 		select: {
-			items: true,
-		},
+			items: true
+		}
 	})
 
 	const resultCommunities = await payload.find({
 		collection: 'communities',
 		depth: 1,
-		overrideAccess: false,
+		overrideAccess: false
 	})
 
 	const communities = resultCommunities.docs as Community[]
@@ -68,8 +68,13 @@ export default async function CommunitiesLayout({
 								className='mt-4'
 								data={globalSideBarNavigation.items || []}
 							/>
-							<CommunitiesListGroup
-								data={communities}
+							<CommunitiesForm
+								// title={formatMessage({ id: 'categoryGroup.communitiesPageLink' })}
+								title={'Сообщества'}
+								limit={5}
+								defaultItems={communities.slice(0, 5)}
+								items={communities}
+								// loading={loading}
 								className='mt-4'
 								hasPost={false}
 							/>

@@ -1,10 +1,13 @@
+import { Community } from '@/payload-types'
 import {
 	Container,
 	FeedUserMenu,
+	NavigationMenuForm,
 	SideFooter,
 	SocialMenu
 } from '@/shared/components/'
 import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
+import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
 import config from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -23,29 +26,28 @@ export default async function MainLayout({
 	const payload = await getPayload({ config })
 
 	const globalSideBarNavigation = await payload.findGlobal({
-		slug: 'sidebar-navigation', // required
+		slug: 'sidebar-navigation',
 		depth: 1,
 		select: {
 			items: true
 		}
 	})
 
-	// const resultCommunities = await payload.find({
-	// 	collection: 'communities',
-	// 	depth: 1,
-	// 	// limit: 12,
-	// 	overrideAccess: false
-	// 	// select: {
-	// 	// 	id: true,
-	// 	//   title: true,
-	// 	// 	 content: true,
-	// 	//   slug: true,
-	// 	//   communities: true,
-	// 	//   meta: true,
-	// 	// },
-	// })
+	const resultCommunities = await payload.find({
+		collection: 'communities',
+		depth: 1,
+		overrideAccess: false
+		// select: {
+		// 	id: true,
+		//   title: true,
+		// 	 content: true,
+		//   slug: true,
+		//   communities: true,
+		//   meta: true,
+		// },
+	})
 
-	// const communities = resultCommunities.docs as Community[]
+	const communities = resultCommunities.docs as Community[]
 
 	return (
 		<>
@@ -65,15 +67,20 @@ export default async function MainLayout({
 							stormicName={stormicName?.content || 'Stormic'}
 							authImage={authImage ? authImage?.url : stormicBanner?.url}
 						/> */}
-						{/* <NavigationMenuForm
+						<NavigationMenuForm
 							className='mt-4'
 							data={globalSideBarNavigation.items || []}
-						/> */}
-						{/* <CommunitiesListGroup
-							data={communities}
+						/>
+						<CommunitiesForm
+							// title={formatMessage({ id: 'categoryGroup.communitiesPageLink' })}
+							title={'Сообщества'}
+							limit={5}
+							defaultItems={communities.slice(0, 5)}
+							items={communities}
+							// loading={loading}
 							className='mt-4'
 							hasPost={false}
-						/> */}
+						/>
 						<SideFooter className='mt-4' />
 					</div>
 					{/* Центральная часть */}

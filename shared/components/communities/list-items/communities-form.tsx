@@ -60,13 +60,13 @@ export const CommunitiesForm: React.FC<Props> = ({
 	const list = showAll
 		? items.filter(item =>
 				item.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
-			)
+		  )
 		: (defaultItems || items).slice(0, limit)
 
 	return (
 		<div className={cn(hasPost && 'max-w-[200px]', className)}>
 			{!hasPost && (
-				<Link href={`/c`}>
+				<Link href={`/communities`}>
 					<Title
 						text={title}
 						size='xs'
