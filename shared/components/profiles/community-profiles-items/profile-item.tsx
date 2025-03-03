@@ -16,37 +16,7 @@ export const ProfileItem: React.FC<Props> = ({ data, hasUser, className }) => {
 	return (
 		<div className={cn('', className)}>
 			<div className='rounded-md bg-secondary'>
-				<ProfileHeader
-					userId={Number(data.id)}
-					communityId={Number(data.id)}
-					profileBanner={
-						'userBanner' in data &&
-						typeof data.userBanner === 'object' &&
-						data.userBanner !== null
-							? data.userBanner.url
-							: 'communityBanner' in data &&
-							  typeof data.communityBanner === 'object' &&
-							  data.communityBanner !== null
-							? data.communityBanner.url
-							: undefined
-					}
-					profileAvatar={
-						'userAvatar' in data &&
-						typeof data.userAvatar === 'object' &&
-						data.userAvatar !== null
-							? data.userAvatar.url
-							: 'communityLogo' in data &&
-							  typeof data.communityLogo === 'object' &&
-							  data.communityLogo !== null
-							? data.communityLogo.url
-							: undefined
-					}
-					profileName={
-						'name' in data ? data.name : (data as Community).title || '#'
-					}
-					profileRep={0}
-					hasUser={hasUser}
-				/>
+				<ProfileHeader data={data} hasUser={hasUser} />
 				<ProfileBody data={data} hasUser={hasUser} />
 			</div>
 		</div>

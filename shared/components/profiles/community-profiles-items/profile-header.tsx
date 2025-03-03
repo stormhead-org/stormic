@@ -3,29 +3,20 @@
 import { ProfileAvatar } from '@/shared/components'
 import UserFollowButton from '@/shared/components/user-follow-button'
 import { cn } from '@/shared/lib/utils'
-import { GripHorizontal } from 'lucide-react'
 import React from 'react'
 // import { useIntl } from 'react-intl'
+import { Community, User } from '@/payload-types'
 import CommunityFollowButton from '../../community-follow-button'
+import { SettingsProfileButton } from './settings-profile-button'
 
 interface Props {
-	userId: number
-	communityId: number
-	profileBanner?: string | null | undefined
-	profileAvatar?: string | null | undefined
-	profileName: string | undefined | null
-	profileRep?: number
+	data: User | Community
 	hasUser: boolean
 	className?: string
 }
 
 export const ProfileHeader: React.FC<Props> = ({
-	userId,
-	communityId,
-	profileBanner,
-	profileAvatar,
-	profileName,
-	profileRep,
+	data,
 	hasUser,
 	className
 }) => {
@@ -34,35 +25,58 @@ export const ProfileHeader: React.FC<Props> = ({
 		<div className={cn('', className)}>
 			<img
 				className='rounded-t-md object-cover object-center w-full h-[120px]'
-				src={profileBanner || ''}
+				src={
+					'userBanner' in data &&
+					typeof data.userBanner === 'object' &&
+					data.userBanner !== null
+						? data.userBanner.url
+						: 'communityBanner' in data &&
+						  typeof data.communityBanner === 'object' &&
+						  data.communityBanner !== null
+						? data.communityBanner.url
+						: undefined
+				}
 				alt='Profile Banner'
 			/>
 			<div className='-mt-10 mx-6'>
 				<div className='flex w-full justify-between mb-2'>
 					<ProfileAvatar
 						className='w-24 h-24 border-none bg-secondary hover:bg-secondary'
-						avatarImage={String(profileAvatar)}
+						avatarImage={
+							'userAvatar' in data &&
+							typeof data.userAvatar === 'object' &&
+							data.userAvatar !== null
+								? data.userAvatar.url
+								: 'communityLogo' in data &&
+								  typeof data.communityLogo === 'object' &&
+								  data.communityLogo !== null
+								? data.communityLogo.url
+								: undefined
+						}
 						avatarSize={Number(92)}
 					/>
 					<div className='flex items-center'>
 						<div className='mt-16'>
 							{hasUser ? (
-								<UserFollowButton userId={userId} />
+								<UserFollowButton userId={data.id} />
 							) : (
-								<CommunityFollowButton communityId={communityId} />
+								<CommunityFollowButton communityId={data.id} />
 							)}
 						</div>
-						<p className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
-							<GripHorizontal className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />
-						</p>
+						<SettingsProfileButton
+							data={data}
+							hasUser={hasUser}
+							className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'
+						/>
 					</div>
 				</div>
-				<span className='font-bold text-2xl'> {profileName} </span>
+				<span className='font-bold text-2xl'>
+					{' '}
+					{'name' in data ? data.name : (data as Community).title || '#'}{' '}
+				</span>
 				{hasUser && (
 					<>
-						<span className='text-md text-green-500 font-bold'>
-							+{profileRep}
-						</span>
+						<span className='text-md text-green-500 font-bold'>+{0}</span>
 					</>
 				)}
 			</div>

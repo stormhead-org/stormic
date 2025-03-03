@@ -26,7 +26,7 @@ export const NewCommunityButton: React.FC<Props> = ({
 	const currentUser = session && (session.user as User)
 
 	// const { formatMessage } = useIntl()
-	const [openCreateCommunityModal, setCreateCommunityModal] =
+	const [openCreateCommunityModal, setOpenCreateCommunityModal] =
 		React.useState(false)
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 
@@ -36,7 +36,7 @@ export const NewCommunityButton: React.FC<Props> = ({
 				<NewCommunityModal
 					userId={currentUser.id}
 					open={openCreateCommunityModal}
-					onClose={() => setCreateCommunityModal(false)}
+					onClose={() => setOpenCreateCommunityModal(false)}
 				/>
 			) : (
 				<AuthModal
@@ -54,7 +54,7 @@ export const NewCommunityButton: React.FC<Props> = ({
 				type='button'
 				onClick={
 					currentUser
-						? () => setCreateCommunityModal(true)
+						? () => setOpenCreateCommunityModal(true)
 						: () => setOpenAuthModal(true)
 				}
 			>
