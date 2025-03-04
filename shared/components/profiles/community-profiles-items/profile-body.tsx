@@ -6,6 +6,7 @@ import { cn } from '@/shared/lib/utils'
 import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
 import { UserFollowersCounter } from '@/shared/stores/state-counters/user-followers-counter'
 import React from 'react'
+import { TeamCommunityModal } from '../../modals/communities/team'
 // import { useIntl } from 'react-intl'
 
 interface Props {
@@ -21,8 +22,16 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 		? (data as User).userDescription
 		: (data as Community).communityDescription
 
+	const [openTeamCommunityModal, setOpenTeamCommunityModal] =
+		React.useState(false)
+
 	return (
 		<div className={cn('mx-6', className)}>
+			<TeamCommunityModal
+				data={data as Community}
+				open={openTeamCommunityModal}
+				onClose={() => setOpenTeamCommunityModal(false)}
+			/>
 			<p className='text-md mt-2'>{description}</p>
 			<div className='rounded-md bg-primary/5 p-4 mt-4'>
 				<p className='text-md font-bold'>
@@ -36,10 +45,11 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 			</div>
 
 			<div className='flex gap-1 items-center mt-4'>
-				{hasUser ?
+				{hasUser ? (
 					<UserFollowersCounter userId={data.id} />
-				: <CommunityFollowersCounter communityId={data.id} />
-				}
+				) : (
+					<CommunityFollowersCounter communityId={data.id} />
+				)}
 				<p className='font-bold text-md'>
 					{/* {formatMessage({ id: 'profileBody.followersCount' })} */}
 					подписчиков
@@ -81,10 +91,10 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 							variant='secondary'
 							className='h-10 w-26 text-md font-bold p-0 bg-transparent border-b-4 border-transparent hover:border-blue-700 hover:bg-transparent ml-8 rounded-none text-primary'
 							type='button'
-							// onClick={() => router.push('/write')}
+							onClick={() => setOpenTeamCommunityModal(true)}
 						>
-							{/* {formatMessage({ id: 'profileBody.modalModTeam' })} */}
-							Команда
+							{/* {formatMessage({ id: 'profileBody.modalModTeam' })} */}О
+							сообществе
 						</Button>
 					</>
 				)}

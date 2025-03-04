@@ -214,7 +214,7 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 						<FormInput
 							name='description'
 							label='Описание сообщества'
-							type='text'
+							type='textarea'
 							placeholder='код, GitHub и ты'
 						/>
 

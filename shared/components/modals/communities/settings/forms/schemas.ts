@@ -13,7 +13,7 @@ export const titleSchema = z
 	.max(30, { message: 'Максимум 30 символов в названии' })
 export const descriptionSchema = z
 	.string()
-	.max(1000, { message: 'Максимум 100 символов в описании' })
+	.max(1000, { message: 'Максимум 1000 символов в описании' })
 const ruleSchema = z.object({
 	communityNameRule: z.string().min(1, 'Название правила обязательно'),
 	communityDescriptionRule: z
