@@ -6,6 +6,7 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 import { Community, User } from '@/payload-types'
+import { GripHorizontal } from 'lucide-react'
 import CommunityFollowButton from '../../community-follow-button'
 import { SettingsProfileButton } from './settings-profile-button'
 
@@ -28,13 +29,13 @@ export const ProfileHeader: React.FC<Props> = ({
 				src={
 					'userBanner' in data &&
 					typeof data.userBanner === 'object' &&
-					data.userBanner !== null
+					data.userBanner?.url
 						? data.userBanner.url
 						: 'communityBanner' in data &&
 						  typeof data.communityBanner === 'object' &&
-						  data.communityBanner !== null
+						  data.communityBanner?.url
 						? data.communityBanner.url
-						: undefined
+						: '/defaultBanner.jpg'
 				}
 				alt='Profile Banner'
 			/>
@@ -43,15 +44,11 @@ export const ProfileHeader: React.FC<Props> = ({
 					<ProfileAvatar
 						className='w-24 h-24 border-none bg-secondary hover:bg-secondary'
 						avatarImage={
-							'userAvatar' in data &&
-							typeof data.userAvatar === 'object' &&
-							data.userAvatar !== null
-								? data.userAvatar.url
-								: 'communityLogo' in data &&
-								  typeof data.communityLogo === 'object' &&
-								  data.communityLogo !== null
+							'communityLogo' in data &&
+							typeof data.communityLogo === 'object' &&
+							data.communityLogo?.url
 								? data.communityLogo.url
-								: undefined
+								: '/logo.png'
 						}
 						avatarSize={Number(92)}
 					/>
@@ -68,6 +65,9 @@ export const ProfileHeader: React.FC<Props> = ({
 							hasUser={hasUser}
 							className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'
 						/>
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<GripHorizontal className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />
+						</div>
 					</div>
 				</div>
 				<span className='font-bold text-2xl'>

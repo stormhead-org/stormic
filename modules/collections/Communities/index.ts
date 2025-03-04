@@ -148,7 +148,7 @@ export const Communities: CollectionConfig = {
 			label: 'Таблица деталей',
 			name: 'tableCommunityInfo',
 			type: 'array',
-			maxRows: 3,
+			maxRows: 2,
 			fields: [
 				{
 					type: 'row',

@@ -38,7 +38,6 @@ export const EmailForm: React.FC<Props> = ({ setType, onClose }) => {
 					icon: '✅'
 				})
 				onClose?.()
-				router.push('/')
 				router.refresh()
 			} catch (error) {
 				console.error('Error [LOGIN]', error)

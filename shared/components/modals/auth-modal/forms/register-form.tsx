@@ -45,7 +45,7 @@ export const RegisterForm: React.FC<Props> = ({
 			})
 
 			// toast.success(String(formatMessage({ id: 'registerForm.toastSuccess' })), {
-			toast.success('Регистрация успешна. Подтвердите свою почту', {
+			toast.success('Регистрация успешна', {
 				icon: '✅'
 			})
 
