@@ -206,8 +206,11 @@ export const Posts: CollectionConfig<'posts'> = {
 					const result = await addBookmark(req)
 					return Response.json(result)
 				} catch (error: any) {
-					req.payload.logger.error('Error while processing add bookmark:', error)
-					
+					req.payload.logger.error(
+						'Error while processing add bookmark:',
+						error
+					)
+
 					if (error.message === 'Unauthorized') {
 						return Response.json({ error: 'Unauthorized' }, { status: 401 })
 					}
@@ -220,8 +223,11 @@ export const Posts: CollectionConfig<'posts'> = {
 							{ status: 400 }
 						)
 					}
-					
-					return Response.json({ error: 'Failed to add bookmark' }, { status: 500 })
+
+					return Response.json(
+						{ error: 'Failed to add bookmark' },
+						{ status: 500 }
+					)
 				}
 			}
 		},
@@ -233,8 +239,11 @@ export const Posts: CollectionConfig<'posts'> = {
 					const result = await removeBookmark(req)
 					return Response.json(result)
 				} catch (error: any) {
-					req.payload.logger.error('Error while processing add bookmark:', error)
-					
+					req.payload.logger.error(
+						'Error while processing add bookmark:',
+						error
+					)
+
 					if (error.message === 'Unauthorized') {
 						return Response.json({ error: 'Unauthorized' }, { status: 401 })
 					}
@@ -247,8 +256,11 @@ export const Posts: CollectionConfig<'posts'> = {
 							{ status: 400 }
 						)
 					}
-					
-					return Response.json({ error: 'Failed to add bookmark' }, { status: 500 })
+
+					return Response.json(
+						{ error: 'Failed to add bookmark' },
+						{ status: 500 }
+					)
 				}
 			}
 		}
@@ -418,7 +430,7 @@ export const Posts: CollectionConfig<'posts'> = {
 			type: 'relationship',
 			hasMany: true,
 			relationTo: 'users'
-		},
+		}
 		// ...slugField()
 	],
 	hooks: {
@@ -429,7 +441,7 @@ export const Posts: CollectionConfig<'posts'> = {
 	versions: {
 		drafts: {
 			autosave: {
-				interval: 100
+				interval: 500
 			},
 			schedulePublish: true
 		},

@@ -6,10 +6,65 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
+
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     users: User;
     posts: Post;
@@ -31,7 +86,6 @@ export interface Config {
       bookmarks: 'posts';
       followCommunities: 'communities';
       ownerCommunities: 'communities';
-      moderationCommunities: 'communities';
       commentsLikes: 'comments';
     };
     posts: {
@@ -126,35 +180,37 @@ export interface User {
   systemRoles: ('owner' | 'everyone')[];
   roles?: (number | Role)[] | null;
   relatedPosts?: {
-    docs?: (number | Post)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Post)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   followers?: (number | User)[] | null;
   follow?: (number | User)[] | null;
   followCommunities?: {
-    docs?: (number | Community)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Community)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   ownerCommunities?: {
-    docs?: (number | Community)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
-  moderationCommunities?: {
-    docs?: (number | Community)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Community)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   postsLikes?: {
-    docs?: (number | Post)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Post)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   commentsLikes?: {
-    docs?: (number | Comment)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Comment)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   bookmarks?: {
-    docs?: (number | Post)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Post)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -268,9 +324,10 @@ export interface Role {
   badge?: (number | null) | Media;
   color?: string | null;
   relatedUsers?: {
-    docs?: (number | User)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | User)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   COMMUNITY_USER_BAN?: boolean | null;
   COMMUNITY_POST_DELETE?: boolean | null;
   updatedAt: string;
@@ -300,9 +357,10 @@ export interface Post {
     [k: string]: unknown;
   };
   relatedComments?: {
-    docs?: (number | Comment)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Comment)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   relatedPost?: (number | null) | Post;
   community: number | Community;
   meta?: {
@@ -337,9 +395,10 @@ export interface Comment {
   hasDeleted: boolean;
   parentComment?: (number | null) | Comment;
   childrenComments?: {
-    docs?: (number | Comment)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Comment)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   likes?: (number | User)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -363,6 +422,7 @@ export interface Community {
       }[]
     | null;
   owner: number | User;
+  communityOwner?: string | null;
   systemArrayModerators?: (number | User)[] | null;
   moderators?:
     | {
@@ -385,13 +445,15 @@ export interface Community {
     | null;
   followers?: (number | User)[] | null;
   posts?: {
-    docs?: (number | Post)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Post)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   comments?: {
-    docs?: (number | Comment)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (number | Comment)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -630,7 +692,6 @@ export interface UsersSelect<T extends boolean = true> {
   follow?: T;
   followCommunities?: T;
   ownerCommunities?: T;
-  moderationCommunities?: T;
   postsLikes?: T;
   commentsLikes?: T;
   bookmarks?: T;
@@ -689,6 +750,7 @@ export interface CommunitiesSelect<T extends boolean = true> {
         id?: T;
       };
   owner?: T;
+  communityOwner?: T;
   systemArrayModerators?: T;
   moderators?:
     | T

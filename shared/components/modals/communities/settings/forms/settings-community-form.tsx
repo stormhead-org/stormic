@@ -163,7 +163,7 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 				banner: banner?.id,
 				title: data.title,
 				description: data.description,
-				email: data.email,
+				email: data.email?.length ? data.email : '',
 				rules: filteredRules,
 				tableCommunityInfo: filteredTableInfo?.length ? filteredTableInfo : []
 			})
@@ -203,7 +203,10 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 						<TabsTrigger value='rules'>Правила</TabsTrigger>
 						<TabsTrigger value='additional'>Дополнительно</TabsTrigger>
 					</TabsList>
-					<TabsContent value='main'>
+					<TabsContent
+						className='h-[18rem] overflow-auto no-scrollbar'
+						value='main'
+					>
 						<FormInput
 							name='title'
 							label='Название сообщества'
@@ -216,6 +219,7 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 							label='Описание сообщества'
 							type='textarea'
 							placeholder='код, GitHub и ты'
+							className='mt-2'
 						/>
 
 						<FormInput
@@ -223,11 +227,15 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 							label='E-mail для связи'
 							type='text'
 							placeholder='stormic@stormhead.org'
+							className='mt-2'
 						/>
 					</TabsContent>
 
-					<TabsContent value='appearance'>
-						<div className='flex w-full max-w-sm items-end space-x-2'>
+					<TabsContent
+						className='h-[18rem] overflow-auto no-scrollbar'
+						value='appearance'
+					>
+						<div className='flex w-full max-w-sm items-end space-x-2 mt-2'>
 							<Avatar>
 								<AvatarImage src={logo?.url || ''} />
 								<AvatarFallback>SH</AvatarFallback>
@@ -246,7 +254,7 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 							</Button>
 						</div>
 
-						<div className='flex w-full max-w-sm items-end space-x-2'>
+						<div className='flex w-full max-w-sm items-end space-x-2 mt-2'>
 							<Avatar>
 								<AvatarImage src={banner?.url || ''} />
 								<AvatarFallback>SH</AvatarFallback>
@@ -266,7 +274,10 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 						</div>
 					</TabsContent>
 
-					<TabsContent value='rules'>
+					<TabsContent
+						className='h-[18rem] overflow-auto no-scrollbar'
+						value='rules'
+					>
 						{/* Правила */}
 						<div className='space-y-4'>
 							<Title
@@ -333,7 +344,10 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 						</div>
 					</TabsContent>
 
-					<TabsContent value='additional'>
+					<TabsContent
+						className='h-[18rem] overflow-auto no-scrollbar'
+						value='additional'
+					>
 						{/* Таблица деталей */}
 						<div className='space-y-4'>
 							<Title text='Таблица деталей' size='sm' className='font-bold' />

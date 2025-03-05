@@ -3,7 +3,7 @@ import type { GlobalAfterReadHook } from 'payload'
 export const ownerUser: GlobalAfterReadHook = async ({
 	doc,
 	req,
-	req: { payload },
+	req: { payload }
 }) => {
 	if (doc?.owner) {
 		const ownerId = typeof doc.owner === 'object' ? doc.owner?.id : doc.owner
@@ -13,7 +13,7 @@ export const ownerUser: GlobalAfterReadHook = async ({
 				id: ownerId,
 				collection: 'users',
 				depth: 1,
-				req,
+				req
 			})
 
 			if (ownerDoc) {
@@ -21,7 +21,7 @@ export const ownerUser: GlobalAfterReadHook = async ({
 					id: ownerDoc.id,
 					name: ownerDoc.name,
 					userDescription: ownerDoc.userDescription,
-					userAvatar: ownerDoc.userAvatar,
+					userAvatar: ownerDoc.userAvatar
 				}
 			}
 		}

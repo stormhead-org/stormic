@@ -27,7 +27,7 @@ export const TeamCommunityModal: React.FC<Props> = ({
 
 	return (
 		<Dialog open={open} onOpenChange={onClose}>
-			<DialogContent className='min-w-[60rem] bg-secondary transition-all duration-300-p-2'>
+			<DialogContent className='min-w-[54rem] bg-secondary transition-all duration-300-p-2'>
 				<DialogHeader className='hidden'>
 					<DialogTitle />
 				</DialogHeader>

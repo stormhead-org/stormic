@@ -8,6 +8,7 @@ import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 // import { useIntl } from 'react-intl'
 import { registerUser } from '@/shared/utils/registerUser'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { formRegisterSchema, TFormRegisterValues } from './schemas'
 
@@ -25,6 +26,7 @@ export const RegisterForm: React.FC<Props> = ({
 	onClickLogin
 }) => {
 	// const { formatMessage } = useIntl()
+	const router = useRouter()
 	const form = useForm<TFormRegisterValues>({
 		resolver: zodResolver(formRegisterSchema),
 		defaultValues: {
@@ -50,6 +52,7 @@ export const RegisterForm: React.FC<Props> = ({
 			})
 
 			onClose?.()
+			router.refresh()
 		} catch (error) {
 			// return toast.error(String(formatMessage({ id: 'registerForm.toastError' })), {
 			return toast.error('Неверная почта или пароль', {

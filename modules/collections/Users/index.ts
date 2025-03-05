@@ -237,14 +237,14 @@ export const Users: CollectionConfig = {
 			on: 'owner',
 			maxDepth: 1
 		},
-		{
-			label: 'Модерируемые сообщества',
-			name: 'moderationCommunities',
-			type: 'join',
-			collection: 'communities',
-			on: 'systemArrayModerators',
-			maxDepth: 1
-		},
+		// {
+		// 	label: 'Модерируемые сообщества',
+		// 	name: 'moderationCommunities',
+		// 	type: 'join',
+		// 	collection: 'communities',
+		// 	on: 'systemArrayModerators',
+		// 	maxDepth: 1
+		// },
 		{
 			label: 'Лайки постов',
 			name: 'postsLikes',

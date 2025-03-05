@@ -5,7 +5,6 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { getCommunityStatus } from '@/shared/utils/api/communities/getCommunityStatus'
-import { moderators } from './hooks/moderators'
 
 export const Communities: CollectionConfig = {
 	slug: 'communities',
@@ -184,6 +183,17 @@ export const Communities: CollectionConfig = {
 			required: true
 		},
 		{
+			name: 'communityOwner',
+			type: 'text',
+			access: {
+				update: () => false
+			},
+			admin: {
+				disabled: true,
+				readOnly: true
+			}
+		},
+		{
 			label: 'Модераторы сообщества',
 			name: 'systemArrayModerators',
 			type: 'relationship',
@@ -266,8 +276,8 @@ export const Communities: CollectionConfig = {
 			on: 'community',
 			maxDepth: 1
 		}
-	],
-	hooks: {
-		afterRead: [moderators]
-	}
+	]
+	// hooks: {
+	// 	afterRead: [moderators]
+	// }
 }

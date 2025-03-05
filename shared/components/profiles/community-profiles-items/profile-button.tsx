@@ -47,7 +47,6 @@ export const ProfileButton: React.FC<Props> = ({
 				toast.error(toastMessage, {
 					duration: 3000
 				})
-				router.push('/')
 				router.refresh()
 			}
 		} catch (error) {

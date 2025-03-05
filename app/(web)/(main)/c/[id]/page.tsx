@@ -50,7 +50,7 @@ const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
 	const community = await payload.findByID({
 		collection: 'communities',
 		id: id,
-		depth: 1
+		depth: 2
 	})
 
 	return community || null

@@ -6,6 +6,7 @@ import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 // import { useIntl } from 'react-intl'
 import { createCommunity } from '@/shared/utils/api/communities/createCommunity'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { formCommunitySchema, TFormCommunityValues } from './schemas'
 
@@ -16,6 +17,7 @@ interface Props {
 
 export const NewCommunityForm: React.FC<Props> = ({ userId, onClose }) => {
 	// const { formatMessage } = useIntl()
+	const router = useRouter()
 	const form = useForm<TFormCommunityValues>({
 		resolver: zodResolver(formCommunitySchema),
 		defaultValues: {
@@ -36,6 +38,7 @@ export const NewCommunityForm: React.FC<Props> = ({ userId, onClose }) => {
 				icon: '✅'
 			})
 			onClose?.()
+			router.refresh()
 		} catch (error) {
 			return toast.error('Сообщество не создано', {
 				icon: '❌'

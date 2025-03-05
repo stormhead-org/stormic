@@ -8,17 +8,20 @@ import type { CollectionAfterReadHook } from 'payload'
 export const moderators: CollectionAfterReadHook = async ({
 	doc,
 	req,
-	req: { payload },
+	req: { payload }
 }) => {
 	if (doc?.systemArrayModerators) {
 		const systemArrayModeratorsDocs: User[] = []
 
 		for (const systemArrayModerator of doc.systemArrayModerators) {
 			const systemArrayModeratorsDoc = await payload.findByID({
-				id: typeof systemArrayModerator === 'object' ? systemArrayModerator?.id : systemArrayModerator,
+				id:
+					typeof systemArrayModerator === 'object'
+						? systemArrayModerator?.id
+						: systemArrayModerator,
 				collection: 'users',
 				depth: 1,
-				req,
+				req
 			})
 
 			if (systemArrayModeratorsDoc) {
@@ -26,11 +29,14 @@ export const moderators: CollectionAfterReadHook = async ({
 			}
 		}
 
-		doc.moderators = systemArrayModeratorsDocs.map(systemArrayModeratorsDoc => ({
-			id: systemArrayModeratorsDoc.id,
-			name: systemArrayModeratorsDoc.name,
-			authorAvatar: systemArrayModeratorsDoc.userAvatar,
-		}))
+		doc.moderators = systemArrayModeratorsDocs.map(
+			systemArrayModeratorsDoc => ({
+				id: systemArrayModeratorsDoc.id,
+				name: systemArrayModeratorsDoc.name,
+				authorAvatar: systemArrayModeratorsDoc.userAvatar,
+				userDescription: systemArrayModeratorsDoc.userDescription
+			})
+		)
 	}
 
 	return doc

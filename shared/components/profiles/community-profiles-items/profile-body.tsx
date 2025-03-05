@@ -15,6 +15,13 @@ interface Props {
 	className?: string
 }
 
+const truncateText = (text: string, maxLength: number | undefined) => {
+	if (maxLength && text.length > maxLength) {
+		return text.slice(0, maxLength) + '...'
+	}
+	return text
+}
+
 export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 	// const { formatMessage } = useIntl()
 
@@ -25,6 +32,8 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 	const [openTeamCommunityModal, setOpenTeamCommunityModal] =
 		React.useState(false)
 
+	const truncatedDescription = truncateText(description || '', 296)
+
 	return (
 		<div className={cn('mx-6', className)}>
 			<TeamCommunityModal
@@ -32,7 +41,15 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 				open={openTeamCommunityModal}
 				onClose={() => setOpenTeamCommunityModal(false)}
 			/>
-			<p className='text-md mt-2'>{description}</p>
+			<p className='text-md mt-2 text-justify'>{truncatedDescription}</p>
+			{description && description?.length > 296 && (
+				<span
+					onClick={() => setOpenTeamCommunityModal(true)}
+					className='text-md font-bold text-blue-800 cursor-pointer hover:text-blue-600'
+				>
+					Показать
+				</span>
+			)}
 			<div className='rounded-md bg-primary/5 p-4 mt-4'>
 				<p className='text-md font-bold'>
 					{/* {formatMessage({ id: 'profileBody.joined' })} */}

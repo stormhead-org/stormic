@@ -1,8 +1,10 @@
 import { z } from 'zod'
 
 export const emailSchema = z
-	.string()
-	.email({ message: 'Введите корректную почту' })
+	.union([
+		z.string().email({ message: 'Введите корректную почту' }),
+		z.literal('')
+	])
 	.optional()
 export const userSchema = z.number()
 export const communitySchema = z.number()
@@ -35,7 +37,7 @@ export const formCommunitySchema = z.object({
 export const formSettingsCommunitySchema = z.object({
 	title: titleSchema,
 	description: descriptionSchema,
-	email: emailSchema,
+	email: emailSchema.optional(),
 	rules: z.array(ruleSchema).optional(),
 	tableCommunityInfo: z
 		.array(tableInfoSchema)

@@ -8,47 +8,47 @@ export const HostSettings: GlobalConfig = {
 		{
 			label: 'Название инстанса',
 			name: 'hostTitle',
-			type: 'text',
+			type: 'text'
 		},
 		{
 			label: 'Слоган инстанса',
 			name: 'hostSlogan',
-			type: 'text',
+			type: 'text'
 		},
 		{
 			label: 'Логотип',
 			name: 'hostLogo',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'Основной баннер',
 			name: 'hostBanner',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'Баннер окна авторизации',
 			name: 'hostAuthBanner',
 			type: 'upload',
-			relationTo: 'media',
+			relationTo: 'media'
 		},
 		{
 			label: 'Управляющий',
 			name: 'owner',
 			type: 'relationship',
 			hasMany: false,
-			relationTo: 'users',
+			relationTo: 'users'
 		},
 		{
 			label: 'E-mail для связи',
 			name: 'contactEmail',
-			type: 'text',
+			type: 'text'
 		},
 		{
 			label: 'Описание инстанса',
 			name: 'hostDescription',
-			type: 'textarea',
+			type: 'textarea'
 		},
 		{
 			label: 'Правила',
@@ -59,37 +59,37 @@ export const HostSettings: GlobalConfig = {
 				{
 					label: 'Название',
 					name: 'nameRule',
-					type: 'text',
+					type: 'text'
 				},
 				{
 					label: 'Описание',
 					name: 'descriptionRule',
-					type: 'textarea',
-				},
-			],
+					type: 'textarea'
+				}
+			]
 		},
 		{
 			name: 'hostOwner',
 			type: 'array',
 			access: {
-				update: () => false,
+				update: () => false
 			},
 			admin: {
 				disabled: true,
-				readOnly: true,
+				readOnly: true
 			},
 			fields: [
 				{
 					name: 'id',
-					type: 'text',
+					type: 'text'
 				},
 				{
 					name: 'name',
-					type: 'text',
+					type: 'text'
 				},
 				{
 					name: 'userDescription',
-					type: 'text',
+					type: 'text'
 				},
 				{
 					name: 'userAvatar',
@@ -97,14 +97,14 @@ export const HostSettings: GlobalConfig = {
 					fields: [
 						{
 							name: 'url',
-							type: 'text',
-						},
-					],
-				},
-			],
-		},
+							type: 'text'
+						}
+					]
+				}
+			]
+		}
 	],
 	hooks: {
-		afterRead: [ownerUser],
-	},
+		afterRead: [ownerUser]
+	}
 }
