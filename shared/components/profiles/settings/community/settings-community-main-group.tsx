@@ -1,15 +1,15 @@
 'use client'
 
-import { User } from '@/payload-types'
+import { type Community, User } from '@/payload-types'
 import { Container, Title } from '@/shared/components'
 import { Button } from '@/shared/components/ui/button'
 import React from 'react'
 
 interface Props {
-	data: User
+	data: Community
 }
 
-export const SettingsProfilePageGroup: React.FC<Props> = ({ data }) => {
+export const SettingsCommunityMainGroup: React.FC<Props> = ({ data }) => {
 	// const { formatMessage } = useIntl()
 	// const { main, loading, updateCustomField } = useProfileCustomFields(data.id)
 	// const form = useProfileCustomFieldsForm(data, main) // Передаем оба аргумента

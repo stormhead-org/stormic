@@ -11,25 +11,25 @@ interface Props {
 
 export const SettingsProfilePageGroup: React.FC<Props> = ({ data }) => {
 	// const { formatMessage } = useIntl()
-	// const { profile, loading, updateCustomField } = useProfileCustomFields(data.id)
-	// const form = useProfileCustomFieldsForm(data, profile) // Передаем оба аргумента
+	// const { main, loading, updateCustomField } = useProfileCustomFields(data.id)
+	// const form = useProfileCustomFieldsForm(data, main) // Передаем оба аргумента
 
 	// const { setValue, handleSubmit, formState } = form
 
 	// useEffect(() => {
-	// 	if (profile) {
-	// 		setValue('fullName', profile.fullName)
-	// 		setValue('bio', profile.bio ?? '')
-	// 		setValue('customFields', profile.customFields)
+	// 	if (main) {
+	// 		setValue('fullName', main.fullName)
+	// 		setValue('bio', main.bio ?? '')
+	// 		setValue('customFields', main.customFields)
 	// 	}
-	// }, [profile, setValue])
+	// }, [main, setValue])
 
 	// const onSubmit = async (formData: TFormProfileUpdateValues) => {
-	// 	if (!profile) return
+	// 	if (!main) return
 
 	// 	try {
 	// 		await updateUserInfo({
-	// 			where: { id: profile.id },
+	// 			where: { id: main.id },
 	// 			data: {
 	// 				fullName: formData.fullName,
 	// 				bio: formData.bio,
@@ -108,7 +108,7 @@ export const SettingsProfilePageGroup: React.FC<Props> = ({ data }) => {
 							</p>
 							{/* <SettingsPageProfileCustomFieldsItem
 								userId={data.id}
-								profile={profile}
+								main={main}
 								onCustomFieldChange={updateCustomField}
 								loading={loading}
 							/> */}

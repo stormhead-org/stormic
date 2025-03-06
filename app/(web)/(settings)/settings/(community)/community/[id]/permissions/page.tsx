@@ -1,6 +1,10 @@
 import { User } from '@/payload-types'
-import { SettingsProfilePageAuthGroup } from '@/shared/components'
-import { SettingsProfileAuthTopMenu } from '@/shared/components/profiles/settings/settings-page-items/personal-profile-settings-items/settings-profile-auth-top-menu'
+import {
+	SettingsCommunityPermissionsGroup
+} from '@/shared/components/profiles/settings/community/settings-community-permissions-group'
+import {
+	SettingsCommunityPermissionsTopMenu
+} from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-permissions-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -33,8 +37,8 @@ export default async function ProfilePage() {
 
 	return (
 		<>
-			<SettingsProfileAuthTopMenu />
-			<SettingsProfilePageAuthGroup data={user} />
+			<SettingsCommunityPermissionsTopMenu />
+			<SettingsCommunityPermissionsGroup data={user} />
 		</>
 	)
 }

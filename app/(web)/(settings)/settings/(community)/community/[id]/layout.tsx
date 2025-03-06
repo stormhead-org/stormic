@@ -35,9 +35,11 @@ export default async function SettingsLayout({
 					{/* Левая часть */}
 					<div className='w-1/4 h-full'>
 						<div className='h-3/4'>
-							<SettingsCommunitySideMenu
-							communityId={id}
-							/>
+							{id &&
+								<SettingsCommunitySideMenu
+									communityId={id}
+								/>
+							}
 						</div>
 					</div>
 					

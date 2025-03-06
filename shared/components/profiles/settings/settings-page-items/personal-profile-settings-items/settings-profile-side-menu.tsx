@@ -28,10 +28,10 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 	const sideSettingsMenu = [
 		{
 			id: 1,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.profile' }),
+			// text: formatMessage({ id: 'settingsProfileSideMenu.main' }),
 			text: 'Профиль',
 			icon: <UserCog />,
-			path: '/settings/profile',
+			path: '/settings/main',
 			disabled: false
 		},
 		{

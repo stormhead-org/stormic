@@ -1,6 +1,10 @@
 import { User } from '@/payload-types'
-import { SettingsProfilePreferencesTopMenu } from '@/shared/components/profiles/settings/settings-page-items/personal-profile-settings-items/settings-profile-preferences-top-menu'
-import { SettingsProfilePreferencesPageGroup } from '@/shared/components/profiles/settings/settings-profile-preferences-page-group'
+import {
+	SettingsCommunityPreferencesGroup
+} from '@/shared/components/profiles/settings/community/settings-community-preferences-group'
+import {
+	SettingsCommunityPreferencesTopMenu
+} from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-preferences-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -33,8 +37,8 @@ export default async function ProfilePage() {
 
 	return (
 		<>
-			<SettingsProfilePreferencesTopMenu />
-			<SettingsProfilePreferencesPageGroup data={user} />
+			<SettingsCommunityPreferencesTopMenu />
+			<SettingsCommunityPreferencesGroup data={user} />
 		</>
 	)
 }

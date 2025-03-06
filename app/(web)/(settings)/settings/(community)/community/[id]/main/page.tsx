@@ -4,8 +4,9 @@ import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
 import {
 	SettingsCommunityMainGroup
 } from '@/shared/components/profiles/settings/community/settings-community-main-group'
-import { SettingsProfileTopMenu } from '@/shared/components/profiles/settings/settings-page-items/personal-profile-settings-items/settings-profile-top-menu'
-import { SettingsProfilePageGroup } from '@/shared/components/profiles/settings/settings-profile-page-group'
+import {
+	SettingsCommunityMainTopMenu
+} from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-main-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -52,7 +53,7 @@ export default async function ProfilePage({ params: paramsPromise }: Args) {
 	
 	return (
 		<>
-			<SettingsProfileTopMenu />
+			<SettingsCommunityMainTopMenu data={community} />
 			<SettingsCommunityMainGroup data={community} />
 		</>
 	)

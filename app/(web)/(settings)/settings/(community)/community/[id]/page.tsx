@@ -45,7 +45,7 @@ export default async function SettingPageRedirect({ params: paramsPromise }: Arg
 	// 	return <UserNotFound />
 	// }
 
-	return redirect(`/communities/${id}/settings/main`)
+	return redirect(`/settings/community/${id}/main`)
 }
 
 

@@ -20,21 +20,21 @@ export const SettingsProfileTopMenu: React.FC<Props> = ({ className }) => {
 			id: 1,
 			// text: formatMessage({ id: 'profileEditTopMenu.editProfile' }),
 			text: 'Изменить профиль',
-			path: '/settings/profile',
+			path: '/settings/main',
 			disabled: false
 		},
 		{
 			id: 2,
 			// text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
 			text: 'Приватность и доступ',
-			path: '/settings/profile#2',
+			path: '/settings/main#2',
 			disabled: true
 		},
 		{
 			id: 3,
 			// text: formatMessage({ id: 'profileEditTopMenu.verification' }),
 			text: 'Верификация ссылок',
-			path: '/settings/profile#3',
+			path: '/settings/main#3',
 			disabled: true
 		}
 	]

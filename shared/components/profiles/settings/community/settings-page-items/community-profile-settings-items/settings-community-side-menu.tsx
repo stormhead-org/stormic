@@ -17,10 +17,11 @@ import { toast } from 'sonner'
 // import { useIntl } from 'react-intl'
 
 interface Props {
+	communityId: string
 	className?: string
 }
 
-export const SettingsCommunitySideMenu: React.FC<Props> = ({ className }) => {
+export const SettingsCommunitySideMenu: React.FC<Props> = ({ communityId, className }) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -29,25 +30,25 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({ className }) => {
 		{
 			id: 1,
 			// text: formatMessage({ id: 'settingsProfileSideMenu.main' }),
-			text: 'Профиль',
+			text: 'Основные',
 			icon: <UserCog />,
-			path: '/settings/main',
+			path: `/settings/community/${communityId}/main`,
 			disabled: false
 		},
 		{
 			id: 2,
 			// text: formatMessage({ id: 'settingsProfileSideMenu.account' }),
-			text: 'Учетная запись',
+			text: 'Права доступа',
 			icon: <LockKeyhole />,
-			path: '/settings/auth',
+			path: `/settings/community/${communityId}/permissions`,
 			disabled: false
 		},
 		{
 			id: 3,
 			// text: formatMessage({ id: 'settingsProfileSideMenu.relationships' }),
-			text: 'Подписки и подписчики',
+			text: 'Подписчики',
 			icon: <Users />,
-			path: '/settings/auth#2',
+			path: '/settings/permissions#2',
 			disabled: true
 		},
 		{
@@ -55,7 +56,7 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({ className }) => {
 			// text: formatMessage({ id: 'settingsProfileSideMenu.filters' }),
 			text: 'Фильтры',
 			icon: <Filter />,
-			path: '/settings/auth#3',
+			path: '/settings/permissions#3',
 			disabled: true
 		},
 		{
@@ -63,38 +64,10 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({ className }) => {
 			// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
 			text: 'Настройки',
 			icon: <Settings />,
-			path: '/settings/preferences',
+			path: `/settings/community/${communityId}/preferences`,
 			disabled: false
-		},
-		{
-			id: 6,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.logout' }),
-			text: 'Выйти',
-			icon: <LogOut />,
-			path: '',
-			click: 'handleSignOut'
 		}
 	]
-
-	const handleSignOut = useCallback(async () => {
-		let toastMessage = ''
-		try {
-			const result = await signOut()
-			if (result.message) {
-				toastMessage = 'Вы успешно вышли из аккаунта!'
-				toast.error(toastMessage, {
-					duration: 3000
-				})
-				router.refresh()
-			}
-		} catch (error) {
-			console.error('Не удалось выйти:', error)
-			toastMessage = 'Ошибка при выходе из аккаунта!'
-			toast.error(toastMessage, {
-				duration: 3000
-			})
-		}
-	}, [router])
 
 	return (
 		<div className={cn('', className)}>
@@ -112,13 +85,7 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({ className }) => {
 								: ''
 						}`
 					)}
-					onClick={() => {
-						if (item.click === 'onClickSignOut') {
-							handleSignOut() // Вызов функции выхода
-						} else if (item.path) {
-							router.push(item.path) // Переход по пути
-						}
-					}}
+					onClick={() => router.push(item.path) }
 				>
 					{item.icon}
 					{item.text}

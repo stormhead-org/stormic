@@ -1,5 +1,6 @@
 'use client'
 
+import type { Community } from '@/payload-types'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
@@ -7,10 +8,11 @@ import React from 'react'
 // import { useIntl } from 'react-intl'
 
 interface Props {
+	data: Community
 	className?: string
 }
 
-export const SettingsCommunityTopMenu: React.FC<Props> = ({ className }) => {
+export const SettingsCommunityMainTopMenu: React.FC<Props> = ({ data, className }) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -19,22 +21,22 @@ export const SettingsCommunityTopMenu: React.FC<Props> = ({ className }) => {
 		{
 			id: 1,
 			// text: formatMessage({ id: 'profileEditTopMenu.editProfile' }),
-			text: 'Изменить профиль',
-			path: '/settings/main',
+			text: 'Сообщество',
+			path: `/settings/community/${data.id}/main`,
 			disabled: false
 		},
 		{
 			id: 2,
 			// text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
-			text: 'Приватность и доступ',
-			path: '/settings/main#2',
+			text: 'Внешний вид',
+			path: `/settings/community/${data.id}/main#2`,
 			disabled: true
 		},
 		{
 			id: 3,
 			// text: formatMessage({ id: 'profileEditTopMenu.verification' }),
 			text: 'Верификация ссылок',
-			path: '/settings/main#3',
+			path: `/settings/community/${data.id}/main#3`,
 			disabled: true
 		}
 	]

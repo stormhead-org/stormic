@@ -29,14 +29,14 @@ export const SettingsProfilePreferencesTopMenu: React.FC<Props> = ({
 			id: 2,
 			// text: formatMessage({ id: 'profilePreferencesTopMenu.notifications' }),
 			text: 'Email уведомления',
-			path: '/settings/profile#2',
+			path: '/settings/main#2',
 			disabled: true
 		},
 		{
 			id: 3,
 			// text: formatMessage({ id: 'profilePreferencesTopMenu.other' }),
 			text: 'Остальное',
-			path: '/settings/profile#3',
+			path: '/settings/main#3',
 			disabled: true
 		}
 	]

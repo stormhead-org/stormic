@@ -10,7 +10,7 @@ interface Props {
 	data: User
 }
 
-export const SettingsCommunityAuthGroup: React.FC<Props> = ({ data }) => {
+export const SettingsCommunityPermissionsGroup: React.FC<Props> = ({ data }) => {
 	// const { formatMessage } = useIntl()
 
 	// const formAccountUpdate = useForm<TFormAccountUpdateValues>({

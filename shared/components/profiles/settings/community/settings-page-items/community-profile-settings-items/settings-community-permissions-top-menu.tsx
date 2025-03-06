@@ -10,7 +10,7 @@ interface Props {
 	className?: string
 }
 
-export const SettingsCommunityAuthTopMenu: React.FC<Props> = ({ className }) => {
+export const SettingsCommunityPermissionsTopMenu: React.FC<Props> = ({ className }) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -20,21 +20,21 @@ export const SettingsCommunityAuthTopMenu: React.FC<Props> = ({ className }) => 
 			id: 1,
 			// text: formatMessage({ id: 'profileAuthTopMenu.accountSettings' }),
 			text: 'Управление учётной записью',
-			path: '/settings/auth',
+			path: '/settings/permissions',
 			disabled: false
 		},
 		{
 			id: 2,
 			// text: formatMessage({ id: 'profileAuthTopMenu.2FactorAuth' }),
 			text: 'Подтверждение входа',
-			path: '/settings/auth#2',
+			path: '/settings/permissions#2',
 			disabled: true
 		},
 		{
 			id: 3,
 			// text: formatMessage({ id: 'profileAuthTopMenu.authorizedApps' }),
 			text: 'Приложения',
-			path: '/settings/auth#3',
+			path: '/settings/permissions#3',
 			disabled: true
 		}
 	]

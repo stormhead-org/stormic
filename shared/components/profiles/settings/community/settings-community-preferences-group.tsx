@@ -12,7 +12,7 @@ interface Props {
 	data: User
 }
 
-export const SettingsProfilePreferencesPageGroup: React.FC<Props> = ({
+export const SettingsCommunityPreferencesGroup: React.FC<Props> = ({
 	data
 }) => {
 	// const { formatMessage } = useIntl()
