@@ -26,8 +26,6 @@ import {
 	lexicalEditor
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
-import { Author } from './hooks/author'
-import { RelatedPost } from './hooks/relatedPost'
 import { revalidateDelete } from './hooks/revalidatePost'
 
 export const Posts: CollectionConfig<'posts'> = {
@@ -305,7 +303,7 @@ export const Posts: CollectionConfig<'posts'> = {
 						},
 						{
 							label: 'Комментарии к посту',
-							name: 'relatedComments',
+							name: 'comments',
 							type: 'join',
 							collection: 'comments',
 							on: 'parentPost',
@@ -362,16 +360,40 @@ export const Posts: CollectionConfig<'posts'> = {
 
 						MetaDescriptionField({})
 						// PreviewField({
-						// 	if the `generateUrl` function is configured
+						// 	// if the `generateUrl` function is configured
 						// 	hasGenerateFn: true,
 
-						// 	field paths to match the target field for data
+						// 	// field paths to match the target field for data
 						// 	titlePath: 'meta.title',
 						// 	descriptionPath: 'meta.description'
 						// })
 					]
 				}
 			]
+		},
+		{
+			label: 'Автор',
+			name: 'author',
+			type: 'relationship',
+			admin: {
+				position: 'sidebar'
+			},
+			hasMany: false,
+			relationTo: 'users'
+		},
+		{
+			label: 'Лайки',
+			name: 'likes',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users'
+		},
+		{
+			label: 'Закладки',
+			name: 'bookmarks',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users'
 		},
 		{
 			name: 'publishedAt',
@@ -392,50 +414,10 @@ export const Posts: CollectionConfig<'posts'> = {
 					}
 				]
 			}
-		},
-		{
-			label: 'Автор',
-			name: 'owner',
-			type: 'relationship',
-			admin: {
-				position: 'sidebar'
-			},
-			hasMany: false,
-			relationTo: 'users'
-		},
-		// This field is only used to populate the user data via the `author` hook
-		// This is because the `user` collection has access control locked to protect user privacy
-		// GraphQL will also not return mutated user data that differs from the underlying schema
-		{
-			name: 'author',
-			type: 'text',
-			access: {
-				update: () => false
-			},
-			admin: {
-				disabled: true,
-				readOnly: true
-			}
-		},
-		{
-			label: 'Лайки',
-			name: 'likes',
-			type: 'relationship',
-			hasMany: true,
-			relationTo: 'users'
-		},
-		{
-			label: 'Закладки',
-			name: 'bookmarks',
-			type: 'relationship',
-			hasMany: true,
-			relationTo: 'users'
 		}
-		// ...slugField()
 	],
 	hooks: {
 		// afterChange: [revalidatePost],
-		afterRead: [Author, RelatedPost],
 		afterDelete: [revalidateDelete]
 	},
 	versions: {

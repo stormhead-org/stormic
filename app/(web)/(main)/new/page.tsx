@@ -4,10 +4,9 @@ import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
-import React from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Свежее',
+	title: 'Stormic: Свежее'
 }
 
 export default async function Home() {
@@ -15,13 +14,12 @@ export default async function Home() {
 
 	const result = await payload.find({
 		collection: 'posts',
-		depth: 1,
-		overrideAccess: false,
+		overrideAccess: true
 	})
 
 	const resultGlobalHost = await payload.findGlobal({
 		slug: 'host-settings',
-		depth: 1,
+		depth: 1
 	})
 
 	const posts = result.docs as Post[]

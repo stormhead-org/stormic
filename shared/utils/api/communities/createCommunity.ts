@@ -22,7 +22,7 @@ export async function createCommunity(
 			},
 			body: JSON.stringify({
 				title: data.title,
-				communityDescription: data.description,
+				description: data.description,
 				owner: data.userId
 			})
 		})

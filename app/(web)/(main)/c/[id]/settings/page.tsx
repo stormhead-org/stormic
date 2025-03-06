@@ -1,6 +1,6 @@
 import { User } from '@/payload-types'
-import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
-import { UserProfileGroup } from '@/shared/components/profiles/user-profile-group'
+import { CommunitySettings } from '@/shared/components/communities/community-settings'
+import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
 import { getSession } from '@/shared/lib/auth'
 import { generateMeta } from '@/shared/lib/generateMeta'
 import configPromise from '@payload-config'
@@ -15,15 +15,15 @@ type Args = {
 	}
 }
 
-export default async function UserPage({ params: paramsPromise }: Args) {
+export default async function Community({ params: paramsPromise }: Args) {
 	const { isEnabled: draft } = await draftMode()
 	const { id = null } = await paramsPromise
-	// const url = '/u/' + id
-	const user = await queryUserById({ id })
-	// const posts = await queryPostByUserId({ id })
+	// const url = '/c/' + id
+	const community = await queryCommunityById({ id })
+	// const posts = await queryPostByCommunityId({ id })
 
-	if (!user) {
-		return <UserNotFound />
+	if (!community) {
+		return <CommunityNotFound />
 	}
 
 	const session = (await getSession()) as { user: User } | null
@@ -31,11 +31,7 @@ export default async function UserPage({ params: paramsPromise }: Args) {
 
 	return (
 		<>
-			<UserProfileGroup
-				//  posts={posts || []}
-				user={user}
-				currentUser={currentUser}
-			/>
+			<CommunitySettings data={community} />
 		</>
 	)
 }
@@ -44,39 +40,39 @@ export async function generateMetadata({
 	params: paramsPromise
 }: Args): Promise<Metadata> {
 	const { id = null } = await paramsPromise
-	const user = await queryUserById({ id })
+	const community = await queryCommunityById({ id })
 
-	return generateMeta({ doc: user })
+	return generateMeta({ doc: community })
 }
 
-const queryUserById = cache(async ({ id }: { id: number | null }) => {
+const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
 	if (!id) return null
 
 	const payload = await getPayload({ config: configPromise })
 
-	const user = await payload.findByID({
-		collection: 'users',
+	const community = await payload.findByID({
+		collection: 'communities',
 		id: id,
-		depth: 1
+		depth: 2
 	})
 
-	return user || null
+	return community || null
 })
 
-// const queryPostByUserId = cache(async ({ id }: { id: number | null }) => {
+// const queryPostByCommunityId = cache(async ({ id }: { id: number | null }) => {
 // 	if (!id) return null
-
+//
 // 	const { isEnabled: draft } = await draftMode()
-
+//
 // 	const payload = await getPayload({ config: configPromise })
-
+//
 // 	const result = await payload.find({
 // 		collection: 'posts',
 // 		draft,
 // 		overrideAccess: draft,
 // 		pagination: false,
 // 		where: {
-// 			author: {
+// 			community: {
 // 				some: {
 // 					id: {
 // 						equals: id
@@ -85,6 +81,6 @@ const queryUserById = cache(async ({ id }: { id: number | null }) => {
 // 			}
 // 		} as any
 // 	})
-
+//
 // 	return result.docs || null
 // })

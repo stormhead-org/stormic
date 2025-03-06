@@ -12,18 +12,16 @@ interface Props {
 
 export const ProfileCustomFieldForm: React.FC<Props> = ({
 	data,
-	className,
+	className
 }) => {
 	return (
 		<div className={cn('', className)}>
 			<ProfileCustomField
 				items={
-					'tableUserInfo' in data && Array.isArray(data.tableUserInfo)
-						? data.tableUserInfo
-						: 'tableCommunityInfo' in data &&
-						  Array.isArray(data.tableCommunityInfo)
-						? data.tableCommunityInfo
-						: []
+					('tableInfo' in data &&
+						Array.isArray(data.tableInfo) &&
+						data.tableInfo) ||
+					[]
 				}
 			/>
 		</div>

@@ -4,24 +4,22 @@ import React from 'react'
 // import { useIntl } from 'react-intl'
 import { Community, User } from '@/payload-types'
 import { cn } from '@/shared/lib/utils'
-import { useSession } from '@/shared/providers/SessionProvider'
 import { Settings } from 'lucide-react'
 import { SettingsCommunityModal } from '../../modals/communities/settings'
 
 interface Props {
 	data: User | Community
+	currentUser: User
 	hasUser: boolean
 	className?: string
 }
 
 export const SettingsProfileButton: React.FC<Props> = ({
 	data,
+	currentUser,
 	hasUser,
 	className
 }) => {
-	const session = useSession()
-	const currentUser = session && (session.user as User)
-
 	// const { formatMessage } = useIntl()
 	const [openSettingsCommunityModal, setOpenSettingsCommunityModal] =
 		React.useState(false)

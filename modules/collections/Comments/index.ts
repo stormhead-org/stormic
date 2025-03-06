@@ -2,7 +2,6 @@ import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { getCommentStatus } from '@/shared/utils/getCommentStatus'
 import type { CollectionConfig } from 'payload'
-import { Author } from './hooks/author'
 
 export const Comments: CollectionConfig = {
 	slug: 'comments',
@@ -62,22 +61,11 @@ export const Comments: CollectionConfig = {
 		},
 		{
 			label: 'Автор комментария',
-			name: 'owner',
+			name: 'author',
 			type: 'relationship',
 			hasMany: false,
 			relationTo: 'users',
 			required: true
-		},
-		{
-			name: 'author',
-			type: 'text',
-			access: {
-				update: () => false
-			},
-			admin: {
-				disabled: true,
-				readOnly: true
-			}
 		},
 		{
 			label: 'Текст комментария',
@@ -87,7 +75,7 @@ export const Comments: CollectionConfig = {
 		},
 		{
 			label: 'Медиа',
-			name: 'commentMedia',
+			name: 'media',
 			type: 'upload',
 			relationTo: 'media'
 		},
@@ -124,7 +112,4 @@ export const Comments: CollectionConfig = {
 			required: false
 		}
 	],
-	hooks: {
-		afterRead: [Author]
-	}
 }

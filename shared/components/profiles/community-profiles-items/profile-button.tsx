@@ -101,7 +101,7 @@ export const ProfileButton: React.FC<Props> = ({
 							</DropdownMenuItem>
 							<DropdownMenuItem
 								className='cursor-pointer'
-								// onClick={() => router.push('/settings/profile')}
+								onClick={() => router.push('/settings/profile')}
 							>
 								{/* {formatMessage({ id: 'profileButton.Settings' })} */}
 								Настройки

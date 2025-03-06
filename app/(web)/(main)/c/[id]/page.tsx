@@ -1,5 +1,7 @@
+import { User } from '@/payload-types'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
 import { CommunityProfileGroup } from '@/shared/components/profiles/community-profile-group'
+import { getSession } from '@/shared/lib/auth'
 import { generateMeta } from '@/shared/lib/generateMeta'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -23,11 +25,16 @@ export default async function Community({ params: paramsPromise }: Args) {
 	if (!community) {
 		return <CommunityNotFound />
 	}
+
+	const session = (await getSession()) as { user: User } | null
+	const currentUser = session && session.user
+
 	return (
 		<>
 			<CommunityProfileGroup
 				// posts={posts || []}
 				community={community}
+				currentUser={currentUser}
 			/>
 		</>
 	)

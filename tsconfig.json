@@ -36,7 +36,8 @@
 		"payload-overrides.d.ts",
 		"shared/endpoints/seed/index",
 		"app/(web)/(main)/next/seed/route",
-		"shared/endpoints/seed/index"
+		"shared/endpoints/seed/index",
+		"shared/components/profiles/settings/settings-page-items/settings-page-profile-custom-fields-item"
 	],
 	"exclude": ["node_modules"]
 }

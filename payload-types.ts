@@ -81,7 +81,7 @@ export interface Config {
   };
   collectionsJoins: {
     users: {
-      relatedPosts: 'posts';
+      posts: 'posts';
       postsLikes: 'posts';
       bookmarks: 'posts';
       followCommunities: 'communities';
@@ -89,7 +89,7 @@ export interface Config {
       commentsLikes: 'comments';
     };
     posts: {
-      relatedComments: 'comments';
+      comments: 'comments';
     };
     communities: {
       posts: 'posts';
@@ -99,7 +99,7 @@ export interface Config {
       childrenComments: 'comments';
     };
     roles: {
-      relatedUsers: 'users';
+      users: 'users';
     };
   };
   collectionsSelect: {
@@ -167,10 +167,10 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   name: string;
-  userAvatar?: (number | null) | Media;
-  userBanner?: (number | null) | Media;
-  userDescription?: string | null;
-  tableUserInfo?:
+  avatar?: (number | null) | Media;
+  banner?: (number | null) | Media;
+  description?: string | null;
+  tableInfo?:
     | {
         label: string;
         value: string;
@@ -179,7 +179,7 @@ export interface User {
     | null;
   systemRoles: ('owner' | 'everyone')[];
   roles?: (number | Role)[] | null;
-  relatedPosts?: {
+  posts?: {
     docs?: (number | Post)[];
     hasNextPage?: boolean;
     totalDocs?: number;
@@ -229,21 +229,6 @@ export interface User {
 export interface Media {
   id: number;
   alt?: string | null;
-  caption?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -323,7 +308,7 @@ export interface Role {
   name: string;
   badge?: (number | null) | Media;
   color?: string | null;
-  relatedUsers?: {
+  users?: {
     docs?: (number | User)[];
     hasNextPage?: boolean;
     totalDocs?: number;
@@ -356,7 +341,7 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  relatedComments?: {
+  comments?: {
     docs?: (number | Comment)[];
     hasNextPage?: boolean;
     totalDocs?: number;
@@ -371,11 +356,10 @@ export interface Post {
      */
     image?: (number | null) | Media;
   };
-  publishedAt?: string | null;
-  owner?: (number | null) | User;
-  author?: string | null;
+  author?: (number | null) | User;
   likes?: (number | User)[] | null;
   bookmarks?: (number | User)[] | null;
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -388,10 +372,9 @@ export interface Comment {
   id: number;
   parentPost: number | Post;
   community: number | Community;
-  owner: number | User;
-  author?: string | null;
+  author: number | User;
   content: string;
-  commentMedia?: (number | null) | Media;
+  media?: (number | null) | Media;
   hasDeleted: boolean;
   parentComment?: (number | null) | Comment;
   childrenComments?: {
@@ -409,12 +392,12 @@ export interface Comment {
  */
 export interface Community {
   id: number;
-  communityLogo?: (number | null) | Media;
-  communityBanner?: (number | null) | Media;
+  logo?: (number | null) | Media;
+  banner?: (number | null) | Media;
   title: string;
-  communityContactEmail?: string | null;
-  communityDescription?: string | null;
-  tableCommunityInfo?:
+  contacts?: string | null;
+  description?: string | null;
+  tableInfo?:
     | {
         label: string;
         value: string;
@@ -422,20 +405,7 @@ export interface Community {
       }[]
     | null;
   owner: number | User;
-  communityOwner?: string | null;
-  systemArrayModerators?: (number | User)[] | null;
-  moderators?:
-    | {
-        id?: string | null;
-        name?: string | null;
-        authorAvatar?:
-          | {
-              url?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-      }[]
-    | null;
+  moderators?: (number | User)[] | null;
   rules?:
     | {
         communityNameRule?: string | null;
@@ -675,10 +645,10 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
-  userAvatar?: T;
-  userBanner?: T;
-  userDescription?: T;
-  tableUserInfo?:
+  avatar?: T;
+  banner?: T;
+  description?: T;
+  tableInfo?:
     | T
     | {
         label?: T;
@@ -687,7 +657,7 @@ export interface UsersSelect<T extends boolean = true> {
       };
   systemRoles?: T;
   roles?: T;
-  relatedPosts?: T;
+  posts?: T;
   followers?: T;
   follow?: T;
   followCommunities?: T;
@@ -713,7 +683,7 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
   content?: T;
-  relatedComments?: T;
+  comments?: T;
   relatedPost?: T;
   community?: T;
   meta?:
@@ -723,11 +693,10 @@ export interface PostsSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
-  publishedAt?: T;
-  owner?: T;
   author?: T;
   likes?: T;
   bookmarks?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -737,12 +706,12 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "communities_select".
  */
 export interface CommunitiesSelect<T extends boolean = true> {
-  communityLogo?: T;
-  communityBanner?: T;
+  logo?: T;
+  banner?: T;
   title?: T;
-  communityContactEmail?: T;
-  communityDescription?: T;
-  tableCommunityInfo?:
+  contacts?: T;
+  description?: T;
+  tableInfo?:
     | T
     | {
         label?: T;
@@ -750,20 +719,7 @@ export interface CommunitiesSelect<T extends boolean = true> {
         id?: T;
       };
   owner?: T;
-  communityOwner?: T;
-  systemArrayModerators?: T;
-  moderators?:
-    | T
-    | {
-        id?: T;
-        name?: T;
-        authorAvatar?:
-          | T
-          | {
-              url?: T;
-              id?: T;
-            };
-      };
+  moderators?: T;
   rules?:
     | T
     | {
@@ -784,10 +740,9 @@ export interface CommunitiesSelect<T extends boolean = true> {
 export interface CommentsSelect<T extends boolean = true> {
   parentPost?: T;
   community?: T;
-  owner?: T;
   author?: T;
   content?: T;
-  commentMedia?: T;
+  media?: T;
   hasDeleted?: T;
   parentComment?: T;
   childrenComments?: T;
@@ -801,7 +756,6 @@ export interface CommentsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  caption?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -896,7 +850,7 @@ export interface RolesSelect<T extends boolean = true> {
   name?: T;
   badge?: T;
   color?: T;
-  relatedUsers?: T;
+  users?: T;
   COMMUNITY_USER_BAN?: T;
   COMMUNITY_POST_DELETE?: T;
   updatedAt?: T;

@@ -39,10 +39,7 @@ export const formSettingsCommunitySchema = z.object({
 	description: descriptionSchema,
 	email: emailSchema.optional(),
 	rules: z.array(ruleSchema).optional(),
-	tableCommunityInfo: z
-		.array(tableInfoSchema)
-		.max(2, 'Максимум 2 поля')
-		.optional()
+	tableInfo: z.array(tableInfoSchema).max(2, 'Максимум 2 поля').optional()
 })
 
 export type TFormCommunityValues = z.infer<typeof formCommunitySchema>

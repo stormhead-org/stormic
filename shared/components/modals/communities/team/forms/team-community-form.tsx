@@ -24,18 +24,14 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 	const truncatedName = truncateText(community.owner?.name || '', 20)
 	const truncatedDescription = truncateText(
-		community.owner?.userDescription || '',
+		community.owner?.description || '',
 		24
 	)
 
 	return (
 		<div className='min-w-[50rem]'>
 			<div className='w-full flex justify-center items-center'>
-				<Title
-					text={`Cообщество ${community.title}`}
-					size='md'
-					className='font-bold mr-2'
-				/>
+				<Title text='Cообщество' size='md' className='font-bold mr-2' />
 			</div>
 			<div className='flex mt-4'>
 				<div className='w-2/5'>
@@ -44,12 +40,13 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 						size='sm'
 						className='font-bold mr-2'
 					/>
-					<Title text='Владелец' size='sm' className='font-bold mr-2 mt-1' />
+					<Title text='Владелец' size='sm' className='font-bold mr-2 mt-4' />
 					<Link href={'/u/' + community.owner?.id}>
 						<div className='flex gap-4 mt-1'>
 							<ProfileAvatar
 								className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
-								avatarImage={String(community.owner?.userAvatar?.url || '')}
+								avatarImage={community.owner?.avatar?.url}
+								// avatarImage={String(community.owner?.userAvatar?.url || '')}
 								avatarSize={Number(44)}
 							/>
 							<div className='flex h-full my-auto'>
@@ -62,24 +59,19 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 							</div>
 						</div>
 					</Link>
-					<Title
-						text='Контактный e-mail'
-						size='sm'
-						className='font-bold mr-2 mt-1'
-					/>
-					<p className='text-md mt-1'>{community.communityContactEmail}</p>
-					<Title text='Модераторы' size='sm' className='font-bold mr-2 mt-1' />
-					{!community.systemArrayModerators ||
-					community.systemArrayModerators.length === 0 ? (
+					<Title text='Связаться' size='sm' className='font-bold mr-2 mt-4' />
+					<p className='text-md mt-1'>{community.contacts}</p>
+					<Title text='Модераторы' size='sm' className='font-bold mr-2 mt-4' />
+					{!community.moderators || community.moderators.length === 0 ? (
 						<p className='text-md mt-1'>Модераторы не назначены</p>
 					) : (
 						<>
-							{community.systemArrayModerators?.map((item, index) => (
+							{community.moderators?.map((item, index) => (
 								<Link key={index} href={'/u/' + item.id}>
 									<div className='flex gap-4 mt-1'>
 										<ProfileAvatar
 											className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
-											avatarImage={String(item.userAvatar?.url || '')}
+											avatarImage={String(item.avatar?.url || '')}
 											avatarSize={Number(44)}
 										/>
 										<div className='flex h-full my-auto'>
@@ -88,7 +80,7 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 													{truncateText(item.name || '', 20)}
 												</p>
 												<p className='-mt-1 text-gray-400 text-sm font-semibold'>
-													{truncateText(item.userDescription || '', 24)}
+													{truncateText(item.description || '', 24)}
 												</p>
 											</div>
 										</div>
@@ -100,8 +92,8 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 				</div>
 				<div className='w-3/5 h-[70vh] overflow-auto no-scrollbar'>
 					<Title text='Описание' size='sm' className='font-bold mr-2' />
-					<p className='mt-1 text-justify'>{community.communityDescription}</p>
-					<Title text='Правила' size='sm' className='font-bold mr-2 mt-1' />
+					<p className='mt-1 text-justify'>{community.description}</p>
+					<Title text='Правила' size='sm' className='font-bold mr-2 mt-4' />
 					<Accordion
 						className='rounded-md bg-secondary'
 						type='single'

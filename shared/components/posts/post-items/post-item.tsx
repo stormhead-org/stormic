@@ -29,7 +29,7 @@ export const PostItem: React.FC<{
 	// 		}
 	// 	}
 	// }, [postId])
-
+	console.log(post)
 	return (
 		<div
 			className={cn(
@@ -42,7 +42,7 @@ export const PostItem: React.FC<{
 					authorId={post.author?.id}
 					authorUrl={`/u/${post.author?.id}` || '#'}
 					authorName={post.author?.name || '#'}
-					authorAvatar={post.author?.authorAvatar?.url}
+					authorAvatar={post.author?.avatar?.url}
 					categoryName={post.community?.title || '#'}
 					categoryUrl={post.community ? `/c/${post.community.id}` : '#'}
 					postTime={formatDateTime(post.publishedAt ? post.publishedAt : '#')}

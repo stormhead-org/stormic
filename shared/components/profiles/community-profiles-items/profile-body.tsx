@@ -26,8 +26,8 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 	// const { formatMessage } = useIntl()
 
 	const description = hasUser
-		? (data as User).userDescription
-		: (data as Community).communityDescription
+		? (data as User).description
+		: (data as Community).description
 
 	const [openTeamCommunityModal, setOpenTeamCommunityModal] =
 		React.useState(false)

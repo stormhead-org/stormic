@@ -98,10 +98,10 @@ export default async function HomeLayout({
 								description={resultGlobalHost.hostSlogan}
 								avatarImage={
 									user &&
-									'userAvatar' in user &&
-									typeof user.userAvatar === 'object' &&
-									user.userAvatar !== null
-										? user.userAvatar.url
+									'avatar' in user &&
+									typeof user.avatar === 'object' &&
+									user.avatar !== null
+										? user.avatar.url
 										: ''
 								}
 								userUrl={`/u/${session?.user.id}`}

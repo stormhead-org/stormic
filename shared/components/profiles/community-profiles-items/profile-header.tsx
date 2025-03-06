@@ -12,12 +12,14 @@ import { SettingsProfileButton } from './settings-profile-button'
 
 interface Props {
 	data: User | Community
+	currentUser: User
 	hasUser: boolean
 	className?: string
 }
 
 export const ProfileHeader: React.FC<Props> = ({
 	data,
+	currentUser,
 	hasUser,
 	className
 }) => {
@@ -27,15 +29,11 @@ export const ProfileHeader: React.FC<Props> = ({
 			<img
 				className='rounded-t-md object-cover object-center w-full h-[120px]'
 				src={
-					'userBanner' in data &&
-					typeof data.userBanner === 'object' &&
-					data.userBanner?.url
-						? data.userBanner.url
-						: 'communityBanner' in data &&
-						  typeof data.communityBanner === 'object' &&
-						  data.communityBanner?.url
-						? data.communityBanner.url
-						: '/defaultBanner.jpg'
+					('banner' in data &&
+						typeof data.banner === 'object' &&
+						data.banner?.url &&
+						data.banner.url) ||
+					'/defaultBanner.jpg'
 				}
 				alt='Profile Banner'
 			/>
@@ -44,10 +42,14 @@ export const ProfileHeader: React.FC<Props> = ({
 					<ProfileAvatar
 						className='w-24 h-24 border-none bg-secondary hover:bg-secondary'
 						avatarImage={
-							'communityLogo' in data &&
-							typeof data.communityLogo === 'object' &&
-							data.communityLogo?.url
-								? data.communityLogo.url
+							'avatar' in data &&
+							typeof data.avatar === 'object' &&
+							data.avatar?.url
+								? data.avatar.url
+								: 'logo' in data &&
+								  typeof data.logo === 'object' &&
+								  data.logo?.url
+								? data.logo.url
 								: '/logo.png'
 						}
 						avatarSize={Number(92)}
@@ -60,11 +62,19 @@ export const ProfileHeader: React.FC<Props> = ({
 								<CommunityFollowButton communityId={data.id} />
 							)}
 						</div>
-						<SettingsProfileButton
-							data={data}
-							hasUser={hasUser}
-							className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'
-						/>
+
+						{currentUser &&
+							((hasUser && currentUser.id === (data as User).id) ||
+								(!hasUser &&
+									currentUser.id === (data as Community).owner?.id)) && (
+								<SettingsProfileButton
+									data={data}
+									currentUser={currentUser}
+									hasUser={hasUser}
+									className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'
+								/>
+							)}
+
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
 							<GripHorizontal className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />
 						</div>

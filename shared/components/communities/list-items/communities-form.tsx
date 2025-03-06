@@ -89,7 +89,7 @@ export const CommunitiesForm: React.FC<Props> = ({
 					<CommunitiesItem
 						key={index}
 						text={item.title}
-						image={item.communityLogo?.url || '/logo.png'}
+						image={item.logo?.url || '/logo.png'}
 						url={`/c/${item.id}`}
 						name={item.title}
 					/>

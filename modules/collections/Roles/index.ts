@@ -33,7 +33,7 @@ export const Roles: CollectionConfig = {
 		},
 		{
 			label: 'Пользователи с этой ролью',
-			name: 'relatedUsers',
+			name: 'users',
 			type: 'join',
 			collection: 'users',
 			on: 'roles',
@@ -52,7 +52,4 @@ export const Roles: CollectionConfig = {
 			defaultValue: false
 		}
 	]
-	// hooks: {
-	// 	afterRead: [moderators],
-	// },
 }

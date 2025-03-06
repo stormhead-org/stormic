@@ -41,16 +41,16 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 		resolver: zodResolver(formSettingsCommunitySchema),
 		defaultValues: {
 			title: community.title || '',
-			description: community.communityDescription || '',
-			email: community.communityContactEmail || '',
+			description: community.description || '',
+			email: community.contacts || '',
 			rules: community.rules
 				? community.rules.map(rule => ({
 						communityNameRule: rule.communityNameRule ?? '',
 						communityDescriptionRule: rule.communityDescriptionRule ?? undefined
 				  }))
 				: [],
-			tableCommunityInfo: community.tableCommunityInfo
-				? community.tableCommunityInfo.map(info => ({
+			tableInfo: community.tableInfo
+				? community.tableInfo.map(info => ({
 						label: info.label ?? '',
 						value: info.value ?? ''
 				  }))
@@ -70,17 +70,17 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 		remove: removeTable
 	} = useFieldArray({
 		control: form.control,
-		name: 'tableCommunityInfo'
+		name: 'tableInfo'
 	})
 
 	const [logo, setLogo] = useState<Media | undefined>(
-		community.communityLogo && typeof community.communityLogo === 'object'
-			? (community.communityLogo as Media)
+		community.logo && typeof community.logo === 'object'
+			? (community.logo as Media)
 			: undefined
 	)
 	const [banner, setBanner] = useState<Media | undefined>(
-		community.communityBanner && typeof community.communityBanner === 'object'
-			? (community.communityBanner as Media)
+		community.banner && typeof community.banner === 'object'
+			? (community.banner as Media)
 			: undefined
 	)
 
@@ -144,7 +144,7 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 						}))
 				: []
 
-			const filteredTableInfo = data.tableCommunityInfo
+			const filteredTableInfo = data.tableInfo
 				?.filter(
 					info =>
 						info.label &&
@@ -165,7 +165,7 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 				description: data.description,
 				email: data.email?.length ? data.email : '',
 				rules: filteredRules,
-				tableCommunityInfo: filteredTableInfo?.length ? filteredTableInfo : []
+				tableInfo: filteredTableInfo?.length ? filteredTableInfo : []
 			})
 			toast.success('Сообщество обновлено', { icon: '✅' })
 			onClose?.()
@@ -354,44 +354,32 @@ export const SettingsCommunityForm: React.FC<Props> = ({
 							{tableFields.map((field, index) => (
 								<div key={field.id} className='space-y-2 border p-4 rounded-md'>
 									<div>
-										<Label htmlFor={`tableCommunityInfo.${index}.label`}>
-											Название
-										</Label>
+										<Label htmlFor={`tableInfo.${index}.label`}>Название</Label>
 										<Input
-											id={`tableCommunityInfo.${index}.label`}
-											{...form.register(`tableCommunityInfo.${index}.label`, {
+											id={`tableInfo.${index}.label`}
+											{...form.register(`tableInfo.${index}.label`, {
 												required: 'Название обязательно'
 											})}
 											placeholder='Например, "Мой сайт"'
 										/>
-										{form.formState.errors.tableCommunityInfo?.[index]
-											?.label && (
+										{form.formState.errors.tableInfo?.[index]?.label && (
 											<p className='text-red-500 text-sm'>
-												{
-													form.formState.errors.tableCommunityInfo[index].label
-														.message
-												}
+												{form.formState.errors.tableInfo[index].label.message}
 											</p>
 										)}
 									</div>
 									<div>
-										<Label htmlFor={`tableCommunityInfo.${index}.value`}>
-											Значение
-										</Label>
+										<Label htmlFor={`tableInfo.${index}.value`}>Значение</Label>
 										<Input
-											id={`tableCommunityInfo.${index}.value`}
-											{...form.register(`tableCommunityInfo.${index}.value`, {
+											id={`tableInfo.${index}.value`}
+											{...form.register(`tableInfo.${index}.value`, {
 												required: 'Значение обязательно'
 											})}
 											placeholder='Например, "google.com"'
 										/>
-										{form.formState.errors.tableCommunityInfo?.[index]
-											?.value && (
+										{form.formState.errors.tableInfo?.[index]?.value && (
 											<p className='text-red-500 text-sm'>
-												{
-													form.formState.errors.tableCommunityInfo[index].value
-														.message
-												}
+												{form.formState.errors.tableInfo[index].value.message}
 											</p>
 										)}
 									</div>

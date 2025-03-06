@@ -6,7 +6,7 @@ export async function settingsCommunity({
 	description,
 	email,
 	rules,
-	tableCommunityInfo
+	tableInfo
 }: {
 	communityId: number
 	logo?: number
@@ -18,7 +18,7 @@ export async function settingsCommunity({
 		communityNameRule: string
 		communityDescriptionRule?: string | null
 	}[]
-	tableCommunityInfo?: { label: string; value: string }[]
+	tableInfo?: { label: string; value: string }[]
 }) {
 	try {
 		const req = await fetch(`/api/communities/${communityId}`, {
@@ -28,13 +28,13 @@ export async function settingsCommunity({
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				communityLogo: logo,
-				communityBanner: banner,
+				logo: logo,
+				banner: banner,
 				title: title,
-				communityDescription: description,
-				communityContactEmail: email,
+				description: description,
+				contacts: email,
 				rules: rules,
-				tableCommunityInfo: tableCommunityInfo
+				tableInfo: tableInfo
 			})
 		})
 

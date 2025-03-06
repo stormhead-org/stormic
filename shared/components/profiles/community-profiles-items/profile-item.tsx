@@ -8,15 +8,25 @@ import React from 'react'
 
 interface Props {
 	data: User | Community
+	currentUser: User
 	hasUser: boolean
 	className?: string
 }
 
-export const ProfileItem: React.FC<Props> = ({ data, hasUser, className }) => {
+export const ProfileItem: React.FC<Props> = ({
+	data,
+	currentUser,
+	hasUser,
+	className
+}) => {
 	return (
 		<div className={cn('', className)}>
 			<div className='rounded-md bg-secondary'>
-				<ProfileHeader data={data} hasUser={hasUser} />
+				<ProfileHeader
+					data={data}
+					currentUser={currentUser}
+					hasUser={hasUser}
+				/>
 				<ProfileBody data={data} hasUser={hasUser} />
 			</div>
 		</div>

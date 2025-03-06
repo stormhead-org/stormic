@@ -116,24 +116,24 @@ export const Users: CollectionConfig = {
 		},
 		{
 			label: 'Аватар',
-			name: 'userAvatar',
+			name: 'avatar',
 			type: 'upload',
 			relationTo: 'media'
 		},
 		{
 			label: 'Баннер профиля',
-			name: 'userBanner',
+			name: 'banner',
 			type: 'upload',
 			relationTo: 'media'
 		},
 		{
 			label: 'О себе',
-			name: 'userDescription',
+			name: 'description',
 			type: 'textarea'
 		},
 		{
 			label: 'Таблица деталей',
-			name: 'tableUserInfo',
+			name: 'tableInfo',
 			type: 'array',
 			maxRows: 2,
 			fields: [
@@ -192,11 +192,11 @@ export const Users: CollectionConfig = {
 		},
 		{
 			label: 'Посты пользователя',
-			name: 'relatedPosts',
+			name: 'posts',
 			type: 'join',
 			collection: 'posts',
 			defaultSort: '-title',
-			on: 'owner',
+			on: 'author',
 			maxDepth: 1
 		},
 		// {
