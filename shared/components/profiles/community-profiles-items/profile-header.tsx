@@ -6,7 +6,8 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 import { Community, User } from '@/payload-types'
-import { GripHorizontal } from 'lucide-react'
+import { GripHorizontal, Settings } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import CommunityFollowButton from '../../community-follow-button'
 import { SettingsProfileButton } from './settings-profile-button'
 
@@ -24,6 +25,9 @@ export const ProfileHeader: React.FC<Props> = ({
 	className
 }) => {
 	// const { formatMessage } = useIntl()
+
+	const router = useRouter()
+
 	return (
 		<div className={cn('', className)}>
 			<img
@@ -74,6 +78,24 @@ export const ProfileHeader: React.FC<Props> = ({
 									className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'
 								/>
 							)}
+
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							{hasUser ? (
+								<Settings
+									className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+									onClick={() => router.push('/settings/profile')}
+								/>
+							) : (
+								<Settings
+									className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+									onClick={() =>
+										router.push(
+											`/settings/community/${(data as Community).id}/main`
+										)
+									}
+								/>
+							)}
+						</div>
 
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
 							<GripHorizontal className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />

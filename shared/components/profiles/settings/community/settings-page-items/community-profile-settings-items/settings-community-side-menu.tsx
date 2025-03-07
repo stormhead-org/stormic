@@ -2,18 +2,15 @@
 
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
-import { signOut } from '@/shared/utils/signOut'
 import {
-	Filter,
+	ChevronLeft,
 	LockKeyhole,
-	LogOut,
 	Settings,
 	UserCog,
 	Users
 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useCallback } from 'react'
-import { toast } from 'sonner'
+import React from 'react'
 // import { useIntl } from 'react-intl'
 
 interface Props {
@@ -21,7 +18,10 @@ interface Props {
 	className?: string
 }
 
-export const SettingsCommunitySideMenu: React.FC<Props> = ({ communityId, className }) => {
+export const SettingsCommunitySideMenu: React.FC<Props> = ({
+	communityId,
+	className
+}) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -31,7 +31,7 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({ communityId, classN
 			id: 1,
 			// text: formatMessage({ id: 'settingsProfileSideMenu.main' }),
 			text: 'Основные',
-			icon: <UserCog />,
+			icon: <Settings />,
 			path: `/settings/community/${communityId}/main`,
 			disabled: false
 		},
@@ -41,7 +41,7 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({ communityId, classN
 			text: 'Права доступа',
 			icon: <LockKeyhole />,
 			path: `/settings/community/${communityId}/permissions`,
-			disabled: false
+			disabled: true
 		},
 		{
 			id: 3,
@@ -51,20 +51,28 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({ communityId, classN
 			path: '/settings/permissions#2',
 			disabled: true
 		},
+		// {
+		// 	id: 4,
+		// 	// text: formatMessage({ id: 'settingsProfileSideMenu.filters' }),
+		// 	text: 'Фильтры',
+		// 	icon: <Filter />,
+		// 	path: '/settings/permissions#3',
+		// 	disabled: true
+		// },
 		{
 			id: 4,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.filters' }),
-			text: 'Фильтры',
-			icon: <Filter />,
-			path: '/settings/permissions#3',
-			disabled: true
+			// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
+			text: 'Администрирование',
+			icon: <UserCog />,
+			path: `/settings/community/${communityId}/administration`,
+			disabled: false
 		},
 		{
 			id: 5,
 			// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
-			text: 'Настройки',
-			icon: <Settings />,
-			path: `/settings/community/${communityId}/preferences`,
+			text: 'В сообщество',
+			icon: <ChevronLeft />,
+			path: `/c/${communityId}`,
 			disabled: false
 		}
 	]
@@ -85,7 +93,7 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({ communityId, classN
 								: ''
 						}`
 					)}
-					onClick={() => router.push(item.path) }
+					onClick={() => router.push(item.path)}
 				>
 					{item.icon}
 					{item.text}

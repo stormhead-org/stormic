@@ -11,7 +11,7 @@ export async function settingsCommunity({
 	communityId: number
 	logo?: number
 	banner?: number
-	title: string
+	title?: string
 	description?: string
 	email?: string
 	rules?: {

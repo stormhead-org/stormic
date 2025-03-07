@@ -1,8 +1,7 @@
 import { User } from '@/payload-types'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
-import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
-import { SettingsCommunityMainGroup } from '@/shared/components/profiles/settings/community/settings-community-main-group'
-import { SettingsCommunityMainTopMenu } from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-main-top-menu'
+import { SettingsCommunityAdministrationGroup } from '@/shared/components/profiles/settings/community/settings-community-administration-group'
+import { SettingsCommunityAdministrationTopMenu } from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-administration-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -20,7 +19,7 @@ type Args = {
 	}
 }
 
-export default async function CommunityMainSettings({
+export default async function CommunityAdministrationSettings({
 	params: paramsPromise
 }: Args) {
 	const { id = null } = await paramsPromise
@@ -28,7 +27,7 @@ export default async function CommunityMainSettings({
 	const currentUser = session && session.user
 
 	if (!currentUser) {
-		return redirect('/')
+		return redirect('/not-auth')
 	}
 
 	const payload = await getPayload({ config: configPromise })
@@ -46,13 +45,13 @@ export default async function CommunityMainSettings({
 	})
 
 	if (!user) {
-		return <UserNotFound />
+		return redirect('/not-auth')
 	}
 
 	return (
 		<>
-			<SettingsCommunityMainTopMenu data={community} />
-			<SettingsCommunityMainGroup community={community} />
+			<SettingsCommunityAdministrationTopMenu data={community} />
+			<SettingsCommunityAdministrationGroup community={community} />
 		</>
 	)
 }

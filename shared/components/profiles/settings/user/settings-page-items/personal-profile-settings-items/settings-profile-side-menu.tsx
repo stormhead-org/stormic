@@ -31,7 +31,7 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 			// text: formatMessage({ id: 'settingsProfileSideMenu.main' }),
 			text: 'Профиль',
 			icon: <UserCog />,
-			path: '/settings/main',
+			path: '/settings/profile',
 			disabled: false
 		},
 		{

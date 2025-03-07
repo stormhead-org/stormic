@@ -1,6 +1,6 @@
 import { User } from '@/payload-types'
-import { SettingsProfileTopMenu } from '@/shared/components/profiles/settings/settings-page-items/personal-profile-settings-items/settings-profile-top-menu'
-import { SettingsProfilePageGroup } from '@/shared/components/profiles/settings/settings-profile-page-group'
+import { SettingsProfileTopMenu } from '@/shared/components/profiles/settings/user/settings-page-items/personal-profile-settings-items/settings-profile-top-menu'
+import { SettingsProfilePageGroup } from '@/shared/components/profiles/settings/user/settings-profile-page-group'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 	title: 'Stormic: Профиль'
 }
 
-export default async function ProfilePage() {
+export default async function CommunityProfileSettings() {
 	const session = (await getSession()) as { user: User } | null
 	const currentUser = session && session.user
 
@@ -34,7 +34,7 @@ export default async function ProfilePage() {
 	return (
 		<>
 			<SettingsProfileTopMenu />
-			<SettingsProfilePageGroup data={user} />
+			<SettingsProfilePageGroup user={user} />
 		</>
 	)
 }

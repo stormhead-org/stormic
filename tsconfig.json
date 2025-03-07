@@ -37,7 +37,7 @@
 		"shared/endpoints/seed/index",
 		"app/(web)/(main)/next/seed/route",
 		"shared/endpoints/seed/index",
-		"shared/components/profiles/settings/settings-page-items/settings-page-profile-custom-fields-item"
+		"shared/components/profiles/settings/user/settings-page-items/settings-page-profile-custom-fields-item"
 	],
 	"exclude": ["node_modules"]
 }

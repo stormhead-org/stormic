@@ -12,7 +12,10 @@ interface Props {
 	className?: string
 }
 
-export const SettingsCommunityMainTopMenu: React.FC<Props> = ({ data, className }) => {
+export const SettingsCommunityMainTopMenu: React.FC<Props> = ({
+	data,
+	className
+}) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -24,21 +27,21 @@ export const SettingsCommunityMainTopMenu: React.FC<Props> = ({ data, className 
 			text: 'Сообщество',
 			path: `/settings/community/${data.id}/main`,
 			disabled: false
-		},
-		{
-			id: 2,
-			// text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
-			text: 'Внешний вид',
-			path: `/settings/community/${data.id}/main#2`,
-			disabled: true
-		},
-		{
-			id: 3,
-			// text: formatMessage({ id: 'profileEditTopMenu.verification' }),
-			text: 'Верификация ссылок',
-			path: `/settings/community/${data.id}/main#3`,
-			disabled: true
 		}
+		// {
+		// 	id: 2,
+		// 	// text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
+		// 	text: 'Внешний вид',
+		// 	path: `/settings/community/${data.id}/main#2`,
+		// 	disabled: true
+		// },
+		// {
+		// 	id: 3,
+		// 	// text: formatMessage({ id: 'profileEditTopMenu.verification' }),
+		// 	text: 'Верификация ссылок',
+		// 	path: `/settings/community/${data.id}/main#3`,
+		// 	disabled: true
+		// }
 	]
 
 	return (

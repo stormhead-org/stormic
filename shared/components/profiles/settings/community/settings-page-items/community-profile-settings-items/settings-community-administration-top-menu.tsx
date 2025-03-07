@@ -1,5 +1,6 @@
 'use client'
 
+import { Community } from '@/payload-types'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
@@ -7,10 +8,14 @@ import React from 'react'
 // import { useIntl } from 'react-intl'
 
 interface Props {
+	data: Community
 	className?: string
 }
 
-export const SettingsProfileTopMenu: React.FC<Props> = ({ className }) => {
+export const SettingsCommunityAdministrationTopMenu: React.FC<Props> = ({
+	data,
+	className
+}) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -18,25 +23,25 @@ export const SettingsProfileTopMenu: React.FC<Props> = ({ className }) => {
 	const topMenuButtons = [
 		{
 			id: 1,
-			// text: formatMessage({ id: 'profileEditTopMenu.editProfile' }),
-			text: 'Изменить профиль',
-			path: '/settings/main',
+			// text: formatMessage({ id: 'profilePreferencesTopMenu.appearance' }),
+			text: 'Правила',
+			path: `/settings/community/${data.id}/administration`,
 			disabled: false
-		},
-		{
-			id: 2,
-			// text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
-			text: 'Приватность и доступ',
-			path: '/settings/main#2',
-			disabled: true
-		},
-		{
-			id: 3,
-			// text: formatMessage({ id: 'profileEditTopMenu.verification' }),
-			text: 'Верификация ссылок',
-			path: '/settings/main#3',
-			disabled: true
 		}
+		// {
+		// 	id: 2,
+		// 	// text: formatMessage({ id: 'profilePreferencesTopMenu.notifications' }),
+		// 	text: 'Email уведомления',
+		// 	path: '/settings/main#2',
+		// 	disabled: true
+		// },
+		// {
+		// 	id: 3,
+		// 	// text: formatMessage({ id: 'profilePreferencesTopMenu.other' }),
+		// 	text: 'Остальное',
+		// 	path: '/settings/main#3',
+		// 	disabled: true
+		// }
 	]
 
 	return (

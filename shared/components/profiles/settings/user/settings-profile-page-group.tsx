@@ -1,36 +1,35 @@
 'use client'
 
-import { type Community, Media } from '@/payload-types'
+import { Media, User } from '@/payload-types'
 import { Container, ProfileAvatar, Title } from '@/shared/components'
 import { FormInput, FormTextarea } from '@/shared/components/form'
-import {
-	formSettingsCommunitySchema,
-	TFormSettingsCommunityValues
-} from '@/shared/components/modals/communities/settings/forms/schemas'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
-import { settingsCommunity } from '@/shared/utils/api/communities/settingsCommunity'
 import { createMedia } from '@/shared/utils/api/media/createMedia'
+import { settingsUser } from '@/shared/utils/api/users/settingsUser'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import React, { useRef, useState } from 'react'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import {
+	formSettingsUserSchema,
+	TFormSettingsUserValues
+} from './forms/schemas'
 
 interface Props {
-	community: Community
+	user: User
 }
 
-export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
-	const form = useForm<TFormSettingsCommunityValues>({
-		resolver: zodResolver(formSettingsCommunitySchema),
+export const SettingsProfilePageGroup: React.FC<Props> = ({ user }) => {
+	const form = useForm<TFormSettingsUserValues>({
+		resolver: zodResolver(formSettingsUserSchema),
 		defaultValues: {
-			title: community.title || '',
-			description: community.description || '',
-			email: community.contacts || '',
-			tableInfo: community.tableInfo
-				? community.tableInfo.map(info => ({
+			name: user.name || '',
+			description: user.description || '',
+			tableInfo: user.tableInfo
+				? user.tableInfo.map(info => ({
 						label: info.label ?? '',
 						value: info.value ?? ''
 				  }))
@@ -48,22 +47,22 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 		name: 'tableInfo'
 	})
 
-	const [logo, setLogo] = useState<Media | undefined>(
-		community.logo && typeof community.logo === 'object'
-			? (community.logo as Media)
+	const [avatar, setAvatar] = useState<Media | undefined>(
+		user.avatar && typeof user.avatar === 'object'
+			? (user.avatar as Media)
 			: undefined
 	)
 	const [banner, setBanner] = useState<Media | undefined>(
-		community.banner && typeof community.banner === 'object'
-			? (community.banner as Media)
+		user.banner && typeof user.banner === 'object'
+			? (user.banner as Media)
 			: undefined
 	)
 
-	const logoInputRef = useRef<HTMLInputElement>(null)
+	const avatarInputRef = useRef<HTMLInputElement>(null)
 	const bannerInputRef = useRef<HTMLInputElement>(null)
 
-	const handleUploadLogo = async () => {
-		const file = logoInputRef.current?.files?.[0]
+	const handleUploadAvatar = async () => {
+		const file = avatarInputRef.current?.files?.[0]
 		if (!file) {
 			toast.error('Выберите файл для загрузки логотипа', { icon: '⚠️' })
 			return
@@ -74,12 +73,12 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 
 		try {
 			const result = await createMedia(formData)
-			const newLogo = result.doc
-			setLogo(newLogo)
-			toast.success('Логотип успешно загружен', { icon: '✅' })
+			const newAvatar = result.doc
+			setAvatar(newAvatar)
+			toast.success('Аватар успешно загружен', { icon: '✅' })
 		} catch (error) {
 			console.error('Error uploading logo:', error)
-			toast.error('Ошибка при загрузке логотипа', { icon: '❌' })
+			toast.error('Ошибка при загрузке аватарки', { icon: '❌' })
 		}
 	}
 
@@ -104,7 +103,7 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 		}
 	}
 
-	const onSubmit = async (data: TFormSettingsCommunityValues) => {
+	const onSubmit = async (data: TFormSettingsUserValues) => {
 		try {
 			const filteredTableInfo = data.tableInfo
 				?.filter(
@@ -119,20 +118,19 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 					value: info.value
 				}))
 
-			await settingsCommunity({
-				communityId: community.id,
-				logo: logo?.id,
+			await settingsUser({
+				userId: user.id,
+				avatar: avatar?.id,
 				banner: banner?.id,
-				title: data.title,
+				name: data.name,
 				description: data.description,
-				email: data.email?.length ? data.email : '',
 				tableInfo: filteredTableInfo?.length ? filteredTableInfo : []
 			})
-			toast.success('Сообщество обновлено', { icon: '✅' })
+			toast.success('Профиль обновлен', { icon: '✅' })
 			router.refresh()
 		} catch (error) {
 			console.error('Error in onSubmit:', error)
-			toast.error('Ошибка при обновлении сообщества', { icon: '❌' })
+			toast.error('Ошибка при обновлении профиля', { icon: '❌' })
 		}
 	}
 
@@ -145,10 +143,9 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 				<Container className='bg-secondary rounded-md mt-1 p-4'>
 					<p className='text-justify'>
 						{/* {formatMessage({ id: 'profilePageEditGroup.tipForSocial' })} */}
-						Настройте то, что люди видят в профиле вашего сообщества. Другие
-						люди с большей вероятностью подпишутся на ваше сообщество и будут
-						взаимодействовать с ним, если у него заполнен профиль и добавлено
-						изображение.
+						Настройте то, что люди видят в вашем профиле. Другие люди с большей
+						вероятностью подпишутся на Вас и будут взаимодействовать с вами,
+						если у Вас заполнен профиль и добавлено изображение.
 					</p>
 					<div className='w-full border-b-2 border-b-blue-600 pb-4'>
 						<Title
@@ -169,48 +166,32 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 								<div className='w-1/2'>
 									<p className='mt-2'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.titleName' })} */}
-										Название
+										Отображаемое имя
 									</p>
 									<p className='text-sm text-gray-400 leading-3 mt-1'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.descriptionName' })} */}
-										Лучшее использовать короткое и емкое название
+										Ваше полное имя или псевдоним
 									</p>
 									<FormInput
-										name='title'
+										name='name'
 										type='text'
-										placeholder='Stormic'
+										placeholder='Stormhead'
 										className='mt-2'
 									/>
 									<p className='mt-4'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.titleAbout' })} */}
-										Описание
+										О себе
 									</p>
 									<p className='text-sm text-gray-400 leading-3 mt-1'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.descriptionAbout' })} */}
-										Расскажите о своем сообществе
+										Расскажите миру немного о себе
 									</p>
 									<FormTextarea
 										name='description'
 										// placeholder={formatMessage({ id: 'profilePageEditGroup.formInputAboutPlaceholder' })}
-										placeholder='код, GitHub и ты'
+										placeholder='Я бы многое мог рассказать, но не хочу...'
 										className='mt-2'
 										sideButton={false}
-									/>
-
-									<p className='mt-4'>
-										{/* {formatMessage({ id: 'profilePageEditGroup.titleAbout' })} */}
-										Контактный e-mail
-									</p>
-									<p className='text-sm text-gray-400 leading-3 mt-1'>
-										{/* {formatMessage({ id: 'profilePageEditGroup.descriptionAbout' })} */}
-										Почта для связи с владельцем сообщества
-									</p>
-
-									<FormInput
-										name='email'
-										type='text'
-										placeholder='stormic@stormhead.org'
-										className='mt-2'
 									/>
 								</div>
 								<div className='w-1/2'>
@@ -221,7 +202,7 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 									</p>
 									<p className='text-sm text-gray-400 leading-3 mt-1'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.descriptionExtraFields' })} */}
-										Контактная информация, ссылки - все, что угодно
+										Ваша домашняя страница, возраст - все, что угодно
 									</p>
 									<div className='mt-2'>
 										{tableFields.map((field, index) => (
@@ -255,7 +236,7 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 														{...form.register(`tableInfo.${index}.value`, {
 															required: 'Значение обязательно'
 														})}
-														placeholder='Например, "google.com"'
+														placeholder='Например, "https://stormic.app"'
 													/>
 													{form.formState.errors.tableInfo?.[index]?.value && (
 														<p className='text-red-500 text-sm'>
@@ -294,7 +275,7 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 								<div className='w-1/2'>
 									<p className='mt-2'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.extraFields' })} */}
-										Лого
+										Аватар
 									</p>
 									<p className='text-sm text-gray-400 leading-3 mt-1'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.descriptionExtraFields' })} */}
@@ -303,17 +284,17 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 									<div className='flex w-full justify-around mt-2 gap-4'>
 										<div className='grid w-full max-w-sm items-center gap-1.5'>
 											<Input
-												id='logo'
+												id='avatar'
 												type='file'
 												accept='image/*'
-												ref={logoInputRef}
+												ref={avatarInputRef}
 												className='rounded-md'
 											/>
 										</div>
 										<Button
 											variant='blue'
 											type='button'
-											onClick={handleUploadLogo}
+											onClick={handleUploadAvatar}
 											className='w-full'
 										>
 											Загрузить
@@ -323,7 +304,7 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 								<div className='w-1/2'>
 									<ProfileAvatar
 										className='w-24 h-24 border-none bg-secondary hover:bg-secondary '
-										avatarImage={logo?.url || ''}
+										avatarImage={avatar?.url || ''}
 										avatarSize={Number(92)}
 									/>
 								</div>
@@ -337,7 +318,7 @@ export const SettingsCommunityMainGroup: React.FC<Props> = ({ community }) => {
 									</p>
 									<p className='text-sm text-gray-400 leading-3 mt-1'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.descriptionExtraFields' })} */}
-										Шапка профиля сообщества
+										Шапка профиля пользователя
 									</p>
 									<div className='flex w-full justify-around mt-2 gap-4'>
 										<div className='grid w-full max-w-sm items-center'>
