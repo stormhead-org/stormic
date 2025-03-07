@@ -13,7 +13,7 @@ export default async function About() {
 
 	const resultGlobalHost = await payload.findGlobal({
 		slug: 'host-settings',
-		depth: 1,
+		depth: 2,
 	})
 
 	return (
@@ -21,13 +21,13 @@ export default async function About() {
 			{/* Центральная часть */}
 			<MainBannerForm
 				stormicName={
-					resultGlobalHost.hostTitle && String(resultGlobalHost.hostTitle)
+					resultGlobalHost.title && String(resultGlobalHost.title)
 				}
 				bannerUrl={
-					'hostBanner' in resultGlobalHost &&
-					typeof resultGlobalHost.hostBanner === 'object' &&
-					resultGlobalHost.hostBanner !== null
-						? resultGlobalHost.hostBanner.url
+					'banner' in resultGlobalHost &&
+					typeof resultGlobalHost.banner === 'object' &&
+					resultGlobalHost.banner !== null
+						? resultGlobalHost.banner.url
 						: ''
 				}
 				search={false}

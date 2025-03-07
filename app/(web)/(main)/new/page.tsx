@@ -28,13 +28,13 @@ export default async function Home() {
 		<>
 			<MainBannerForm
 				stormicName={
-					resultGlobalHost.hostTitle && String(resultGlobalHost.hostTitle)
+					resultGlobalHost.title && String(resultGlobalHost.title)
 				}
 				bannerUrl={
-					'hostBanner' in resultGlobalHost &&
-					typeof resultGlobalHost.hostBanner === 'object' &&
-					resultGlobalHost.hostBanner !== null
-						? resultGlobalHost.hostBanner.url
+					'banner' in resultGlobalHost &&
+					typeof resultGlobalHost.banner === 'object' &&
+					resultGlobalHost.banner !== null
+						? resultGlobalHost.banner.url
 						: ''
 				}
 			/>

@@ -37,13 +37,13 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 export const AboutPage: React.FC<Props> = ({ hostInfo, className }) => {
 	// const { formatMessage } = useIntl()
 
-	if (!hostInfo.hostOwner) {
+	if (!hostInfo.owner) {
 		return <div>Owner not found</div>
 	}
 
-	const truncatedName = truncateText(hostInfo.hostOwner?.name || '', 20)
+	const truncatedName = truncateText(hostInfo.owner?.name || '', 20)
 	const truncatedDescription = truncateText(
-		hostInfo.hostOwner?.userDescription || '',
+		hostInfo.owner?.description || '',
 		24
 	)
 
@@ -71,11 +71,11 @@ export const AboutPage: React.FC<Props> = ({ hostInfo, className }) => {
 						{/* {formatMessage({ id: 'aboutPage.managed' })} */}
 						Управляется
 					</p>
-					<Link href={'/u/' + hostInfo.hostOwner?.id}>
+					<Link href={'/u/' + hostInfo.owner?.id}>
 						<div className='flex gap-4 mt-4'>
 							<ProfileAvatar
 								className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
-								avatarImage={String(hostInfo.hostOwner?.userAvatar?.url || '')}
+								avatarImage={String(hostInfo.owner?.avatar?.url || '')}
 								avatarSize={Number(44)}
 							/>
 							<div className='flex h-full my-auto'>
@@ -97,7 +97,7 @@ export const AboutPage: React.FC<Props> = ({ hostInfo, className }) => {
 						Контакты
 					</p>
 					<div className='h-full'>
-						<p className='font-semibold mt-4'>{hostInfo.contactEmail}</p>
+						<p className='font-semibold mt-4'>{hostInfo.contacts}</p>
 					</div>
 				</div>
 			</div>
@@ -113,7 +113,7 @@ export const AboutPage: React.FC<Props> = ({ hostInfo, className }) => {
 						{/* {formatMessage({ id: 'aboutPage.about' })} */}О Проекте
 					</AccordionTrigger>
 					<AccordionContent className='text-base'>
-						{hostInfo.hostDescription}
+						{hostInfo.description}
 					</AccordionContent>
 				</AccordionItem>
 			</Accordion>
