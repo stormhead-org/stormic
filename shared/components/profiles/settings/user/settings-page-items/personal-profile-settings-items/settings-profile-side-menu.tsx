@@ -1,12 +1,14 @@
 'use client'
 
+import { User } from '@/payload-types'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
+import { useSession } from '@/shared/providers/SessionProvider'
 import { signOut } from '@/shared/utils/signOut'
 import {
+	ChevronLeft,
 	Filter,
 	LockKeyhole,
-	LogOut,
 	Settings,
 	UserCog,
 	Users
@@ -24,6 +26,8 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
+	const session = useSession()
+	const currentUser = session && (session.user as User)
 
 	const sideSettingsMenu = [
 		{
@@ -69,10 +73,10 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 		{
 			id: 6,
 			// text: formatMessage({ id: 'settingsProfileSideMenu.logout' }),
-			text: 'Выйти',
-			icon: <LogOut />,
-			path: '',
-			click: 'handleSignOut'
+			text: 'В профиль',
+			icon: <ChevronLeft />,
+			path: `/u/${currentUser?.id}`,
+			disabled: false
 		}
 	]
 
@@ -112,13 +116,14 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 								: ''
 						}`
 					)}
-					onClick={() => {
-						if (item.click === 'onClickSignOut') {
-							handleSignOut() // Вызов функции выхода
-						} else if (item.path) {
-							router.push(item.path) // Переход по пути
-						}
-					}}
+					// onClick={() => {
+					// 	if (item.click === 'onClickSignOut') {
+					// 		handleSignOut() // Вызов функции выхода
+					// 	} else if (item.path) {
+					// 		router.push(item.path) // Переход по пути
+					// 	}
+					// }}
+					onClick={() => router.push(item.path)}
 				>
 					{item.icon}
 					{item.text}
