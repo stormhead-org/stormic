@@ -952,32 +952,19 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HostSetting {
   id: number;
-  hostTitle?: string | null;
-  hostSlogan?: string | null;
-  hostLogo?: (number | null) | Media;
-  hostBanner?: (number | null) | Media;
-  hostAuthBanner?: (number | null) | Media;
-  owner?: (number | null) | User;
-  contactEmail?: string | null;
-  hostDescription?: string | null;
+  title?: string | null;
+  slogan?: string | null;
+  logo?: (number | null) | Media;
+  banner?: (number | null) | Media;
+  authBanner?: (number | null) | Media;
+  owner: number | User;
+  contacts?: string | null;
+  description?: string | null;
   rules?:
     | {
         nameRule?: string | null;
         descriptionRule?: string | null;
         id?: string | null;
-      }[]
-    | null;
-  hostOwner?:
-    | {
-        id?: string | null;
-        name?: string | null;
-        userDescription?: string | null;
-        userAvatar?:
-          | {
-              url?: string | null;
-              id?: string | null;
-            }[]
-          | null;
       }[]
     | null;
   updatedAt?: string | null;
@@ -1003,33 +990,20 @@ export interface SidebarNavigation {
  * via the `definition` "host-settings_select".
  */
 export interface HostSettingsSelect<T extends boolean = true> {
-  hostTitle?: T;
-  hostSlogan?: T;
-  hostLogo?: T;
-  hostBanner?: T;
-  hostAuthBanner?: T;
+  title?: T;
+  slogan?: T;
+  logo?: T;
+  banner?: T;
+  authBanner?: T;
   owner?: T;
-  contactEmail?: T;
-  hostDescription?: T;
+  contacts?: T;
+  description?: T;
   rules?:
     | T
     | {
         nameRule?: T;
         descriptionRule?: T;
         id?: T;
-      };
-  hostOwner?:
-    | T
-    | {
-        id?: T;
-        name?: T;
-        userDescription?: T;
-        userAvatar?:
-          | T
-          | {
-              url?: T;
-              id?: T;
-            };
       };
   updatedAt?: T;
   createdAt?: T;

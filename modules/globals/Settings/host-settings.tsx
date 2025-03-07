@@ -7,29 +7,29 @@ export const HostSettings: GlobalConfig = {
 	fields: [
 		{
 			label: 'Название инстанса',
-			name: 'hostTitle',
+			name: 'title',
 			type: 'text'
 		},
 		{
 			label: 'Слоган инстанса',
-			name: 'hostSlogan',
+			name: 'slogan',
 			type: 'text'
 		},
 		{
 			label: 'Логотип',
-			name: 'hostLogo',
+			name: 'logo',
 			type: 'upload',
 			relationTo: 'media'
 		},
 		{
 			label: 'Основной баннер',
-			name: 'hostBanner',
+			name: 'banner',
 			type: 'upload',
 			relationTo: 'media'
 		},
 		{
 			label: 'Баннер окна авторизации',
-			name: 'hostAuthBanner',
+			name: 'authBanner',
 			type: 'upload',
 			relationTo: 'media'
 		},
@@ -38,16 +38,17 @@ export const HostSettings: GlobalConfig = {
 			name: 'owner',
 			type: 'relationship',
 			hasMany: false,
-			relationTo: 'users'
+			relationTo: 'users',
+			required: true
 		},
 		{
 			label: 'E-mail для связи',
-			name: 'contactEmail',
+			name: 'contacts',
 			type: 'text'
 		},
 		{
 			label: 'Описание инстанса',
-			name: 'hostDescription',
+			name: 'description',
 			type: 'textarea'
 		},
 		{
@@ -68,43 +69,43 @@ export const HostSettings: GlobalConfig = {
 				}
 			]
 		},
-		{
-			name: 'hostOwner',
-			type: 'array',
-			access: {
-				update: () => false
-			},
-			admin: {
-				disabled: true,
-				readOnly: true
-			},
-			fields: [
-				{
-					name: 'id',
-					type: 'text'
-				},
-				{
-					name: 'name',
-					type: 'text'
-				},
-				{
-					name: 'userDescription',
-					type: 'text'
-				},
-				{
-					name: 'userAvatar',
-					type: 'array',
-					fields: [
-						{
-							name: 'url',
-							type: 'text'
-						}
-					]
-				}
-			]
-		}
+		// {
+		// 	name: 'hostOwner',
+		// 	type: 'array',
+		// 	access: {
+		// 		update: () => false
+		// 	},
+		// 	admin: {
+		// 		disabled: true,
+		// 		readOnly: true
+		// 	},
+		// 	fields: [
+		// 		{
+		// 			name: 'id',
+		// 			type: 'text'
+		// 		},
+		// 		{
+		// 			name: 'name',
+		// 			type: 'text'
+		// 		},
+		// 		{
+		// 			name: 'userDescription',
+		// 			type: 'text'
+		// 		},
+		// 		{
+		// 			name: 'userAvatar',
+		// 			type: 'array',
+		// 			fields: [
+		// 				{
+		// 					name: 'url',
+		// 					type: 'text'
+		// 				}
+		// 			]
+		// 		}
+		// 	]
+		// }
 	],
-	hooks: {
-		afterRead: [ownerUser]
-	}
+	// hooks: {
+	// 	afterRead: [ownerUser]
+	// }
 }

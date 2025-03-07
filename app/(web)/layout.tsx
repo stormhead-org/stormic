@@ -81,21 +81,21 @@ export default async function HomeLayout({
 							<Header
 								session={!!session}
 								logoImage={
-									'hostLogo' in resultGlobalHost &&
-									typeof resultGlobalHost.hostLogo === 'object' &&
-									resultGlobalHost.hostLogo !== null
-										? resultGlobalHost.hostLogo.url
+									'logo' in resultGlobalHost &&
+									typeof resultGlobalHost.logo === 'object' &&
+									resultGlobalHost.logo !== null
+										? resultGlobalHost.logo.url
 										: ''
 								}
-								stormicName={resultGlobalHost.hostTitle}
+								stormicName={resultGlobalHost.title}
 								authImage={
-									'hostAuthBanner' in resultGlobalHost &&
-									typeof resultGlobalHost.hostAuthBanner === 'object' &&
-									resultGlobalHost.hostAuthBanner !== null
-										? resultGlobalHost.hostAuthBanner.url
+									'authBanner' in resultGlobalHost &&
+									typeof resultGlobalHost.authBanner === 'object' &&
+									resultGlobalHost.authBanner !== null
+										? resultGlobalHost.authBanner.url
 										: ''
 								}
-								description={resultGlobalHost.hostSlogan}
+								description={resultGlobalHost.slogan}
 								avatarImage={
 									user &&
 									'avatar' in user &&

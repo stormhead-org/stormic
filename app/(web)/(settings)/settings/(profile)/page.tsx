@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 	title: 'Stormic: Профиль'
 }
 
-export default async function SettingPageRedirect() {
+export default async function SettingProfileRedirect() {
 	const session = (await getSession()) as { user: User } | null
 	const currentUser = session && session.user
 

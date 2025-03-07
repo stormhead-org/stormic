@@ -1,25 +1,11 @@
-import { User } from '@/payload-types'
-import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
-import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
-import { getSession } from '@/shared/lib/auth'
-import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
-import { getPayload } from 'payload'
-import { cache } from 'react'
 
 export const metadata: Metadata = {
 	title: 'Stormic: Профиль'
 }
 
-type Args = {
-	params: {
-		id?: number
-	}
-}
-
-export default async function SettingCommunityRedirect({ params: paramsPromise }: Args) {
-	const { id = null } = await paramsPromise
+export default async function SettingHostRedirect() {
 	// const session = (await getSession()) as { user: User } | null
 	// const currentUser = session && session.user
 	//
@@ -45,7 +31,7 @@ export default async function SettingCommunityRedirect({ params: paramsPromise }
 	// 	return <UserNotFound />
 	// }
 
-	return redirect(`/settings/community/${id}/main`)
+	return redirect(`/settings/host/main`)
 }
 
 
