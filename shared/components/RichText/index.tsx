@@ -17,19 +17,15 @@ import {
 } from '@/modules/collections/blocks/Code/Component'
 
 import { BannerBlock } from '@/modules/collections/blocks/Banner/Component'
-import { CallToActionBlock } from '@/modules/collections/blocks/CallToAction/Component'
 import type {
 	BannerBlock as BannerBlockProps,
-	CallToActionBlock as CTABlockProps,
 	MediaBlock as MediaBlockProps
 } from '@/payload-types'
 import { cn } from '@/shared/lib/utils'
 
 type NodeTypes =
 	| DefaultNodeTypes
-	| SerializedBlockNode<
-			CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps
-	  >
+	| SerializedBlockNode<MediaBlockProps | BannerBlockProps | CodeBlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 	const { value, relationTo } = linkNode.fields.doc!
@@ -59,8 +55,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({
 				disableInnerContainer={true}
 			/>
 		),
-		code: ({ node }) => <CodeBlock className='col-start-2' {...node.fields} />,
-		cta: ({ node }) => <CallToActionBlock {...node.fields} />
+		code: ({ node }) => <CodeBlock className='col-start-2' {...node.fields} />
 	}
 })
 

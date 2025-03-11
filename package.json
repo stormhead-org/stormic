@@ -19,6 +19,7 @@
 		"start:workers": "exec tsx workers.ts"
 	},
 	"dependencies": {
+		"@drcpythonmfe/lexical-playground": "^0.4.20",
 		"@emoji-mart/data": "^1.2.1",
 		"@emoji-mart/react": "^1.1.1",
 		"@hookform/resolvers": "^4.0.0",
