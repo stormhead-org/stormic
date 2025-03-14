@@ -7,16 +7,16 @@ const nextConfig: NextConfig = {
 			{
 				protocol: 'http',
 				hostname: 'localhost',
-				port: '3000',
+				port: '3000'
 				// pathname: '/account123/**',
 				// search: '',
-			},
-		],
+			}
+		]
 	},
 	experimental: {
-		reactCompiler: false,
+		reactCompiler: false
 	},
-	reactStrictMode: true,
+	reactStrictMode: true
 }
 
 export default withPayload(nextConfig)
