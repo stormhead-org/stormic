@@ -1,4 +1,4 @@
-import { Community } from '@/payload-types'
+import { Community, User } from '@/payload-types'
 import {
 	Container,
 	FeedUserMenu,
@@ -8,6 +8,8 @@ import {
 } from '@/shared/components/'
 import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
 import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
+import { NewPostButton } from '@/shared/components/new-post-button'
+import { getSession } from '@/shared/lib/auth'
 import config from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -24,6 +26,14 @@ export default async function MainLayout({
 	modal: React.ReactNode
 }>) {
 	const payload = await getPayload({ config })
+
+	const session = (await getSession()) as { user: User } | null
+	const user = session && session.user
+
+	const resultGlobalHost = await payload.findGlobal({
+		slug: 'host-settings',
+		depth: 1
+	})
 
 	const globalSideBarNavigation = await payload.findGlobal({
 		slug: 'sidebar-navigation',
@@ -57,16 +67,37 @@ export default async function MainLayout({
 					<div className='w-1/4 h-[91vh] overflow-auto no-scrollbar rounded-md'>
 						<FeedUserMenu />
 						<SocialMenu className='my-2' />
-						{/* <NewPostButton
+
+						<NewPostButton
 							className='my-4'
-							authorAvatar={String(user && user.profile_picture)}
-							authorName={String(user && user.fullName)}
+							authorAvatar={String(
+								user &&
+									'avatar' in user &&
+									typeof user.avatar === 'object' &&
+									user.avatar !== null
+									? user.avatar.url
+									: ''
+							)}
+							authorName={String(user && user.name)}
 							authorUrl={String(user && '/u/' + user.id)}
 							hasSession={!!user}
-							logoImage={logoImage?.url || '/logo.png'}
-							stormicName={stormicName?.content || 'Stormic'}
-							authImage={authImage ? authImage?.url : stormicBanner?.url}
-						/> */}
+							logoImage={String(
+								'logo' in resultGlobalHost &&
+									typeof resultGlobalHost.logo === 'object' &&
+									resultGlobalHost.logo !== null
+									? resultGlobalHost.logo.url
+									: ''
+							)}
+							stormicName={resultGlobalHost.title || ''}
+							authImage={String(
+								'authBanner' in resultGlobalHost &&
+									typeof resultGlobalHost.authBanner === 'object' &&
+									resultGlobalHost.authBanner !== null
+									? resultGlobalHost.authBanner.url
+									: ''
+							)}
+							communities={communities}
+						/>
 						<NavigationMenuForm
 							className='mt-4'
 							data={globalSideBarNavigation.items || []}
