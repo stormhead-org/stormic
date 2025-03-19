@@ -3,6 +3,7 @@
 import { Community } from '@/payload-types'
 import PlaygroundEditorTheme from '@/shared/components/lexical/themes/PlaygroundEditorTheme'
 import { PostWriteHeader } from '@/shared/components/post-write/items/post-write-header'
+import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
@@ -24,9 +25,11 @@ interface Props {
 	communityId?: number
 }
 
-const EditorWithContext: React.FC<{ onSave: (content: any) => void }> = ({
-	onSave
+const EditorWithContext: React.FC<{ onSave: (content: any) => void, isFullScreen: boolean }> = ({
+	onSave,
+	isFullScreen
 }) => {
+	
 	const [editor] = useLexicalComposerContext()
 
 	const handleSave = () => {
@@ -34,16 +37,21 @@ const EditorWithContext: React.FC<{ onSave: (content: any) => void }> = ({
 		const jsonState = editorState.toJSON()
 		onSave(jsonState)
 	}
-
+	
 	return (
 		<>
-			<Editor />
-			<button
-				onClick={handleSave}
-				className='my-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
-			>
-				Опубликовать
-			</button>
+				<div className={`max-w-[74rem] my-2 ${
+					isFullScreen ? 'min-w-[71rem] min-h-[68rem]' : 'min-w-[71rem] min-h-[44rem]'
+				}`} >
+					<Editor />
+				</div>
+					<Button
+						onClick={handleSave}
+						variant='blue'
+						className='my-4 px-4 py-2'
+					>
+						Опубликовать
+					</Button>
 		</>
 	)
 }
@@ -58,12 +66,14 @@ export const WriteModal: React.FC<Props> = ({
 	authorId = 1,
 	communityId = 1
 }) => {
+	
+	
 	const [isFullScreen, setIsFullScreen] = useState(false)
-
+	
 	const handleToggleSize = () => {
 		setIsFullScreen(!isFullScreen)
 	}
-
+	
 	const handleSave = async (content: any) => {
 		if (!content?.root?.children?.length) {
 			console.error('Контент пустой')
@@ -109,23 +119,15 @@ export const WriteModal: React.FC<Props> = ({
 	return (
 		<Dialog open={open} onOpenChange={onClose}>
 			<DialogContent
-				className={`bg-secondary transition-all duration-300 p-2 ${
-					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[60rem] min-h-[620px]'
+				className={`bg-secondary transition-all duration-300-p-2 ${
+					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[75rem] min-h-[44rem]'
 				}`}
 			>
-				{isFullScreen ? (
-					<Minimize2
-						onClick={handleToggleSize}
-						className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
-						size={15}
-					/>
-				) : (
-					<Maximize2
-						onClick={handleToggleSize}
-						className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
-						size={15}
-					/>
-				)}
+				{isFullScreen ?
+					<Minimize2 onClick={handleToggleSize} className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
+					           size={15} /> :
+					<Maximize2 onClick={handleToggleSize} className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
+					           size={15} />}
 				<div className='flex mx-auto'>
 					<div className='p-2'>
 						<PostWriteHeader
@@ -134,23 +136,15 @@ export const WriteModal: React.FC<Props> = ({
 							authorAvatar={authorAvatar}
 							communities={communities}
 						/>
-						<div
-							className={`max-w-[58rem] my-2 ${
-								isFullScreen
-									? 'min-w-[600px] min-h-[88%]'
-									: 'min-w-[600px] min-h-[600px]'
-							}`}
-						>
-							<LexicalComposer initialConfig={initialConfig}>
-								<SharedHistoryContext>
-									<ToolbarContext>
-										<div className='mx-auto my-5 rounded-md max-w-[1100px] text-black relative leading-7 font-normal'>
-											<EditorWithContext onSave={handleSave} />
-										</div>
-									</ToolbarContext>
-								</SharedHistoryContext>
-							</LexicalComposer>
-						</div>
+						<LexicalComposer initialConfig={initialConfig}>
+							<SharedHistoryContext>
+								<ToolbarContext>
+									<div className='min-h-[88%] max-w-[74rem]'>
+										<EditorWithContext onSave={handleSave} isFullScreen={isFullScreen} />
+									</div>
+								</ToolbarContext>
+							</SharedHistoryContext>
+						</LexicalComposer>
 					</div>
 				</div>
 			</DialogContent>

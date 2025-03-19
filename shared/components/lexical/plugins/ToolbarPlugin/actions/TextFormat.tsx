@@ -1,8 +1,13 @@
-import { useToolbarState } from '@/shared/components/lexical/context/ToolbarContext'
-import { Button } from '@/shared/components/ui/button'
+import { clearFormatting } from '@/shared/components/lexical/plugins/ToolbarPlugin/utils'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
 import { cn } from '@/shared/lib/utils'
-import { LexicalEditor, REDO_COMMAND, UNDO_COMMAND } from 'lexical'
-import { RotateCcw, RotateCw } from 'lucide-react'
+import { FORMAT_TEXT_COMMAND, LexicalEditor, } from 'lexical'
+import {
+	ArrowBigUpDash,
+	CaseLower, CaseSensitive,
+	CaseUpper, CircleX,
+	Strikethrough
+} from 'lucide-react'
 import React, { useState } from 'react'
 
 interface Props {
@@ -11,21 +16,91 @@ interface Props {
 	className?: string
 }
 
-export const Redo: React.FC<Props> = ({ editor, activeEditor, className }) => {
+export const TextFormat: React.FC<Props> = ({ editor, activeEditor, className }) => {
 	
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable())
-	const { toolbarState, updateToolbarState } = useToolbarState()
 	
 	return (
 		<div className={cn(className, '')}>
-			<Button
-				type='button'
-				variant='default'
-				disabled={!toolbarState.canRedo || !isEditable}
-				onClick={() => activeEditor.dispatchCommand(REDO_COMMAND, undefined)}
+			<Select
+				disabled={!isEditable}
+				onValueChange={value => {
+					const actions: Record<string, () => void> = {
+						lowercase: () =>
+							activeEditor.dispatchCommand(
+								FORMAT_TEXT_COMMAND,
+								'lowercase'
+							),
+						uppercase: () =>
+							activeEditor.dispatchCommand(
+								FORMAT_TEXT_COMMAND,
+								'uppercase'
+							),
+						capitalize: () =>
+							activeEditor.dispatchCommand(
+								FORMAT_TEXT_COMMAND,
+								'capitalize'
+							),
+						strikethrough: () =>
+							activeEditor.dispatchCommand(
+								FORMAT_TEXT_COMMAND,
+								'strikethrough'
+							),
+						subscript: () =>
+							activeEditor.dispatchCommand(
+								FORMAT_TEXT_COMMAND,
+								'subscript'
+							),
+						superscript: () =>
+							activeEditor.dispatchCommand(
+								FORMAT_TEXT_COMMAND,
+								'superscript'
+							),
+						highlight: () =>
+							activeEditor.dispatchCommand(
+								FORMAT_TEXT_COMMAND,
+								'highlight'
+							),
+						clearing: () => clearFormatting(activeEditor)
+					}
+					actions[value]?.()
+				}}
 			>
-				<RotateCw size={16} />
-			</Button>
+				<SelectTrigger className='w-[180px]'>
+					<SelectValue placeholder='Форматирование'/>
+				</SelectTrigger>
+				<SelectContent>
+					{[
+						{ value: 'lowercase', icon: CaseLower, label: 'Строчные' },
+						{ value: 'uppercase', icon: CaseUpper, label: 'Заглавные' },
+						{
+							value: 'capitalize',
+							icon: ArrowBigUpDash,
+							label: 'С заглавной'
+						},
+						{
+							value: 'strikethrough',
+							icon: Strikethrough,
+							label: 'Зачеркнутый'
+						},
+						// { value: 'subscript', icon: Subscript, label: 'Subscript' },
+						// {
+						// 	value: 'superscript',
+						// 	icon: Superscript,
+						// 	label: 'Superscript'
+						// },
+						// { value: 'highlight', icon: Highlighter, label: 'Highlight' },
+						{ value: 'clearing', icon: CircleX, label: 'Очистить' }
+					].map(({ value, icon: Icon, label }) => (
+						<SelectItem key={value} value={value}>
+							<div className='flex'>
+								<Icon className='mr-2' size={16} />
+								{label}
+							</div>
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
 		</div>
 	)
 }
