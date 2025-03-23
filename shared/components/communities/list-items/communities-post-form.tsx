@@ -1,18 +1,15 @@
 'use client'
 
-import { CommunitiesItem } from '@/shared/components/communities/list-items/communities-item'
+import { Community } from '@/payload-types'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-// import { useIntl } from 'react-intl'
-import { Community } from '@/payload-types'
 import { Input } from '../../ui/input'
 import { Skeleton } from '../../ui/skeleton'
 
 interface Props {
-	title: string
 	items: Community[]
 	defaultItems?: Community[]
 	limit?: number
@@ -21,10 +18,11 @@ interface Props {
 	name?: string
 	hasPost: boolean
 	className?: string
+	selectedCommunityId: number | null
+	setSelectedCommunityId: (id: number) => void
 }
 
-export const CommunitiesForm: React.FC<Props> = ({
-	title,
+export const CommunitiesPostForm: React.FC<Props> = ({
 	items,
 	defaultItems,
 	limit = 5,
@@ -32,11 +30,13 @@ export const CommunitiesForm: React.FC<Props> = ({
 	name,
 	className,
 	hasPost,
-	loading
+	loading,
+	selectedCommunityId,
+	setSelectedCommunityId
 }) => {
-	// const { formatMessage } = useIntl()
 	const [showAll, setShowAll] = React.useState(false)
 	const [searchValue, setSearchValue] = React.useState('')
+
 	const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value)
 	}
@@ -44,14 +44,11 @@ export const CommunitiesForm: React.FC<Props> = ({
 	if (loading) {
 		return (
 			<div className={className}>
-				<Title text={title} size='xs' className='mb-4' />
-
-				{...Array(limit)
+				{Array(limit)
 					.fill(0)
 					.map((_, index) => (
 						<Skeleton key={index} className='h-6 mb-4 rounded-[8px]' />
 					))}
-
 				<Skeleton className='w-28 h-6 mb-4 rounded-[8px]' />
 			</div>
 		)
@@ -59,23 +56,14 @@ export const CommunitiesForm: React.FC<Props> = ({
 
 	const list = showAll
 		? items.filter(item =>
-				item.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
+				item.title.toLowerCase().includes(searchValue.toLowerCase())
 			)
 		: (defaultItems || items).slice(0, limit)
 
 	return (
 		<div className={cn(hasPost && 'max-w-[200px]', className)}>
-			{!hasPost && (
-				<Link href={`/communities`}>
-					<Title
-						text={title}
-						size='xs'
-						className='font-bold text-a-color hover:text-a-color-hover mb-6'
-					/>
-				</Link>
-			)}
 			{showAll && (
-				<div className={cn(hasPost ? 'mb-2]' : 'mb-5', className)}>
+				<div className={cn(hasPost ? 'mb-2' : 'mb-5', className)}>
 					<Input
 						onChange={onChangeSearchInput}
 						placeholder={searchInputPlaceholder}
@@ -84,15 +72,23 @@ export const CommunitiesForm: React.FC<Props> = ({
 				</div>
 			)}
 
-			<div className='flex flex-col mt-4 max-h-[415px] pr-2 overflow-auto scrollbar'>
-				{list.map((item, index) => (
-					<CommunitiesItem
-						key={index}
-						text={item.title}
-						image={item.logo?.url || '/logo.png'}
-						url={`/c/${item.id}`}
-						name={item.title}
-					/>
+			<div className='flex flex-col max-h-[415px] p-1 overflow-auto scrollbar'>
+				{list.map(item => (
+					<div
+						key={item.id}
+						onClick={() => setSelectedCommunityId(item.id)}
+						className={cn(
+							'cursor-pointer p-2 flex items-center hover:bg-gray-700 rounded',
+							selectedCommunityId === item.id && 'bg-gray-700'
+						)}
+					>
+						<img
+							src={item.logo?.url || '/logo.png'}
+							alt={item.title}
+							className='w-8 h-8 rounded-full mr-2'
+						/>
+						<span>{item.title}</span>
+					</div>
 				))}
 			</div>
 
@@ -105,18 +101,12 @@ export const CommunitiesForm: React.FC<Props> = ({
 						{showAll ? (
 							<div className='flex flex-1 items-center hover:text-a-color-hover'>
 								<ChevronUp className='mx-3' />
-								<p className='font-bold'>
-									{/* {formatMessage({ id: 'categoryGroup.communityListHide' })} */}
-									Скрыть
-								</p>
+								<p className='font-bold'>Скрыть</p>
 							</div>
 						) : (
 							<div className='flex flex-1 items-center hover:text-a-color-hover'>
 								<ChevronDown className='mx-3' />
-								<p className='font-bold'>
-									{/* {formatMessage({ id: 'categoryGroup.communityListShow' })} */}
-									Показать
-								</p>
+								<p className='font-bold'>Показать</p>
 							</div>
 						)}
 					</button>

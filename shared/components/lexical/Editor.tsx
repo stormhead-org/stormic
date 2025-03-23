@@ -64,7 +64,7 @@ export default function Editor() {
 
 	const isEditable = useLexicalEditable()
 	const placeholder = isRichText
-		? 'Enter some rich text...'
+		? 'Однажды, в холодную зимнюю пору...'
 		: 'Enter some plain text...'
 	const [floatingAnchorElem, setFloatingAnchorElem] =
 		useState<HTMLDivElement | null>(null)

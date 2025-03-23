@@ -1,6 +1,6 @@
 'use client'
 
-import { Community } from '@/payload-types'
+import { Community, User } from '@/payload-types'
 import { AuthModal } from '@/shared/components/modals'
 import { WriteModal } from '@/shared/components/modals/write-modal'
 import React from 'react'
@@ -9,6 +9,7 @@ import { cn } from '../lib/utils'
 import { Button } from './ui/button'
 
 interface Props {
+	authorId: number
 	authorAvatar: string
 	authorName: string
 	authorUrl: string
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export const NewPostButton: React.FC<Props> = ({
+	authorId,
 	authorAvatar,
 	authorName,
 	authorUrl,
@@ -40,6 +42,7 @@ export const NewPostButton: React.FC<Props> = ({
 			<WriteModal
 				open={openWriteModal}
 				onClose={() => setOpenWriteModal(false)}
+				authorId={authorId}
 				authorAvatar={authorAvatar}
 				authorName={authorName}
 				authorUrl={authorUrl}

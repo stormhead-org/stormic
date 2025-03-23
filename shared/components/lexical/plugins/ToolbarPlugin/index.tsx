@@ -58,7 +58,7 @@ const CODE_LANGUAGE_OPTIONS = Object.entries(
 ).map(([lang, name]) => [lang, name] as [string, string])
 
 function Divider(): JSX.Element {
-	return <div className='w-[2px] bg-primary mx-1' />
+	return <div className='w-[2px] bg-gray-600 mx-1' />
 }
 
 export default function ToolbarPlugin({
@@ -267,12 +267,10 @@ export default function ToolbarPlugin({
 		[activeEditor, selectedElementKey]
 	)
 
-	
-
 	const canViewerSeeInsertControls = !toolbarState.isImageCaption
 
 	return (
-		<div className='flex mb-px bg-primary/10 p-1 rounded-md overflow-auto overflow-y-hidden justify-center'>
+		<div className='flex bg-primary/10 p-1 rounded-md overflow-auto overflow-y-hidden justify-center'>
 			<Undo editor={editor} activeEditor={activeEditor} />
 			<Redo editor={editor} activeEditor={activeEditor} />
 			{toolbarState.blockType in blockTypeToBlockName &&
@@ -295,7 +293,11 @@ export default function ToolbarPlugin({
 				setIsLinkEditMode={setIsLinkEditMode}
 			/>
 			<Divider />
-			<TextFormat className='ml-1' editor={editor} activeEditor={activeEditor} />
+			<TextFormat
+				className='ml-1'
+				editor={editor}
+				activeEditor={activeEditor}
+			/>
 			{canViewerSeeInsertControls && (
 				<>
 					<Divider />
@@ -341,7 +343,12 @@ export default function ToolbarPlugin({
 			{/* 	</> */}
 			{/* )} */}
 			<Divider />
-			<TextAlign editor={activeEditor} value={toolbarState.elementFormat} isRTL={toolbarState.isRTL} disabled={!isEditable} />
+			<TextAlign
+				editor={activeEditor}
+				value={toolbarState.elementFormat}
+				isRTL={toolbarState.isRTL}
+				disabled={!isEditable}
+			/>
 		</div>
 	)
 }

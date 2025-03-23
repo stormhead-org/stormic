@@ -13,23 +13,26 @@ import { SharedHistoryContext } from '../../lexical/context/SharedHistoryContext
 import { ToolbarContext } from '../../lexical/context/ToolbarContext'
 import Editor from '../../lexical/Editor'
 import PlaygroundNodes from '../../lexical/nodes/PlaygroundNodes'
+import { FormInput } from '../../form'
+import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { formTitleSchema, TFormTitleValues } from './schemas'
+import { useCurrentTime } from '@/shared/hooks/useCurrentTime'
 
 interface Props {
+	authorId: number
 	authorAvatar: string
 	authorName: string
 	communities: Community[]
 	authorUrl: string
 	open: boolean
 	onClose: () => void
-	authorId?: number
-	communityId?: number
 }
 
-const EditorWithContext: React.FC<{ onSave: (content: any) => void, isFullScreen: boolean }> = ({
-	onSave,
-	isFullScreen
-}) => {
-	
+const EditorWithContext: React.FC<{
+	onSave: (content: any) => void
+	isFullScreen: boolean
+}> = ({ onSave, isFullScreen }) => {
 	const [editor] = useLexicalComposerContext()
 
 	const handleSave = () => {
@@ -37,56 +40,69 @@ const EditorWithContext: React.FC<{ onSave: (content: any) => void, isFullScreen
 		const jsonState = editorState.toJSON()
 		onSave(jsonState)
 	}
-	
+
 	return (
 		<>
-				<div className={`max-w-[74rem] my-2 ${
-					isFullScreen ? 'min-w-[71rem] min-h-[68rem]' : 'min-w-[71rem] min-h-[44rem]'
-				}`} >
-					<Editor />
-				</div>
-					<Button
-						onClick={handleSave}
-						variant='blue'
-						className='my-4 px-4 py-2'
-					>
-						Опубликовать
-					</Button>
+			<div
+				className={`max-w-[74rem] my-2 ${
+					isFullScreen
+						? 'min-w-[71rem] min-h-[68rem]'
+						: 'min-w-[71rem] min-h-[44rem]'
+				}`}
+			>
+				<Editor />
+			</div>
+			<Button onClick={handleSave} variant='blue' className='my-4 px-4 py-2'>
+				Опубликовать
+			</Button>
 		</>
 	)
 }
 
 export const WriteModal: React.FC<Props> = ({
+	authorId,
 	authorAvatar,
 	authorName,
 	communities,
 	authorUrl,
 	open,
-	onClose,
-	authorId = 1,
-	communityId = 1
+	onClose
 }) => {
-	
-	
+	const form = useForm<TFormTitleValues>({
+		resolver: zodResolver(formTitleSchema),
+		defaultValues: {
+			title: ''
+		}
+	})
+
 	const [isFullScreen, setIsFullScreen] = useState(false)
-	
+
+	const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(
+		null
+	)
+
+	const currentTime = useCurrentTime()
+
 	const handleToggleSize = () => {
 		setIsFullScreen(!isFullScreen)
 	}
-	
+
 	const handleSave = async (content: any) => {
 		if (!content?.root?.children?.length) {
 			console.error('Контент пустой')
 			return
 		}
 
+		const { title } = form.getValues()
+
 		const postData = {
-			content,
-			title: 'Новый пост',
+			title: title,
 			author: authorId,
-			community: communityId
+			community: selectedCommunityId,
+			content,
+			publishedAt: currentTime
 		}
-		console.log(content)
+
 		try {
 			const response = await fetch('/api/posts', {
 				method: 'POST',
@@ -123,11 +139,19 @@ export const WriteModal: React.FC<Props> = ({
 					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[75rem] min-h-[44rem]'
 				}`}
 			>
-				{isFullScreen ?
-					<Minimize2 onClick={handleToggleSize} className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
-					           size={15} /> :
-					<Maximize2 onClick={handleToggleSize} className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
-					           size={15} />}
+				{isFullScreen ? (
+					<Minimize2
+						onClick={handleToggleSize}
+						className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
+						size={15}
+					/>
+				) : (
+					<Maximize2
+						onClick={handleToggleSize}
+						className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
+						size={15}
+					/>
+				)}
 				<div className='flex mx-auto'>
 					<div className='p-2'>
 						<PostWriteHeader
@@ -135,12 +159,27 @@ export const WriteModal: React.FC<Props> = ({
 							authorUrl={authorUrl}
 							authorAvatar={authorAvatar}
 							communities={communities}
+							selectedCommunityId={selectedCommunityId}
+							setSelectedCommunityId={setSelectedCommunityId}
 						/>
+						<FormProvider {...form}>
+							<form>
+								<FormInput
+									name='title'
+									placeholder='Заголовок'
+									className='bg-transparent'
+									required
+								/>
+							</form>
+						</FormProvider>
 						<LexicalComposer initialConfig={initialConfig}>
 							<SharedHistoryContext>
 								<ToolbarContext>
 									<div className='min-h-[88%] max-w-[74rem]'>
-										<EditorWithContext onSave={handleSave} isFullScreen={isFullScreen} />
+										<EditorWithContext
+											onSave={handleSave}
+											isFullScreen={isFullScreen}
+										/>
 									</div>
 								</ToolbarContext>
 							</SharedHistoryContext>

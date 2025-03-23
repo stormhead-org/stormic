@@ -10,12 +10,25 @@ import { InsertInlineImageDialog } from '@/shared/components/lexical/plugins/Inl
 import InsertLayoutDialog from '@/shared/components/lexical/plugins/LayoutPlugin/InsertLayoutDialog'
 import { InsertPollDialog } from '@/shared/components/lexical/plugins/PollPlugin'
 import { Button } from '@/shared/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue
+} from '@/shared/components/ui/select'
 import { cn } from '@/shared/lib/utils'
 import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin'
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode'
 import { LexicalEditor, UNDO_COMMAND } from 'lexical'
-import { Columns2, Image, ImagePlay, RotateCcw, Rows2, Vote } from 'lucide-react'
+import {
+	Columns2,
+	Image,
+	ImagePlay,
+	RotateCcw,
+	Rows2,
+	Vote
+} from 'lucide-react'
 import React, { useState } from 'react'
 
 interface Props {
@@ -24,14 +37,17 @@ interface Props {
 	className?: string
 }
 
-export const Insert: React.FC<Props> = ({ editor, activeEditor, className }) => {
-	
+export const Insert: React.FC<Props> = ({
+	editor,
+	activeEditor,
+	className
+}) => {
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable())
 	const [modal, showModal] = useModal()
-	
+
 	const insertGifOnClick = (payload: InsertImagePayload) =>
 		activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, payload)
-	
+
 	return (
 		<div className={cn(className, '')}>
 			<Select
@@ -90,10 +106,10 @@ export const Insert: React.FC<Props> = ({ editor, activeEditor, className }) => 
 					}
 				}}
 			>
-				<SelectTrigger>
+				<SelectTrigger className='bg-gray-600 hover:bg-gray-500 border-0'>
 					<SelectValue placeholder='Вставка' />
 				</SelectTrigger>
-				<SelectContent>
+				<SelectContent className='mt-1'>
 					{[
 						{
 							value: 'horizontal-rule',
@@ -122,7 +138,11 @@ export const Insert: React.FC<Props> = ({ editor, activeEditor, className }) => 
 						</SelectItem>
 					))}
 					{EmbedConfigs.map(embedConfig => (
-						<SelectItem key={embedConfig.type} value={embedConfig.type}>
+						<SelectItem
+							key={embedConfig.type}
+							value={embedConfig.type}
+							className='cursor-pointer hover:bg-primary/10'
+						>
 							<div className='flex items-center'>
 								{embedConfig.icon}
 								<span className='ml-2'>{embedConfig.contentName}</span>

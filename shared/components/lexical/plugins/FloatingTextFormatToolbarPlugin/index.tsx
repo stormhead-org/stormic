@@ -203,7 +203,10 @@ function TextFormatFloatingToolbar({
 	}, [editor, $updateTextFormatFloatingToolbar])
 
 	return (
-		<div ref={popupCharStylesEditorRef} className='floating-text-format-popup'>
+		<div
+			ref={popupCharStylesEditorRef}
+			className='flex items-center absolute top-0 left-0 gap-2 p-1 bg-primary/30 rounded-md'
+		>
 			{editor.isEditable() && (
 				<>
 					<ToggleGroup type='multiple'>

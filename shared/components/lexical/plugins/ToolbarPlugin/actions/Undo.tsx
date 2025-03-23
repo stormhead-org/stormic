@@ -12,10 +12,9 @@ interface Props {
 }
 
 export const Undo: React.FC<Props> = ({ editor, activeEditor, className }) => {
-	
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable())
 	const { toolbarState, updateToolbarState } = useToolbarState()
-	
+
 	return (
 		<div className={cn(className, '')}>
 			<Button
@@ -23,6 +22,7 @@ export const Undo: React.FC<Props> = ({ editor, activeEditor, className }) => {
 				variant='default'
 				disabled={!toolbarState.canUndo || !isEditable}
 				onClick={() => activeEditor.dispatchCommand(UNDO_COMMAND, undefined)}
+				className='text-primary bg-gray-600 hover:bg-gray-500 disabled:bg-gray-800'
 			>
 				<RotateCcw size={16} />
 			</Button>

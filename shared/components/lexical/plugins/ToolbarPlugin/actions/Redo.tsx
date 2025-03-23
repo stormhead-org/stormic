@@ -12,10 +12,9 @@ interface Props {
 }
 
 export const Redo: React.FC<Props> = ({ editor, activeEditor, className }) => {
-	
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable())
 	const { toolbarState, updateToolbarState } = useToolbarState()
-	
+
 	return (
 		<div className={cn(className, '')}>
 			<Button
@@ -23,6 +22,7 @@ export const Redo: React.FC<Props> = ({ editor, activeEditor, className }) => {
 				variant='default'
 				disabled={!toolbarState.canRedo || !isEditable}
 				onClick={() => activeEditor.dispatchCommand(REDO_COMMAND, undefined)}
+				className='text-primary ml-1 bg-gray-600 hover:bg-gray-500 disabled:bg-gray-800'
 			>
 				<RotateCw size={16} />
 			</Button>

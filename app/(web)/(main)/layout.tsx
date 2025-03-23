@@ -70,6 +70,7 @@ export default async function MainLayout({
 
 						<NewPostButton
 							className='my-4'
+							authorId={(user && user.id) || 0}
 							authorAvatar={String(
 								user &&
 									'avatar' in user &&

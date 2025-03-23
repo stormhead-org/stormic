@@ -1,9 +1,15 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue
+} from '@/shared/components/ui/select'
 import { cn } from '@/shared/lib/utils'
 import {
 	ElementFormatType,
 	FORMAT_ELEMENT_COMMAND,
-	LexicalEditor,
+	LexicalEditor
 } from 'lexical'
 import {
 	AlignCenter,
@@ -11,7 +17,9 @@ import {
 	AlignJustify,
 	AlignLeft,
 	AlignRight,
-	AlignStartVertical, IndentDecrease, IndentIncrease,
+	AlignStartVertical,
+	IndentDecrease,
+	IndentIncrease,
 	RotateCcw
 } from 'lucide-react'
 import React from 'react'
@@ -44,16 +52,21 @@ interface Props {
 	className?: string
 }
 
-export const TextAlign: React.FC<Props> = ({ editor, value, isRTL, disabled = false, className }) => {
-	
+export const TextAlign: React.FC<Props> = ({
+	editor,
+	value,
+	isRTL,
+	disabled = false,
+	className
+}) => {
 	const formatOption = ELEMENT_FORMAT_OPTIONS[value || 'left']
-	
+
 	const handleFormat = (val: string) => {
 		const actions: Record<string, () => void> = {
 			left: () => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left'),
 			center: () => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center'),
 			right: () => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right'),
-			justify: () => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify'),
+			justify: () => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify')
 			// start: () => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'start'),
 			// end: () => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'end'),
 			// outdent: () => editor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined),
@@ -61,27 +74,31 @@ export const TextAlign: React.FC<Props> = ({ editor, value, isRTL, disabled = fa
 		}
 		actions[val]?.()
 	}
-	
+
 	return (
 		<div className={cn(className, '')}>
 			<Select disabled={disabled} onValueChange={handleFormat}>
 				<SelectTrigger
-					className={`toolbar-item spaced alignment ${isRTL ? formatOption.iconRTL : formatOption.icon}`}
+					className={`bg-gray-600 hover:bg-gray-500 border-0 ${isRTL ? formatOption.iconRTL : formatOption.icon}`}
 				>
 					<SelectValue placeholder={formatOption.name} />
 				</SelectTrigger>
-				<SelectContent>
+				<SelectContent className='mt-1'>
 					{[
 						{ value: 'left', icon: AlignLeft, label: 'Слева' },
 						{ value: 'right', icon: AlignRight, label: 'Справа' },
 						{ value: 'center', icon: AlignCenter, label: 'По центру' },
-						{ value: 'justify', icon: AlignJustify, label: 'По ширине' },
+						{ value: 'justify', icon: AlignJustify, label: 'По ширине' }
 						// { value: 'start', icon: AlignStartVertical, label: 'Start Align' },
 						// { value: 'end', icon: AlignEndVertical, label: 'End Align' },
 						// { value: 'outdent', icon: IndentDecrease, label: 'Outdent' },
 						// { value: 'indent', icon: IndentIncrease, label: 'Indent' }
 					].map(({ value, icon: Icon, label }) => (
-						<SelectItem key={value} value={value}>
+						<SelectItem
+							key={value}
+							value={value}
+							className='cursor-pointer hover:bg-primary/10'
+						>
 							<div className='flex items-center'>
 								<Icon size={16} />
 								<span className='ml-2'>{label}</span>

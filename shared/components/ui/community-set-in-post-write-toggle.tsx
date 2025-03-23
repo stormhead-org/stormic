@@ -9,17 +9,23 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { ChevronDown } from 'lucide-react'
 import * as React from 'react'
-import { CommunitiesForm } from '../communities/list-items/communities-form'
+import { CommunitiesPostForm } from '../communities/list-items/communities-post-form'
 
 export interface Props {
 	communities: Community[]
+	selectedCommunityId: number | null
+	setSelectedCommunityId: (id: number) => void
 	className?: string
 }
 
 export const CommunitySetInPostWriteToggle: React.FC<Props> = ({
 	communities,
+	selectedCommunityId,
+	setSelectedCommunityId,
 	className
 }) => {
+	const selectedCommunity = communities.find(c => c.id === selectedCommunityId)
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -28,17 +34,17 @@ export const CommunitySetInPostWriteToggle: React.FC<Props> = ({
 					variant='secondary'
 					type='button'
 				>
-					Сообщество <ChevronDown />
+					{selectedCommunity ? selectedCommunity.title : 'Сообщество'}{' '}
+					<ChevronDown />
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align='end' className='bg-secondary'>
-				<CommunitiesForm
-					// title={formatMessage({ id: 'categoryGroup.communitiesPageLink' })}
-					title={'Сообщества'}
+				<CommunitiesPostForm
 					limit={5}
 					defaultItems={communities.slice(0, 5)}
 					items={communities}
-					// loading={loading}
+					setSelectedCommunityId={setSelectedCommunityId}
+					selectedCommunityId={selectedCommunityId} // Передаем для выделения выбранного элемента
 					className='mt-4'
 					hasPost={false}
 				/>

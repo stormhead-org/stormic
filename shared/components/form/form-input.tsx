@@ -2,6 +2,7 @@
 
 import { ClearButton, ErrorText, RequiredSymbol } from '@/shared/components'
 import { Input } from '@/shared/components/ui/input'
+import { cn } from '@/shared/lib/utils'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -20,43 +21,45 @@ export const FormInput = React.forwardRef<HTMLInputElement, Props>(
 			watch,
 			setValue
 		} = useFormContext()
-		
+
 		const { ref: registerRef, ...rest } = register(name) // Извлекаем ref и остальные параметры
-		
+
 		const value = watch(name)
 		const errorText = errors[name]?.message as string
-		
+
 		const onClickClear = () => {
 			setValue(name, '', { shouldValidate: true })
 		}
-		
+
 		return (
-			<div className={className}>
+			<div>
 				{label && (
 					<p className='font-medium mb-2'>
 						{label} {required && <RequiredSymbol />}
 					</p>
 				)}
-				
+
 				<div className='relative'>
 					{/* Передаем registerRef как ref, и остальные параметры */}
 					<Input
-						ref={(el) => {
+						ref={el => {
 							registerRef(el) // Сначала передаем ref из register
 							if (typeof ref === 'function') {
 								ref(el)
 							} else if (ref) {
-								(ref as React.MutableRefObject<HTMLInputElement | null>).current = el
+								;(
+									ref as React.MutableRefObject<HTMLInputElement | null>
+								).current = el
 							}
 						}}
-						className='h-12 text-md'
+						className={cn(className, 'h-12 text-md border-0')}
 						{...rest} // Передаем оставшиеся параметры из register
 						{...props} // Передаем оставшиеся пропсы компонента
 					/>
-					
+
 					{value && <ClearButton onClick={onClickClear} />}
 				</div>
-				
+
 				{errorText && <ErrorText text={errorText} className='mt-2' />}
 			</div>
 		)

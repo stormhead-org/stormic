@@ -1,6 +1,14 @@
-import { ToggleGroupItem, ToggleGroup } from '@/shared/components/ui/toggle-group'
+import {
+	ToggleGroupItem,
+	ToggleGroup
+} from '@/shared/components/ui/toggle-group'
 import { cn } from '@/shared/lib/utils'
-import { FORMAT_TEXT_COMMAND, LexicalEditor, TextFormatType, UNDO_COMMAND } from 'lexical'
+import {
+	FORMAT_TEXT_COMMAND,
+	LexicalEditor,
+	TextFormatType,
+	UNDO_COMMAND
+} from 'lexical'
 import { Bold, Italic, Underline } from 'lucide-react'
 import React, { useState } from 'react'
 
@@ -10,10 +18,13 @@ interface Props {
 	className?: string
 }
 
-export const Toggles: React.FC<Props> = ({ editor, activeEditor, className }) => {
-	
+export const Toggles: React.FC<Props> = ({
+	editor,
+	activeEditor,
+	className
+}) => {
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable())
-	
+
 	return (
 		<div className={cn(className, '')}>
 			<ToggleGroup type='multiple' variant='outline'>
@@ -26,13 +37,13 @@ export const Toggles: React.FC<Props> = ({ editor, activeEditor, className }) =>
 						key={value}
 						disabled={!isEditable}
 						value={value}
-						aria-label={`Toggle ${value}`}
 						onClick={() =>
 							activeEditor.dispatchCommand(
 								FORMAT_TEXT_COMMAND,
 								value as TextFormatType
 							)
 						}
+						className='bg-gray-600 hover:bg-gray-500 border-0 '
 					>
 						<Icon size={16} />
 					</ToggleGroupItem>

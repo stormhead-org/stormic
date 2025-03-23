@@ -1,11 +1,19 @@
 import { clearFormatting } from '@/shared/components/lexical/plugins/ToolbarPlugin/utils'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue
+} from '@/shared/components/ui/select'
 import { cn } from '@/shared/lib/utils'
-import { FORMAT_TEXT_COMMAND, LexicalEditor, } from 'lexical'
+import { FORMAT_TEXT_COMMAND, LexicalEditor } from 'lexical'
 import {
 	ArrowBigUpDash,
-	CaseLower, CaseSensitive,
-	CaseUpper, CircleX,
+	CaseLower,
+	CaseSensitive,
+	CaseUpper,
+	CircleX,
 	Strikethrough
 } from 'lucide-react'
 import React, { useState } from 'react'
@@ -16,10 +24,13 @@ interface Props {
 	className?: string
 }
 
-export const TextFormat: React.FC<Props> = ({ editor, activeEditor, className }) => {
-	
+export const TextFormat: React.FC<Props> = ({
+	editor,
+	activeEditor,
+	className
+}) => {
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable())
-	
+
 	return (
 		<div className={cn(className, '')}>
 			<Select
@@ -27,49 +38,31 @@ export const TextFormat: React.FC<Props> = ({ editor, activeEditor, className })
 				onValueChange={value => {
 					const actions: Record<string, () => void> = {
 						lowercase: () =>
-							activeEditor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'lowercase'
-							),
+							activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'lowercase'),
 						uppercase: () =>
-							activeEditor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'uppercase'
-							),
+							activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'uppercase'),
 						capitalize: () =>
-							activeEditor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'capitalize'
-							),
+							activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'capitalize'),
 						strikethrough: () =>
 							activeEditor.dispatchCommand(
 								FORMAT_TEXT_COMMAND,
 								'strikethrough'
 							),
 						subscript: () =>
-							activeEditor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'subscript'
-							),
+							activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript'),
 						superscript: () =>
-							activeEditor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'superscript'
-							),
+							activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript'),
 						highlight: () =>
-							activeEditor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'highlight'
-							),
+							activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight'),
 						clearing: () => clearFormatting(activeEditor)
 					}
 					actions[value]?.()
 				}}
 			>
-				<SelectTrigger className='w-[180px]'>
-					<SelectValue placeholder='Форматирование'/>
+				<SelectTrigger className='bg-gray-600 hover:bg-gray-500 border-0'>
+					<SelectValue placeholder='Форматирование' />
 				</SelectTrigger>
-				<SelectContent>
+				<SelectContent className='mt-1'>
 					{[
 						{ value: 'lowercase', icon: CaseLower, label: 'Строчные' },
 						{ value: 'uppercase', icon: CaseUpper, label: 'Заглавные' },
@@ -92,8 +85,12 @@ export const TextFormat: React.FC<Props> = ({ editor, activeEditor, className })
 						// { value: 'highlight', icon: Highlighter, label: 'Highlight' },
 						{ value: 'clearing', icon: CircleX, label: 'Очистить' }
 					].map(({ value, icon: Icon, label }) => (
-						<SelectItem key={value} value={value}>
-							<div className='flex'>
+						<SelectItem
+							key={value}
+							value={value}
+							className='cursor-pointer hover:bg-primary/10'
+						>
+							<div className='flex items-center'>
 								<Icon className='mr-2' size={16} />
 								{label}
 							</div>

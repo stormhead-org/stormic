@@ -11,6 +11,8 @@ export interface PostWriteHeaderProps {
 	authorUrl: string
 	setCategory?: string
 	communities: Community[]
+	selectedCommunityId: number | null
+	setSelectedCommunityId: (id: number) => void
 	className?: string
 }
 
@@ -20,6 +22,8 @@ export const PostWriteHeader: React.FC<PostWriteHeaderProps> = ({
 	authorUrl,
 	setCategory,
 	communities,
+	selectedCommunityId,
+	setSelectedCommunityId,
 	className
 }) => {
 	return (
@@ -39,7 +43,11 @@ export const PostWriteHeader: React.FC<PostWriteHeaderProps> = ({
 					<br />
 					{/* <p className='text-sm'>{setCategory}</p> */}
 					<div className='-ml-4 -mt-3 font-medium'>
-						<CommunitySetInPostWriteToggle communities={communities} />
+						<CommunitySetInPostWriteToggle
+							communities={communities}
+							selectedCommunityId={selectedCommunityId}
+							setSelectedCommunityId={setSelectedCommunityId}
+						/>
 					</div>
 				</div>
 			</div>

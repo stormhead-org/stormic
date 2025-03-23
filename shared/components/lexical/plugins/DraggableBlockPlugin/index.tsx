@@ -8,10 +8,9 @@
 import type { JSX } from 'react'
 import React from 'react'
 
-import './index.css'
-
 import { DraggableBlockPlugin_EXPERIMENTAL } from '@lexical/react/LexicalDraggableBlockPlugin'
 import { useRef } from 'react'
+import { GripVertical } from 'lucide-react'
 
 const DRAGGABLE_BLOCK_MENU_CLASSNAME = 'draggable-block-menu'
 
@@ -20,7 +19,7 @@ function isOnMenu(element: HTMLElement): boolean {
 }
 
 export default function DraggableBlockPlugin({
-	anchorElem = document.body,
+	anchorElem = document.body
 }: {
 	anchorElem?: HTMLElement
 }): JSX.Element {
@@ -33,12 +32,18 @@ export default function DraggableBlockPlugin({
 			menuRef={menuRef as React.RefObject<HTMLElement>}
 			targetLineRef={targetLineRef as React.RefObject<HTMLElement>}
 			menuComponent={
-				<div ref={menuRef} className='icon draggable-block-menu'>
-					<div className='icon' />
+				<div
+					ref={menuRef}
+					className='draggable-block-menu rounded py-[2px] px-[1px] cursor-grab opacity-0 absolute left-0 top-0 [will-change:transform] active:cursor-grabbing hover:bg-gray-500'
+				>
+					<GripVertical size={20} className='opacity-30 text-primary' />
 				</div>
 			}
 			targetLineComponent={
-				<div ref={targetLineRef} className='draggable-block-target-line' />
+				<div
+					ref={targetLineRef}
+					className='pointer-events-none bg-gray-600 h-[4px] absolute left-0 top-0 opacity-0 [will-change:transform]'
+				/>
 			}
 			isOnMenu={isOnMenu}
 		/>
