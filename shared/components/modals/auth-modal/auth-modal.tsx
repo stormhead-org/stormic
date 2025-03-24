@@ -42,7 +42,7 @@ export const AuthModal: React.FC<Props> = ({
 
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className='min-w-[700px] min-h-[700px] p-0'>
+			<DialogContent className='min-w-[38rem] min-h-[36rem] p-0'>
 				<DialogHeader className='hidden'>
 					<DialogTitle />
 				</DialogHeader>

@@ -1,34 +1,14 @@
-'use client'
+// import { RichTextField } from '@payloadcms/richtext-lexical/client';
+// import { ToolbarFeature } from '@payloadcms/richtext-lexical/client/features/ToolbarFeature';
+import RichTextClient from './RichTextClient'
 
-import { ToolbarContext } from '@/shared/components/lexical/context/ToolbarContext'
-import Editor from '@/shared/components/lexical/Editor'
-import PlaygroundNodes from '@/shared/components/lexical/nodes/PlaygroundNodes'
-import { SharedHistoryContext } from '@/shared/components/lexical/old/context/SharedHistoryContext'
-import PlaygroundEditorTheme from '@/shared/components/lexical/themes/PlaygroundEditorTheme'
-import { LexicalComposer } from '@lexical/react/LexicalComposer'
-import { JSX } from 'react'
-
-function NewPost(): JSX.Element {
-	const initialConfig = {
-		namespace: 'NewPost',
-		nodes: [...PlaygroundNodes],
-		theme: PlaygroundEditorTheme,
-		onError: (error: Error) => {
-			console.error(error)
-		}
-	}
-
+const CreatePostForm = () => {
 	return (
-		<LexicalComposer initialConfig={initialConfig}>
-			<SharedHistoryContext>
-				<ToolbarContext>
-					<div className='mx-auto my-5 rounded-md max-w-[1100px] text-black relative leading-7 font-normal'>
-						<Editor />
-					</div>
-				</ToolbarContext>
-			</SharedHistoryContext>
-		</LexicalComposer>
+		<div>
+			<RichTextClient />
+			<button type='submit'>Создать пост</button>
+		</div>
 	)
 }
 
-export default NewPost
+export default CreatePostForm

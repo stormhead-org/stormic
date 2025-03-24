@@ -1,29 +1,35 @@
 'use client'
 
-import { Community } from '@/payload-types'
+import { Community, Media, Post } from '@/payload-types'
 import PlaygroundEditorTheme from '@/shared/components/lexical/themes/PlaygroundEditorTheme'
 import { PostWriteHeader } from '@/shared/components/post-write/items/post-write-header'
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
+import { useCurrentTime } from '@/shared/hooks/useCurrentTime'
+import { createMedia } from '@/shared/utils/api/media/createMedia'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { Maximize2, Minimize2 } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { FormInput } from '../../form'
 import { SharedHistoryContext } from '../../lexical/context/SharedHistoryContext'
 import { ToolbarContext } from '../../lexical/context/ToolbarContext'
 import Editor from '../../lexical/Editor'
 import PlaygroundNodes from '../../lexical/nodes/PlaygroundNodes'
-import { FormInput } from '../../form'
-import { FormProvider, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
+import { Input } from '../../ui/input'
+import { Label } from '../../ui/label'
 import { formTitleSchema, TFormTitleValues } from './schemas'
-import { useCurrentTime } from '@/shared/hooks/useCurrentTime'
 
 interface Props {
 	authorId: number
 	authorAvatar: string
 	authorName: string
 	communities: Community[]
+	post?: Post
 	authorUrl: string
 	open: boolean
 	onClose: () => void
@@ -45,9 +51,7 @@ const EditorWithContext: React.FC<{
 		<>
 			<div
 				className={`max-w-[74rem] my-2 ${
-					isFullScreen
-						? 'min-w-[71rem] min-h-[68rem]'
-						: 'min-w-[71rem] min-h-[44rem]'
+					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[71rem] min-h-[20rem]'
 				}`}
 			>
 				<Editor />
@@ -64,6 +68,7 @@ export const WriteModal: React.FC<Props> = ({
 	authorAvatar,
 	authorName,
 	communities,
+	post,
 	authorUrl,
 	open,
 	onClose
@@ -81,10 +86,41 @@ export const WriteModal: React.FC<Props> = ({
 		null
 	)
 
+	const [heroImage, setHeroImage] = useState<Media | undefined>(
+		post?.heroImage && typeof post.heroImage === 'object'
+			? (post.heroImage as Media)
+			: undefined
+	)
+
+	const heroImageInputRef = useRef<HTMLInputElement>(null)
+
 	const currentTime = useCurrentTime()
 
 	const handleToggleSize = () => {
 		setIsFullScreen(!isFullScreen)
+	}
+
+	const handleUploadHeroImage = async () => {
+		const file = heroImageInputRef.current?.files?.[0]
+		if (!file) {
+			toast.error('Выберите файл для загрузки заглавного изображения', {
+				icon: '⚠️'
+			})
+			return
+		}
+
+		const formData = new FormData()
+		formData.append('file', file)
+
+		try {
+			const result = await createMedia(formData)
+			const newHeroImage = result.doc
+			setHeroImage(newHeroImage)
+			toast.success('Изображение успешно загружено', { icon: '✅' })
+		} catch (error) {
+			console.error('Error uploading image:', error)
+			toast.error('Ошибка при загрузке изображения', { icon: '❌' })
+		}
 	}
 
 	const handleSave = async (content: any) => {
@@ -97,6 +133,7 @@ export const WriteModal: React.FC<Props> = ({
 
 		const postData = {
 			title: title,
+			heroImage: heroImage?.id,
 			author: authorId,
 			community: selectedCommunityId,
 			content,
@@ -111,7 +148,7 @@ export const WriteModal: React.FC<Props> = ({
 				},
 				body: JSON.stringify(postData)
 			})
-
+			console.log(postData)
 			if (response.ok) {
 				console.log('Пост успешно опубликован')
 				onClose()
@@ -136,7 +173,7 @@ export const WriteModal: React.FC<Props> = ({
 		<Dialog open={open} onOpenChange={onClose}>
 			<DialogContent
 				className={`bg-secondary transition-all duration-300-p-2 ${
-					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[75rem] min-h-[44rem]'
+					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[75rem] min-h-[20rem]'
 				}`}
 			>
 				{isFullScreen ? (
@@ -162,6 +199,28 @@ export const WriteModal: React.FC<Props> = ({
 							selectedCommunityId={selectedCommunityId}
 							setSelectedCommunityId={setSelectedCommunityId}
 						/>
+						<div className='flex w-full max-w-sm items-end space-x-2 mt-2'>
+							<Avatar>
+								<AvatarImage src={heroImage?.url || ''} />
+								<AvatarFallback>SH</AvatarFallback>
+							</Avatar>
+							<div className='grid w-full max-w-sm items-center gap-1.5'>
+								<Label htmlFor='heroImage'>Заглавное изображение</Label>
+								<Input
+									id='heroImage'
+									type='file'
+									accept='image/*'
+									ref={heroImageInputRef}
+								/>
+							</div>
+							<Button
+								variant='blue'
+								type='button'
+								onClick={handleUploadHeroImage}
+							>
+								Загрузить
+							</Button>
+						</div>
 						<FormProvider {...form}>
 							<form>
 								<FormInput
@@ -175,7 +234,7 @@ export const WriteModal: React.FC<Props> = ({
 						<LexicalComposer initialConfig={initialConfig}>
 							<SharedHistoryContext>
 								<ToolbarContext>
-									<div className='min-h-[88%] max-w-[74rem]'>
+									<div className='min-h-[20rem] max-w-[74rem]'>
 										<EditorWithContext
 											onSave={handleSave}
 											isFullScreen={isFullScreen}

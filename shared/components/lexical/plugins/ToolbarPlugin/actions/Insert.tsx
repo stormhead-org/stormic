@@ -1,4 +1,3 @@
-import { useToolbarState } from '@/shared/components/lexical/context/ToolbarContext'
 import useModal from '@/shared/components/lexical/hooks/useModal'
 import { EmbedConfigs } from '@/shared/components/lexical/plugins/AutoEmbedPlugin'
 import {
@@ -9,7 +8,6 @@ import {
 import { InsertInlineImageDialog } from '@/shared/components/lexical/plugins/InlineImagePlugin'
 import InsertLayoutDialog from '@/shared/components/lexical/plugins/LayoutPlugin/InsertLayoutDialog'
 import { InsertPollDialog } from '@/shared/components/lexical/plugins/PollPlugin'
-import { Button } from '@/shared/components/ui/button'
 import {
 	Select,
 	SelectContent,
@@ -20,15 +18,8 @@ import {
 import { cn } from '@/shared/lib/utils'
 import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin'
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode'
-import { LexicalEditor, UNDO_COMMAND } from 'lexical'
-import {
-	Columns2,
-	Image,
-	ImagePlay,
-	RotateCcw,
-	Rows2,
-	Vote
-} from 'lucide-react'
+import { LexicalEditor } from 'lexical'
+import { Columns2, Image, ImagePlay, Rows2, Vote } from 'lucide-react'
 import React, { useState } from 'react'
 
 interface Props {
