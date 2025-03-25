@@ -9,7 +9,6 @@ import { Community, User } from '@/payload-types'
 import { GripHorizontal, Settings } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import CommunityFollowButton from '../../community-follow-button'
-import { SettingsProfileButton } from './settings-profile-button'
 
 interface Props {
 	data: User | Community
@@ -51,10 +50,10 @@ export const ProfileHeader: React.FC<Props> = ({
 							data.avatar?.url
 								? data.avatar.url
 								: 'logo' in data &&
-								  typeof data.logo === 'object' &&
-								  data.logo?.url
-								? data.logo.url
-								: '/logo.png'
+									  typeof data.logo === 'object' &&
+									  data.logo?.url
+									? data.logo.url
+									: '/logo.png'
 						}
 						avatarSize={Number(92)}
 					/>
@@ -66,18 +65,6 @@ export const ProfileHeader: React.FC<Props> = ({
 								<CommunityFollowButton communityId={data.id} />
 							)}
 						</div>
-
-						{currentUser &&
-							((hasUser && currentUser.id === (data as User).id) ||
-								(!hasUser &&
-									currentUser.id === (data as Community).owner?.id)) && (
-								<SettingsProfileButton
-									data={data}
-									currentUser={currentUser}
-									hasUser={hasUser}
-									className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'
-								/>
-							)}
 
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
 							{hasUser ? (

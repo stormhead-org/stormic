@@ -295,6 +295,7 @@ export const Posts: CollectionConfig<'posts'> = {
 										FixedToolbarFeature(),
 										InlineToolbarFeature(),
 										HorizontalRuleFeature()
+										// YouTubeFeature()
 									]
 								}
 							}),

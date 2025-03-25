@@ -33,7 +33,7 @@ export const SettingsCommunityAdministrationGroup: React.FC<Props> = ({
 				? community.rules.map(rule => ({
 						communityNameRule: rule.communityNameRule ?? '',
 						communityDescriptionRule: rule.communityDescriptionRule ?? undefined
-				  }))
+					}))
 				: []
 		}
 	})
