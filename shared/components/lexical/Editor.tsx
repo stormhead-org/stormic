@@ -33,7 +33,7 @@ import InlineImagePlugin from './plugins/InlineImagePlugin'
 import { LayoutPlugin } from './plugins/LayoutPlugin/LayoutPlugin'
 import LinkPlugin from './plugins/LinkPlugin'
 import { MaxLengthPlugin } from './plugins/MaxLengthPlugin'
-import PollPlugin from './plugins/PollPlugin'
+// import PollPlugin from './plugins/PollPlugin'
 import TabFocusPlugin from './plugins/TabFocusPlugin'
 import ToolbarPlugin from './plugins/ToolbarPlugin'
 import YouTubePlugin from './plugins/YouTubePlugin'
@@ -142,12 +142,12 @@ export default function Editor() {
 						<ImagesPlugin />
 						<InlineImagePlugin />
 						<LinkPlugin hasLinkAttributes={hasLinkAttributes} />
-						<PollPlugin />
+						{/* <PollPlugin /> */}
 						<YouTubePlugin />
 						<ClickableLinkPlugin disabled={isEditable} />
 						<HorizontalRulePlugin />
 						<TabFocusPlugin />
-						<TabIndentationPlugin maxIndent={7} />
+						<TabIndentationPlugin />
 						<LayoutPlugin />
 						{floatingAnchorElem && (
 							<>

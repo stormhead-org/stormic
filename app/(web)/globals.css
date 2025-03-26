@@ -137,6 +137,62 @@ html {
 	body {
 		@apply bg-background text-foreground;
 	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: var(--txt-color-headers);
+		margin: 1em 0;
+		font-weight: 700;
+	}
+
+	p {
+		margin: 0.5em 0;
+		line-height: 1.6;
+		font-size: 1rem;
+		color: var(--txt-color);
+	}
+
+	ul,
+	ol {
+		margin: 0.5em 0 0.5em 1.5em;
+		padding-left: 1em;
+		list-style-position: outside;
+	}
+
+	li {
+		margin: 0.2em 0;
+	}
+
+	blockquote {
+		border-left: 4px solid var(--primary);
+		padding-left: 1em;
+		color: var(--muted-foreground);
+		font-style: italic;
+		margin: 1em 0;
+		background: rgba(0, 0, 0, 0.03);
+	}
+
+	code {
+		background: var(--muted);
+		color: var(--accent-foreground);
+		padding: 0.2em 0.4em;
+		border-radius: 0.25rem;
+		font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+		font-size: 0.9em;
+	}
+
+	pre {
+		background: var(--muted);
+		padding: 1em;
+		border-radius: 0.5rem;
+		overflow-x: auto;
+		font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+		margin: 1em 0;
+	}
 }
 
 #nprogress .bar {

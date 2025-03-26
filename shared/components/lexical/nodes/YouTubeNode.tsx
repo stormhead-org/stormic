@@ -15,16 +15,15 @@ import type {
 	LexicalEditor,
 	LexicalNode,
 	NodeKey,
-	Spread,
+	Spread
 } from 'lexical'
 import type { JSX } from 'react'
 
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents'
 import {
 	DecoratorBlockNode,
-	SerializedDecoratorBlockNode,
+	SerializedDecoratorBlockNode
 } from '@lexical/react/LexicalDecoratorBlockNode'
-import * as React from 'react'
 
 type YouTubeComponentProps = Readonly<{
 	className: Readonly<{
@@ -40,7 +39,7 @@ function YouTubeComponent({
 	className,
 	format,
 	nodeKey,
-	videoID,
+	videoID
 }: YouTubeComponentProps) {
 	return (
 		<BlockWithAlignableContents
@@ -100,7 +99,7 @@ export class YouTubeNode extends DecoratorBlockNode {
 	exportJSON(): SerializedYouTubeNode {
 		return {
 			...super.exportJSON(),
-			videoID: this.__id,
+			videoID: this.__id
 		}
 	}
 
@@ -136,9 +135,9 @@ export class YouTubeNode extends DecoratorBlockNode {
 				}
 				return {
 					conversion: $convertYoutubeElement,
-					priority: 1,
+					priority: 1
 				}
-			},
+			}
 		}
 	}
 
@@ -161,7 +160,7 @@ export class YouTubeNode extends DecoratorBlockNode {
 		const embedBlockTheme = config.theme.embedBlock || {}
 		const className = {
 			base: embedBlockTheme.base || '',
-			focus: embedBlockTheme.focus || '',
+			focus: embedBlockTheme.focus || ''
 		}
 		return (
 			<YouTubeComponent

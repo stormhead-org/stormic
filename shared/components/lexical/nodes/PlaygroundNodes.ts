@@ -23,7 +23,7 @@ import { ImageNode } from './ImageNode'
 import { InlineImageNode } from './InlineImageNode/InlineImageNode'
 import { LayoutContainerNode } from './LayoutContainerNode'
 import { LayoutItemNode } from './LayoutItemNode'
-import { PollNode } from './PollNode'
+// import { PollNode } from './PollNode'
 import { YouTubeNode } from './YouTubeNode'
 
 const PlaygroundNodes: Array<Klass<LexicalNode>> = [
@@ -40,7 +40,7 @@ const PlaygroundNodes: Array<Klass<LexicalNode>> = [
 	AutoLinkNode,
 	LinkNode,
 	OverflowNode,
-	PollNode,
+	// PollNode,
 	ImageNode,
 	InlineImageNode,
 	EmojiNode,
@@ -48,7 +48,7 @@ const PlaygroundNodes: Array<Klass<LexicalNode>> = [
 	YouTubeNode,
 	MarkNode,
 	LayoutContainerNode,
-	LayoutItemNode,
+	LayoutItemNode
 ]
 
 export default PlaygroundNodes

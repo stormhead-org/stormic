@@ -1,24 +1,19 @@
 'use client'
 
 import { Community, Media, Post } from '@/payload-types'
-import PlaygroundEditorTheme from '@/shared/components/lexical/themes/PlaygroundEditorTheme'
 import { PostWriteHeader } from '@/shared/components/post-write/items/post-write-header'
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
 import { useCurrentTime } from '@/shared/hooks/useCurrentTime'
 import { createMedia } from '@/shared/utils/api/media/createMedia'
+import { OutputData } from '@editorjs/editorjs'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LexicalComposer } from '@lexical/react/LexicalComposer'
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { Maximize2, Minimize2 } from 'lucide-react'
-import React, { useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
+import React, { useCallback, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { FormInput } from '../../form'
-import { SharedHistoryContext } from '../../lexical/context/SharedHistoryContext'
-import { ToolbarContext } from '../../lexical/context/ToolbarContext'
-import Editor from '../../lexical/Editor'
-import PlaygroundNodes from '../../lexical/nodes/PlaygroundNodes'
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
 import { Input } from '../../ui/input'
 import { Label } from '../../ui/label'
@@ -35,33 +30,33 @@ interface Props {
 	onClose: () => void
 }
 
-const EditorWithContext: React.FC<{
-	onSave: (content: any) => void
-	isFullScreen: boolean
-}> = ({ onSave, isFullScreen }) => {
-	const [editor] = useLexicalComposerContext()
+// const EditorWithContext: React.FC<{
+// 	onSave: (content: any) => void
+// 	isFullScreen: boolean
+// }> = ({ onSave, isFullScreen }) => {
+// 	const [editor] = useLexicalComposerContext()
 
-	const handleSave = () => {
-		const editorState = editor.getEditorState()
-		const jsonState = editorState.toJSON()
-		onSave(jsonState)
-	}
+// 	const handleSave = () => {
+// 		const editorState = editor.getEditorState()
+// 		const jsonState = editorState.toJSON()
+// 		onSave(jsonState)
+// 	}
 
-	return (
-		<>
-			<div
-				className={`max-w-[74rem] my-2 ${
-					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[71rem] min-h-[20rem]'
-				}`}
-			>
-				<Editor />
-			</div>
-			<Button onClick={handleSave} variant='blue' className='my-4 px-4 py-2'>
-				Опубликовать
-			</Button>
-		</>
-	)
-}
+// 	return (
+// 		<>
+// 			<div
+// 				className={`max-w-[74rem] my-2 ${
+// 					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[71rem] min-h-[20rem]'
+// 				}`}
+// 			>
+// 				<Editor />
+// 			</div>
+// 			<Button onClick={handleSave} variant='blue' className='my-4 px-4 py-2'>
+// 				Опубликовать
+// 			</Button>
+// 		</>
+// 	)
+// }
 
 export const WriteModal: React.FC<Props> = ({
 	authorId,
@@ -79,6 +74,12 @@ export const WriteModal: React.FC<Props> = ({
 			title: ''
 		}
 	})
+
+	const [content, setContent] = useState<OutputData | null>(null)
+
+	const handleChange = useCallback((newContent: OutputData) => {
+		setContent(newContent)
+	}, [])
 
 	const [isFullScreen, setIsFullScreen] = useState(false)
 
@@ -123,49 +124,87 @@ export const WriteModal: React.FC<Props> = ({
 		}
 	}
 
-	const handleSave = async (content: any) => {
-		if (!content?.root?.children?.length) {
-			console.error('Контент пустой')
-			return
-		}
+	// const handleSave = async (content: any) => {
+	// 	if (!content?.root?.children?.length) {
+	// 		console.error('Контент пустой')
+	// 		return
+	// 	}
 
-		const { title } = form.getValues()
+	// 	const { title } = form.getValues()
 
-		const postData = {
-			title: title,
-			heroImage: heroImage?.id,
-			author: authorId,
-			community: selectedCommunityId,
-			content,
-			publishedAt: currentTime
-		}
+	// 	const postData = {
+	// 		title: title,
+	// 		heroImage: heroImage?.id,
+	// 		author: authorId,
+	// 		community: selectedCommunityId,
+	// 		content,
+	// 		publishedAt: currentTime
+	// 	}
 
-		try {
-			const response = await fetch('/api/posts', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(postData)
-			})
-			console.log(postData)
-			if (response.ok) {
-				console.log('Пост успешно опубликован')
-				onClose()
-			} else {
-				console.error('Ошибка при публикации:', response.statusText)
+	// 	try {
+	// 		const response = await fetch('/api/posts', {
+	// 			method: 'POST',
+	// 			headers: {
+	// 				'Content-Type': 'application/json'
+	// 			},
+	// 			body: JSON.stringify(postData)
+	// 		})
+	// 		console.log(postData)
+	// 		if (response.ok) {
+	// 			console.log('Пост успешно опубликован')
+	// 			onClose()
+	// 		} else {
+	// 			console.error('Ошибка при публикации:', response.statusText)
+	// 		}
+	// 	} catch (error) {
+	// 		console.error('Ошибка при отправке запроса:', error)
+	// 	}
+	// }
+
+	// const initialConfig = {
+	// 	namespace: 'NewPost',
+	// 	nodes: [...PlaygroundNodes],
+	// 	theme: PlaygroundEditorTheme,
+	// 	onError: (error: Error) => {
+	// 		console.error(error)
+	// 	}
+	// }
+
+	let Editor = dynamic(() => import('../../editorjs/Editor'), { ssr: false })
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault()
+		if (content) {
+			console.log(content)
+			const { title } = form.getValues()
+
+			const postData = {
+				title: title,
+				heroImage: heroImage?.id,
+				author: authorId,
+				community: selectedCommunityId,
+				content,
+				publishedAt: currentTime
 			}
-		} catch (error) {
-			console.error('Ошибка при отправке запроса:', error)
-		}
-	}
 
-	const initialConfig = {
-		namespace: 'NewPost',
-		nodes: [...PlaygroundNodes],
-		theme: PlaygroundEditorTheme,
-		onError: (error: Error) => {
-			console.error(error)
+			try {
+				const response = await fetch('/api/posts', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(postData)
+				})
+				console.log(postData)
+				if (response.ok) {
+					console.log('Пост успешно опубликован')
+					onClose()
+				} else {
+					console.error('Ошибка при публикации:', response.statusText)
+				}
+			} catch (error) {
+				console.error('Ошибка при отправке запроса:', error)
+			}
 		}
 	}
 
@@ -231,7 +270,15 @@ export const WriteModal: React.FC<Props> = ({
 								/>
 							</form>
 						</FormProvider>
-						<LexicalComposer initialConfig={initialConfig}>
+						<form onSubmit={handleSubmit}>
+							<Editor
+								data={content}
+								onChange={handleChange}
+								holder='editor_create'
+							/>
+							<button type='submit'>Создать пост</button>
+						</form>
+						{/* <LexicalComposer initialConfig={initialConfig}>
 							<SharedHistoryContext>
 								<ToolbarContext>
 									<div className='min-h-[20rem] max-w-[74rem]'>
@@ -242,7 +289,7 @@ export const WriteModal: React.FC<Props> = ({
 									</div>
 								</ToolbarContext>
 							</SharedHistoryContext>
-						</LexicalComposer>
+						</LexicalComposer> */}
 					</div>
 				</div>
 			</DialogContent>

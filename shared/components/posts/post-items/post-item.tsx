@@ -6,6 +6,7 @@ import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
 import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { cn } from '@/shared/lib/utils'
+import { OutputData } from '@editorjs/editorjs'
 // import { createVisibilityObserver } from '@/shared/utils/visibility-observer'
 // import React, { useEffect, useRef } from 'react'
 
@@ -49,7 +50,7 @@ export const PostItem: React.FC<{
 				/>
 				<PostBody
 					postTitle={post.title}
-					postContent={post.content}
+					postContent={post.content as unknown as OutputData}
 					postHero={post}
 					maxLength={300}
 					postUrl={`/p/${post.id}`}

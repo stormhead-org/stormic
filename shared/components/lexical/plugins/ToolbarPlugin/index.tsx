@@ -50,7 +50,6 @@ import {
 	blockTypeToBlockName,
 	useToolbarState
 } from '../../context/ToolbarContext'
-import useModal from '../../hooks/useModal'
 import { getSelectedNode } from '../../utils/getSelectedNode'
 
 const CODE_LANGUAGE_OPTIONS = Object.entries(
@@ -75,7 +74,6 @@ export default function ToolbarPlugin({
 	const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
 		null
 	)
-	const [modal, showModal] = useModal()
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable())
 	const { toolbarState, updateToolbarState } = useToolbarState()
 
@@ -186,14 +184,6 @@ export default function ToolbarPlugin({
 			updateToolbarState('isSuperscript', selection.hasFormat('superscript'))
 			updateToolbarState('isHighlight', selection.hasFormat('highlight'))
 			updateToolbarState('isCode', selection.hasFormat('code'))
-			// if ($isRangeSelection(selection)) {
-			// 	updateToolbarState(
-			// 		'fontSize',
-			// 		$getSelectionStyleValueForProperty(selection, 'font-size', '18px')
-			// 	)
-			// } else {
-			// 	updateToolbarState('fontSize', '18px')
-			// }
 			updateToolbarState('fontSize', '18px')
 			updateToolbarState('isLowercase', selection.hasFormat('lowercase'))
 			updateToolbarState('isUppercase', selection.hasFormat('uppercase'))
@@ -304,44 +294,6 @@ export default function ToolbarPlugin({
 					<Insert editor={editor} activeEditor={activeEditor} />
 				</>
 			)}
-			{/* {toolbarState.blockType === 'code' ? ( */}
-			{/* 	<DropDown */}
-			{/* 		disabled={!isEditable} */}
-			{/* 		buttonClassName='toolbar-item code-language' */}
-			{/* 		buttonLabel={getLanguageFriendlyName(toolbarState.codeLanguage)} */}
-			{/* 		buttonAriaLabel='Select language' */}
-			{/* 	> */}
-			{/* 		{CODE_LANGUAGE_OPTIONS.map(([value, name]) => ( */}
-			{/* 			<DropDownItem */}
-			{/* 				key={value} */}
-			{/* 				className={`item ${dropDownActiveClass(value === toolbarState.codeLanguage)}`} */}
-			{/* 				onClick={() => onCodeLanguageSelect(value)} */}
-			{/* 			> */}
-			{/* 				<span className='text'>{name}</span> */}
-			{/* 			</DropDownItem> */}
-			{/* 		))} */}
-			{/* 	</DropDown> */}
-			{/* ) : ( */}
-			{/* 	<> */}
-			{/* 		/!* <Divider /> */}
-			{/* 		<FontSize */}
-			{/* 			selectionFontSize={toolbarState.fontSize.slice(0, -2)} */}
-			{/* 			editor={activeEditor} */}
-			{/* 			disabled={!isEditable} */}
-			{/* 		/> *!/ */}
-			{/* 		/!* {canViewerSeeInsertControls && ( *!/ */}
-			{/* 		/!* 	<Toggle *!/ */}
-			{/* 		/!* 		disabled={!isEditable} *!/ */}
-			{/* 		/!* 		aria-label='Toggle code' *!/ */}
-			{/* 		/!* 		onClick={() => *!/ */}
-			{/* 		/!* 			activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code') *!/ */}
-			{/* 		/!* 		} *!/ */}
-			{/* 		/!* 	> *!/ */}
-			{/* 		/!* 		<Code size={16} /> *!/ */}
-			{/* 		/!* 	</Toggle> *!/ */}
-			{/* 		/!* )} *!/ */}
-			{/* 	</> */}
-			{/* )} */}
 			<Divider />
 			<TextAlign
 				editor={activeEditor}
