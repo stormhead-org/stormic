@@ -30,33 +30,7 @@ interface Props {
 	onClose: () => void
 }
 
-// const EditorWithContext: React.FC<{
-// 	onSave: (content: any) => void
-// 	isFullScreen: boolean
-// }> = ({ onSave, isFullScreen }) => {
-// 	const [editor] = useLexicalComposerContext()
-
-// 	const handleSave = () => {
-// 		const editorState = editor.getEditorState()
-// 		const jsonState = editorState.toJSON()
-// 		onSave(jsonState)
-// 	}
-
-// 	return (
-// 		<>
-// 			<div
-// 				className={`max-w-[74rem] my-2 ${
-// 					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[71rem] min-h-[20rem]'
-// 				}`}
-// 			>
-// 				<Editor />
-// 			</div>
-// 			<Button onClick={handleSave} variant='blue' className='my-4 px-4 py-2'>
-// 				Опубликовать
-// 			</Button>
-// 		</>
-// 	)
-// }
+const Editor = dynamic(() => import('../../editorjs/Editor'), { ssr: false })
 
 export const WriteModal: React.FC<Props> = ({
 	authorId,
@@ -77,10 +51,6 @@ export const WriteModal: React.FC<Props> = ({
 
 	const [content, setContent] = useState<OutputData | null>(null)
 
-	const handleChange = useCallback((newContent: OutputData) => {
-		setContent(newContent)
-	}, [])
-
 	const [isFullScreen, setIsFullScreen] = useState(false)
 
 	const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(
@@ -93,13 +63,17 @@ export const WriteModal: React.FC<Props> = ({
 			: undefined
 	)
 
-	const heroImageInputRef = useRef<HTMLInputElement>(null)
-
-	const currentTime = useCurrentTime()
-
 	const handleToggleSize = () => {
 		setIsFullScreen(!isFullScreen)
 	}
+
+	const handleChange = useCallback((newContent: OutputData) => {
+		setContent(newContent)
+	}, [])
+
+	const heroImageInputRef = useRef<HTMLInputElement>(null)
+
+	const currentTime = useCurrentTime()
 
 	const handleUploadHeroImage = async () => {
 		const file = heroImageInputRef.current?.files?.[0]
@@ -123,54 +97,6 @@ export const WriteModal: React.FC<Props> = ({
 			toast.error('Ошибка при загрузке изображения', { icon: '❌' })
 		}
 	}
-
-	// const handleSave = async (content: any) => {
-	// 	if (!content?.root?.children?.length) {
-	// 		console.error('Контент пустой')
-	// 		return
-	// 	}
-
-	// 	const { title } = form.getValues()
-
-	// 	const postData = {
-	// 		title: title,
-	// 		heroImage: heroImage?.id,
-	// 		author: authorId,
-	// 		community: selectedCommunityId,
-	// 		content,
-	// 		publishedAt: currentTime
-	// 	}
-
-	// 	try {
-	// 		const response = await fetch('/api/posts', {
-	// 			method: 'POST',
-	// 			headers: {
-	// 				'Content-Type': 'application/json'
-	// 			},
-	// 			body: JSON.stringify(postData)
-	// 		})
-	// 		console.log(postData)
-	// 		if (response.ok) {
-	// 			console.log('Пост успешно опубликован')
-	// 			onClose()
-	// 		} else {
-	// 			console.error('Ошибка при публикации:', response.statusText)
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('Ошибка при отправке запроса:', error)
-	// 	}
-	// }
-
-	// const initialConfig = {
-	// 	namespace: 'NewPost',
-	// 	nodes: [...PlaygroundNodes],
-	// 	theme: PlaygroundEditorTheme,
-	// 	onError: (error: Error) => {
-	// 		console.error(error)
-	// 	}
-	// }
-
-	let Editor = dynamic(() => import('../../editorjs/Editor'), { ssr: false })
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -197,13 +123,13 @@ export const WriteModal: React.FC<Props> = ({
 				})
 				console.log(postData)
 				if (response.ok) {
-					console.log('Пост успешно опубликован')
+					toast.success('Пост успешно опубликован', { icon: '✅' })
 					onClose()
 				} else {
-					console.error('Ошибка при публикации:', response.statusText)
+					toast.error('Ошибка при публикации', { icon: '❌' })
 				}
 			} catch (error) {
-				console.error('Ошибка при отправке запроса:', error)
+				toast.error('Ошибка при отправке запроса', { icon: '❌' })
 			}
 		}
 	}
@@ -212,7 +138,7 @@ export const WriteModal: React.FC<Props> = ({
 		<Dialog open={open} onOpenChange={onClose}>
 			<DialogContent
 				className={`bg-secondary transition-all duration-300-p-2 ${
-					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[75rem] min-h-[20rem]'
+					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[75rem] min-h-[420px]'
 				}`}
 			>
 				{isFullScreen ? (
@@ -228,7 +154,7 @@ export const WriteModal: React.FC<Props> = ({
 						size={15}
 					/>
 				)}
-				<div className='flex mx-auto'>
+				<div className='flex justify-center'>
 					<div className='p-2'>
 						<PostWriteHeader
 							authorName={authorName}
@@ -271,25 +197,24 @@ export const WriteModal: React.FC<Props> = ({
 							</form>
 						</FormProvider>
 						<form onSubmit={handleSubmit}>
-							<Editor
-								data={content}
-								onChange={handleChange}
-								holder='editor_create'
-							/>
-							<button type='submit'>Создать пост</button>
+							<div
+								className={`${
+									isFullScreen
+										? 'w-[71rem] h-[42rem] overflow-auto'
+										: 'w-[71rem] h-[420px] overflow-auto'
+								}`}
+							>
+								<Editor
+									data={content}
+									onChange={handleChange}
+									holder='editorjs'
+									className='w-full'
+								/>
+							</div>
+							<Button variant='blue' type='submit' className='mt-4'>
+								Опубликовать
+							</Button>
 						</form>
-						{/* <LexicalComposer initialConfig={initialConfig}>
-							<SharedHistoryContext>
-								<ToolbarContext>
-									<div className='min-h-[20rem] max-w-[74rem]'>
-										<EditorWithContext
-											onSave={handleSave}
-											isFullScreen={isFullScreen}
-										/>
-									</div>
-								</ToolbarContext>
-							</SharedHistoryContext>
-						</LexicalComposer> */}
 					</div>
 				</div>
 			</DialogContent>
