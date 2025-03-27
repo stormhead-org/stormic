@@ -14,9 +14,11 @@ import React, { useCallback, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { FormInput } from '../../form'
+import { MetaSidebar } from '../../post-write/items/meta-sidebar'
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
 import { Input } from '../../ui/input'
 import { Label } from '../../ui/label'
+import { SidebarProvider, SidebarTrigger } from '../../ui/sidebar'
 import { formTitleSchema, TFormTitleValues } from './schemas'
 
 interface Props {
@@ -155,67 +157,73 @@ export const WriteModal: React.FC<Props> = ({
 					/>
 				)}
 				<div className='flex justify-center'>
-					<div className='p-2'>
-						<PostWriteHeader
-							authorName={authorName}
-							authorUrl={authorUrl}
-							authorAvatar={authorAvatar}
-							communities={communities}
-							selectedCommunityId={selectedCommunityId}
-							setSelectedCommunityId={setSelectedCommunityId}
-						/>
-						<div className='flex w-full max-w-sm items-end space-x-2 mt-2'>
-							<Avatar>
-								<AvatarImage src={heroImage?.url || ''} />
-								<AvatarFallback>SH</AvatarFallback>
-							</Avatar>
-							<div className='grid w-full max-w-sm items-center gap-1.5'>
-								<Label htmlFor='heroImage'>Заглавное изображение</Label>
-								<Input
-									id='heroImage'
-									type='file'
-									accept='image/*'
-									ref={heroImageInputRef}
-								/>
+					<SidebarProvider>
+						{/* {isFullScreen && <MetaSidebar />} */}
+						<MetaSidebar />
+						<div className='p-2'>
+							{/* {isFullScreen && <SidebarTrigger />} */}
+							<SidebarTrigger />
+							<PostWriteHeader
+								authorName={authorName}
+								authorUrl={authorUrl}
+								authorAvatar={authorAvatar}
+								communities={communities}
+								selectedCommunityId={selectedCommunityId}
+								setSelectedCommunityId={setSelectedCommunityId}
+							/>
+							<div className='flex w-full max-w-sm items-end space-x-2 mt-2'>
+								<Avatar>
+									<AvatarImage src={heroImage?.url || ''} />
+									<AvatarFallback>SH</AvatarFallback>
+								</Avatar>
+								<div className='grid w-full max-w-sm items-center gap-1.5'>
+									<Label htmlFor='heroImage'>Заглавное изображение</Label>
+									<Input
+										id='heroImage'
+										type='file'
+										accept='image/*'
+										ref={heroImageInputRef}
+									/>
+								</div>
+								<Button
+									variant='blue'
+									type='button'
+									onClick={handleUploadHeroImage}
+								>
+									Загрузить
+								</Button>
 							</div>
-							<Button
-								variant='blue'
-								type='button'
-								onClick={handleUploadHeroImage}
-							>
-								Загрузить
-							</Button>
-						</div>
-						<FormProvider {...form}>
-							<form>
-								<FormInput
-									name='title'
-									placeholder='Заголовок'
-									className='bg-transparent'
-									required
-								/>
+							<FormProvider {...form}>
+								<form>
+									<FormInput
+										name='title'
+										placeholder='Заголовок'
+										className='bg-transparent'
+										required
+									/>
+								</form>
+							</FormProvider>
+							<form onSubmit={handleSubmit}>
+								<div
+									className={`${
+										isFullScreen
+											? 'min-w-[100vw] h-[56vh] overflow-auto'
+											: 'w-[90vw] h-[46vh] overflow-auto'
+									}`}
+								>
+									<Editor
+										data={content}
+										onChange={handleChange}
+										holder='editorjs'
+										className='w-full'
+									/>
+								</div>
+								<Button variant='blue' type='submit' className='mt-4'>
+									Опубликовать
+								</Button>
 							</form>
-						</FormProvider>
-						<form onSubmit={handleSubmit}>
-							<div
-								className={`${
-									isFullScreen
-										? 'min-w-[100vw] h-[56vh] overflow-auto'
-										: 'w-[90vw] h-[46vh] overflow-auto'
-								}`}
-							>
-								<Editor
-									data={content}
-									onChange={handleChange}
-									holder='editorjs'
-									className='w-full'
-								/>
-							</div>
-							<Button variant='blue' type='submit' className='mt-4'>
-								Опубликовать
-							</Button>
-						</form>
-					</div>
+						</div>
+					</SidebarProvider>
 				</div>
 			</DialogContent>
 		</Dialog>
