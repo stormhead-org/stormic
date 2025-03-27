@@ -4,6 +4,7 @@ import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
 import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { cn } from '@/shared/lib/utils'
+import { OutputData } from '@editorjs/editorjs'
 import React from 'react'
 import { PostItem } from '../post-items/post-item'
 
@@ -30,8 +31,8 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 			<PostFullBody
 				className='cursor-default'
 				postTitle={post.title}
-				postContent={post.content}
-				postHero={post}
+				heroImage={post.heroImage?.url}
+				postContent={post.content as unknown as OutputData}
 			/>
 			{post.relatedPost && (
 				<PostItem

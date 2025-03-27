@@ -1,5 +1,3 @@
-import { PostHero } from '@/modules/heros/PostHero'
-import { Post } from '@/payload-types'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
 import { OutputData } from '@editorjs/editorjs'
@@ -10,7 +8,7 @@ import RichText from '../../editorjs/render'
 interface Props {
 	postTitle: string
 	postContent: OutputData | null
-	postHero: Post
+	heroImage?: string
 	postUrl: string
 	className?: string
 	maxLength: number
@@ -54,7 +52,7 @@ interface Props {
 export const PostBody: React.FC<Props> = ({
 	postTitle,
 	postContent,
-	postHero,
+	heroImage,
 	postUrl,
 	className,
 	maxLength
@@ -63,13 +61,18 @@ export const PostBody: React.FC<Props> = ({
 		<div className={cn('', className)}>
 			<Link href={postUrl}>
 				<Title text={postTitle} size='sm' className='font-extrabold my-2' />
-				{/* <RichText
-          className="max-w-[48rem] mx-auto mb-4"
-          data={truncateEditorState(postContent, maxLength)}
-          enableGutter={false}
-        /> */}
-				<RichText data={postContent} />
-				{PostHero ? <PostHero post={postHero} /> : null}
+				<RichText
+					//data={truncateEditorState(postContent, maxLength)}
+					data={postContent}
+				/>
+
+				{heroImage && (
+					<img
+						className='rounded-md mt-4 object-cover h-80 w-full'
+						src={heroImage}
+						alt={postTitle}
+					/>
+				)}
 			</Link>
 		</div>
 	)

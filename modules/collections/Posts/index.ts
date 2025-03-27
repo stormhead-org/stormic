@@ -1,6 +1,5 @@
 import { authenticated } from '@/modules/access/authenticated'
 import { authenticatedOrPublished } from '@/modules/access/authenticatedOrPublished'
-import { generatePreviewPath } from '@/shared/lib/generatePreviewPath'
 import { addBookmark } from '@/shared/utils/api/bookmarks/addBookmark'
 import { getBookmarkStatus } from '@/shared/utils/api/bookmarks/getBookmarkStatus'
 import { removeBookmark } from '@/shared/utils/api/bookmarks/removeBookmark'
@@ -40,23 +39,6 @@ export const Posts: CollectionConfig<'posts'> = {
 	},
 	admin: {
 		defaultColumns: ['title', 'updatedAt'],
-		livePreview: {
-			url: ({ data, req }) => {
-				const path = generatePreviewPath({
-					id: typeof data?.id === 'number' ? data.id : null,
-					collection: 'posts',
-					req
-				})
-
-				return path
-			}
-		},
-		preview: (data, { req }) =>
-			generatePreviewPath({
-				id: typeof data?.id === 'number' ? data.id : null,
-				collection: 'posts',
-				req
-			}),
 		useAsTitle: 'title'
 	},
 	endpoints: [
@@ -276,28 +258,6 @@ export const Posts: CollectionConfig<'posts'> = {
 							label: false,
 							required: true
 						},
-						// {
-						// 	name: 'content',
-						// 	type: 'richText',
-						// 	editor: lexicalEditor({
-						// 		features: ({ rootFeatures }) => {
-						// 			return [
-						// 				...rootFeatures,
-						// 				HeadingFeature({
-						// 					enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4']
-						// 				}),
-						// 				BlocksFeature({
-						// 					blocks: [Banner, Code, MediaBlock]
-						// 				}),
-						// 				FixedToolbarFeature(),
-						// 				InlineToolbarFeature(),
-						// 				HorizontalRuleFeature()
-						// 			]
-						// 		}
-						// 	}),
-						// 	label: false,
-						// 	required: true
-						// },
 						{
 							label: 'Комментарии к посту',
 							name: 'comments',

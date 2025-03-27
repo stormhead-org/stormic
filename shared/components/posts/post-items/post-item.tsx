@@ -51,7 +51,7 @@ export const PostItem: React.FC<{
 				<PostBody
 					postTitle={post.title}
 					postContent={post.content as unknown as OutputData}
-					postHero={post}
+					heroImage={post.heroImage?.url}
 					maxLength={300}
 					postUrl={`/p/${post.id}`}
 				/>

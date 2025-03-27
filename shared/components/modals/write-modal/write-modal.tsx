@@ -137,8 +137,8 @@ export const WriteModal: React.FC<Props> = ({
 	return (
 		<Dialog open={open} onOpenChange={onClose}>
 			<DialogContent
-				className={`bg-secondary transition-all duration-300-p-2 ${
-					isFullScreen ? 'min-w-full min-h-full' : 'min-w-[75rem] min-h-[420px]'
+				className={`bg-secondary transition-all duration-300 p-2 ${
+					isFullScreen ? 'min-w-[100vw] h-[100vh]' : 'min-w-[90vw] h-[90vh]'
 				}`}
 			>
 				{isFullScreen ? (
@@ -200,8 +200,8 @@ export const WriteModal: React.FC<Props> = ({
 							<div
 								className={`${
 									isFullScreen
-										? 'w-[71rem] h-[42rem] overflow-auto'
-										: 'w-[71rem] h-[420px] overflow-auto'
+										? 'min-w-[100vw] h-[56vh] overflow-auto'
+										: 'w-[90vw] h-[46vh] overflow-auto'
 								}`}
 							>
 								<Editor

@@ -138,7 +138,7 @@ html {
 		@apply bg-background text-foreground;
 	}
 
-	h1,
+	/* h1,
 	h2,
 	h3,
 	h4,
@@ -147,7 +147,7 @@ html {
 		color: var(--txt-color-headers);
 		margin: 1em 0;
 		font-weight: 700;
-	}
+	} */
 
 	p {
 		margin: 0.5em 0;
@@ -161,10 +161,12 @@ html {
 		margin: 0.5em 0 0.5em 1.5em;
 		padding-left: 1em;
 		list-style-position: outside;
+		background-color: aqua;
 	}
 
 	li {
 		margin: 0.2em 0;
+		background-color: brown;
 	}
 
 	blockquote {
@@ -173,7 +175,7 @@ html {
 		color: var(--muted-foreground);
 		font-style: italic;
 		margin: 1em 0;
-		background: rgba(0, 0, 0, 0.03);
+		background-color: blueviolet;
 	}
 
 	code {
@@ -186,7 +188,7 @@ html {
 	}
 
 	pre {
-		background: var(--muted);
+		background-color: burlywood;
 		padding: 1em;
 		border-radius: 0.5rem;
 		overflow-x: auto;

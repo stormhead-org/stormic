@@ -1,5 +1,3 @@
-import { PostHero } from '@/modules/heros/PostHero'
-import { Post } from '@/payload-types'
 import { Title } from '@/shared/components'
 import { cn } from '@/shared/lib/utils'
 import { OutputData } from '@editorjs/editorjs'
@@ -9,25 +7,26 @@ import RichText from '../../editorjs/render'
 interface Props {
 	postTitle: string
 	postContent: OutputData | null
-	postHero: Post
+	heroImage?: string
 	className?: string
 }
 
 export const PostFullBody: React.FC<Props> = ({
 	postTitle,
 	postContent,
-	postHero,
+	heroImage,
 	className
 }) => {
 	return (
 		<div className={cn('', className)}>
 			<Title text={postTitle} size='sm' className='font-extrabold my-2' />
-			{PostHero ? <PostHero post={postHero} /> : null}
-			{/* <RichText
-				className='max-w-[48rem] mx-auto mt-4'
-				data={postContent}
-				enableGutter={false}
-			/> */}
+			{heroImage && (
+				<img
+					className='rounded-md mt-4 object-cover h-80 w-full'
+					src={heroImage}
+					alt={postTitle}
+				/>
+			)}
 			<RichText data={postContent} />
 		</div>
 	)
