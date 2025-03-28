@@ -1,7 +1,6 @@
 'use client'
 
 import { Community, Media, Post } from '@/payload-types'
-import { PostWriteHeader } from '@/shared/components/post-write/items/post-write-header'
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
 import { useCurrentTime } from '@/shared/hooks/useCurrentTime'
@@ -143,6 +142,7 @@ export const WriteModal: React.FC<Props> = ({
 					isFullScreen ? 'min-w-[100vw] h-[100vh]' : 'min-w-[90vw] h-[90vh]'
 				}`}
 			>
+				{/* <SidebarTrigger className='absolute top-4 right-20' /> */}
 				{isFullScreen ? (
 					<Minimize2
 						onClick={handleToggleSize}
@@ -158,19 +158,19 @@ export const WriteModal: React.FC<Props> = ({
 				)}
 				<div className='flex justify-center'>
 					<SidebarProvider>
-						{/* {isFullScreen && <MetaSidebar />} */}
-						<MetaSidebar />
-						<div className='p-2'>
-							{/* {isFullScreen && <SidebarTrigger />} */}
-							<SidebarTrigger />
-							<PostWriteHeader
+						{isFullScreen && (
+							<MetaSidebar
 								authorName={authorName}
-								authorUrl={authorUrl}
 								authorAvatar={authorAvatar}
 								communities={communities}
 								selectedCommunityId={selectedCommunityId}
 								setSelectedCommunityId={setSelectedCommunityId}
+								heroImage={heroImage}
+								setHeroImage={setHeroImage}
 							/>
+						)}
+						<div className='p-2'>
+							{isFullScreen && <SidebarTrigger />}
 							<div className='flex w-full max-w-sm items-end space-x-2 mt-2'>
 								<Avatar>
 									<AvatarImage src={heroImage?.url || ''} />

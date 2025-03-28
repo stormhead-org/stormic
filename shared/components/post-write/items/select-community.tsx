@@ -1,14 +1,18 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
+import { Community } from '@/payload-types'
+import { cn } from '@/shared/lib/utils'
+import { Check, ChevronsUpDown, Users } from 'lucide-react'
 import * as React from 'react'
-
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger
-} from '../../ui/dropdown-menu'
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList
+} from '../../ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover'
 import {
 	SidebarHeader,
 	SidebarMenu,
@@ -16,53 +20,70 @@ import {
 	SidebarMenuItem
 } from '../../ui/sidebar'
 
-const frameworks = [
-	{
-		value: 'next.js',
-		label: 'Next.js'
-	},
-	{
-		value: 'sveltekit',
-		label: 'SvelteKit'
-	},
-	{
-		value: 'nuxt.js',
-		label: 'Nuxt.js'
-	},
-	{
-		value: 'remix',
-		label: 'Remix'
-	},
-	{
-		value: 'astro',
-		label: 'Astro'
-	}
-]
+interface SelectCommunityProps {
+	communities: Community[]
+	selectedCommunityId: number | null
+	setSelectedCommunityId: (id: number) => void
+}
 
-export function SelectCommunity() {
+export function SelectCommunity({
+	communities,
+	selectedCommunityId,
+	setSelectedCommunityId
+}: SelectCommunityProps) {
 	const [open, setOpen] = React.useState(false)
-	const [value, setValue] = React.useState('')
+
+	// Находим выбранное сообщество по ID
+	const selectedCommunity = communities.find(c => c.id === selectedCommunityId)
 
 	return (
 		<SidebarHeader>
-			<SidebarMenu>
-				<SidebarMenuItem>
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<SidebarMenuButton>
-								Сообщество
-								<ChevronDown className='ml-auto' />
+			<SidebarMenu className='p-0 m-0 bg-transparent'>
+				<SidebarMenuItem className='bg-transparent'>
+					<Popover open={open} onOpenChange={setOpen}>
+						<PopoverTrigger asChild>
+							<SidebarMenuButton
+								variant='default'
+								role='combobox'
+								aria-expanded={open}
+								className='w-full justify-between bg-transparent text-primary hover:bg-secondary'
+							>
+								<Users size={16} />
+								{selectedCommunity ? selectedCommunity.title : 'Сообщество...'}
+								<ChevronsUpDown className='opacity-50' />
 							</SidebarMenuButton>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent className='w-[--radix-popper-anchor-width]'>
-							<DropdownMenuItem>
-								<span>Acme Inc</span>
-							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<span>Acme Corp.</span>
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
+						</PopoverTrigger>
+						<PopoverContent className='w-full p-0'>
+							<Command>
+								<CommandInput placeholder='Поиск...' className='h-9' />
+								<CommandList>
+									<CommandEmpty>Сообщество не найдено</CommandEmpty>
+									<CommandGroup>
+										{communities.map(community => (
+											<CommandItem
+												key={community.id}
+												value={community.title.toLowerCase()}
+												onSelect={() => {
+													setSelectedCommunityId(community.id)
+													setOpen(false)
+												}}
+											>
+												{community.title}
+												<Check
+													className={cn(
+														'ml-auto',
+														selectedCommunityId === community.id
+															? 'opacity-100'
+															: 'opacity-0'
+													)}
+												/>
+											</CommandItem>
+										))}
+									</CommandGroup>
+								</CommandList>
+							</Command>
+						</PopoverContent>
+					</Popover>
 				</SidebarMenuItem>
 			</SidebarMenu>
 		</SidebarHeader>

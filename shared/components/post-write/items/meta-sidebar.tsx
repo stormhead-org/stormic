@@ -1,93 +1,95 @@
-import {
-	Calendar,
-	ChevronDown,
-	Home,
-	Inbox,
-	Search,
-	Settings
-} from 'lucide-react'
-
+import { Community, Media } from '@/payload-types'
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarGroup,
-	SidebarGroupContent,
-	SidebarGroupLabel
+	SidebarMenuButton,
+	SidebarMenuItem,
+	SidebarMenuSub,
+	SidebarMenuSubButton,
+	SidebarMenuSubItem
 } from '@/shared/components/ui/sidebar'
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger
-} from '../../ui/collapsible'
+import { ImagePlus } from 'lucide-react'
+import { HeroImageUploader } from './hero-image-uploader'
 import { SelectCommunity } from './select-community'
 import { UserProfile } from './user-profile'
 
-// Menu items.
-const items = [
-	{
-		title: 'Home',
-		url: '#',
-		icon: Home
-	},
-	{
-		title: 'Inbox',
-		url: '#',
-		icon: Inbox
-	},
-	{
-		title: 'Calendar',
-		url: '#',
-		icon: Calendar
-	},
-	{
-		title: 'Search',
-		url: '#',
-		icon: Search
-	},
-	{
-		title: 'Settings',
-		url: '#',
-		icon: Settings
-	}
-]
+interface Props {
+	authorName: string
+	authorAvatar?: string
+	communities: Community[]
+	selectedCommunityId: number | null
+	setSelectedCommunityId: (id: number) => void
+	heroImage: Media | undefined
+	setHeroImage: (media: Media | undefined) => void
+	className?: string
+}
 
-export function MetaSidebar() {
+export const MetaSidebar: React.FC<Props> = ({
+	authorName,
+	authorAvatar,
+	communities,
+	selectedCommunityId,
+	setSelectedCommunityId,
+	heroImage,
+	setHeroImage,
+	className
+}) => {
 	return (
-		<Sidebar side='right' collapsible='icon'>
-			<SelectCommunity />
+		<Sidebar side='left' collapsible='icon'>
+			<SelectCommunity
+				communities={communities}
+				selectedCommunityId={selectedCommunityId}
+				setSelectedCommunityId={setSelectedCommunityId}
+			/>
 			<SidebarContent>
 				<SidebarGroup>
-					<SidebarGroupLabel className='text-sm'>Мета</SidebarGroupLabel>
-					<SidebarGroupContent>
-						<Collapsible defaultOpen className='group/collapsible'>
-							<SidebarGroup>
-								<SidebarGroupLabel asChild>
-									<CollapsibleTrigger>
-										Help
-										<ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
-									</CollapsibleTrigger>
-								</SidebarGroupLabel>
-								<CollapsibleContent>
-									<SidebarGroupContent />
-								</CollapsibleContent>
-							</SidebarGroup>
-						</Collapsible>
-						{/* <SidebarMenu>
-							{items.map(item => (
-								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
-										<a href={item.url}>
-											<item.icon />
-											<span>{item.title}</span>
-										</a>
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu> */}
-					</SidebarGroupContent>
+					<SidebarMenuItem className='bg-transparent p-0 m-0'>
+						<SidebarMenuButton className='bg-transparent hover:bg-transparent mx-0 mb-2 w-full text-primary cursor-default'>
+							<ImagePlus size={16} />
+							<span>Заглавное изображение</span>
+						</SidebarMenuButton>
+						<SidebarMenuSub className='bg-transparent p-0 m-0 rounded-md'>
+							<SidebarMenuSubItem className='bg-transparent p-0 m-0'>
+								<SidebarMenuSubButton className='bg-transparent p-0 m-0 w-full h-32'>
+									<HeroImageUploader
+										heroImage={heroImage}
+										setHeroImage={setHeroImage}
+									/>
+								</SidebarMenuSubButton>
+							</SidebarMenuSubItem>
+						</SidebarMenuSub>
+					</SidebarMenuItem>
+
+					{/* <SidebarMenuItem className='bg-transparent p-0 m-0'>
+						<SidebarMenuButton className='bg-transparent hover:bg-transparent mx-0 mb-2 w-full text-primary cursor-default'>
+							<ALargeSmall size={16} />
+							<span>SEO</span>
+						</SidebarMenuButton>
+						<SidebarMenuSub className='bg-transparent p-0 m-0 rounded-md'>
+							<SidebarMenuSubItem className='bg-transparent p-0 m-0'>
+								<SidebarMenuSubButton className='bg-transparent p-0 m-0 w-full'>
+									<p className='text-sm text-gray-400 leading-3 mt-1'>
+										Заголовок поста для SEO оптимизации. Подробнее...
+									</p>
+								</SidebarMenuSubButton>
+							</SidebarMenuSubItem>
+							<SidebarMenuSubItem className='bg-transparent p-0 m-0'>
+								<SidebarMenuSubButton className='bg-transparent p-0 m-0 w-full'>
+									<FormInput
+										name='seotitle'
+										// label={formatMessage({ id: 'loginForm.formInputEmailLabel' })}
+										label='Заголовок'
+										placeholder='Заголовок'
+										required
+									/>
+								</SidebarMenuSubButton>
+							</SidebarMenuSubItem>
+						</SidebarMenuSub>
+					</SidebarMenuItem> */}
 				</SidebarGroup>
 			</SidebarContent>
-			<UserProfile />
+			<UserProfile authorName={authorName} authorAvatar={authorAvatar} />
 		</Sidebar>
 	)
 }
