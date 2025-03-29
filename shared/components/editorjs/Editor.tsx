@@ -29,8 +29,8 @@ const EDITOR_TOOLS: { [key: string]: any } = {
 		inlineToolbar: true,
 		config: {
 			placeholder: 'Заголовок',
-			levels: [1, 2, 3, 4],
-			defaultLevel: 1
+			levels: [2, 3, 4],
+			defaultLevel: 2
 		}
 	},
 	paragraph: {
@@ -80,10 +80,3 @@ const Editor: React.FC<EditorProps> = ({
 }
 
 export default Editor
-
-// {
-// 				width: '100%',
-// 				minHeight: 500,
-// 				borderRadius: '7px',
-// 				background: '#003'
-// 			}

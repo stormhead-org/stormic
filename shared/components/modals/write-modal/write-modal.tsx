@@ -7,16 +7,12 @@ import { useCurrentTime } from '@/shared/hooks/useCurrentTime'
 import { createMedia } from '@/shared/utils/api/media/createMedia'
 import { OutputData } from '@editorjs/editorjs'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Maximize2, Minimize2 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import React, { useCallback, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { FormInput } from '../../form'
 import { MetaSidebar } from '../../post-write/items/meta-sidebar'
-import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
-import { Input } from '../../ui/input'
-import { Label } from '../../ui/label'
 import { SidebarProvider, SidebarTrigger } from '../../ui/sidebar'
 import { formTitleSchema, TFormTitleValues } from './schemas'
 
@@ -52,7 +48,7 @@ export const WriteModal: React.FC<Props> = ({
 
 	const [content, setContent] = useState<OutputData | null>(null)
 
-	const [isFullScreen, setIsFullScreen] = useState(false)
+	const [isFullScreen, setIsFullScreen] = useState(true)
 
 	const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(
 		null
@@ -142,8 +138,65 @@ export const WriteModal: React.FC<Props> = ({
 					isFullScreen ? 'min-w-[100vw] h-[100vh]' : 'min-w-[90vw] h-[90vh]'
 				}`}
 			>
+				<SidebarProvider>
+					<div className='flex gap-4'>
+						{/* Левая часть */}
+						<div className='w-1/4'>
+							{isFullScreen && (
+								<MetaSidebar
+									authorName={authorName}
+									authorAvatar={authorAvatar}
+									communities={communities}
+									selectedCommunityId={selectedCommunityId}
+									setSelectedCommunityId={setSelectedCommunityId}
+									heroImage={heroImage}
+									setHeroImage={setHeroImage}
+								/>
+							)}
+						</div>
+
+						{/* Центральная часть */}
+						<div className='w-2/4 h-full overflow-auto no-scrollbar rounded-md'>
+							<div className='p-2'>
+								{isFullScreen && <SidebarTrigger />}
+								<FormProvider {...form}>
+									<form>
+										<FormInput
+											name='title'
+											placeholder='Заголовок'
+											className='bg-transparent'
+											required
+										/>
+									</form>
+								</FormProvider>
+								<form onSubmit={handleSubmit}>
+									<div
+										className={`${
+											isFullScreen
+												? 'min-w-[100vw] h-[56vh] overflow-auto bg-red-600'
+												: 'w-[90vw] h-[46vh] overflow-auto'
+										}`}
+									>
+										<Editor
+											data={content}
+											onChange={handleChange}
+											holder='editorjs'
+											className='w-full bg-blue-600'
+										/>
+									</div>
+									<Button variant='blue' type='submit' className='mt-4'>
+										Опубликовать
+									</Button>
+								</form>
+							</div>
+						</div>
+
+						{/* Правая часть */}
+						<div className='w-1/4'></div>
+					</div>
+				</SidebarProvider>
 				{/* <SidebarTrigger className='absolute top-4 right-20' /> */}
-				{isFullScreen ? (
+				{/* {isFullScreen ? (
 					<Minimize2
 						onClick={handleToggleSize}
 						className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
@@ -155,76 +208,7 @@ export const WriteModal: React.FC<Props> = ({
 						className='cursor-pointer absolute top-4 right-10 hover:text-a-color'
 						size={15}
 					/>
-				)}
-				<div className='flex justify-center'>
-					<SidebarProvider>
-						{isFullScreen && (
-							<MetaSidebar
-								authorName={authorName}
-								authorAvatar={authorAvatar}
-								communities={communities}
-								selectedCommunityId={selectedCommunityId}
-								setSelectedCommunityId={setSelectedCommunityId}
-								heroImage={heroImage}
-								setHeroImage={setHeroImage}
-							/>
-						)}
-						<div className='p-2'>
-							{isFullScreen && <SidebarTrigger />}
-							<div className='flex w-full max-w-sm items-end space-x-2 mt-2'>
-								<Avatar>
-									<AvatarImage src={heroImage?.url || ''} />
-									<AvatarFallback>SH</AvatarFallback>
-								</Avatar>
-								<div className='grid w-full max-w-sm items-center gap-1.5'>
-									<Label htmlFor='heroImage'>Заглавное изображение</Label>
-									<Input
-										id='heroImage'
-										type='file'
-										accept='image/*'
-										ref={heroImageInputRef}
-									/>
-								</div>
-								<Button
-									variant='blue'
-									type='button'
-									onClick={handleUploadHeroImage}
-								>
-									Загрузить
-								</Button>
-							</div>
-							<FormProvider {...form}>
-								<form>
-									<FormInput
-										name='title'
-										placeholder='Заголовок'
-										className='bg-transparent'
-										required
-									/>
-								</form>
-							</FormProvider>
-							<form onSubmit={handleSubmit}>
-								<div
-									className={`${
-										isFullScreen
-											? 'min-w-[100vw] h-[56vh] overflow-auto'
-											: 'w-[90vw] h-[46vh] overflow-auto'
-									}`}
-								>
-									<Editor
-										data={content}
-										onChange={handleChange}
-										holder='editorjs'
-										className='w-full'
-									/>
-								</div>
-								<Button variant='blue' type='submit' className='mt-4'>
-									Опубликовать
-								</Button>
-							</form>
-						</div>
-					</SidebarProvider>
-				</div>
+				)} */}
 			</DialogContent>
 		</Dialog>
 	)
