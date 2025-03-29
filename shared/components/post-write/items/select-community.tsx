@@ -37,7 +37,7 @@ export function SelectCommunity({
 	const selectedCommunity = communities.find(c => c.id === selectedCommunityId)
 
 	return (
-		<SidebarHeader>
+		<SidebarHeader className='mt-2'>
 			<SidebarMenu className='p-0 m-0 bg-transparent'>
 				<SidebarMenuItem className='bg-transparent'>
 					<Popover open={open} onOpenChange={setOpen}>

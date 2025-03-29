@@ -42,11 +42,11 @@ export const AuthModal: React.FC<Props> = ({
 
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className='min-w-[38rem] min-h-[36rem] p-0'>
+			<DialogContent className='min-w-[38vw] h-[70vh] p-0'>
 				<DialogHeader className='hidden'>
 					<DialogTitle />
 				</DialogHeader>
-				<div className='flex w-full'>
+				<div className='flex w-full h-[70vh]'>
 					<div className='w-[40%]'>
 						<img
 							className='rounded-l-md h-full object-cover'
