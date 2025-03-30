@@ -184,11 +184,27 @@ export const Users: CollectionConfig = {
 		},
 		{
 			label: 'Роли',
-			name: 'roles',
-			type: 'relationship',
-			hasMany: true,
-			relationTo: 'roles'
-			// required: true
+			name: 'communitiesRoles',
+			type: 'join',
+			collection: 'roles',
+			on: 'users',
+			maxDepth: 1
+		},
+		{
+			label: 'Заблокирован в сообществах',
+			name: 'communitiesBans',
+			type: 'join',
+			collection: 'communities',
+			on: 'bans',
+			maxDepth: 1
+		},
+		{
+			label: 'Посты пользователя',
+			name: 'communitiesMutes',
+			type: 'join',
+			collection: 'communities',
+			on: 'mutes',
+			maxDepth: 1
 		},
 		{
 			label: 'Посты пользователя',

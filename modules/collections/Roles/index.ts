@@ -32,12 +32,26 @@ export const Roles: CollectionConfig = {
 			type: 'text'
 		},
 		{
+			label: 'Роль принадлежит сообществу',
+			name: 'community',
+			type: 'relationship',
+			hasMany: false,
+			relationTo: 'communities',
+			required: true
+		},
+		{
 			label: 'Пользователи с этой ролью',
 			name: 'users',
-			type: 'join',
-			collection: 'users',
-			on: 'roles',
-			maxDepth: 1
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users',
+			required: false
+		},
+		{
+			label: 'Управление ролями',
+			name: 'COMMUNITY_ROLES_MANAGEMENT',
+			type: 'checkbox',
+			defaultValue: false
 		},
 		{
 			label: 'Блокировать пользователей в сообществе',
@@ -46,8 +60,26 @@ export const Roles: CollectionConfig = {
 			defaultValue: false
 		},
 		{
+			label: 'Заглушать пользователей в сообществе',
+			name: 'COMMUNITY_USER_MUTE',
+			type: 'checkbox',
+			defaultValue: false
+		},
+		{
 			label: 'Удалять посты в сообществе',
 			name: 'COMMUNITY_POST_DELETE',
+			type: 'checkbox',
+			defaultValue: false
+		},
+		{
+			label: 'Снять пост с публикации в сообществе',
+			name: 'COMMUNITY_POST_REMOVE_FROM_PUBLICATION',
+			type: 'checkbox',
+			defaultValue: false
+		},
+		{
+			label: 'Удалять комментарии в сообществе',
+			name: 'COMMUNITY_COMMENTS_DELETE',
 			type: 'checkbox',
 			defaultValue: false
 		}

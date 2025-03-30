@@ -40,8 +40,13 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({
 			// text: formatMessage({ id: 'settingsProfileSideMenu.account' }),
 			text: 'Права доступа',
 			icon: <LockKeyhole />,
-			path: `/settings/community/${communityId}/permissions`,
-			disabled: true
+			path: `/settings/community/${communityId}/permissions/roles`,
+			includePaths: [
+				`/settings/community/${communityId}/permissions/roles`,
+				`/settings/community/${communityId}/permissions/bans`,
+				`/settings/community/${communityId}/permissions/mutes`
+			],
+			disabled: false
 		},
 		{
 			id: 3,

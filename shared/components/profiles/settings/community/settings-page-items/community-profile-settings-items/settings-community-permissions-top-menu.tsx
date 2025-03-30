@@ -7,10 +7,14 @@ import React from 'react'
 // import { useIntl } from 'react-intl'
 
 interface Props {
+	communityId: number
 	className?: string
 }
 
-export const SettingsCommunityPermissionsTopMenu: React.FC<Props> = ({ className }) => {
+export const SettingsCommunityPermissionsTopMenu: React.FC<Props> = ({
+	communityId,
+	className
+}) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -19,23 +23,23 @@ export const SettingsCommunityPermissionsTopMenu: React.FC<Props> = ({ className
 		{
 			id: 1,
 			// text: formatMessage({ id: 'profileAuthTopMenu.accountSettings' }),
-			text: 'Управление учётной записью',
-			path: '/settings/permissions',
+			text: 'Роли',
+			path: `/settings/community/${communityId}/permissions/roles`,
 			disabled: false
 		},
 		{
 			id: 2,
 			// text: formatMessage({ id: 'profileAuthTopMenu.2FactorAuth' }),
-			text: 'Подтверждение входа',
-			path: '/settings/permissions#2',
-			disabled: true
+			text: 'Заблокированные',
+			path: `/settings/community/${communityId}/permissions/bans`,
+			disabled: false
 		},
 		{
 			id: 3,
 			// text: formatMessage({ id: 'profileAuthTopMenu.authorizedApps' }),
-			text: 'Приложения',
-			path: '/settings/permissions#3',
-			disabled: true
+			text: 'Заглушенные',
+			path: `/settings/community/${communityId}/permissions/mutes`,
+			disabled: false
 		}
 	]
 

@@ -190,6 +190,14 @@ export const Communities: CollectionConfig = {
 			relationTo: 'users'
 		},
 		{
+			label: 'Роли',
+			name: 'roles',
+			type: 'join',
+			collection: 'roles',
+			on: 'community',
+			maxDepth: 1
+		},
+		{
 			label: 'Правила',
 			name: 'rules',
 			type: 'array',
@@ -209,6 +217,23 @@ export const Communities: CollectionConfig = {
 		{
 			label: 'Подписчики сообщества',
 			name: 'followers',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users',
+			admin: {
+				readOnly: true
+			}
+		},
+		{
+			label: 'Забаненые пользователи',
+			name: 'bans',
+			type: 'relationship',
+			hasMany: true,
+			relationTo: 'users'
+		},
+		{
+			label: 'Заглушенные пользователи',
+			name: 'mutes',
 			type: 'relationship',
 			hasMany: true,
 			relationTo: 'users',

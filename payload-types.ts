@@ -81,25 +81,26 @@ export interface Config {
   };
   collectionsJoins: {
     users: {
+      communitiesRoles: 'roles';
+      communitiesBans: 'communities';
+      communitiesMutes: 'communities';
+      followCommunities: 'communities';
+      ownerCommunities: 'communities';
       posts: 'posts';
       postsLikes: 'posts';
       bookmarks: 'posts';
-      followCommunities: 'communities';
-      ownerCommunities: 'communities';
       commentsLikes: 'comments';
     };
     posts: {
       comments: 'comments';
     };
     communities: {
+      roles: 'roles';
       posts: 'posts';
       comments: 'comments';
     };
     comments: {
       childrenComments: 'comments';
-    };
-    roles: {
-      users: 'users';
     };
   };
   collectionsSelect: {
@@ -178,7 +179,21 @@ export interface User {
       }[]
     | null;
   systemRoles: ('owner' | 'everyone')[];
-  roles?: (number | Role)[] | null;
+  communitiesRoles?: {
+    docs?: (number | Role)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  communitiesBans?: {
+    docs?: (number | Community)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  communitiesMutes?: {
+    docs?: (number | Community)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   posts?: {
     docs?: (number | Post)[];
     hasNextPage?: boolean;
@@ -308,13 +323,62 @@ export interface Role {
   name: string;
   badge?: (number | null) | Media;
   color?: string | null;
-  users?: {
-    docs?: (number | User)[];
+  community: number | Community;
+  users?: (number | User)[] | null;
+  COMMUNITY_ROLES_MANAGEMENT?: boolean | null;
+  COMMUNITY_USER_BAN?: boolean | null;
+  COMMUNITY_USER_MUTE?: boolean | null;
+  COMMUNITY_POST_DELETE?: boolean | null;
+  COMMUNITY_POST_REMOVE_FROM_PUBLICATION?: boolean | null;
+  COMMUNITY_COMMENTS_DELETE?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "communities".
+ */
+export interface Community {
+  id: number;
+  logo?: (number | null) | Media;
+  banner?: (number | null) | Media;
+  title: string;
+  contacts?: string | null;
+  description?: string | null;
+  tableInfo?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  owner: number | User;
+  moderators?: (number | User)[] | null;
+  roles?: {
+    docs?: (number | Role)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
-  COMMUNITY_USER_BAN?: boolean | null;
-  COMMUNITY_POST_DELETE?: boolean | null;
+  rules?:
+    | {
+        communityNameRule?: string | null;
+        communityDescriptionRule?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  followers?: (number | User)[] | null;
+  bans?: (number | User)[] | null;
+  mutes?: (number | User)[] | null;
+  posts?: {
+    docs?: (number | Post)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  comments?: {
+    docs?: (number | Comment)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -377,47 +441,6 @@ export interface Comment {
     totalDocs?: number;
   };
   likes?: (number | User)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "communities".
- */
-export interface Community {
-  id: number;
-  logo?: (number | null) | Media;
-  banner?: (number | null) | Media;
-  title: string;
-  contacts?: string | null;
-  description?: string | null;
-  tableInfo?:
-    | {
-        label: string;
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  owner: number | User;
-  moderators?: (number | User)[] | null;
-  rules?:
-    | {
-        communityNameRule?: string | null;
-        communityDescriptionRule?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  followers?: (number | User)[] | null;
-  posts?: {
-    docs?: (number | Post)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  comments?: {
-    docs?: (number | Comment)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -650,7 +673,9 @@ export interface UsersSelect<T extends boolean = true> {
         id?: T;
       };
   systemRoles?: T;
-  roles?: T;
+  communitiesRoles?: T;
+  communitiesBans?: T;
+  communitiesMutes?: T;
   posts?: T;
   followers?: T;
   follow?: T;
@@ -714,6 +739,7 @@ export interface CommunitiesSelect<T extends boolean = true> {
       };
   owner?: T;
   moderators?: T;
+  roles?: T;
   rules?:
     | T
     | {
@@ -722,6 +748,8 @@ export interface CommunitiesSelect<T extends boolean = true> {
         id?: T;
       };
   followers?: T;
+  bans?: T;
+  mutes?: T;
   posts?: T;
   comments?: T;
   updatedAt?: T;
@@ -844,9 +872,14 @@ export interface RolesSelect<T extends boolean = true> {
   name?: T;
   badge?: T;
   color?: T;
+  community?: T;
   users?: T;
+  COMMUNITY_ROLES_MANAGEMENT?: T;
   COMMUNITY_USER_BAN?: T;
+  COMMUNITY_USER_MUTE?: T;
   COMMUNITY_POST_DELETE?: T;
+  COMMUNITY_POST_REMOVE_FROM_PUBLICATION?: T;
+  COMMUNITY_COMMENTS_DELETE?: T;
   updatedAt?: T;
   createdAt?: T;
 }
