@@ -3,29 +3,95 @@ import { Container } from '@/shared/components/container'
 import { Title } from '@/shared/components/title'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
-import { ChevronRight, Mail, User, Users } from 'lucide-react'
+import { ChevronRight, Trash2, User, Users } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import qs from 'qs'
 import React, { useState } from 'react'
-// import { useIntl } from 'react-intl'
 
 interface Props {
 	data: Community
-	totalRoles: number
+	communityRoles: Role[]
+	selectedRoleId: number | null
+	setSelectedRoleId: (id: number) => void
 	setType: React.Dispatch<
 		React.SetStateAction<'main' | 'visual' | 'permissions' | 'users'>
 	>
 }
 
-export const MainForm: React.FC<Props> = ({ setType, data, totalRoles }) => {
-	// const { formatMessage } = useIntl()
-	const [selectedRoleId, setSelectedRoleId] = useState<number | null>(null)
+export const MainForm: React.FC<Props> = ({
+	setType,
+	data,
+	selectedRoleId,
+	setSelectedRoleId,
+	communityRoles
+}) => {
+	const router = useRouter()
 	const [searchTerm, setSearchTerm] = useState<string>('')
 
-	const filteredRoles = data.roles?.docs?.filter(
+	const filteredRoles = communityRoles.filter(
 		(role): role is Role =>
 			typeof role === 'object' &&
-			role.name.toLowerCase() !== 'everyone' &&
+			role.name.toLowerCase() !== '@everyone' &&
 			role.name.toLowerCase().includes(searchTerm.toLowerCase())
 	)
+
+	const everyoneRole = communityRoles.find(
+		(role): role is Role =>
+			typeof role === 'object' && role.name === '@everyone'
+	)
+
+	const handleSubmitNewRole = async () => {
+		const newRoleData = {
+			name: 'Новая роль',
+			community: data.id
+		}
+		try {
+			const response = await fetch('/api/roles', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(newRoleData)
+			})
+
+			if (!response.ok) {
+				throw new Error(`Ошибка создания роли: ${response.status}`)
+			}
+
+			const result = await response.json()
+			return result
+		} catch (error) {
+			console.error('Ошибка роли:', error)
+			throw error
+		}
+	}
+
+	const handleSubmitDeleteRole = async (roleId: number) => {
+		const stringifiedQuery = qs.stringify(
+			{
+				where: {
+					id: {
+						equals: roleId
+					},
+					community: {
+						equals: data.id
+					}
+				}
+			},
+			{ addQueryPrefix: true }
+		)
+		try {
+			const req = await fetch(`/api/roles/${stringifiedQuery}`, {
+				method: 'DELETE',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			const data = await req.json()
+			return data
+		} catch (err) {
+			console.log(err)
+		}
+	}
 
 	return (
 		<Container className='bg-secondary rounded-md mt-1 p-4 w-full'>
@@ -36,7 +102,15 @@ export const MainForm: React.FC<Props> = ({ setType, data, totalRoles }) => {
 			<div className='w-full border-b-2 border-b-blue-600 pb-4'>
 				<Title text='Роли' size='sm' className='mt-2' />
 			</div>
-			<div className='flex mt-4 bg-gray-700 hover:bg-gray-600 cursor-pointer items-center justify-around rounded-md w-full'>
+			<div
+				className='flex mt-4 bg-gray-700 hover:bg-gray-600 cursor-pointer items-center justify-around rounded-md w-full'
+				onClick={() => {
+					if (everyoneRole) {
+						setSelectedRoleId(everyoneRole.id)
+						setType('visual')
+					}
+				}}
+			>
 				<div className='flex items-center'>
 					<Users size={28} />
 					<div className='ml-4'>
@@ -58,19 +132,34 @@ export const MainForm: React.FC<Props> = ({ setType, data, totalRoles }) => {
 							value={searchTerm}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
-						<Button variant='blue' className='px-10'>
+						<Button
+							variant='blue'
+							onClick={async () => {
+								try {
+									const newRole = await handleSubmitNewRole()
+									setSelectedRoleId(newRole.doc?.id)
+									setType('visual')
+								} catch (error) {
+									console.error('Ошибка при создании роли:', error)
+								}
+							}}
+							className='px-10'
+						>
 							Новая роль
 						</Button>
 					</div>
 					<div className='flex w-full bg-secondary px-1 mt-2'>
-						<div className='w-1/2'>
-							<p>Роли - {totalRoles}</p>
+						<div className='flex w-11/12'>
+							<div className='w-1/2'>
+								<p>Роли - {communityRoles.length - 1}</p>
+							</div>
+							<div className='w-1/2'>
+								<p>Участники</p>
+							</div>
 						</div>
-						<div className='w-1/2'>
-							<p>Участники</p>
-						</div>
+						<div className='w-1/12' />
 					</div>
-					<div className='mt-2 max-h-60 overflow-y-auto'>
+					<div className='mt-2'>
 						{filteredRoles?.length === 0 ? (
 							<div className='p-2 text-gray-500'>Роль не найдена</div>
 						) : (
@@ -78,14 +167,38 @@ export const MainForm: React.FC<Props> = ({ setType, data, totalRoles }) => {
 								{filteredRoles?.map(role => (
 									<div
 										key={role.id}
-										className={`flex w-full p-2 cursor-pointer hover:bg-gray-600 bg-gray-700 rounded-md mt-2 ${
+										className={`flex w-full p-2 cursor-pointer hover:bg-gray-600 bg-gray-700 rounded-md mt-2 items-center justify-between ${
 											selectedRoleId === role.id ? 'bg-gray-600' : ''
 										}`}
-										onClick={() => setSelectedRoleId(role.id)}
 									>
-										<div className='w-1/2'>{role.name}</div>
-										<div className='w-1/2 flex items-center gap-1'>
-											{role.users?.length || 0} <User size={18} />{' '}
+										<div
+											className='flex w-11/12'
+											onClick={() => {
+												setSelectedRoleId(role.id)
+												setType('visual')
+											}}
+										>
+											<div className='w-1/2 flex items-center'>{role.name}</div>
+											<div className='w-1/2 flex items-center justify-between'>
+												<div className='flex gap-1 items-center'>
+													{role.users?.length || 0} <User size={18} />
+												</div>
+											</div>
+										</div>
+										<div className='group -my-7 w-1/12'>
+											<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+												<Trash2
+													className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+													onClick={async () => {
+														try {
+															await handleSubmitDeleteRole(role.id)
+															router.refresh()
+														} catch (error) {
+															console.error('Ошибка при удалении роли:', error)
+														}
+													}}
+												/>
+											</p>
 										</div>
 									</div>
 								))}

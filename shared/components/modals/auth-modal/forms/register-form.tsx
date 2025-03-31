@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 // import { useIntl } from 'react-intl'
+import { Title } from '@/shared/components/title'
 import { registerUser } from '@/shared/utils/registerUser'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -67,7 +68,19 @@ export const RegisterForm: React.FC<Props> = ({
 				className='flex flex-col gap-4'
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
-				<p className='text-xl font-bold text-center'>Регистрация</p>
+				<div className='flex justify-between items-center'>
+					<div className='mr-2'>
+						<Title
+							// text={formatMessage({ id: 'loginForm.title' })}
+							text='Регистрация'
+							size='md'
+							className='font-bold'
+						/>
+						{/* <p className='text-gray-400'> */}
+						{/* 	{formatMessage({ id: 'loginForm.loginDescription' })} */}
+						{/* </p> */}
+					</div>
+				</div>
 				<FormInput
 					name='email'
 					// label={formatMessage({ id: 'registerForm.formInputEmailLabel' })}

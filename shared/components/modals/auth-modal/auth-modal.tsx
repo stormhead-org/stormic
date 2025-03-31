@@ -32,22 +32,18 @@ export const AuthModal: React.FC<Props> = ({
 		'login' | 'email' | 'register' | 'passwordReset'
 	>('login')
 
-	const onSwitchType = () => {
-		setType(type === 'login' ? 'register' : 'login')
-	}
-
 	const handleClose = () => {
 		onClose()
 	}
 
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className='min-w-[38vw] h-[70vh] p-0'>
+			<DialogContent className='min-w-[43vw] h-[78vh] p-0'>
 				<DialogHeader className='hidden'>
 					<DialogTitle />
 				</DialogHeader>
-				<div className='flex w-full h-[70vh]'>
-					<div className='w-[40%]'>
+				<div className='flex w-full h-full'>
+					<div className='w-[40%] h-full'>
 						<img
 							className='rounded-l-md h-full object-cover'
 							src={authImage}
@@ -61,7 +57,7 @@ export const AuthModal: React.FC<Props> = ({
 							width='54'
 						/>
 					</div>
-					<div className='w-[60%] flex h-full items-center justify-center'>
+					<div className='w-[60%] flex h-[76vh] items-center justify-center overflow-auto'>
 						<div className='w-full px-20'>
 							{type === 'login' && (
 								<LoginForm onClose={handleClose} setType={setType} />
@@ -72,14 +68,6 @@ export const AuthModal: React.FC<Props> = ({
 							{type === 'email' && (
 								<EmailForm onClose={handleClose} setType={setType} />
 							)}
-							{/* <Button */}
-							{/* 	variant='blue' */}
-							{/* 	onClick={onSwitchType} */}
-							{/* 	type='button' */}
-							{/* 	className='flex items-center text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white' */}
-							{/* > */}
-							{/* 	{type !== 'login' ? formatMessage({ id: 'loginForm.loginButton' }) : formatMessage({ id: 'registerForm.regButton' })} */}
-							{/* </Button> */}
 						</div>
 					</div>
 				</div>

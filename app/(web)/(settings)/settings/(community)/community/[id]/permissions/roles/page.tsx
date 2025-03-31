@@ -1,6 +1,5 @@
 import { User } from '@/payload-types'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
-import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
 import { SettingsCommunityPermissionsRolesGroup } from '@/shared/components/profiles/settings/community/permissions/settings-community-permissions-roles-group'
 import { SettingsCommunityPermissionsTopMenu } from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-permissions-top-menu'
 import { getSession } from '@/shared/lib/auth'
@@ -48,12 +47,23 @@ export default async function CommunityPermissionsSettings({
 		overrideAccess: true
 	})
 
+	const communityRoles = await payload.find({
+		collection: 'roles',
+		where: {
+			community: {
+				equals: community.id
+			}
+		},
+		pagination: false,
+		overrideAccess: true
+	})
+
 	return (
 		<>
 			<SettingsCommunityPermissionsTopMenu communityId={community.id} />
 			<SettingsCommunityPermissionsRolesGroup
 				data={community}
-				totalRoles={totalRoles.totalDocs - 1}
+				communityRoles={communityRoles.docs}
 			/>
 		</>
 	)
