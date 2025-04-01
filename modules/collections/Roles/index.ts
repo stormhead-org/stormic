@@ -28,7 +28,7 @@ export const Roles: CollectionConfig = {
 		{
 			label: 'Цвет роли',
 			name: 'color',
-			defaultValue: '#eeedf5',
+			defaultValue: '#98A9B4',
 			type: 'text'
 		},
 		{

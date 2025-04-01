@@ -72,6 +72,8 @@ export interface Config {
     comments: Comment;
     media: Media;
     roles: Role;
+    followCommunity: FollowCommunity;
+    likePost: LikePost;
     search: Search;
     redirects: Redirect;
     'payload-jobs': PayloadJob;
@@ -84,18 +86,20 @@ export interface Config {
       communitiesRoles: 'roles';
       communitiesBans: 'communities';
       communitiesMutes: 'communities';
-      followCommunities: 'communities';
       ownerCommunities: 'communities';
       posts: 'posts';
-      postsLikes: 'posts';
       bookmarks: 'posts';
+      followCommunities: 'followCommunity';
+      postsLikes: 'likePost';
       commentsLikes: 'comments';
     };
     posts: {
       comments: 'comments';
+      likes: 'likePost';
     };
     communities: {
       roles: 'roles';
+      followers: 'followCommunity';
       posts: 'posts';
       comments: 'comments';
     };
@@ -110,6 +114,8 @@ export interface Config {
     comments: CommentsSelect<false> | CommentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     roles: RolesSelect<false> | RolesSelect<true>;
+    followCommunity: FollowCommunitySelect<false> | FollowCommunitySelect<true>;
+    likePost: LikePostSelect<false> | LikePostSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
@@ -202,7 +208,7 @@ export interface User {
   followers?: (number | User)[] | null;
   follow?: (number | User)[] | null;
   followCommunities?: {
-    docs?: (number | Community)[];
+    docs?: (number | FollowCommunity)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -212,7 +218,7 @@ export interface User {
     totalDocs?: number;
   };
   postsLikes?: {
-    docs?: (number | Post)[];
+    docs?: (number | LikePost)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -366,7 +372,11 @@ export interface Community {
         id?: string | null;
       }[]
     | null;
-  followers?: (number | User)[] | null;
+  followers?: {
+    docs?: (number | FollowCommunity)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   bans?: (number | User)[] | null;
   mutes?: (number | User)[] | null;
   posts?: {
@@ -379,6 +389,17 @@ export interface Community {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "followCommunity".
+ */
+export interface FollowCommunity {
+  id: number;
+  user?: (number | null) | User;
+  community: number | Community;
   updatedAt: string;
   createdAt: string;
 }
@@ -415,7 +436,11 @@ export interface Post {
     image?: (number | null) | Media;
   };
   author?: (number | null) | User;
-  likes?: (number | User)[] | null;
+  likes?: {
+    docs?: (number | LikePost)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   bookmarks?: (number | User)[] | null;
   publishedAt?: string | null;
   updatedAt: string;
@@ -441,6 +466,17 @@ export interface Comment {
     totalDocs?: number;
   };
   likes?: (number | User)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "likePost".
+ */
+export interface LikePost {
+  id: number;
+  user?: (number | null) | User;
+  post: number | Post;
   updatedAt: string;
   createdAt: string;
 }
@@ -601,6 +637,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'roles';
         value: number | Role;
+      } | null)
+    | ({
+        relationTo: 'followCommunity';
+        value: number | FollowCommunity;
+      } | null)
+    | ({
+        relationTo: 'likePost';
+        value: number | LikePost;
       } | null)
     | ({
         relationTo: 'search';
@@ -880,6 +924,26 @@ export interface RolesSelect<T extends boolean = true> {
   COMMUNITY_POST_DELETE?: T;
   COMMUNITY_POST_REMOVE_FROM_PUBLICATION?: T;
   COMMUNITY_COMMENTS_DELETE?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "followCommunity_select".
+ */
+export interface FollowCommunitySelect<T extends boolean = true> {
+  user?: T;
+  community?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "likePost_select".
+ */
+export interface LikePostSelect<T extends boolean = true> {
+  user?: T;
+  post?: T;
   updatedAt?: T;
   createdAt?: T;
 }

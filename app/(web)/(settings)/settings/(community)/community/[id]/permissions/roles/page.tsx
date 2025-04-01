@@ -58,12 +58,24 @@ export default async function CommunityPermissionsSettings({
 		overrideAccess: true
 	})
 
+	const communityUsers = await payload.find({
+		collection: 'followCommunity',
+		where: {
+			community: {
+				equals: community.id
+			}
+		},
+		pagination: false,
+		overrideAccess: true
+	})
+
 	return (
 		<>
 			<SettingsCommunityPermissionsTopMenu communityId={community.id} />
 			<SettingsCommunityPermissionsRolesGroup
 				data={community}
 				communityRoles={communityRoles.docs}
+				communityUsers={communityUsers.docs}
 			/>
 		</>
 	)

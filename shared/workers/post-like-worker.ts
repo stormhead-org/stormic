@@ -3,65 +3,88 @@ import { Message } from 'amqplib'
 import { getPayload } from 'payload'
 import { consumePostLikeQueue } from '../lib/rabbitmq-client'
 
+// Функция обработки сообщений из очереди
 async function handlePostLikeMessage(msg: Message) {
-	const { action, postId, userId } = JSON.parse(msg.content.toString())
+	const content = JSON.parse(msg.content.toString()) // Парсинг содержимого сообщения
+	const { userId, postId, action } = content
+
+	console.log(`Processing like message: ${JSON.stringify(content)}`)
+
 	const payload = await getPayload({ config })
+
 	if (action === 'like') {
 		try {
-			console.log(`User ${userId} is liked post ${postId}`)
+			console.log(`User ${userId} is liking post ${postId}`)
 
-			// Получаем текущие данные поста postId
-			const likedPost = await payload.findByID({
+			// Проверяем, существует ли уже такой лайк
+			const existingLike = await payload.find({
+				collection: 'likePost',
+				where: {
+					user: { equals: userId },
+					post: { equals: postId }
+				},
+				limit: 1
+			})
+
+			if (existingLike.docs.length > 0) {
+				console.log(`User ${userId} has already liked post ${postId}`)
+				return // Если лайк уже есть, ничего не делаем
+			}
+
+			// Проверяем, существуют ли пользователь и пост
+			await payload.findByID({
+				collection: 'users',
+				id: userId
+			})
+			await payload.findByID({
 				collection: 'posts',
 				id: postId
 			})
 
-			// Добавляем userId в массив likes, избегая дубликатов
-			const currentLikes = Array.isArray(likedPost.likes)
-				? likedPost.likes.map((f: any) => (typeof f === 'object' ? f.id : f))
-				: []
-			const updatedLikes = currentLikes.includes(userId)
-				? currentLikes
-				: [...currentLikes, userId]
-
-			// Обновляем likes поста postId
-			await payload.update({
-				collection: 'posts',
-				id: postId,
+			// Создаем новую запись в коллекции likePost
+			await payload.create({
+				collection: 'likePost',
 				data: {
-					likes: updatedLikes
+					user: userId,
+					post: postId
 				},
-				overrideAccess: true
+				overrideAccess: true // Обход проверки доступа, если требуется
 			})
+
+			console.log(`User ${userId} liked post ${postId}`)
 		} catch (error) {
 			console.error(`Failed to create like relationship: ${error}`)
-			throw error // Пробрасываем ошибку для обработки в consumeFollowQueue
+			throw error // Пробрасываем ошибку для обработки в consumePostLikeQueue
 		}
 	} else if (action === 'unlike') {
 		try {
-			console.log(`User ${userId} is unlike post ${postId}`)
+			console.log(`User ${userId} is unliking post ${postId}`)
 
-			// Получаем текущие данные поста postId
-			const likedPost = await payload.findByID({
-				collection: 'posts',
-				id: postId
-			})
-
-			// Удаляем userId из массива likes
-			const currentLikes = Array.isArray(likedPost.likes)
-				? likedPost.likes.map((f: any) => (typeof f === 'object' ? f.id : f))
-				: []
-			const updatedLikes = currentLikes.filter(id => id !== userId)
-
-			// Обновляем likes поста postId
-			await payload.update({
-				collection: 'posts',
-				id: postId,
-				data: {
-					likes: updatedLikes
+			// Ищем запись в likePost для удаления
+			const likeRecord = await payload.find({
+				collection: 'likePost',
+				where: {
+					user: { equals: userId },
+					post: { equals: postId }
 				},
-				overrideAccess: true
+				limit: 1
 			})
+
+			if (likeRecord.docs.length === 0) {
+				console.log(
+					`No like relationship found for user ${userId} and post ${postId}`
+				)
+				return // Если записи нет, ничего не делаем
+			}
+
+			// Удаляем запись из likePost
+			await payload.delete({
+				collection: 'likePost',
+				id: likeRecord.docs[0].id,
+				overrideAccess: true // Обход проверки доступа, если требуется
+			})
+
+			console.log(`User ${userId} unliked post ${postId}`)
 		} catch (error) {
 			console.error(`Failed to delete like relationship: ${error}`)
 			throw error // Пробрасываем ошибку
@@ -71,4 +94,5 @@ async function handlePostLikeMessage(msg: Message) {
 	}
 }
 
+// Запускаем потребление сообщений из очереди
 consumePostLikeQueue(handlePostLikeMessage)

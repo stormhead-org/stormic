@@ -1,78 +1,90 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
-import { consumeCommunityFollowQueue } from '../lib/rabbitmq-client';
+import { consumeCommunityFollowQueue } from '../lib/rabbitmq-client'
 
+// Функция обработки сообщений из очереди
 const processCommunityFollowMessage = async (message: any) => {
 	const content = JSON.parse(message.content.toString()) // Парсинг содержимого сообщения
 	const { userId, communityId, action } = content
-	
+
 	console.log(`Processing follow message: ${JSON.stringify(content)}`)
-	
+
 	const payload = await getPayload({ config })
-	
+
 	if (action === 'follow') {
 		try {
 			console.log(`User ${userId} is following community ${communityId}`)
-			
-			// Получаем текущие данные сообщества communityId
-			const followingCommunity = await payload.findByID({
+
+			// Проверяем, существует ли уже такая подписка
+			const existingFollow = await payload.find({
+				collection: 'followCommunity',
+				where: {
+					user: { equals: userId },
+					community: { equals: communityId }
+				},
+				limit: 1
+			})
+
+			if (existingFollow.docs.length > 0) {
+				console.log(
+					`User ${userId} is already following community ${communityId}`
+				)
+				return // Если подписка уже есть, ничего не делаем
+			}
+
+			// Проверяем, существуют ли пользователь и сообщество
+			await payload.findByID({
+				collection: 'users',
+				id: userId
+			})
+			await payload.findByID({
 				collection: 'communities',
 				id: communityId
 			})
-			
-			// Добавляем userId в массив followers, избегая дубликатов
-			const currentFollowers = Array.isArray(followingCommunity.followers)
-				? followingCommunity.followers.map((f: any) =>
-					typeof f === 'object' ? f.id : f
-				)
-				: []
-			const updatedFollowers = currentFollowers.includes(userId)
-				? currentFollowers
-				: [...currentFollowers, userId]
-			
-			// Обновляем followers сообщества communityId
-			await payload.update({
-				collection: 'communities',
-				id: communityId,
+
+			// Создаем новую запись в коллекции followCommunity
+			await payload.create({
+				collection: 'followCommunity',
 				data: {
-					followers: updatedFollowers
+					user: userId,
+					community: communityId
 				},
-				overrideAccess: true
+				overrideAccess: true // Обход проверки доступа, если требуется
 			})
-			
+
 			console.log(`User ${userId} followed community ${communityId}`)
 		} catch (error) {
 			console.error(`Failed to create follow relationship: ${error}`)
-			throw error // Пробрасываем ошибку для обработки в consumeFollowQueue
+			throw error // Пробрасываем ошибку для обработки в consumeCommunityFollowQueue
 		}
 	} else if (action === 'unfollow') {
 		try {
 			console.log(`User ${userId} is unfollowing community ${communityId}`)
-			
-			// Получаем текущие данные сообщества communityId
-			const followingCommunity = await payload.findByID({
-				collection: 'users',
-				id: communityId
-			})
-			
-			// Удаляем userId из массива followers
-			const currentFollowers = Array.isArray(followingCommunity.followers)
-				? followingCommunity.followers.map((f: any) =>
-					typeof f === 'object' ? f.id : f
-				)
-				: []
-			const updatedFollowers = currentFollowers.filter(id => id !== userId)
-			
-			// Обновляем followers сообщества communityId
-			await payload.update({
-				collection: 'communities',
-				id: communityId,
-				data: {
-					followers: updatedFollowers
+
+			// Ищем запись в followCommunity для удаления
+			const followRecord = await payload.find({
+				collection: 'followCommunity',
+				where: {
+					user: { equals: userId },
+					community: { equals: communityId }
 				},
-				overrideAccess: true
+				limit: 1
 			})
-			
+
+			if (followRecord.docs.length === 0) {
+				console.log(
+					`No follow relationship found for user ${userId} and community ${communityId}`
+				)
+				return // Если записи нет, ничего не делаем
+			}
+
+			// Удаляем запись из followCommunity
+			await payload.delete({
+				collection: 'followCommunity',
+				id: followRecord.docs[0].id,
+				overrideAccess: true // Обход проверки доступа, если требуется
+			})
+
 			console.log(`User ${userId} unfollowed community ${communityId}`)
 		} catch (error) {
 			console.error(`Failed to delete follow relationship: ${error}`)
@@ -81,6 +93,7 @@ const processCommunityFollowMessage = async (message: any) => {
 	} else {
 		console.warn(`Unknown action: ${action}`)
 	}
-};
+}
 
-consumeCommunityFollowQueue(processCommunityFollowMessage);
+// Запускаем потребление сообщений из очереди
+consumeCommunityFollowQueue(processCommunityFollowMessage)

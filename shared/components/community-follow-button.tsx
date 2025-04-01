@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 // import { useIntl } from 'react-intl'
 
 interface FollowButtonProps {
-	communityId: number // ID пользователя, на которого подписываются
+	communityId: number // ID сообщества, на которого подписываются
 }
 
 const CommunityFollowButton: React.FC<FollowButtonProps> = ({

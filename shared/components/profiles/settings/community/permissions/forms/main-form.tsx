@@ -13,9 +13,7 @@ interface Props {
 	communityRoles: Role[]
 	selectedRoleId: number | null
 	setSelectedRoleId: (id: number) => void
-	setType: React.Dispatch<
-		React.SetStateAction<'main' | 'visual' | 'permissions' | 'users'>
-	>
+	setType: React.Dispatch<React.SetStateAction<'main' | 'editor'>>
 }
 
 export const MainForm: React.FC<Props> = ({
@@ -107,7 +105,7 @@ export const MainForm: React.FC<Props> = ({
 				onClick={() => {
 					if (everyoneRole) {
 						setSelectedRoleId(everyoneRole.id)
-						setType('visual')
+						setType('editor')
 					}
 				}}
 			>
@@ -138,7 +136,8 @@ export const MainForm: React.FC<Props> = ({
 								try {
 									const newRole = await handleSubmitNewRole()
 									setSelectedRoleId(newRole.doc?.id)
-									setType('visual')
+									setType('editor')
+									router.refresh()
 								} catch (error) {
 									console.error('Ошибка при создании роли:', error)
 								}
@@ -175,10 +174,16 @@ export const MainForm: React.FC<Props> = ({
 											className='flex w-11/12'
 											onClick={() => {
 												setSelectedRoleId(role.id)
-												setType('visual')
+												setType('editor')
 											}}
 										>
-											<div className='w-1/2 flex items-center'>{role.name}</div>
+											<div className='w-1/2 flex items-center gap-2'>
+												<ChevronRight
+													className='w-5 h-5'
+													style={{ color: role.color || '99AAB5' }}
+												/>
+												{role.name}
+											</div>
 											<div className='w-1/2 flex items-center justify-between'>
 												<div className='flex gap-1 items-center'>
 													{role.users?.length || 0} <User size={18} />

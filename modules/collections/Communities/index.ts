@@ -217,12 +217,10 @@ export const Communities: CollectionConfig = {
 		{
 			label: 'Подписчики сообщества',
 			name: 'followers',
-			type: 'relationship',
-			hasMany: true,
-			relationTo: 'users',
-			admin: {
-				readOnly: true
-			}
+			type: 'join',
+			collection: 'followCommunity',
+			on: 'community',
+			maxDepth: 1
 		},
 		{
 			label: 'Забаненые пользователи',

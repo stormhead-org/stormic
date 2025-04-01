@@ -8,13 +8,14 @@ export type TCommunityResponse = {
 		fullName: string
 		createdAt: string
 	}
+	id?: string
 }
 
 export async function createCommunity(
 	data: TFormCommunityValues
 ): Promise<TCommunityResponse> {
 	try {
-		const req = await fetch('/api/communities', {
+		const communityReq = await fetch('/api/communities', {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -27,14 +28,38 @@ export async function createCommunity(
 			})
 		})
 
-		if (!req.ok) {
-			throw new Error(`Ошибка регистрации: ${req.status}`)
+		if (!communityReq.ok) {
+			throw new Error(`Ошибка создания сообщества: ${communityReq.status}`)
 		}
 
-		const result = await req.json()
-		return result as TCommunityResponse
+		const communityResult = await communityReq.json()
+
+		const communityId =
+			communityResult.id || communityResult._id || communityResult.doc?.id
+		if (!communityId) {
+			throw new Error(
+				'ID сообщества не найден в ответе API. Проверьте структуру ответа.'
+			)
+		}
+
+		const systemRoleData = {
+			name: '@everyone',
+			community: communityId
+		}
+
+		const systemRoleReq = await fetch('/api/roles', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(systemRoleData)
+		})
+
+		if (!systemRoleReq.ok) {
+			throw new Error(`Ошибка создания роли: ${systemRoleReq.status}`)
+		}
+
+		return communityResult as TCommunityResponse
 	} catch (error) {
-		console.error('Ошибка создания сообщества:', error)
+		console.error('Ошибка создания сообщества или роли:', error)
 		throw error
 	}
 }

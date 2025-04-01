@@ -15,7 +15,7 @@ export const getPostStatus = async (
 					equals: postId
 				}
 			},
-			depth: 1
+			depth: 1 // Загружаем связанные данные
 		})
 
 		const post = postResult.docs[0]
@@ -26,16 +26,17 @@ export const getPostStatus = async (
 		const currentUser = req.user
 		let isLiked = false
 
+		// Получаем массив лайков из likes.docs
+		const likesDocs = post.likes?.docs || []
+
 		if (currentUser) {
-			const userId = currentUser.id as unknown as string
-			isLiked =
-				Array.isArray(post.likes) &&
-				post.likes.some((like: any) => {
-					return typeof like === 'string' ? like === userId : like.id === userId
-				})
+			const userId = currentUser.id
+			// Проверяем, есть ли текущий пользователь среди тех, кто лайкнул пост
+			isLiked = likesDocs.some((like: any) => like.user === userId)
 		}
 
-		const likesCount = Array.isArray(post.likes) ? post.likes.length : 0
+		// Подсчитываем количество лайков
+		const likesCount = likesDocs.length
 
 		return {
 			likesCount,

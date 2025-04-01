@@ -1,22 +1,22 @@
 'use client'
 
-import { Community, Role } from '@/payload-types'
+import { Community, FollowCommunity, Role } from '@/payload-types'
 import React, { useState } from 'react'
+import { EditorForm } from './forms/editor-form'
 import { MainForm } from './forms/main-form'
-import { VisualForm } from './forms/vasual-form'
 
 interface Props {
 	data: Community
 	communityRoles: Role[]
+	communityUsers: FollowCommunity[]
 }
 
 export const SettingsCommunityPermissionsRolesGroup: React.FC<Props> = ({
 	data,
-	communityRoles
+	communityRoles,
+	communityUsers
 }) => {
-	const [type, setType] = React.useState<
-		'main' | 'visual' | 'permissions' | 'users'
-	>('main')
+	const [type, setType] = React.useState<'main' | 'editor'>('main')
 
 	const [selectedRoleId, setSelectedRoleId] = useState<number | null>(null)
 
@@ -31,10 +31,11 @@ export const SettingsCommunityPermissionsRolesGroup: React.FC<Props> = ({
 					setSelectedRoleId={setSelectedRoleId}
 				/>
 			)}
-			{type === 'visual' && (
-				<VisualForm
+			{type === 'editor' && (
+				<EditorForm
 					data={data}
 					communityRoles={communityRoles}
+					communityUsers={communityUsers}
 					setType={setType}
 					selectedRoleId={selectedRoleId}
 					setSelectedRoleId={setSelectedRoleId}

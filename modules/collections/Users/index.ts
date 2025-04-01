@@ -241,8 +241,8 @@ export const Users: CollectionConfig = {
 			label: 'Подписки на сообщества',
 			name: 'followCommunities',
 			type: 'join',
-			collection: 'communities',
-			on: 'followers',
+			collection: 'followCommunity',
+			on: 'user',
 			maxDepth: 1
 		},
 		{
@@ -265,8 +265,8 @@ export const Users: CollectionConfig = {
 			label: 'Лайки постов',
 			name: 'postsLikes',
 			type: 'join',
-			collection: 'posts',
-			on: 'likes',
+			collection: 'likePost',
+			on: 'user',
 			maxDepth: 1
 		},
 		{

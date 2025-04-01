@@ -333,9 +333,10 @@ export const Posts: CollectionConfig<'posts'> = {
 		{
 			label: 'Лайки',
 			name: 'likes',
-			type: 'relationship',
-			hasMany: true,
-			relationTo: 'users'
+			type: 'join',
+			collection: 'likePost',
+			on: 'post',
+			maxDepth: 1
 		},
 		{
 			label: 'Закладки',

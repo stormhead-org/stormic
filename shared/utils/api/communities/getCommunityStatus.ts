@@ -15,7 +15,7 @@ export const getCommunityStatus = async (
 					equals: communityId
 				}
 			},
-			depth: 1
+			depth: 1 // Загружаем связанные данные
 		})
 
 		const community = communityResult.docs[0]
@@ -26,21 +26,17 @@ export const getCommunityStatus = async (
 		const currentUser = req.user
 		let isFollowing = false
 
+		// Получаем массив подписок из followers.docs
+		const followersDocs = community.followers?.docs || []
+
 		if (currentUser) {
-			// const userId = user.id as string
-			const userId = currentUser.id as unknown as string
-			isFollowing =
-				Array.isArray(community.followers) &&
-				community.followers.some((follow: any) => {
-					return typeof follow === 'string'
-						? follow === userId
-						: follow.id === userId
-				})
+			const userId = currentUser.id
+			// Проверяем, есть ли текущий пользователь среди подписчиков
+			isFollowing = followersDocs.some((follow: any) => follow.user === userId)
 		}
 
-		const followersCount = Array.isArray(community.followers)
-			? community.followers.length
-			: 0
+		// Подсчитываем количество подписчиков
+		const followersCount = followersDocs.length
 
 		return {
 			followersCount,

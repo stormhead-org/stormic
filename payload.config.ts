@@ -14,6 +14,8 @@ import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { Comments } from './modules/collections/Comments'
 import { Communities } from './modules/collections/Communities'
+import { FollowCommunity } from './modules/collections/FollowCommunity'
+import { LikePost } from './modules/collections/LikePost'
 import { Posts } from './modules/collections/Posts'
 import { Roles } from './modules/collections/Roles'
 import { SidebarNavigation } from './modules/globals/Navigation'
@@ -53,7 +55,16 @@ export default buildConfig({
 			]
 		}
 	},
-	collections: [Users, Posts, Communities, Comments, Media, Roles],
+	collections: [
+		Users,
+		Posts,
+		Communities,
+		Comments,
+		Media,
+		Roles,
+		FollowCommunity,
+		LikePost
+	],
 	globals: [HostSettings, SidebarNavigation],
 	cors: [getServerSideURL()].filter(Boolean),
 	secret: process.env.PAYLOAD_SECRET || '',
