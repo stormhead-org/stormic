@@ -1,6 +1,7 @@
 import { Role } from '@/payload-types'
 import { FormInput } from '@/shared/components/form'
 import { Button } from '@/shared/components/ui/button'
+import { Check } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -90,10 +91,11 @@ export const VisualForm: React.FC<Props> = ({
 			<p className='text-lg'>Редактировать роль - {selectedRole?.name}</p>
 			<div className='flex justify-between items-center gap-4'>
 				<div className='border-b-2 border-b-blue-600 cursor-pointer'>
-					<p>Элементы отображения</p>
+					<p>Внешний вид</p>
 				</div>
 				<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
-					<p>Права доступа</p>
+					<p onClick={() => setTypeEditor('permissions')}>
+						Права доступа</p>
 				</div>
 				{!isEveryoneRole ? (
 					<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
@@ -120,16 +122,20 @@ export const VisualForm: React.FC<Props> = ({
 						<div className='flex w-5/12 gap-2'>
 							<div>
 								<div
-									className='w-14 h-14 rounded-md cursor-pointer'
+									className='flex w-14 h-14 rounded-md cursor-pointer justify-center items-center'
 									style={{ backgroundColor: '#99AAB5' }}
 									onClick={() => form.setValue('roleColor', '#99AAB5')}
-								/>
+								>
+									{form.getValues('roleColor') === '#99AAB5' && <Check size={36} />}
+								</div>
 							</div>
 							<div>
-								<div
-									className='w-14 h-14 rounded-md'
-									style={{ backgroundColor: form.getValues('roleColor') }}
-								/>
+								{form.getValues('roleColor') !== '#99AAB5' && (
+									<div
+										className='w-14 h-14 rounded-md'
+										style={{ backgroundColor: form.getValues('roleColor') }}
+									/>
+								)}
 							</div>
 						</div>
 						<div className='w-7/12 flex flex-wrap gap-2 pl-3'>

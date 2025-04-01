@@ -97,10 +97,11 @@ export const UsersForm: React.FC<Props> = ({
 			<p className='text-lg'>Редактировать роль - {selectedRole?.name}</p>
 			<div className='flex justify-between items-center gap-4'>
 				<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
-					<p onClick={() => setTypeEditor('visual')}>Элементы отображения</p>
+					<p onClick={() => setTypeEditor('visual')}>Внешний вид</p>
 				</div>
 				<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
-					<p>Права доступа</p>
+					<p onClick={() => setTypeEditor('permissions')}>
+						Права доступа</p>
 				</div>
 				<div className='border-b-2 border-b-blue-600 cursor-pointer'>
 					<p>Участники ({selectedRole.users?.length})</p>

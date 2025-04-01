@@ -3,11 +3,12 @@
 import { FollowCommunity, Role } from '@/payload-types'
 import {
 	Dialog,
-	DialogContent,
+	DialogContent, DialogDescription, DialogFooter,
 	DialogHeader,
 	DialogTitle
 } from '@/shared/components/ui/dialog'
-import { CircleUser } from 'lucide-react'
+import { ChevronRight, CircleUser, Shield, ShieldCheck } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import qs from 'qs'
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
@@ -39,6 +40,8 @@ export const RoleAddUserModal: React.FC<Props> = ({
 	const handleClose = () => {
 		onClose()
 	}
+	
+	const router = useRouter()
 
 	const [searchTerm, setSearchTerm] = useState<string>('')
 	const [selectedUsers, setSelectedUsers] = useState<number[]>([])
@@ -95,7 +98,9 @@ export const RoleAddUserModal: React.FC<Props> = ({
 			})
 			const data = await req.json()
 			if (req.ok) {
+				setSelectedUsers([])
 				handleClose()
+				router.refresh()
 			}
 			return data
 		} catch (err) {
@@ -124,40 +129,52 @@ export const RoleAddUserModal: React.FC<Props> = ({
 
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className='min-w-[43vw] h-[78vh] p-0'>
-				<DialogHeader className='hidden'>
-					<DialogTitle />
+			<DialogContent className='p-2'>
+				<DialogHeader className='pt-8'>
+					<DialogTitle className='text-2xl text-center font-bold'>
+						Добавить участников
+					</DialogTitle>
+					<DialogDescription className='flex gap-1 items-center justify-center text-center text-xl'>
+						<Shield
+							className='w-6 h-6'
+							style={{ color: selectedRole.color || '99AAB5' }}
+						/>
+						{selectedRole.name}
+					</DialogDescription>
+					<DialogDescription>
+						{selectedUsers.length === 0 ? (
+							<>
+								Выбрать до 30 участников
+							</>
+						) : (
+							<>
+							Выбрано {selectedUsers.length} участников
+							</>
+						)
+						}
+					</DialogDescription>
 				</DialogHeader>
-				<div className='mt-4'>
+				<div className=''>
 					<div className='command-container'>
 						<div className='flex gap-2'>
 							<Input
 								type='text'
 								placeholder='Поиск участников...'
-								className='h-10 w-full px-2 rounded-md bg-gray-700'
+								className='h-10 w-full px-2 rounded-md bg-secondary'
 								value={searchTerm}
 								onChange={e => setSearchTerm(e.target.value)}
 							/>
-							<Button
-								variant='blue'
-								onClick={handleAddSelectedUsers}
-								disabled={selectedUsers.length === 0}
-								className='px-6'
-							>
-								Добавить ({selectedUsers.length})
-							</Button>
 						</div>
-						<div className='mt-2'>
+						<div className='mt-2 bg-secondary p-1 rounded-md'>
 							{filteredUsers.length === 0 ? (
 								<div className='p-2 text-gray-500'>Участники не найдены</div>
 							) : (
-								<div className='flex flex-col'>
+								<div className='flex flex-col w-full h-[30vh] overflow-auto'>
 									{filteredUsers.map(item => (
 										<div
 											key={item.id}
-											className='flex w-full p-1 cursor-pointer hover:bg-gray-600 bg-gray-700 rounded-md mt-2 items-center justify-between'
+											className='flex items-center gap-2 w-full px-2 py-1 cursor-pointer rounded-md bg-gray-700 hover:bg-gray-800'
 										>
-											<div className='flex w-full items-center gap-2'>
 												<Checkbox
 													checked={selectedUsers.includes(item.user.id)}
 													onCheckedChange={checked =>
@@ -184,7 +201,6 @@ export const RoleAddUserModal: React.FC<Props> = ({
 													</Avatar>
 													<span>{item.user.name}</span>
 												</div>
-											</div>
 										</div>
 									))}
 								</div>
@@ -192,6 +208,23 @@ export const RoleAddUserModal: React.FC<Props> = ({
 						</div>
 					</div>
 				</div>
+				<DialogFooter className='flex items-center gap-4 justify-items-end pb-2'>
+					<Button
+						variant='blue'
+						onClick={() => handleClose()}
+						className='px-10'
+					>
+						Отмена
+					</Button>
+					<Button
+						variant='blue'
+						onClick={handleAddSelectedUsers}
+						disabled={selectedUsers.length === 0}
+						className='px-6'
+					>
+						Добавить
+					</Button>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	)

@@ -3,7 +3,7 @@ import { Container } from '@/shared/components/container'
 import { Title } from '@/shared/components/title'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
-import { ChevronRight, Trash2, User, Users } from 'lucide-react'
+import { ChevronRight, Shield, Trash2, User, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
 import React, { useState } from 'react'
@@ -178,7 +178,7 @@ export const MainForm: React.FC<Props> = ({
 											}}
 										>
 											<div className='w-1/2 flex items-center gap-2'>
-												<ChevronRight
+												<Shield
 													className='w-5 h-5'
 													style={{ color: role.color || '99AAB5' }}
 												/>
