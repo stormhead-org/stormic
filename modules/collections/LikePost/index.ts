@@ -16,7 +16,7 @@ export const LikePost: CollectionConfig = {
 			type: 'relationship',
 			hasMany: false,
 			relationTo: 'users',
-			required: false
+			required: true
 		},
 		{
 			label: 'Пост с лайком',

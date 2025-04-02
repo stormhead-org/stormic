@@ -194,16 +194,16 @@ export const Users: CollectionConfig = {
 			label: 'Заблокирован в сообществах',
 			name: 'communitiesBans',
 			type: 'join',
-			collection: 'communities',
-			on: 'bans',
+			collection: 'communityUsersBans',
+			on: 'community',
 			maxDepth: 1
 		},
 		{
-			label: 'Посты пользователя',
+			label: 'Заглушен в сообществах',
 			name: 'communitiesMutes',
 			type: 'join',
-			collection: 'communities',
-			on: 'mutes',
+			collection: 'communityUsersMutes',
+			on: 'community',
 			maxDepth: 1
 		},
 		{

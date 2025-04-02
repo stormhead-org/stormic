@@ -1,7 +1,6 @@
 import { User } from '@/payload-types'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
-import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
-import { SettingsCommunityPermissionsRolesGroup } from '@/shared/components/profiles/settings/community/permissions/settings-community-permissions-roles-group'
+import { SettingsCommunityBansGroup } from '@/shared/components/profiles/settings/community/bans/settings-community-bans-group'
 import { SettingsCommunityPermissionsTopMenu } from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-permissions-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
@@ -11,7 +10,7 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Профиль'
+	title: 'Stormic: Настройки сообщества - Баны'
 }
 
 type Args = {
@@ -26,6 +25,7 @@ export default async function CommunityPermissionsSettings({
 	const { id = null } = await paramsPromise
 	const session = (await getSession()) as { user: User } | null
 	const currentUser = session && session.user
+	const payload = await getPayload({ config: configPromise })
 
 	if (!currentUser) {
 		return redirect('/')
@@ -37,10 +37,37 @@ export default async function CommunityPermissionsSettings({
 		return <CommunityNotFound />
 	}
 
+	const communityUsers = await payload.find({
+		collection: 'followCommunity',
+		where: {
+			community: {
+				equals: community.id
+			}
+		},
+		pagination: false,
+		overrideAccess: true
+	})
+
+	const communityUsersBans = await payload.find({
+		collection: 'communityUsersBans',
+		where: {
+			community: {
+				equals: community.id
+			}
+		},
+		pagination: false,
+		overrideAccess: true
+	})
+
 	return (
 		<>
 			<SettingsCommunityPermissionsTopMenu communityId={community.id} />
-			<SettingsCommunityPermissionsRolesGroup data={community} />
+			<SettingsCommunityBansGroup
+				data={community}
+				currentUser={currentUser}
+				communityUsers={communityUsers.docs}
+				communityUsersBans={communityUsersBans.docs}
+			/>
 		</>
 	)
 }

@@ -14,6 +14,8 @@ import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { Comments } from './modules/collections/Comments'
 import { Communities } from './modules/collections/Communities'
+import { CommunityUsersBans } from './modules/collections/CommunityUsersBans'
+import { CommunityUsersMutes } from './modules/collections/CommunityUsersMutes'
 import { FollowCommunity } from './modules/collections/FollowCommunity'
 import { LikePost } from './modules/collections/LikePost'
 import { Posts } from './modules/collections/Posts'
@@ -63,6 +65,8 @@ export default buildConfig({
 		Media,
 		Roles,
 		FollowCommunity,
+		CommunityUsersBans,
+		CommunityUsersMutes,
 		LikePost
 	],
 	globals: [HostSettings, SidebarNavigation],

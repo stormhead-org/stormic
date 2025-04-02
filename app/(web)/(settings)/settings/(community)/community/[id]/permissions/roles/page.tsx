@@ -37,16 +37,6 @@ export default async function CommunityPermissionsSettings({
 		return <CommunityNotFound />
 	}
 
-	const totalRoles = await payload.count({
-		collection: 'roles',
-		where: {
-			community: {
-				equals: community.id
-			}
-		},
-		overrideAccess: true
-	})
-
 	const communityRoles = await payload.find({
 		collection: 'roles',
 		where: {

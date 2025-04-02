@@ -1,8 +1,8 @@
 import { authenticated } from '@/modules/access/authenticated'
 import type { CollectionConfig } from 'payload'
 
-export const FollowCommunity: CollectionConfig = {
-	slug: 'followCommunity',
+export const CommunityUsersMutes: CollectionConfig = {
+	slug: 'communityUsersMutes',
 	access: {
 		create: authenticated,
 		delete: authenticated,
@@ -11,7 +11,7 @@ export const FollowCommunity: CollectionConfig = {
 	},
 	fields: [
 		{
-			label: 'Подписавшийся пользователь',
+			label: 'Заглушенный пользователь',
 			name: 'user',
 			type: 'relationship',
 			hasMany: false,
@@ -19,7 +19,7 @@ export const FollowCommunity: CollectionConfig = {
 			required: true
 		},
 		{
-			label: 'Подписался на сообщество',
+			label: 'Заглушен в сообществе',
 			name: 'community',
 			type: 'relationship',
 			hasMany: false,

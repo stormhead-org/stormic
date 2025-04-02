@@ -223,21 +223,20 @@ export const Communities: CollectionConfig = {
 			maxDepth: 1
 		},
 		{
-			label: 'Забаненые пользователи',
+			label: 'Заблокированные пользователи',
 			name: 'bans',
-			type: 'relationship',
-			hasMany: true,
-			relationTo: 'users'
+			type: 'join',
+			collection: 'communityUsersBans',
+			on: 'user',
+			maxDepth: 1
 		},
 		{
 			label: 'Заглушенные пользователи',
 			name: 'mutes',
-			type: 'relationship',
-			hasMany: true,
-			relationTo: 'users',
-			admin: {
-				readOnly: true
-			}
+			type: 'join',
+			collection: 'communityUsersMutes',
+			on: 'user',
+			maxDepth: 1
 		},
 		{
 			label: 'Посты в сообществе',
