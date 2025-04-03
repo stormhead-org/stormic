@@ -72,6 +72,7 @@ export interface Config {
     comments: Comment;
     media: Media;
     roles: Role;
+    hostRoles: HostRole;
     followCommunity: FollowCommunity;
     communityUsersBans: CommunityUsersBan;
     communityUsersMutes: CommunityUsersMute;
@@ -85,6 +86,7 @@ export interface Config {
   };
   collectionsJoins: {
     users: {
+      hostRoles: 'hostRoles';
       communitiesRoles: 'roles';
       communitiesBans: 'communityUsersBans';
       communitiesMutes: 'communityUsersMutes';
@@ -118,6 +120,7 @@ export interface Config {
     comments: CommentsSelect<false> | CommentsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     roles: RolesSelect<false> | RolesSelect<true>;
+    hostRoles: HostRolesSelect<false> | HostRolesSelect<true>;
     followCommunity: FollowCommunitySelect<false> | FollowCommunitySelect<true>;
     communityUsersBans: CommunityUsersBansSelect<false> | CommunityUsersBansSelect<true>;
     communityUsersMutes: CommunityUsersMutesSelect<false> | CommunityUsersMutesSelect<true>;
@@ -190,7 +193,11 @@ export interface User {
         id?: string | null;
       }[]
     | null;
-  systemRoles: ('owner' | 'everyone')[];
+  hostRoles?: {
+    docs?: (number | HostRole)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   communitiesRoles?: {
     docs?: (number | Role)[];
     hasNextPage?: boolean;
@@ -328,6 +335,25 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostRoles".
+ */
+export interface HostRole {
+  id: number;
+  name: string;
+  badge?: (number | null) | Media;
+  color?: string | null;
+  users?: (number | User)[] | null;
+  COMMUNITY_ROLES_MANAGEMENT?: boolean | null;
+  HOST_USER_BAN?: boolean | null;
+  HOST_USER_MUTE?: boolean | null;
+  HOST_COMMUNITY_POST_DELETE?: boolean | null;
+  HOST_COMMUNITY_POST_REMOVE_FROM_PUBLICATION?: boolean | null;
+  HOST_COMMUNITY_COMMENTS_DELETE?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "roles".
  */
 export interface Role {
@@ -403,6 +429,7 @@ export interface Community {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  COMMUNITY_HAS_BANNED?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -675,6 +702,10 @@ export interface PayloadLockedDocument {
         value: number | Role;
       } | null)
     | ({
+        relationTo: 'hostRoles';
+        value: number | HostRole;
+      } | null)
+    | ({
         relationTo: 'followCommunity';
         value: number | FollowCommunity;
       } | null)
@@ -760,7 +791,7 @@ export interface UsersSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
-  systemRoles?: T;
+  hostRoles?: T;
   communitiesRoles?: T;
   communitiesBans?: T;
   communitiesMutes?: T;
@@ -840,6 +871,7 @@ export interface CommunitiesSelect<T extends boolean = true> {
   mutes?: T;
   posts?: T;
   comments?: T;
+  COMMUNITY_HAS_BANNED?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -968,6 +1000,24 @@ export interface RolesSelect<T extends boolean = true> {
   COMMUNITY_POST_DELETE?: T;
   COMMUNITY_POST_REMOVE_FROM_PUBLICATION?: T;
   COMMUNITY_COMMENTS_DELETE?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostRoles_select".
+ */
+export interface HostRolesSelect<T extends boolean = true> {
+  name?: T;
+  badge?: T;
+  color?: T;
+  users?: T;
+  COMMUNITY_ROLES_MANAGEMENT?: T;
+  HOST_USER_BAN?: T;
+  HOST_USER_MUTE?: T;
+  HOST_COMMUNITY_POST_DELETE?: T;
+  HOST_COMMUNITY_POST_REMOVE_FROM_PUBLICATION?: T;
+  HOST_COMMUNITY_COMMENTS_DELETE?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1122,6 +1172,7 @@ export interface HostSetting {
         id?: string | null;
       }[]
     | null;
+  FIRST_SETTNGS?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1160,6 +1211,7 @@ export interface HostSettingsSelect<T extends boolean = true> {
         descriptionRule?: T;
         id?: T;
       };
+  FIRST_SETTNGS?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

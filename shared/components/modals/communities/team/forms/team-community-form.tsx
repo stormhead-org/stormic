@@ -42,7 +42,7 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 					/>
 					<Title text='Владелец' size='sm' className='font-bold mr-2 mt-4' />
 					<Link href={'/u/' + community.owner?.id}>
-						<div className='flex gap-4 mt-1'>
+						<div className='flex gap-2 mt-2 items-center'>
 							<ProfileAvatar
 								className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
 								avatarImage={community.owner?.avatar?.url}
@@ -52,7 +52,7 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 							<div className='flex h-full my-auto'>
 								<div>
 									<p className='font-semibold text-md'>{truncatedName}</p>
-									<p className='-mt-1 text-gray-400 text-sm font-semibold'>
+									<p className='-mt-2 text-gray-400 text-sm font-semibold'>
 										{truncatedDescription}
 									</p>
 								</div>

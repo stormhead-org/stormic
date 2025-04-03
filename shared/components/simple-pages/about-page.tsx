@@ -9,7 +9,9 @@ import {
 	AccordionTrigger
 } from '@/shared/components/ui/accordion'
 import { cn } from '@/shared/lib/utils'
+import { Settings } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 
@@ -24,6 +26,7 @@ import React from 'react'
 
 interface Props {
 	hostInfo: HostSetting
+	hasOwner?: boolean
 	className?: string
 }
 
@@ -34,7 +37,12 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 	return text
 }
 
-export const AboutPage: React.FC<Props> = ({ hostInfo, className }) => {
+export const AboutPage: React.FC<Props> = ({
+	hostInfo,
+	hasOwner,
+	className
+}) => {
+	const router = useRouter()
 	// const { formatMessage } = useIntl()
 
 	if (!hostInfo.owner) {
@@ -65,6 +73,17 @@ export const AboutPage: React.FC<Props> = ({ hostInfo, className }) => {
 				</p>
 			</div>
 
+			{hasOwner && (
+				<div className='flex gap-2 w-full items-center justify-between bg-secondary p-1 mt-6 rounded-md'>
+					<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<Settings
+							className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+							onClick={() => router.push('/settings/host/main')}
+						/>
+					</div>
+				</div>
+			)}
+
 			<div className='h-full w-full flex bg-secondary rounded-md p-4 mt-6'>
 				<div className='w-1/2'>
 					<p className='uppercase font-semibold'>
@@ -72,16 +91,16 @@ export const AboutPage: React.FC<Props> = ({ hostInfo, className }) => {
 						Управляется
 					</p>
 					<Link href={'/u/' + hostInfo.owner?.id}>
-						<div className='flex gap-4 mt-4'>
+						<div className='flex gap-2 mt-2 items-center'>
 							<ProfileAvatar
-								className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
+								className='w-14 h-14 border-none bg-secondary hover:bg-secondary'
 								avatarImage={String(hostInfo.owner?.avatar?.url || '')}
-								avatarSize={Number(44)}
+								avatarSize={Number(54)}
 							/>
 							<div className='flex h-full my-auto'>
 								<div>
 									<p className='font-semibold text-md'>{truncatedName}</p>
-									<p className='-mt-1 text-gray-400 text-sm font-semibold'>
+									<p className='-mt-2 text-gray-400 text-sm font-semibold'>
 										{truncatedDescription}
 									</p>
 								</div>

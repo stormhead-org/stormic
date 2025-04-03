@@ -197,28 +197,36 @@ export const Users: CollectionConfig = {
 				}
 			]
 		},
+		// {
+		// 	label: 'Системные роли',
+		// 	name: 'systemRoles',
+		// 	type: 'select',
+		// 	hasMany: true,
+		// 	// hooks: {
+		// 	// 	beforeChange: [protectRoles]
+		// 	// },
+		// 	required: true,
+		// 	options: [
+		// 		{
+		// 			label: 'Основатель',
+		// 			value: 'owner'
+		// 		},
+		// 		{
+		// 			label: 'everyone',
+		// 			value: 'everyone'
+		// 		}
+		// 	]
+		// },
 		{
-			label: 'Системные роли',
-			name: 'systemRoles',
-			type: 'select',
-			hasMany: true,
-			// hooks: {
-			// 	beforeChange: [protectRoles]
-			// },
-			required: true,
-			options: [
-				{
-					label: 'Основатель',
-					value: 'owner'
-				},
-				{
-					label: 'everyone',
-					value: 'everyone'
-				}
-			]
+			label: 'Роли платформы',
+			name: 'hostRoles',
+			type: 'join',
+			collection: 'hostRoles',
+			on: 'users',
+			maxDepth: 1
 		},
 		{
-			label: 'Роли',
+			label: 'Роли сообществ',
 			name: 'communitiesRoles',
 			type: 'join',
 			collection: 'roles',

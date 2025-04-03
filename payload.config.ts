@@ -24,6 +24,7 @@ import { SidebarNavigation } from './modules/globals/Navigation'
 import { HostSettings } from './modules/globals/Settings'
 import { revalidateRedirects } from './shared/hooks/revalidateRedirects'
 import { getServerSideURL } from './shared/lib/getURL'
+import { HostRoles } from './modules/collections/HostRoles'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -64,6 +65,7 @@ export default buildConfig({
 		Comments,
 		Media,
 		Roles,
+		HostRoles,
 		FollowCommunity,
 		CommunityUsersBans,
 		CommunityUsersMutes,

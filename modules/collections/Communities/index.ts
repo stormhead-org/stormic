@@ -255,6 +255,12 @@ export const Communities: CollectionConfig = {
 			defaultSort: '-id',
 			on: 'community',
 			maxDepth: 1
+		},
+		{
+			label: 'Сообщество заблокированно',
+			name: 'COMMUNITY_HAS_BANNED',
+			type: 'checkbox',
+			defaultValue: false
 		}
 	]
 }

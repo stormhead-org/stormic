@@ -17,9 +17,7 @@ interface Props {
 	className?: string
 }
 
-export const SettingsHostSideMenu: React.FC<Props> = ({
-	className
-}) => {
+export const SettingsHostSideMenu: React.FC<Props> = ({ className }) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -39,16 +37,16 @@ export const SettingsHostSideMenu: React.FC<Props> = ({
 			text: 'Права доступа',
 			icon: <LockKeyhole />,
 			path: `/settings/host/permissions`,
-			disabled: true
+			disabled: false
 		},
-		{
-			id: 3,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.relationships' }),
-			text: 'Подписчики',
-			icon: <Users />,
-			path: '/settings/permissions#2',
-			disabled: true
-		},
+		// {
+		// 	id: 3,
+		// 	// text: formatMessage({ id: 'settingsProfileSideMenu.relationships' }),
+		// 	text: 'Сообщества',
+		// 	icon: <Users />,
+		// 	path: '/settings/communities',
+		// 	disabled: true
+		// },
 		// {
 		// 	id: 4,
 		// 	// text: formatMessage({ id: 'settingsProfileSideMenu.filters' }),
@@ -58,7 +56,7 @@ export const SettingsHostSideMenu: React.FC<Props> = ({
 		// 	disabled: true
 		// },
 		{
-			id: 4,
+			id: 3,
 			// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
 			text: 'Администрирование',
 			icon: <UserCog />,

@@ -69,6 +69,12 @@ export const HostSettings: GlobalConfig = {
 				}
 			]
 		},
+		{
+			label: 'Первая настройка',
+			name: 'FIRST_SETTNGS',
+			type: 'checkbox',
+			defaultValue: true
+		}
 		// {
 		// 	name: 'hostOwner',
 		// 	type: 'array',
@@ -104,7 +110,7 @@ export const HostSettings: GlobalConfig = {
 		// 		}
 		// 	]
 		// }
-	],
+	]
 	// hooks: {
 	// 	afterRead: [ownerUser]
 	// }
