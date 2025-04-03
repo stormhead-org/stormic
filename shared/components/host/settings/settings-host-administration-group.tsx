@@ -1,21 +1,15 @@
 'use client'
 
-import { Community, type HostSetting } from '@/payload-types'
+import { type HostSetting } from '@/payload-types'
 import { Container, Title } from '@/shared/components'
 import {
-	formSettingsHostSchema, formSettingsRulesHostSchema,
-	type TFormSettingsHostValues,
+	formSettingsRulesHostSchema,
 	type TFormSettingsRulesHostValues
 } from '@/shared/components/host/settings/form/schemas'
-import {
-	formSettingsRulesCommunitySchema,
-	TFormSettingsRulesCommunityValues
-} from '@/shared/components/modals/communities/settings/forms/schemas'
 import { Button } from '@/shared/components/ui/button'
 import { Label } from '@/shared/components/ui/label'
 // import { LocaleToggle } from '@/shared/components/ui/locale-toggle'
 import { Textarea } from '@/shared/components/ui/textarea'
-import { settingsCommunity } from '@/shared/utils/api/communities/settingsCommunity'
 import { settingsHost } from '@/shared/utils/api/host/settingsHost'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
@@ -30,7 +24,8 @@ interface Props {
 }
 
 export const SettingsHostAdministrationGroup: React.FC<Props> = ({
-	                                                                 ownerId, host
+	ownerId,
+	host
 }) => {
 	// const { formatMessage } = useIntl()
 	const form = useForm<TFormSettingsRulesHostValues>({
@@ -38,9 +33,9 @@ export const SettingsHostAdministrationGroup: React.FC<Props> = ({
 		defaultValues: {
 			rules: host.rules
 				? host.rules.map(rule => ({
-					nameRule: rule.nameRule ?? '',
-					descriptionRule: rule.descriptionRule ?? undefined
-				  }))
+						nameRule: rule.nameRule ?? '',
+						descriptionRule: rule.descriptionRule ?? undefined
+					}))
 				: []
 		}
 	})
@@ -55,14 +50,10 @@ export const SettingsHostAdministrationGroup: React.FC<Props> = ({
 		try {
 			const filteredRules = data.rules
 				? data.rules
-						.filter(
-							rule =>
-								rule.nameRule && rule.nameRule.trim() !== ''
-						)
+						.filter(rule => rule.nameRule && rule.nameRule.trim() !== '')
 						.map(rule => ({
 							nameRule: rule.nameRule,
-							descriptionRule:
-								rule.descriptionRule ?? undefined
+							descriptionRule: rule.descriptionRule ?? undefined
 						}))
 				: []
 
@@ -111,9 +102,7 @@ export const SettingsHostAdministrationGroup: React.FC<Props> = ({
 							{fields.map((field, index) => (
 								<div key={field.id} className='space-y-2 border p-4 rounded-md'>
 									<div>
-										<Label htmlFor={`rules.${index}.nameRule`}>
-											Правило
-										</Label>
+										<Label htmlFor={`rules.${index}.nameRule`}>Правило</Label>
 										<p className='text-sm text-gray-400 leading-3 mt-1'>
 											{/* {formatMessage({ id: 'profilePageEditGroup.descriptionName' })} */}
 											Опишите правило или требование для пользователей в этом
@@ -127,13 +116,9 @@ export const SettingsHostAdministrationGroup: React.FC<Props> = ({
 											placeholder='Запрещено продвижение антинаучных точек зрения'
 											className='mt-2'
 										/>
-										{form.formState.errors.rules?.[index]
-											?.nameRule && (
+										{form.formState.errors.rules?.[index]?.nameRule && (
 											<p className='text-red-500 text-sm'>
-												{
-													form.formState.errors.rules[index].nameRule
-														.message
-												}
+												{form.formState.errors.rules[index].nameRule.message}
 											</p>
 										)}
 									</div>
@@ -148,9 +133,7 @@ export const SettingsHostAdministrationGroup: React.FC<Props> = ({
 										</p>
 										<Textarea
 											id={`rules.${index}.descriptionRule`}
-											{...form.register(
-												`rules.${index}.descriptionRule`
-											)}
+											{...form.register(`rules.${index}.descriptionRule`)}
 											placeholder='Поддержка гомеопатии, лечения молитвами, отрицание COVID-19 или отрицание того, что вакцины от него намного больше защищают, чем угрожают жизням'
 											className='mt-2'
 										/>

@@ -227,7 +227,7 @@ export const Communities: CollectionConfig = {
 			name: 'bans',
 			type: 'join',
 			collection: 'communityUsersBans',
-			on: 'user',
+			on: 'community',
 			maxDepth: 1
 		},
 		{
@@ -235,7 +235,7 @@ export const Communities: CollectionConfig = {
 			name: 'mutes',
 			type: 'join',
 			collection: 'communityUsersMutes',
-			on: 'user',
+			on: 'community',
 			maxDepth: 1
 		},
 		{

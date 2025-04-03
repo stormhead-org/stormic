@@ -11,7 +11,6 @@ import {
 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
-// import { useIntl } from 'react-intl'
 
 interface Props {
 	communityId: string
@@ -22,14 +21,12 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({
 	communityId,
 	className
 }) => {
-	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
 
 	const sideSettingsMenu = [
 		{
 			id: 1,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.main' }),
 			text: 'Основные',
 			icon: <Settings />,
 			path: `/settings/community/${communityId}/main`,
@@ -37,7 +34,6 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({
 		},
 		{
 			id: 2,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.account' }),
 			text: 'Права доступа',
 			icon: <LockKeyhole />,
 			path: `/settings/community/${communityId}/permissions/roles`,
@@ -50,23 +46,13 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({
 		},
 		{
 			id: 3,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.relationships' }),
 			text: 'Подписчики',
 			icon: <Users />,
 			path: '/settings/permissions#2',
 			disabled: true
 		},
-		// {
-		// 	id: 4,
-		// 	// text: formatMessage({ id: 'settingsProfileSideMenu.filters' }),
-		// 	text: 'Фильтры',
-		// 	icon: <Filter />,
-		// 	path: '/settings/permissions#3',
-		// 	disabled: true
-		// },
 		{
 			id: 4,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
 			text: 'Администрирование',
 			icon: <UserCog />,
 			path: `/settings/community/${communityId}/administration`,
@@ -74,7 +60,6 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({
 		},
 		{
 			id: 5,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
 			text: 'В сообщество',
 			icon: <ChevronLeft />,
 			path: `/c/${communityId}`,
@@ -84,26 +69,32 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			{sideSettingsMenu.map(item => (
-				<Button
-					key={item.id}
-					variant='blue'
-					type='button'
-					disabled={item.disabled}
-					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-md font-bold bg-transparent hover:bg-blue-700 text-primary hover:text-white',
-						`${
-							pathname === item.path
-								? 'bg-blue-800 hover:bg-blue-800 text-white'
-								: ''
-						}`
-					)}
-					onClick={() => router.push(item.path)}
-				>
-					{item.icon}
-					{item.text}
-				</Button>
-			))}
+			{sideSettingsMenu.map(item => {
+				const isActive = item.includePaths
+					? pathname && item.includePaths.includes(pathname)
+					: pathname === item.path
+
+				const buttonStyles = isActive
+					? 'bg-blue-800 hover:bg-blue-800 text-white'
+					: 'bg-transparent hover:bg-blue-700 text-primary hover:text-white'
+
+				return (
+					<Button
+						key={item.id}
+						variant='blue'
+						type='button'
+						disabled={item.disabled}
+						className={cn(
+							'flex gap-2 justify-start w-full mb-1 h-12 text-md font-bold',
+							buttonStyles
+						)}
+						onClick={() => router.push(item.path)}
+					>
+						{item.icon}
+						{item.text}
+					</Button>
+				)
+			})}
 		</div>
 	)
 }

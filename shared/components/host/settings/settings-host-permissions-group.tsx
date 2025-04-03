@@ -1,6 +1,6 @@
 'use client'
 
-import { type HostSetting, User } from '@/payload-types'
+import { type HostSetting } from '@/payload-types'
 import { Container, Title } from '@/shared/components'
 import { Button } from '@/shared/components/ui/button'
 import React from 'react'

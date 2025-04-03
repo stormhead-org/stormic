@@ -1,23 +1,20 @@
 'use client'
 
-import { type Community, type HostSetting, Media } from '@/payload-types'
+import { type HostSetting, Media } from '@/payload-types'
 import { Container, ProfileAvatar, Title } from '@/shared/components'
 import { FormInput, FormTextarea } from '@/shared/components/form'
-import { formSettingsHostSchema, type TFormSettingsHostValues } from '@/shared/components/host/settings/form/schemas'
 import {
-	formSettingsCommunitySchema,
-	TFormSettingsCommunityValues
-} from '@/shared/components/modals/communities/settings/forms/schemas'
+	formSettingsHostSchema,
+	type TFormSettingsHostValues
+} from '@/shared/components/host/settings/form/schemas'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
-import { Label } from '@/shared/components/ui/label'
-import { settingsCommunity } from '@/shared/utils/api/communities/settingsCommunity'
 import { settingsHost } from '@/shared/utils/api/host/settingsHost'
 import { createMedia } from '@/shared/utils/api/media/createMedia'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import React, { useRef, useState } from 'react'
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 interface Props {
@@ -32,7 +29,7 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 			title: host.title || '',
 			slogan: host.slogan || '',
 			description: host.description || '',
-			email: host.contacts || '',
+			email: host.contacts || ''
 		}
 	})
 	const router = useRouter()
@@ -98,17 +95,19 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 			toast.error('Ошибка при загрузке баннера', { icon: '❌' })
 		}
 	}
-	
+
 	const handleUploadAuthBanner = async () => {
 		const file = authBannerInputRef.current?.files?.[0]
 		if (!file) {
-			toast.error('Выберите файл для загрузки баннера окна авторизации', { icon: '⚠️' })
+			toast.error('Выберите файл для загрузки баннера окна авторизации', {
+				icon: '⚠️'
+			})
 			return
 		}
-		
+
 		const formData = new FormData()
 		formData.append('file', file)
-		
+
 		try {
 			const result = await createMedia(formData)
 			const newAuthBanner = result.doc
@@ -116,7 +115,9 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 			toast.success('Баннер окна авторизации успешно загружен', { icon: '✅' })
 		} catch (error) {
 			console.error('Error uploading banner:', error)
-			toast.error('Ошибка при загрузке баннера окна авторизации', { icon: '❌' })
+			toast.error('Ошибка при загрузке баннера окна авторизации', {
+				icon: '❌'
+			})
 		}
 	}
 
@@ -130,7 +131,7 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 				title: data.title,
 				slogan: data.slogan,
 				description: data.description,
-				email: data.email?.length ? data.email : '',
+				email: data.email?.length ? data.email : ''
 			})
 			toast.success('Сервер обновлен', { icon: '✅' })
 			router.refresh()
@@ -149,9 +150,10 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 				<Container className='bg-secondary rounded-md mt-1 p-4'>
 					<p className='text-justify'>
 						{/* {formatMessage({ id: 'profilePageEditGroup.tipForSocial' })} */}
-						Настройте то, что люди видят на странице информации о вашей платформе. Другие
-						люди с большей вероятностью останется на вашей платформе и будут
-						на нее возвращаться, если вся информация заполнена и добавлены изображения.
+						Настройте то, что люди видят на странице информации о вашей
+						платформе. Другие люди с большей вероятностью останется на вашей
+						платформе и будут на нее возвращаться, если вся информация заполнена
+						и добавлены изображения.
 					</p>
 					<div className='w-full border-b-2 border-b-blue-600 pb-4'>
 						<Title
@@ -184,7 +186,7 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 										placeholder='Stormic'
 										className='mt-2'
 									/>
-									
+
 									<p className='mt-4'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.titleName' })} */}
 										Слоган
@@ -312,7 +314,7 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 									/>
 								</div>
 							</div>
-							
+
 							<div className='flex w-full mt-6 gap-4'>
 								<div className='w-1/2'>
 									<p className='mt-2'>
@@ -351,8 +353,6 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 									/>
 								</div>
 							</div>
-							
-							
 
 							<Button
 								variant='blue'

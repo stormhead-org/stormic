@@ -23,7 +23,7 @@ interface Props {
 	communityId: number
 	open: boolean
 	onClose: () => void
-	bannedUsers: number[]
+	mutedUsers: number[]
 }
 
 interface UserWithDetails {
@@ -32,11 +32,11 @@ interface UserWithDetails {
 	avatar?: { url: string }
 }
 
-export const CommunityUsersBansModal: React.FC<Props> = ({
+export const CommunityUsersMutesModal: React.FC<Props> = ({
 	currentUser,
 	communityUsers,
 	communityId,
-	bannedUsers,
+	mutedUsers,
 	open,
 	onClose
 }) => {
@@ -56,14 +56,14 @@ export const CommunityUsersBansModal: React.FC<Props> = ({
 			'name' in user &&
 			typeof user.name === 'string' &&
 			user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-			!bannedUsers.includes(user.id) &&
+			!mutedUsers.includes(user.id) &&
 			user.id !== currentUser.id
 		)
 	})
 
-	const banUser = async (communityId: number, userId: number) => {
+	const muteUser = async (communityId: number, userId: number) => {
 		try {
-			const req = await fetch('/api/communityUsersBans', {
+			const req = await fetch('/api/communityUsersMutes', {
 				method: 'POST',
 				credentials: 'include',
 				headers: { 'Content-Type': 'application/json' },
@@ -73,36 +73,36 @@ export const CommunityUsersBansModal: React.FC<Props> = ({
 				})
 			})
 			if (!req.ok) {
-				throw new Error('Ошибка при бане пользователя')
+				throw new Error('Ошибка при муте пользователя')
 			}
 		} catch (err) {
-			console.log('Ошибка при бане пользователя:', err)
+			console.log('Ошибка при муте пользователя:', err)
 			throw err
 		}
 	}
 
-	const handleSubmitBanUsers = async (
+	const handleSubmitMuteUsers = async (
 		communityId: number,
 		userIds: number[]
 	) => {
 		try {
-			// Фильтруем только тех пользователей, которых ещё нет в bannedUsers
-			const newUsersToBan = userIds.filter(
-				userId => !bannedUsers.includes(userId)
+			// Фильтруем только тех пользователей, которых ещё нет в mutedUsers
+			const newUsersToMute = userIds.filter(
+				userId => !mutedUsers.includes(userId)
 			)
-			if (newUsersToBan.length === 0) {
+			if (newUsersToMute.length === 0) {
 				handleClose()
 				return
 			}
 
 			await Promise.all(
-				newUsersToBan.map(userId => banUser(communityId, userId))
+				newUsersToMute.map(userId => muteUser(communityId, userId))
 			)
 			setSelectedUsers([])
 			handleClose()
 			router.refresh()
 		} catch (err) {
-			console.log('Ошибка при бане пользователей:', err)
+			console.log('Ошибка при муте пользователей:', err)
 		}
 	}
 
@@ -119,9 +119,9 @@ export const CommunityUsersBansModal: React.FC<Props> = ({
 		})
 	}
 
-	const handleBanSelectedUsers = async () => {
+	const handleMuteSelectedUsers = async () => {
 		if (selectedUsers.length > 0) {
-			await handleSubmitBanUsers(communityId, selectedUsers)
+			await handleSubmitMuteUsers(communityId, selectedUsers)
 		}
 	}
 
@@ -130,7 +130,7 @@ export const CommunityUsersBansModal: React.FC<Props> = ({
 			<DialogContent className='p-2 w-[40vw]'>
 				<DialogHeader className='pt-8'>
 					<DialogTitle className='text-2xl text-center font-bold'>
-						Заблокировать участников
+						Заглушить участников
 					</DialogTitle>
 					<DialogDescription>
 						{selectedUsers.length === 0 ? (
@@ -207,11 +207,11 @@ export const CommunityUsersBansModal: React.FC<Props> = ({
 					</Button>
 					<Button
 						variant='blue'
-						onClick={handleBanSelectedUsers}
+						onClick={handleMuteSelectedUsers}
 						disabled={selectedUsers.length === 0}
 						className='px-6'
 					>
-						Заблокировать
+						Заглушить
 					</Button>
 				</DialogFooter>
 			</DialogContent>

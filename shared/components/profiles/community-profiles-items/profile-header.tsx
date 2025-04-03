@@ -6,20 +6,21 @@ import { cn } from '@/shared/lib/utils'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 import { Community, User } from '@/payload-types'
+import { Permissions } from '@/shared/lib/permissions'
 import { GripHorizontal, Settings } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import CommunityFollowButton from '../../community-follow-button'
 
 interface Props {
 	data: User | Community
-	currentUser: User
+	permissions: Permissions | null
 	hasUser: boolean
 	className?: string
 }
 
 export const ProfileHeader: React.FC<Props> = ({
 	data,
-	currentUser,
+	permissions,
 	hasUser,
 	className
 }) => {
@@ -72,16 +73,14 @@ export const ProfileHeader: React.FC<Props> = ({
 									className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
 									onClick={() => router.push('/settings/profile')}
 								/>
-							) : (
+							) : permissions?.COMMUNITY_OWNER ? (
 								<Settings
 									className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
 									onClick={() =>
-										router.push(
-											`/settings/community/${(data as Community).id}/main`
-										)
+										router.push(`/settings/community/${data.id}/main`)
 									}
 								/>
-							)}
+							) : null}
 						</div>
 
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>

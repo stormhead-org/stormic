@@ -3,11 +3,13 @@
 import { FollowCommunity, Role } from '@/payload-types'
 import {
 	Dialog,
-	DialogContent, DialogDescription, DialogFooter,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
 	DialogHeader,
 	DialogTitle
 } from '@/shared/components/ui/dialog'
-import { ChevronRight, CircleUser, Shield, ShieldCheck } from 'lucide-react'
+import { CircleUser, Shield } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
 import React, { useState } from 'react'
@@ -26,9 +28,7 @@ interface Props {
 interface UserWithDetails {
 	id: number
 	name: string
-	avatar?: {
-		url: string
-	}
+	avatar?: { url: string }
 }
 
 export const RoleAddUserModal: React.FC<Props> = ({
@@ -40,9 +40,8 @@ export const RoleAddUserModal: React.FC<Props> = ({
 	const handleClose = () => {
 		onClose()
 	}
-	
-	const router = useRouter()
 
+	const router = useRouter()
 	const [searchTerm, setSearchTerm] = useState<string>('')
 	const [selectedUsers, setSelectedUsers] = useState<number[]>([])
 
@@ -52,7 +51,6 @@ export const RoleAddUserModal: React.FC<Props> = ({
 				const isAlreadyInRole =
 					selectedRole.users?.some(user => {
 						const userId = typeof user === 'object' && user?.id ? user.id : user
-						// Проверяем тип item.user
 						return typeof item.user === 'object' && item.user?.id
 							? userId === item.user.id
 							: userId === item.user
@@ -85,26 +83,56 @@ export const RoleAddUserModal: React.FC<Props> = ({
 			},
 			{ addQueryPrefix: true }
 		)
+
 		try {
-			const req = await fetch(`/api/roles/${stringifiedQuery}`, {
+			// Получаем текущую роль с её пользователями
+			const getReq = await fetch(`/api/roles${stringifiedQuery}`, {
+				method: 'GET',
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json' }
+			})
+			const roleData = await getReq.json()
+			if (!getReq.ok) {
+				throw new Error('Ошибка при получении текущей роли')
+			}
+
+			console.log('Current role data:', JSON.stringify(roleData, null, 2))
+
+			// Текущий список пользователей роли
+			const currentUsers = Array.isArray(roleData.docs[0]?.users)
+				? roleData.docs[0].users.map((user: any) =>
+						typeof user === 'object' && user?.id ? user.id : user
+					)
+				: []
+
+			console.log('Current users:', currentUsers)
+
+			// Объединяем текущих пользователей с новыми, убираем дубликаты
+			const updatedUsers = [...new Set([...currentUsers, ...userIds])]
+
+			console.log('Updated users to send:', updatedUsers)
+
+			// Отправляем обновлённый список
+			const patchReq = await fetch(`/api/roles${stringifiedQuery}`, {
 				method: 'PATCH',
 				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					users: userIds
-				})
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ users: updatedUsers })
 			})
-			const data = await req.json()
-			if (req.ok) {
-				setSelectedUsers([])
-				handleClose()
-				router.refresh()
+
+			const data = await patchReq.json()
+			if (!patchReq.ok) {
+				throw new Error('Ошибка при обновлении роли: ' + JSON.stringify(data))
 			}
+
+			console.log('PATCH response:', JSON.stringify(data, null, 2))
+
+			setSelectedUsers([])
+			handleClose()
+			router.refresh()
 			return data
 		} catch (err) {
-			console.log(err)
+			console.error('Ошибка при обновлении роли:', err)
 		}
 	}
 
@@ -129,7 +157,7 @@ export const RoleAddUserModal: React.FC<Props> = ({
 
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className='p-2'>
+			<DialogContent className='p-2 w-[40vw]'>
 				<DialogHeader className='pt-8'>
 					<DialogTitle className='text-2xl text-center font-bold'>
 						Добавить участников
@@ -137,21 +165,16 @@ export const RoleAddUserModal: React.FC<Props> = ({
 					<DialogDescription className='flex gap-1 items-center justify-center text-center text-xl'>
 						<Shield
 							className='w-6 h-6'
-							style={{ color: selectedRole.color || '99AAB5' }}
+							style={{ color: selectedRole.color || '#99AAB5' }}
 						/>
 						{selectedRole.name}
 					</DialogDescription>
 					<DialogDescription>
 						{selectedUsers.length === 0 ? (
-							<>
-								Выбрать до 30 участников
-							</>
+							<>Выбрать до 30 участников</>
 						) : (
-							<>
-							Выбрано {selectedUsers.length} участников
-							</>
-						)
-						}
+							<>Выбрано {selectedUsers.length} участников</>
+						)}
 					</DialogDescription>
 				</DialogHeader>
 				<div className=''>
@@ -165,42 +188,46 @@ export const RoleAddUserModal: React.FC<Props> = ({
 								onChange={e => setSearchTerm(e.target.value)}
 							/>
 						</div>
-						<div className='mt-2 bg-secondary p-1 rounded-md'>
+						<div className='mt-2 p-1 rounded-md'>
 							{filteredUsers.length === 0 ? (
 								<div className='p-2 text-gray-500'>Участники не найдены</div>
 							) : (
-								<div className='flex flex-col w-full h-[30vh] overflow-auto'>
+								<div className='flex flex-col gap-2 w-full h-[40vh] overflow-auto'>
 									{filteredUsers.map(item => (
 										<div
 											key={item.id}
-											className='flex items-center gap-2 w-full px-2 py-1 cursor-pointer rounded-md bg-gray-700 hover:bg-gray-800'
+											className='flex items-center gap-2 w-full px-2 py-1 cursor-pointer rounded-md bg-secondary hover:bg-gray-800'
+											onClick={() =>
+												handleCheckboxChange(
+													item.user.id,
+													!selectedUsers.includes(item.user.id)
+												)
+											}
 										>
-												<Checkbox
-													checked={selectedUsers.includes(item.user.id)}
-													onCheckedChange={checked =>
-														handleCheckboxChange(
-															item.user.id,
-															checked as boolean
-														)
-													}
-													disabled={
-														selectedUsers.length >= 30 &&
-														!selectedUsers.includes(item.user.id)
-													}
-												/>
-												<div className='flex justify-items-start items-center gap-2 bg-transparent text-primary'>
-													<Avatar className='rounded-full'>
-														<AvatarImage
-															className='m-auto rounded-full'
-															src={item.user.avatar?.url}
-															style={{ width: 34, height: 34 }}
-														/>
-														<AvatarFallback>
-															<CircleUser />
-														</AvatarFallback>
-													</Avatar>
-													<span>{item.user.name}</span>
-												</div>
+											<Checkbox
+												checked={selectedUsers.includes(item.user.id)}
+												onClick={event => event.stopPropagation()}
+												onCheckedChange={checked =>
+													handleCheckboxChange(item.user.id, checked as boolean)
+												}
+												disabled={
+													selectedUsers.length >= 30 &&
+													!selectedUsers.includes(item.user.id)
+												}
+											/>
+											<div className='flex justify-items-start items-center gap-2 bg-transparent text-primary'>
+												<Avatar className='rounded-full'>
+													<AvatarImage
+														className='m-auto rounded-full'
+														src={item.user.avatar?.url}
+														style={{ width: 34, height: 34 }}
+													/>
+													<AvatarFallback>
+														<CircleUser />
+													</AvatarFallback>
+												</Avatar>
+												<span>{item.user.name}</span>
+											</div>
 										</div>
 									))}
 								</div>
@@ -209,11 +236,7 @@ export const RoleAddUserModal: React.FC<Props> = ({
 					</div>
 				</div>
 				<DialogFooter className='flex items-center gap-4 justify-items-end pb-2'>
-					<Button
-						variant='blue'
-						onClick={() => handleClose()}
-						className='px-10'
-					>
+					<Button variant='blue' onClick={handleClose} className='px-10'>
 						Отмена
 					</Button>
 					<Button

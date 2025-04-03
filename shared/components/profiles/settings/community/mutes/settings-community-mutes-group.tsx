@@ -2,11 +2,11 @@
 
 import {
 	Community,
-	CommunityUsersBan,
+	CommunityUsersMute,
 	FollowCommunity,
 	User
 } from '@/payload-types'
-import { CommunityUsersBansModal } from '@/shared/components/modals/community-users-bans-modal'
+import { CommunityUsersMutesModal } from '@/shared/components/modals/community-users-mutes-modal'
 import {
 	Avatar,
 	AvatarFallback,
@@ -23,38 +23,38 @@ interface Props {
 	data: Community
 	currentUser: User
 	communityUsers: FollowCommunity[]
-	communityUsersBans: CommunityUsersBan[]
+	communityUsersMutes: CommunityUsersMute[]
 }
 
-export const SettingsCommunityBansGroup: React.FC<Props> = ({
+export const SettingsCommunityMutesGroup: React.FC<Props> = ({
 	data,
 	currentUser,
 	communityUsers,
-	communityUsersBans
+	communityUsersMutes
 }) => {
 	const router = useRouter()
 	const [searchTerm, setSearchTerm] = useState<string>('')
 	const [openAddUserModal, setOpenAddUserModal] = useState(false)
 
-	// Фильтрация забаненных пользователей по поисковому запросу
-	const filteredBans = communityUsersBans.filter(ban => {
-		const user = ban.user as User
+	// Фильтрация замучетанных пользователей по поисковому запросу
+	const filteredMutes = communityUsersMutes.filter(mute => {
+		const user = mute.user as User
 		return user.name.toLowerCase().includes(searchTerm.toLowerCase())
 	})
 
-	// Функция для разбана пользователя
-	const handleSubmitDeleteBan = async (banId: number) => {
+	// Функция для размута пользователя
+	const handleSubmitDeleteBan = async (muteId: number) => {
 		try {
 			const stringifiedQuery = qs.stringify(
 				{
 					where: {
-						id: { equals: banId },
+						id: { equals: muteId },
 						community: { equals: data.id }
 					}
 				},
 				{ addQueryPrefix: true }
 			)
-			const req = await fetch(`/api/communityUsersBans${stringifiedQuery}`, {
+			const req = await fetch(`/api/communityUsersMutes${stringifiedQuery}`, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {
@@ -65,7 +65,7 @@ export const SettingsCommunityBansGroup: React.FC<Props> = ({
 				router.refresh()
 			}
 		} catch (err) {
-			console.log('Ошибка при разбане пользователя:', err)
+			console.log('Ошибка при размуте пользователя:', err)
 		}
 	}
 
@@ -75,39 +75,39 @@ export const SettingsCommunityBansGroup: React.FC<Props> = ({
 				<div className='flex gap-2'>
 					<Input
 						type='text'
-						placeholder='Поиск заблокированных участников...'
+						placeholder='Поиск заглушенных участников...'
 						className='h-10 w-full px-2 rounded-md bg-gray-700'
 						value={searchTerm}
 						onChange={e => setSearchTerm(e.target.value)}
 					/>
-					<CommunityUsersBansModal
+					<CommunityUsersMutesModal
 						open={openAddUserModal}
 						onClose={() => setOpenAddUserModal(false)}
 						currentUser={currentUser}
 						communityUsers={communityUsers}
 						communityId={data.id}
-						bannedUsers={communityUsersBans.map(ban => (ban.user as User).id)}
+						mutedUsers={communityUsersMutes.map(mute => (mute.user as User).id)}
 					/>
 					<Button
 						variant='blue'
 						onClick={() => setOpenAddUserModal(true)}
 						className='px-6'
 					>
-						Заблокировать
+						Заглушить
 					</Button>
 				</div>
 				<div className='mt-2'>
-					{filteredBans.length === 0 ? (
+					{filteredMutes.length === 0 ? (
 						<div className='p-2 text-gray-500'>
-							Заблокированные участники не найдены
+							Заглушенные участники не найдены
 						</div>
 					) : (
 						<div className='flex flex-col'>
-							{filteredBans.map(ban => {
-								const user = ban.user as User
+							{filteredMutes.map(mute => {
+								const user = mute.user as User
 								return (
 									<div
-										key={ban.id}
+										key={mute.id}
 										className='flex w-full px-2 py-1 cursor-pointer hover:bg-gray-600 bg-gray-700 rounded-md mt-2 items-center justify-between'
 									>
 										<div className='flex w-11/12'>
@@ -136,10 +136,10 @@ export const SettingsCommunityBansGroup: React.FC<Props> = ({
 													className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
 													onClick={async () => {
 														try {
-															await handleSubmitDeleteBan(ban.id)
+															await handleSubmitDeleteBan(mute.id)
 														} catch (error) {
 															console.error(
-																'Ошибка при разбане пользователя:',
+																'Ошибка при размуте пользователя:',
 																error
 															)
 														}

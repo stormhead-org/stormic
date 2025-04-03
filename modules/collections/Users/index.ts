@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
+import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import { followUser } from '@/shared/utils/followUser'
 import { getUserStatus } from '@/shared/utils/getUserStatus'
 import { unfollowUser } from '@/shared/utils/unfollowUser'
@@ -29,6 +30,40 @@ export const Users: CollectionConfig = {
 	},
 	auth: true,
 	endpoints: [
+		{
+			path: '/:id/permissions',
+			method: 'get',
+			handler: async req => {
+				const userId = req.routeParams?.id as string
+				const communityId = req.query?.communityId as string
+				if (!userId || !communityId) {
+					return Response.json(
+						{ error: 'User ID and Community ID are required' },
+						{ status: 400 }
+					)
+				}
+				try {
+					const permissions = await getUserPermissions(
+						Number(userId),
+						Number(communityId)
+					)
+					console.log(
+						`Permissions for user ${userId} in community ${communityId}:`,
+						permissions
+					)
+					return Response.json(permissions)
+				} catch (error) {
+					console.error(`Error fetching permissions for user ${userId}:`, error)
+					return Response.json(
+						{
+							error: 'Failed to fetch permissions',
+							details: error instanceof Error ? error.message : 'Unknown error'
+						},
+						{ status: 500 }
+					)
+				}
+			}
+		},
 		{
 			path: '/:id/status',
 			method: 'get',
@@ -195,7 +230,7 @@ export const Users: CollectionConfig = {
 			name: 'communitiesBans',
 			type: 'join',
 			collection: 'communityUsersBans',
-			on: 'community',
+			on: 'user',
 			maxDepth: 1
 		},
 		{
@@ -203,7 +238,7 @@ export const Users: CollectionConfig = {
 			name: 'communitiesMutes',
 			type: 'join',
 			collection: 'communityUsersMutes',
-			on: 'community',
+			on: 'user',
 			maxDepth: 1
 		},
 		{
