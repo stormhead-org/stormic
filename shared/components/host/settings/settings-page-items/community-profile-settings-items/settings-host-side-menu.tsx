@@ -2,13 +2,7 @@
 
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
-import {
-	ChevronLeft,
-	LockKeyhole,
-	Settings,
-	UserCog,
-	Users
-} from 'lucide-react'
+import { LockKeyhole, Settings, UserCog } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 // import { useIntl } from 'react-intl'
@@ -28,7 +22,7 @@ export const SettingsHostSideMenu: React.FC<Props> = ({ className }) => {
 			// text: formatMessage({ id: 'settingsProfileSideMenu.main' }),
 			text: 'Основные',
 			icon: <Settings />,
-			path: `/settings/host/main`,
+			path: '/settings/host/main',
 			disabled: false
 		},
 		{
@@ -36,7 +30,7 @@ export const SettingsHostSideMenu: React.FC<Props> = ({ className }) => {
 			// text: formatMessage({ id: 'settingsProfileSideMenu.account' }),
 			text: 'Права доступа',
 			icon: <LockKeyhole />,
-			path: `/settings/host/permissions`,
+			path: '/settings/host/permissions/roles',
 			disabled: false
 		},
 		// {
@@ -60,7 +54,7 @@ export const SettingsHostSideMenu: React.FC<Props> = ({ className }) => {
 			// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
 			text: 'Администрирование',
 			icon: <UserCog />,
-			path: `/settings/host/administration`,
+			path: '/settings/host/administration',
 			disabled: false
 		}
 	]

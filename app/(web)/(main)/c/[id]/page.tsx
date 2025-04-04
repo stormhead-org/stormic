@@ -1,6 +1,6 @@
 import { User } from '@/payload-types'
+import { CommunityBan } from '@/shared/components/info-blocks/community-ban'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
-import { CommunityUserBan } from '@/shared/components/info-blocks/community-user-ban'
 import { CommunityProfileGroup } from '@/shared/components/profiles/community-profile-group'
 import { getSession } from '@/shared/lib/auth'
 import { generateMeta } from '@/shared/lib/generateMeta'
@@ -26,13 +26,25 @@ export default async function Community({ params: paramsPromise }: Args) {
 
 	const session = (await getSession()) as { user: User } | null
 	const currentUser = session?.user
+	const payload = await getPayload({ config: configPromise })
+
+	const hostCommunityBan = await payload.find({
+		collection: 'hostCommunitiesBans',
+		where: {
+			community: {
+				equals: community.id
+			}
+		},
+		pagination: false,
+		overrideAccess: true
+	})
 
 	const permissions = currentUser
 		? await getUserPermissions(currentUser.id, community.id)
 		: null
 
-	if (currentUser && permissions?.COMMUNITY_USER_HAS_BANNED) {
-		return <CommunityUserBan />
+	if (hostCommunityBan.docs.length !== 0) {
+		return <CommunityBan />
 	}
 
 	return (

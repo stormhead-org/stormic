@@ -10,7 +10,9 @@ interface Props {
 	className?: string
 }
 
-export const SettingsHostPermissionsTopMenu: React.FC<Props> = ({ className }) => {
+export const SettingsHostPermissionsTopMenu: React.FC<Props> = ({
+	className
+}) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -19,22 +21,22 @@ export const SettingsHostPermissionsTopMenu: React.FC<Props> = ({ className }) =
 		{
 			id: 1,
 			// text: formatMessage({ id: 'profileAuthTopMenu.accountSettings' }),
-			text: 'Управление учётной записью',
-			path: '/settings/permissions',
+			text: 'Роли',
+			path: '/settings/host/permissions/roles',
 			disabled: false
 		},
 		{
 			id: 2,
 			// text: formatMessage({ id: 'profileAuthTopMenu.2FactorAuth' }),
-			text: 'Подтверждение входа',
-			path: '/settings/permissions#2',
-			disabled: true
+			text: 'Заблокированные',
+			path: '/settings/host/permissions/bans',
+			disabled: false
 		},
 		{
 			id: 3,
 			// text: formatMessage({ id: 'profileAuthTopMenu.authorizedApps' }),
-			text: 'Приложения',
-			path: '/settings/permissions#3',
+			text: 'Заглушенные',
+			path: '/settings/host/permissions/mutes',
 			disabled: true
 		}
 	]

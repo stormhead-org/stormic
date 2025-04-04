@@ -1,4 +1,4 @@
-import { Community, Role } from '@/payload-types'
+import { HostRole, HostSetting, Role } from '@/payload-types'
 import { Container } from '@/shared/components/container'
 import { Title } from '@/shared/components/title'
 import { Button } from '@/shared/components/ui/button'
@@ -9,8 +9,8 @@ import qs from 'qs'
 import React, { useState } from 'react'
 
 interface Props {
-	data: Community
-	communityRoles: Role[]
+	data: HostSetting
+	hostRoles: HostRole[]
 	selectedRoleId: number | null
 	setSelectedRoleId: (id: number) => void
 	setType: React.Dispatch<React.SetStateAction<'main' | 'editor'>>
@@ -21,19 +21,19 @@ export const MainForm: React.FC<Props> = ({
 	data,
 	selectedRoleId,
 	setSelectedRoleId,
-	communityRoles
+	hostRoles
 }) => {
 	const router = useRouter()
 	const [searchTerm, setSearchTerm] = useState<string>('')
 
-	const filteredRoles = communityRoles.filter(
+	const filteredRoles = hostRoles.filter(
 		(role): role is Role =>
 			typeof role === 'object' &&
 			role.name.toLowerCase() !== '@everyone' &&
 			role.name.toLowerCase().includes(searchTerm.toLowerCase())
 	)
 
-	const everyoneRole = communityRoles.find(
+	const everyoneRole = hostRoles.find(
 		(role): role is Role =>
 			typeof role === 'object' && role.name === '@everyone'
 	)
@@ -44,7 +44,7 @@ export const MainForm: React.FC<Props> = ({
 			community: data.id
 		}
 		try {
-			const response = await fetch('/api/roles', {
+			const response = await fetch('/api/hostRoles', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(newRoleData)
@@ -68,16 +68,13 @@ export const MainForm: React.FC<Props> = ({
 				where: {
 					id: {
 						equals: roleId
-					},
-					community: {
-						equals: data.id
 					}
 				}
 			},
 			{ addQueryPrefix: true }
 		)
 		try {
-			const req = await fetch(`/api/roles/${stringifiedQuery}`, {
+			const req = await fetch(`/api/hostRoles/${stringifiedQuery}`, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {
@@ -150,7 +147,7 @@ export const MainForm: React.FC<Props> = ({
 					<div className='flex w-full bg-secondary px-1 mt-2'>
 						<div className='flex w-11/12'>
 							<div className='w-1/2'>
-								<p>Роли - {communityRoles.length - 1}</p>
+								<p>Роли - {hostRoles.length - 1}</p>
 							</div>
 							<div className='w-1/2'>
 								<p>Участники</p>

@@ -1,4 +1,4 @@
-import { Role } from '@/payload-types'
+import { HostRole } from '@/payload-types'
 import { FormInput } from '@/shared/components/form'
 import { Button } from '@/shared/components/ui/button'
 import { Check } from 'lucide-react'
@@ -30,7 +30,7 @@ const colorOptions = [
 ]
 
 interface Props {
-	selectedRole: Role
+	selectedRole: HostRole
 	isEveryoneRole?: boolean
 	setTypeEditor: React.Dispatch<
 		React.SetStateAction<'visual' | 'permissions' | 'users'>
@@ -69,7 +69,7 @@ export const VisualForm: React.FC<Props> = ({
 				? { color: formData.roleColor }
 				: { name: formData.roleTitle, color: formData.roleColor }
 
-			const response = await fetch(`/api/roles/${selectedRole?.id}`, {
+			const response = await fetch(`/api/hostRoles/${selectedRole?.id}`, {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(updateData)
@@ -94,8 +94,7 @@ export const VisualForm: React.FC<Props> = ({
 					<p>Внешний вид</p>
 				</div>
 				<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
-					<p onClick={() => setTypeEditor('permissions')}>
-						Права доступа</p>
+					<p onClick={() => setTypeEditor('permissions')}>Права доступа</p>
 				</div>
 				{!isEveryoneRole ? (
 					<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
@@ -126,7 +125,9 @@ export const VisualForm: React.FC<Props> = ({
 									style={{ backgroundColor: '#99AAB5' }}
 									onClick={() => form.setValue('roleColor', '#99AAB5')}
 								>
-									{form.getValues('roleColor') === '#99AAB5' && <Check size={36} />}
+									{form.getValues('roleColor') === '#99AAB5' && (
+										<Check size={36} />
+									)}
 								</div>
 							</div>
 							<div>

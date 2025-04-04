@@ -1,5 +1,5 @@
-import { FollowCommunity, Role, User } from '@/payload-types'
-import { RoleAddUserModal } from '@/shared/components/modals/role-add-user-modal'
+import { HostRole, User } from '@/payload-types'
+import { RoleAddUserHostModal } from '@/shared/components/modals/role-add-user-host-modal'
 import {
 	Avatar,
 	AvatarFallback,
@@ -13,9 +13,9 @@ import qs from 'qs'
 import React, { useEffect, useState } from 'react'
 
 interface Props {
-	selectedRole: Role
+	selectedRole: HostRole
 	isEveryoneRole: boolean
-	communityUsers: FollowCommunity[]
+	users: User[]
 	setTypeEditor: React.Dispatch<
 		React.SetStateAction<'visual' | 'permissions' | 'users'>
 	>
@@ -25,7 +25,7 @@ export const UsersForm: React.FC<Props> = ({
 	selectedRole,
 	isEveryoneRole,
 	setTypeEditor,
-	communityUsers
+	users
 }) => {
 	useEffect(() => {
 		if (isEveryoneRole) {
@@ -34,7 +34,7 @@ export const UsersForm: React.FC<Props> = ({
 	}, [isEveryoneRole, setTypeEditor])
 
 	const router = useRouter()
-	const [openAddUserModal, setOpenAddUserModal] = React.useState(false)
+	const [openAddUserHostModal, setOpenAddUserHostModal] = React.useState(false)
 	const [searchTerm, setSearchTerm] = useState<string>('')
 
 	const filteredUsers =
@@ -52,11 +52,6 @@ export const UsersForm: React.FC<Props> = ({
 		roleId: number,
 		userIdToRemove: number
 	) => {
-		const communityId =
-			typeof selectedRole.community === 'object' && selectedRole.community?.id
-				? selectedRole.community.id
-				: selectedRole.community
-
 		const updatedUsers = (selectedRole.users || [])
 			.map(user => (typeof user === 'object' && user?.id ? user.id : user))
 			.filter(id => id !== userIdToRemove)
@@ -64,15 +59,14 @@ export const UsersForm: React.FC<Props> = ({
 		const stringifiedQuery = qs.stringify(
 			{
 				where: {
-					id: { equals: roleId },
-					community: { equals: communityId }
+					id: { equals: roleId }
 				}
 			},
 			{ addQueryPrefix: true }
 		)
 
 		try {
-			const req = await fetch(`/api/roles/${stringifiedQuery}`, {
+			const req = await fetch(`/api/hostRoles/${stringifiedQuery}`, {
 				method: 'PATCH',
 				credentials: 'include',
 				headers: {
@@ -116,15 +110,15 @@ export const UsersForm: React.FC<Props> = ({
 							value={searchTerm}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
-						<RoleAddUserModal
-							open={openAddUserModal}
-							onClose={() => setOpenAddUserModal(false)}
-							communityUsers={communityUsers}
+						<RoleAddUserHostModal
+							open={openAddUserHostModal}
+							onClose={() => setOpenAddUserHostModal(false)}
+							users={users}
 							selectedRole={selectedRole}
 						/>
 						<Button
 							variant='blue'
-							onClick={() => setOpenAddUserModal(true)}
+							onClick={() => setOpenAddUserHostModal(true)}
 							className='px-6'
 						>
 							Добавить участников

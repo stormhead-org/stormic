@@ -17,6 +17,11 @@ import { Communities } from './modules/collections/Communities'
 import { CommunityUsersBans } from './modules/collections/CommunityUsersBans'
 import { CommunityUsersMutes } from './modules/collections/CommunityUsersMutes'
 import { FollowCommunity } from './modules/collections/FollowCommunity'
+import { HostCommunitiesBans } from './modules/collections/HostCommunitiesBans'
+import { HostCommunitiesMutes } from './modules/collections/HostCommunitiesMutes'
+import { HostRoles } from './modules/collections/HostRoles'
+import { HostUsersBans } from './modules/collections/HostUsersBans'
+import { HostUsersMutes } from './modules/collections/HostUsersMutes'
 import { LikePost } from './modules/collections/LikePost'
 import { Posts } from './modules/collections/Posts'
 import { Roles } from './modules/collections/Roles'
@@ -24,7 +29,6 @@ import { SidebarNavigation } from './modules/globals/Navigation'
 import { HostSettings } from './modules/globals/Settings'
 import { revalidateRedirects } from './shared/hooks/revalidateRedirects'
 import { getServerSideURL } from './shared/lib/getURL'
-import { HostRoles } from './modules/collections/HostRoles'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -69,7 +73,11 @@ export default buildConfig({
 		FollowCommunity,
 		CommunityUsersBans,
 		CommunityUsersMutes,
-		LikePost
+		LikePost,
+		HostUsersMutes,
+		HostUsersBans,
+		HostCommunitiesMutes,
+		HostCommunitiesBans
 	],
 	globals: [HostSettings, SidebarNavigation],
 	cors: [getServerSideURL()].filter(Boolean),

@@ -77,6 +77,10 @@ export interface Config {
     communityUsersBans: CommunityUsersBan;
     communityUsersMutes: CommunityUsersMute;
     likePost: LikePost;
+    hostUsersMutes: HostUsersMute;
+    hostUsersBans: HostUsersBan;
+    hostCommunitiesMutes: HostCommunitiesMute;
+    hostCommunitiesBans: HostCommunitiesBan;
     search: Search;
     redirects: Redirect;
     'payload-jobs': PayloadJob;
@@ -125,6 +129,10 @@ export interface Config {
     communityUsersBans: CommunityUsersBansSelect<false> | CommunityUsersBansSelect<true>;
     communityUsersMutes: CommunityUsersMutesSelect<false> | CommunityUsersMutesSelect<true>;
     likePost: LikePostSelect<false> | LikePostSelect<true>;
+    hostUsersMutes: HostUsersMutesSelect<false> | HostUsersMutesSelect<true>;
+    hostUsersBans: HostUsersBansSelect<false> | HostUsersBansSelect<true>;
+    hostCommunitiesMutes: HostCommunitiesMutesSelect<false> | HostCommunitiesMutesSelect<true>;
+    hostCommunitiesBans: HostCommunitiesBansSelect<false> | HostCommunitiesBansSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
@@ -544,6 +552,46 @@ export interface LikePost {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostUsersMutes".
+ */
+export interface HostUsersMute {
+  id: number;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostUsersBans".
+ */
+export interface HostUsersBan {
+  id: number;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostCommunitiesMutes".
+ */
+export interface HostCommunitiesMute {
+  id: number;
+  community: number | Community;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostCommunitiesBans".
+ */
+export interface HostCommunitiesBan {
+  id: number;
+  community: number | Community;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -720,6 +768,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'likePost';
         value: number | LikePost;
+      } | null)
+    | ({
+        relationTo: 'hostUsersMutes';
+        value: number | HostUsersMute;
+      } | null)
+    | ({
+        relationTo: 'hostUsersBans';
+        value: number | HostUsersBan;
+      } | null)
+    | ({
+        relationTo: 'hostCommunitiesMutes';
+        value: number | HostCommunitiesMute;
+      } | null)
+    | ({
+        relationTo: 'hostCommunitiesBans';
+        value: number | HostCommunitiesBan;
       } | null)
     | ({
         relationTo: 'search';
@@ -1058,6 +1122,42 @@ export interface CommunityUsersMutesSelect<T extends boolean = true> {
 export interface LikePostSelect<T extends boolean = true> {
   user?: T;
   post?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostUsersMutes_select".
+ */
+export interface HostUsersMutesSelect<T extends boolean = true> {
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostUsersBans_select".
+ */
+export interface HostUsersBansSelect<T extends boolean = true> {
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostCommunitiesMutes_select".
+ */
+export interface HostCommunitiesMutesSelect<T extends boolean = true> {
+  community?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hostCommunitiesBans_select".
+ */
+export interface HostCommunitiesBansSelect<T extends boolean = true> {
+  community?: T;
   updatedAt?: T;
   createdAt?: T;
 }

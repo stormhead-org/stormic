@@ -9,15 +9,15 @@ interface Props {
 	className?: string
 }
 
-export const CommunityBan: React.FC<Props> = ({ className }) => {
+export const UserBan: React.FC<Props> = ({ className }) => {
 	// const { formatMessage } = useIntl()
 	return (
 		<div className={cn('flex w-full h-[80%]', className)}>
 			<InfoBlock
 				// title={formatMessage({ id: 'communityNotFound.title' })}
 				// text={formatMessage({ id: 'communityNotFound.description' })}
-				title='Упс. Заблокировано...'
-				text='Когда-то это сообщество процветало, а потом дорога приключений привела его к краху...'
+				title='Упс. Заблокирован...'
+				text='Когда-то его вела дорога приключений, а потом ему повредили колено...'
 				imageUrl='/assets/images/empty-box.png'
 			/>
 		</div>

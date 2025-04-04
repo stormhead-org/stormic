@@ -1,4 +1,5 @@
 import { User } from '@/payload-types'
+import { UserBan } from '@/shared/components/info-blocks/user-ban'
 import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
 import { UserProfileGroup } from '@/shared/components/profiles/user-profile-group'
 import { getSession } from '@/shared/lib/auth'
@@ -28,6 +29,22 @@ export default async function UserPage({ params: paramsPromise }: Args) {
 
 	const session = (await getSession()) as { user: User } | null
 	const currentUser = session && session.user
+	const payload = await getPayload({ config: configPromise })
+
+	const hostUserBan = await payload.find({
+		collection: 'hostUsersBans',
+		where: {
+			user: {
+				equals: id
+			}
+		},
+		pagination: false,
+		overrideAccess: true
+	})
+
+	if (hostUserBan.docs.length !== 0) {
+		return <UserBan />
+	}
 
 	return (
 		<>

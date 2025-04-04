@@ -1,20 +1,20 @@
 'use client'
 
-import { Community, FollowCommunity, Role } from '@/payload-types'
+import { HostRole, HostSetting, User } from '@/payload-types'
 import React, { useState } from 'react'
 import { EditorForm } from './forms/editor-form'
 import { MainForm } from './forms/main-form'
 
 interface Props {
-	data: Community
-	communityRoles: Role[]
-	communityUsers: FollowCommunity[]
+	data: HostSetting
+	hostRoles: HostRole[]
+	users: User[]
 }
 
 export const SettingsHostPermissionsRolesGroup: React.FC<Props> = ({
 	data,
-	communityRoles,
-	communityUsers
+	hostRoles,
+	users
 }) => {
 	const [type, setType] = React.useState<'main' | 'editor'>('main')
 
@@ -25,7 +25,7 @@ export const SettingsHostPermissionsRolesGroup: React.FC<Props> = ({
 			{type === 'main' && (
 				<MainForm
 					data={data}
-					communityRoles={communityRoles}
+					hostRoles={hostRoles}
 					setType={setType}
 					selectedRoleId={selectedRoleId}
 					setSelectedRoleId={setSelectedRoleId}
@@ -34,8 +34,8 @@ export const SettingsHostPermissionsRolesGroup: React.FC<Props> = ({
 			{type === 'editor' && (
 				<EditorForm
 					data={data}
-					communityRoles={communityRoles}
-					communityUsers={communityUsers}
+					hostRoles={hostRoles}
+					users={users}
 					setType={setType}
 					selectedRoleId={selectedRoleId}
 					setSelectedRoleId={setSelectedRoleId}
