@@ -13,7 +13,7 @@ import CommunityFollowButton from '../../community-follow-button'
 
 interface Props {
 	data: User | Community
-	permissions: Permissions | null
+	permissions?: Permissions | null
 	hasUser: boolean
 	className?: string
 }

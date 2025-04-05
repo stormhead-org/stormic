@@ -51,7 +51,6 @@ export default async function UserPage({ params: paramsPromise }: Args) {
 			<UserProfileGroup
 				//  posts={posts || []}
 				user={user}
-				currentUser={currentUser}
 			/>
 		</>
 	)

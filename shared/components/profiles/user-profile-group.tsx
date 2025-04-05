@@ -9,7 +9,7 @@ import React from 'react'
 interface Props {
 	// posts: Post[]
 	user: User
-	permissions: Permissions | null
+	permissions?: Permissions | null
 	className?: string
 }
 

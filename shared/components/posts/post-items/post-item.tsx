@@ -1,36 +1,24 @@
 'use client'
 
-import { Post } from '@/payload-types'
+import { Community, Post, User } from '@/payload-types'
 import { PostBody } from '@/shared/components/posts/post-items/post-body'
 import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
-import { formatDateTime } from '@/shared/lib/formatDateTime'
+import { Permissions } from '@/shared/lib/permissions' // Импортируем тип Permissions
 import { cn } from '@/shared/lib/utils'
+import { useSession } from '@/shared/providers/SessionProvider'
 import { OutputData } from '@editorjs/editorjs'
-// import { createVisibilityObserver } from '@/shared/utils/visibility-observer'
-// import React, { useEffect, useRef } from 'react'
 
 export const PostItem: React.FC<{
 	post: Post
+	communities: Community[]
+	permissions: Permissions | null // Добавляем пропс permissions
 	relatedPost?: boolean
 	className?: string
-}> = ({ post, relatedPost = false, className }) => {
-	// const ref = useRef<HTMLDivElement>(null)
+}> = ({ post, communities, permissions, relatedPost = false, className }) => {
+	const session = useSession()
+	const currentUser = session && (session.user as User)
 
-	// useEffect(() => {
-	// 	const observer = createVisibilityObserver()
-
-	// 	if (ref.current) {
-	// 		observer.observe(ref.current)
-	// 	}
-
-	// 	return () => {
-	// 		if (ref.current) {
-	// 			observer.unobserve(ref.current)
-	// 		}
-	// 	}
-	// }, [postId])
-	console.log(post)
 	return (
 		<div
 			className={cn(
@@ -40,29 +28,26 @@ export const PostItem: React.FC<{
 		>
 			<div data-post-id={post.id} className='post'>
 				<PostHeader
-					authorId={post.author?.id}
-					authorUrl={`/u/${post.author?.id}` || '#'}
-					authorName={post.author?.name || '#'}
-					authorAvatar={post.author?.avatar?.url}
-					categoryName={post.community?.title || '#'}
-					categoryUrl={post.community ? `/c/${post.community.id}` : '#'}
-					postTime={formatDateTime(post.publishedAt ? post.publishedAt : '#')}
+					post={post}
+					communities={communities}
+					currentUser={currentUser}
+					permissions={permissions} // Передаем права
 				/>
 				<PostBody
 					postTitle={post.title}
 					postContent={post.content as unknown as OutputData}
-					heroImage={post.heroImage?.url}
+					heroImage={String(
+						'heroImage' in post &&
+							typeof post.heroImage === 'object' &&
+							post.heroImage !== null
+							? post.heroImage.url
+							: ''
+					)}
 					maxLength={300}
 					postUrl={`/p/${post.id}`}
 				/>
 				{!relatedPost ? (
-					<PostFooter
-						postId={Number(post.id)}
-						// commentsCount={}
-						// commentsCount={0}
-						// viewsCount={0}
-						className='mt-4'
-					/>
+					<PostFooter postId={Number(post.id)} className='mt-4' />
 				) : null}
 			</div>
 		</div>

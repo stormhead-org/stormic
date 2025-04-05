@@ -1,6 +1,6 @@
 'use client'
 
-import { Post } from '@/payload-types'
+import { Community, Post } from '@/payload-types'
 import { FullPostItem } from '@/shared/components/posts/full-post-items/full-post-item'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
@@ -8,11 +8,17 @@ import { Skeleton } from '../../ui/skeleton'
 
 interface Props {
 	post: Post
+	communities: Community[]
 	loading?: boolean
 	className?: string
 }
 
-export const FullPostForm: React.FC<Props> = ({ post, loading, className }) => {
+export const FullPostForm: React.FC<Props> = ({
+	post,
+	communities,
+	loading,
+	className
+}) => {
 	if (loading) {
 		return (
 			<div className={className}>
@@ -23,7 +29,7 @@ export const FullPostForm: React.FC<Props> = ({ post, loading, className }) => {
 
 	return (
 		<div className={cn('', className)}>
-			<FullPostItem post={post} />
+			<FullPostItem post={post} communities={communities} />
 		</div>
 	)
 }

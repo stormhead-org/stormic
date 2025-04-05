@@ -9,7 +9,7 @@ import {
 	AccordionTrigger
 } from '@/shared/components/ui/accordion'
 import { cn } from '@/shared/lib/utils'
-import { Settings } from 'lucide-react'
+import { Gavel, Settings, ShieldCheck, UserRoundCog } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -74,12 +74,44 @@ export const AboutPage: React.FC<Props> = ({
 			</div>
 
 			{hasOwner && (
-				<div className='flex gap-2 w-full items-center justify-between bg-secondary p-1 mt-6 rounded-md'>
-					<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
-						<Settings
+				<div className='flex w-full items-center justify-evenly bg-secondary p-1 mt-6 rounded-md'>
+					<div className='flex gap-2'>
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<Settings
+								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								onClick={() => router.push('/settings/host/main')}
+							/>
+						</div>
+					</div>
+
+					<div className='flex gap-2'>
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<ShieldCheck
+								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								onClick={() => router.push('/settings/host/permissions/roles')}
+							/>
+						</div>
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<Gavel
+								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								onClick={() => router.push('/settings/host/permissions/bans')}
+							/>
+						</div>
+						{/* <div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<MessageCircleOff
 							className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
-							onClick={() => router.push('/settings/host/main')}
+							onClick={() => router.push('/settings/host/permissions/mutes')}
 						/>
+					</div> */}
+					</div>
+
+					<div className='flex gap-2'>
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<UserRoundCog
+								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								onClick={() => router.push('/settings/host/administration')}
+							/>
+						</div>
 					</div>
 				</div>
 			)}

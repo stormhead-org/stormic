@@ -44,7 +44,7 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 			text: 'Учетная запись',
 			icon: <LockKeyhole />,
 			path: '/settings/auth',
-			disabled: false
+			disabled: true
 		},
 		{
 			id: 3,
@@ -68,7 +68,7 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 			text: 'Настройки',
 			icon: <Settings />,
 			path: '/settings/preferences',
-			disabled: false
+			disabled: true
 		},
 		{
 			id: 6,

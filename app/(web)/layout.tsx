@@ -1,5 +1,6 @@
 import { User } from '@/payload-types'
 import { Header } from '@/shared/components/headers/main-header/header'
+import { UserBanLogin } from '@/shared/components/info-blocks/user-ban-login'
 import YandexMetrika from '@/shared/components/yandex-metrika'
 import { getSession } from '@/shared/lib/auth'
 import { getServerSideURL } from '@/shared/lib/getURL'
@@ -35,23 +36,18 @@ export default async function HomeLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const payload = await getPayload({ config: configPromise })
-
-	const session = (await getSession()) as { user: User } | null
-	const user = session && session.user
-
-	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings',
-		depth: 1
-	})
-
 	const counterId = process.env.NEXT_PUBLIC_YANDEX_METRIKA
-	return (
+	const payload = await getPayload({ config: configPromise })
+	const session = (await getSession()) as { user: User } | null
+	const currentUser = session && session.user
+
+	// Базовая разметка, которая будет использоваться в обоих случаях
+	const baseLayout = (content: React.ReactNode) => (
 		<html lang='en' suppressHydrationWarning>
 			<head>
 				<InitTheme />
 				{/* <link href='/favicon.ico' rel='icon' sizes='32x32' />
-				<link href='/favicon.svg' rel='icon' type='image/svg+xml'/> */}
+        <link href='/favicon.svg' rel='icon' type='image/svg+xml'/> */}
 			</head>
 			<body className={nunito.className}>
 				<Script id='metrika-counter' strategy='afterInteractive'>
@@ -74,43 +70,106 @@ export default async function HomeLayout({
 				<Suspense fallback={<></>}>
 					<YandexMetrika />
 				</Suspense>
-
 				<Providers session={session}>
-					<main className='min-h-screen'>
-						<Suspense>
-							<Header
-								session={!!session}
-								logoImage={
-									'logo' in resultGlobalHost &&
-									typeof resultGlobalHost.logo === 'object' &&
-									resultGlobalHost.logo !== null
-										? resultGlobalHost.logo.url
-										: ''
-								}
-								stormicName={resultGlobalHost.title}
-								authImage={
-									'authBanner' in resultGlobalHost &&
-									typeof resultGlobalHost.authBanner === 'object' &&
-									resultGlobalHost.authBanner !== null
-										? resultGlobalHost.authBanner.url
-										: ''
-								}
-								description={resultGlobalHost.slogan}
-								avatarImage={
-									user &&
-									'avatar' in user &&
-									typeof user.avatar === 'object' &&
-									user.avatar !== null
-										? user.avatar.url
-										: ''
-								}
-								userUrl={`/u/${session?.user.id}`}
-							/>
-						</Suspense>
-						{children}
-					</main>
+					<main className='min-h-screen'>{content}</main>
 				</Providers>
 			</body>
 		</html>
+	)
+
+	// Если пользователь не авторизован
+	if (!currentUser) {
+		const resultGlobalHost = await payload.findGlobal({
+			slug: 'host-settings',
+			depth: 1
+		})
+
+		return baseLayout(
+			<>
+				<Suspense>
+					<Header
+						session={false}
+						logoImage={
+							'logo' in resultGlobalHost &&
+							typeof resultGlobalHost.logo === 'object' &&
+							resultGlobalHost.logo !== null
+								? resultGlobalHost.logo.url
+								: ''
+						}
+						stormicName={resultGlobalHost.title}
+						authImage={
+							'authBanner' in resultGlobalHost &&
+							typeof resultGlobalHost.authBanner === 'object' &&
+							resultGlobalHost.authBanner !== null
+								? resultGlobalHost.authBanner.url
+								: ''
+						}
+						description={resultGlobalHost.slogan}
+						avatarImage=''
+						userUrl=''
+					/>
+				</Suspense>
+				{children}
+			</>
+		)
+	}
+
+	// Если пользователь авторизован, проверяем бан
+	const hostUserBan = await payload.find({
+		collection: 'hostUsersBans',
+		where: {
+			user: {
+				equals: currentUser.id
+			}
+		},
+		pagination: false,
+		overrideAccess: true
+	})
+
+	// Если пользователь забанен
+	if (hostUserBan.docs.length > 0) {
+		return baseLayout(<UserBanLogin className='mt-24' />)
+	}
+
+	// Если пользователь авторизован и не забанен
+	const resultGlobalHost = await payload.findGlobal({
+		slug: 'host-settings',
+		depth: 1
+	})
+
+	return baseLayout(
+		<>
+			<Suspense>
+				<Header
+					session={true}
+					logoImage={
+						'logo' in resultGlobalHost &&
+						typeof resultGlobalHost.logo === 'object' &&
+						resultGlobalHost.logo !== null
+							? resultGlobalHost.logo.url
+							: ''
+					}
+					stormicName={resultGlobalHost.title}
+					authImage={
+						'authBanner' in resultGlobalHost &&
+						typeof resultGlobalHost.authBanner === 'object' &&
+						resultGlobalHost.authBanner !== null
+							? resultGlobalHost.authBanner.url
+							: ''
+					}
+					description={resultGlobalHost.slogan}
+					avatarImage={
+						currentUser &&
+						'avatar' in currentUser &&
+						typeof currentUser.avatar === 'object' &&
+						currentUser.avatar !== null
+							? currentUser.avatar.url
+							: ''
+					}
+					userUrl={`/u/${session?.user.id}`}
+				/>
+			</Suspense>
+			{children}
+		</>
 	)
 }

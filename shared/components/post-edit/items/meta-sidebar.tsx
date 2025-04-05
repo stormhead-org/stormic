@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { Community, Media } from '@/payload-types'
 import {
 	Sidebar,
@@ -11,12 +10,13 @@ import {
 	SidebarMenuSubItem
 } from '@/shared/components/ui/sidebar'
 import { ALargeSmall, ImagePlus } from 'lucide-react'
-import { useForm, FormProvider, useWatch } from 'react-hook-form'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import { FormProvider, useForm, useWatch } from 'react-hook-form'
+import { FormInput, FormTextarea } from '../../form'
 import { HeroImageUploader } from './hero-image-uploader'
 import { SelectCommunity } from './select-community'
 import { UserProfile } from './user-profile'
-import { FormInput, FormTextarea } from '../../form'
-import Link from 'next/link'
 
 interface Props {
 	authorName: string
@@ -26,7 +26,9 @@ interface Props {
 	setSelectedCommunityId: (id: number) => void
 	heroImage: Media | undefined
 	setHeroImage: (media: Media | undefined) => void
+	seotitle: string
 	setSeoTitle: (title: string) => void
+	seodescription: string
 	setSeoDescription: (description: string) => void
 	seoImage: Media | undefined
 	setSeoImage: (media: Media | undefined) => void
@@ -41,7 +43,9 @@ export const MetaSidebar: React.FC<Props> = ({
 	setSelectedCommunityId,
 	heroImage,
 	setHeroImage,
+	seotitle,
 	setSeoTitle,
+	seodescription,
 	setSeoDescription,
 	seoImage,
 	setSeoImage,
@@ -49,26 +53,34 @@ export const MetaSidebar: React.FC<Props> = ({
 }) => {
 	const seoForm = useForm({
 		defaultValues: {
-			seotitle: '',
-			seodescription: ''
+			seotitle: seotitle || '',
+			seodescription: seodescription || ''
 		}
 	})
 
-	// Отслеживаем изменения в полях формы
-	const seotitle = useWatch({ control: seoForm.control, name: 'seotitle' })
-	const seodescription = useWatch({
+	const watchedSeotitle = useWatch({
+		control: seoForm.control,
+		name: 'seotitle'
+	})
+	const watchedSeodescription = useWatch({
 		control: seoForm.control,
 		name: 'seodescription'
 	})
 
-	// Передаем значения в родительский компонент при изменении
 	useEffect(() => {
-		setSeoTitle(seotitle)
-	}, [seotitle, setSeoTitle])
+		setSeoTitle(watchedSeotitle)
+	}, [watchedSeotitle, setSeoTitle])
 
 	useEffect(() => {
-		setSeoDescription(seodescription)
-	}, [seodescription, setSeoDescription])
+		setSeoDescription(watchedSeodescription)
+	}, [watchedSeodescription, setSeoDescription])
+
+	useEffect(() => {
+		seoForm.reset({
+			seotitle: seotitle || '',
+			seodescription: seodescription || ''
+		})
+	}, [seotitle, seodescription, seoForm])
 
 	return (
 		<Sidebar side='left' collapsible='icon' className={className}>

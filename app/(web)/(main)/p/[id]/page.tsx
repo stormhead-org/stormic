@@ -1,4 +1,4 @@
-import type { Post } from '@/payload-types'
+import type { Community, Post } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -19,6 +19,7 @@ export default async function Post({
 	}
 
 	const payload = await getPayload({ config: configPromise })
+
 	const resultPost = await payload.find({
 		collection: 'posts',
 		overrideAccess: true,
@@ -28,7 +29,14 @@ export default async function Post({
 			}
 		}
 	})
+
+	const resultCommunities = await payload.find({
+		collection: 'communities',
+		overrideAccess: true
+	})
+
 	const post = resultPost.docs as Post[]
+	const communities = resultCommunities.docs as Community[]
 
 	if (!post) {
 		return <PostNotFound />
@@ -38,7 +46,7 @@ export default async function Post({
 		<article>
 			<PageClient />
 			<div className='flex flex-col h-[91vh] overflow-auto no-scrollbar rounded-md'>
-				<FullPostPage post={post} />
+				<FullPostPage post={post} communities={communities} />
 			</div>
 		</article>
 	)

@@ -1,11 +1,11 @@
 'use client'
 
-import { Community, User } from '@/payload-types'
+import { Community } from '@/payload-types'
 import { AuthModal } from '@/shared/components/modals'
-import { WriteModal } from '@/shared/components/modals/write-modal'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 import { cn } from '../lib/utils'
+import { PostEditModal } from './modals/post-edit-modal'
 import { Button } from './ui/button'
 
 interface Props {
@@ -34,14 +34,14 @@ export const NewPostButton: React.FC<Props> = ({
 	className
 }) => {
 	// const { formatMessage } = useIntl()
-	const [openWriteModal, setOpenWriteModal] = React.useState(false)
+	const [openEditModal, setOpenEditModal] = React.useState(false)
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 
 	return (
 		<div className={cn('', className)}>
-			<WriteModal
-				open={openWriteModal}
-				onClose={() => setOpenWriteModal(false)}
+			<PostEditModal
+				open={openEditModal}
+				onClose={() => setOpenEditModal(false)}
 				authorId={authorId}
 				authorAvatar={authorAvatar}
 				authorName={authorName}
@@ -63,7 +63,7 @@ export const NewPostButton: React.FC<Props> = ({
 				type='button'
 				onClick={
 					hasSession
-						? () => setOpenWriteModal(true)
+						? () => setOpenEditModal(true)
 						: () => setOpenAuthModal(true)
 				}
 			>

@@ -9,7 +9,7 @@ import React from 'react'
 
 interface Props {
 	data: User | Community
-	permissions: Permissions | null
+	permissions?: Permissions | null
 	hasUser: boolean
 	className?: string
 }

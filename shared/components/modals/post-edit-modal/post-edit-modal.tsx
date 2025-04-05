@@ -16,7 +16,7 @@ import React, { useCallback, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { FormInput } from '../../form'
-import { MetaSidebar } from '../../post-write/items/meta-sidebar'
+import { MetaSidebar } from '../../post-edit/items/meta-sidebar'
 import { SidebarProvider, SidebarTrigger } from '../../ui/sidebar'
 import { formTitleSchema, TFormTitleValues } from './schemas'
 
@@ -33,7 +33,7 @@ interface Props {
 
 const Editor = dynamic(() => import('../../editorjs/Editor'), { ssr: false })
 
-export const WriteModal: React.FC<Props> = ({
+export const PostEditModal: React.FC<Props> = ({
 	authorId,
 	authorAvatar,
 	authorName,
@@ -45,21 +45,33 @@ export const WriteModal: React.FC<Props> = ({
 }) => {
 	const form = useForm<TFormTitleValues>({
 		resolver: zodResolver(formTitleSchema),
-		defaultValues: { title: '' }
+		defaultValues: { title: post?.title || '' }
 	})
 
-	const [content, setContent] = useState<OutputData | null>(null)
-	const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(
-		null
+	const [content, setContent] = useState<OutputData | null>(
+		post?.content ? (post.content as unknown as OutputData) : null
 	)
+
+	const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(
+		post?.community && typeof post.community === 'object'
+			? post.community.id
+			: null
+	)
+
 	const [heroImage, setHeroImage] = useState<Media | undefined>(
 		post?.heroImage && typeof post.heroImage === 'object'
 			? (post.heroImage as Media)
 			: undefined
 	)
-	const [seotitle, setSeoTitle] = useState<string>('')
-	const [seodescription, setSeoDescription] = useState<string>('')
-	const [seoImage, setSeoImage] = useState<Media | undefined>(undefined)
+	const [seotitle, setSeoTitle] = useState<string>(post?.meta?.title || '')
+	const [seodescription, setSeoDescription] = useState<string>(
+		post?.meta?.description || ''
+	)
+	const [seoImage, setSeoImage] = useState<Media | undefined>(
+		post?.meta?.image && typeof post.meta.image === 'object'
+			? (post.meta.image as Media)
+			: undefined
+	)
 
 	const handleChange = useCallback((newContent: OutputData) => {
 		setContent(newContent)
@@ -82,19 +94,24 @@ export const WriteModal: React.FC<Props> = ({
 					description: seodescription,
 					image: seoImage?.id
 				},
-				publishedAt: currentTime
+				publishedAt: post ? post.publishedAt : currentTime
 			}
 			try {
-				const response = await fetch('/api/posts', {
-					method: 'POST',
+				const url = post ? `/api/posts/${post.id}` : '/api/posts'
+				const method = post ? 'PATCH' : 'POST'
+				const response = await fetch(url, {
+					method,
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(postData)
 				})
 				if (response.ok) {
-					toast.success('Пост успешно опубликован', { icon: '✅' })
+					toast.success(
+						post ? 'Пост успешно обновлен' : 'Пост успешно опубликован',
+						{ icon: '✅' }
+					)
 					onClose()
 				} else {
-					toast.error('Ошибка при публикации', { icon: '❌' })
+					toast.error('Ошибка при сохранении', { icon: '❌' })
 				}
 			} catch (error) {
 				toast.error('Ошибка при отправке запроса', { icon: '❌' })
@@ -110,7 +127,6 @@ export const WriteModal: React.FC<Props> = ({
 				</DialogHeader>
 				<SidebarProvider>
 					<div className='flex h-full w-full'>
-						{/* Левая часть: MetaSidebar */}
 						<MetaSidebar
 							authorName={authorName}
 							authorAvatar={authorAvatar}
@@ -119,20 +135,17 @@ export const WriteModal: React.FC<Props> = ({
 							setSelectedCommunityId={setSelectedCommunityId}
 							heroImage={heroImage}
 							setHeroImage={setHeroImage}
+							seotitle={seotitle}
 							setSeoTitle={setSeoTitle}
+							seodescription={seodescription}
 							setSeoDescription={setSeoDescription}
 							seoImage={seoImage}
 							setSeoImage={setSeoImage}
 							className='w-64 flex-shrink-0'
 						/>
-
-						{/* Центральная часть */}
 						<div className='flex-1 flex flex-col items-center p-4'>
 							<div className='w-full max-w-3xl flex flex-col h-full'>
-								{/* Фиксированный SidebarTrigger */}
 								<SidebarTrigger className='mb-4' />
-
-								{/* Прокручиваемая область: заголовок и редактор */}
 								<div className='flex-1 overflow-y-auto space-y-1'>
 									<FormProvider {...form}>
 										<form>
@@ -153,8 +166,6 @@ export const WriteModal: React.FC<Props> = ({
 										/>
 									</div>
 								</div>
-
-								{/* Фиксированная кнопка "Опубликовать" */}
 								<div className='my-4 flex justify-start'>
 									<Button
 										variant='blue'
@@ -162,7 +173,7 @@ export const WriteModal: React.FC<Props> = ({
 										onClick={handleSubmit}
 										className='px-10'
 									>
-										Опубликовать
+										{post ? 'Сохранить изменения' : 'Опубликовать'}
 									</Button>
 								</div>
 							</div>
