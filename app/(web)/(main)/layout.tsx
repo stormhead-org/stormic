@@ -1,4 +1,4 @@
-import { Community, User } from '@/payload-types'
+import { Community, HostCommunitiesBan, User } from '@/payload-types'
 import {
 	Container,
 	FeedUserMenu,
@@ -45,16 +45,14 @@ export default async function MainLayout({
 
 	const resultCommunities = await payload.find({
 		collection: 'communities',
-		depth: 1,
+		where: {
+			COMMUNITY_HAS_BANNED: {
+				equals: false
+			}
+		},
+		depth: 2,
+		pagination: false,
 		overrideAccess: false
-		// select: {
-		// 	id: true,
-		//   title: true,
-		// 	 content: true,
-		//   slug: true,
-		//   communities: true,
-		//   meta: true,
-		// },
 	})
 
 	const communities = resultCommunities.docs as Community[]

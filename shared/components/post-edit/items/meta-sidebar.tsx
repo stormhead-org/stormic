@@ -1,3 +1,5 @@
+'use client'
+
 import { Community, Media } from '@/payload-types'
 import {
 	Sidebar,
@@ -12,7 +14,7 @@ import {
 import { ALargeSmall, ImagePlus } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect } from 'react'
-import { FormProvider, useForm, useWatch } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { FormInput, FormTextarea } from '../../form'
 import { HeroImageUploader } from './hero-image-uploader'
 import { SelectCommunity } from './select-community'
@@ -58,29 +60,26 @@ export const MetaSidebar: React.FC<Props> = ({
 		}
 	})
 
-	const watchedSeotitle = useWatch({
-		control: seoForm.control,
-		name: 'seotitle'
-	})
-	const watchedSeodescription = useWatch({
-		control: seoForm.control,
-		name: 'seodescription'
-	})
-
-	useEffect(() => {
-		setSeoTitle(watchedSeotitle)
-	}, [watchedSeotitle, setSeoTitle])
-
-	useEffect(() => {
-		setSeoDescription(watchedSeodescription)
-	}, [watchedSeodescription, setSeoDescription])
-
+	// Синхронизация начальных значений при изменении внешних пропсов
 	useEffect(() => {
 		seoForm.reset({
 			seotitle: seotitle || '',
 			seodescription: seodescription || ''
 		})
 	}, [seotitle, seodescription, seoForm])
+
+	// Обработчики изменения для передачи значений в родительский компонент
+	const handleSeoTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value
+		setSeoTitle(value)
+	}
+
+	const handleSeoDescriptionChange = (
+		e: React.ChangeEvent<HTMLTextAreaElement>
+	) => {
+		const value = e.target.value
+		setSeoDescription(value)
+	}
 
 	return (
 		<Sidebar side='left' collapsible='icon' className={className}>
@@ -120,6 +119,7 @@ export const MetaSidebar: React.FC<Props> = ({
 											className='w-full bg-secondary'
 											name='seotitle'
 											placeholder='Заголовок'
+											onChange={handleSeoTitleChange}
 										/>
 									</SidebarMenuSubItem>
 									<SidebarMenuSubItem className='bg-transparent p-0 m-0'>
@@ -138,6 +138,7 @@ export const MetaSidebar: React.FC<Props> = ({
 											name='seodescription'
 											placeholder='Описание'
 											className='bg-secondary'
+											onChange={handleSeoDescriptionChange}
 										/>
 									</SidebarMenuSubItem>
 									<SidebarGroupLabel className='mt-4'>

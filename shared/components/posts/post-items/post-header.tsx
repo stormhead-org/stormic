@@ -9,6 +9,7 @@ import { cn } from '@/shared/lib/utils'
 import { GripHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 import { PostEditModal } from '../../modals/post-edit-modal'
 import {
 	DropdownMenu,
@@ -16,6 +17,10 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger
 } from '../../ui/dropdown-menu'
+import {
+	deletePost,
+	removePostFromPublication
+} from '@/shared/utils/post-utils'
 
 export interface PostHeaderProps {
 	post: Post
@@ -33,6 +38,15 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 	className
 }) => {
 	const [openEditModal, setOpenEditModal] = React.useState(false)
+	const router = useRouter()
+
+	const handleRemoveFromPublication = async () => {
+		await removePostFromPublication(post, router)
+	}
+
+	const handleDeletePost = async () => {
+		await deletePost(post, router)
+	}
 
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
@@ -92,14 +106,17 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 							permissions?.COMMUNITY_POST_REMOVE_FROM_PUBLICATION) && (
 							<DropdownMenuItem
 								className='cursor-pointer'
-								onClick={() => setOpenEditModal(true)}
+								onClick={handleRemoveFromPublication}
 							>
 								Снять с публикации
 							</DropdownMenuItem>
 						)}
 						{(permissions?.HOST_OWNER ||
 							permissions?.COMMUNITY_POST_DELETE) && (
-							<DropdownMenuItem className='cursor-pointer'>
+							<DropdownMenuItem
+								className='cursor-pointer'
+								onClick={handleDeletePost}
+							>
 								Удалить
 							</DropdownMenuItem>
 						)}

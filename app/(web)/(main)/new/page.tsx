@@ -3,7 +3,7 @@ import { MainBannerForm } from '@/shared/components'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { getSession } from '@/shared/lib/auth'
 import { getUserPermissions } from '@/shared/lib/getUserPermissions'
-import { Permissions } from '@/shared/lib/permissions' // Импортируем тип Permissions
+import { Permissions } from '@/shared/lib/permissions'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -23,14 +23,23 @@ export default async function Home() {
 		where: {
 			_status: {
 				equals: 'published'
+			},
+			hasDeleted: {
+				equals: false
 			}
 		},
 		pagination: false,
-		overrideAccess: true
+		overrideAccess: true,
+		depth: 2
 	})
 
 	const resultCommunities = await payload.find({
 		collection: 'communities',
+		where: {
+			COMMUNITY_HAS_BANNED: {
+				equals: false
+			}
+		},
 		pagination: false,
 		overrideAccess: true
 	})

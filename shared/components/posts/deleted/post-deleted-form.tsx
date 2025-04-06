@@ -14,6 +14,7 @@ import {
 	TableHeader,
 	TableRow
 } from '@/shared/components/ui/table'
+import { PostDeletedItem } from './post-deleted-item'
 
 interface Props {
 	post: Post[]
@@ -22,7 +23,7 @@ interface Props {
 	className?: string
 }
 
-export const PostDraftForm: React.FC<Props> = ({
+export const PostDeletedForm: React.FC<Props> = ({
 	post,
 	communities,
 	loading,
@@ -40,25 +41,31 @@ export const PostDraftForm: React.FC<Props> = ({
 
 	return (
 		<div className={cn('overflow-x-auto', className)}>
-			<Title text='Ваши черновики' />
-			<Table className='mt-4'>
-				<TableHeader>
-					<TableRow>
-						<TableHead className='w-[200px]'>Название</TableHead>
-						<TableHead>Содержание</TableHead>
-						<TableHead>Сообщество</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{post.map(item => (
-						<PostDraftItem
-							key={item.id}
-							post={item}
-							communities={communities}
-						/>
-					))}
-				</TableBody>
-			</Table>
+			<div className='mt-4'>
+				<div className='flex justify-center items-center gap-4'>
+					<div className='border-b-2 border-b-blue-600 cursor-pointer'>
+						<p>Посты</p>
+					</div>
+				</div>
+				<Table className='mt-4'>
+					<TableHeader>
+						<TableRow>
+							<TableHead className='w-[200px]'>Название</TableHead>
+							<TableHead>Содержание</TableHead>
+							<TableHead>Сообщество</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
+						{post.map(item => (
+							<PostDeletedItem
+								key={item.id}
+								post={item}
+								communities={communities}
+							/>
+						))}
+					</TableBody>
+				</Table>
+			</div>
 		</div>
 	)
 }

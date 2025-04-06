@@ -7,7 +7,7 @@ import { OutputData } from '@editorjs/editorjs'
 import React, { useState } from 'react'
 import { TableCell, TableRow } from '@/shared/components/ui/table'
 
-export const PostDraftItem: React.FC<{
+export const PostDeletedItem: React.FC<{
 	post: Post
 	communities: Community[]
 	className?: string

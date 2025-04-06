@@ -364,6 +364,12 @@ export const Posts: CollectionConfig<'posts'> = {
 					}
 				]
 			}
+		},
+		{
+			label: 'Пост удален',
+			name: 'hasDeleted',
+			type: 'checkbox',
+			defaultValue: false
 		}
 	],
 	hooks: {

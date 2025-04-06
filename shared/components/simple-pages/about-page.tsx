@@ -9,7 +9,13 @@ import {
 	AccordionTrigger
 } from '@/shared/components/ui/accordion'
 import { cn } from '@/shared/lib/utils'
-import { Gavel, Settings, ShieldCheck, UserRoundCog } from 'lucide-react'
+import {
+	Delete,
+	Gavel,
+	Settings,
+	ShieldCheck,
+	UserRoundCog
+} from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -89,6 +95,14 @@ export const AboutPage: React.FC<Props> = ({
 							<ShieldCheck
 								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/permissions/roles')}
+							/>
+						</div>
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<Delete
+								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								onClick={() =>
+									router.push('/settings/host/permissions/deleted')
+								}
 							/>
 						</div>
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>

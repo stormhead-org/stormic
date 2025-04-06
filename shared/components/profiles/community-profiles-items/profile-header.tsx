@@ -10,6 +10,7 @@ import { Permissions } from '@/shared/lib/permissions'
 import { GripHorizontal, Settings } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import CommunityFollowButton from '../../community-follow-button'
+import { useSession } from '@/shared/providers/SessionProvider'
 
 interface Props {
 	data: User | Community
@@ -27,6 +28,8 @@ export const ProfileHeader: React.FC<Props> = ({
 	// const { formatMessage } = useIntl()
 
 	const router = useRouter()
+	const session = useSession()
+	const currentUser = session && (session.user as User)
 
 	return (
 		<div className={cn('', className)}>
@@ -68,19 +71,22 @@ export const ProfileHeader: React.FC<Props> = ({
 						</div>
 
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
-							{hasUser ? (
-								<Settings
-									className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
-									onClick={() => router.push('/settings/profile')}
-								/>
-							) : permissions?.COMMUNITY_OWNER ? (
-								<Settings
-									className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
-									onClick={() =>
-										router.push(`/settings/community/${data.id}/main`)
-									}
-								/>
-							) : null}
+							{currentUser &&
+								(hasUser
+									? currentUser.id === data.id && (
+											<Settings
+												className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+												onClick={() => router.push('/settings/profile')}
+											/>
+										)
+									: permissions?.COMMUNITY_OWNER && (
+											<Settings
+												className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+												onClick={() =>
+													router.push(`/settings/community/${data.id}/main`)
+												}
+											/>
+										))}
 						</div>
 
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>

@@ -58,7 +58,8 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 
 	const banCommunity = async (communityId: number) => {
 		try {
-			const req = await fetch('/api/hostCommunitiesBans', {
+			// Создаем запись в hostCommunitiesBans
+			const banResponse = await fetch('/api/hostCommunitiesBans', {
 				method: 'POST',
 				credentials: 'include',
 				headers: { 'Content-Type': 'application/json' },
@@ -66,8 +67,21 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 					community: communityId
 				})
 			})
-			if (!req.ok) {
-				throw new Error('Ошибка при бане сообщества')
+			if (!banResponse.ok) {
+				throw new Error('Ошибка при создании бана сообщества')
+			}
+
+			// Обновляем COMMUNITY_HAS_BANNED в коллекции communities
+			const updateResponse = await fetch(`/api/communities/${communityId}`, {
+				method: 'PATCH',
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					COMMUNITY_HAS_BANNED: true
+				})
+			})
+			if (!updateResponse.ok) {
+				throw new Error('Ошибка при обновлении статуса COMMUNITY_HAS_BANNED')
 			}
 		} catch (err) {
 			console.log('Ошибка при бане сообщества:', err)
@@ -77,7 +91,6 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 
 	const handleSubmitBanUsers = async (communityIds: number[]) => {
 		try {
-			// Фильтруем только те сообщества, которых ещё нет в bannedCommunities
 			const newCommunitiesToBan = communityIds.filter(
 				communityId => !bannedCommunities.includes(communityId)
 			)
@@ -93,7 +106,7 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 			handleClose()
 			router.refresh()
 		} catch (err) {
-			console.log('Ошибка при бане сообщества:', err)
+			console.log('Ошибка при бане сообществ:', err)
 		}
 	}
 
@@ -144,7 +157,7 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 						</div>
 						<div className='mt-2 p-1 rounded-md'>
 							{filteredCommunities.length === 0 ? (
-								<div className='p-2 text-gray-500'>Участники не найдены</div>
+								<div className='p-2 text-gray-500'>Сообщества не найдены</div>
 							) : (
 								<div className='flex flex-col gap-2 w-full h-[40vh] overflow-auto'>
 									{filteredCommunities.map(item => {

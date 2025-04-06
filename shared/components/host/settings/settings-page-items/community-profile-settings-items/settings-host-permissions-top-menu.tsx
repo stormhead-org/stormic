@@ -28,12 +28,19 @@ export const SettingsHostPermissionsTopMenu: React.FC<Props> = ({
 		{
 			id: 2,
 			// text: formatMessage({ id: 'profileAuthTopMenu.2FactorAuth' }),
+			text: 'Удаленные',
+			path: '/settings/host/permissions/deleted',
+			disabled: false
+		},
+		{
+			id: 3,
+			// text: formatMessage({ id: 'profileAuthTopMenu.2FactorAuth' }),
 			text: 'Заблокированные',
 			path: '/settings/host/permissions/bans',
 			disabled: false
 		},
 		{
-			id: 3,
+			id: 4,
 			// text: formatMessage({ id: 'profileAuthTopMenu.authorizedApps' }),
 			text: 'Заглушенные',
 			path: '/settings/host/permissions/mutes',

@@ -29,15 +29,14 @@ export const CommunitiesBanForm: React.FC<Props> = ({
 	const [searchTerm, setSearchTerm] = useState<string>('')
 	const [openAddCommunityModal, setOpenAddCommunityModal] = useState(false)
 
-	// Фильтрация забаненных пользователей по поисковому запросу
 	const filteredBans = hostCommunitiesBans.filter(ban => {
 		const community = ban.community as Community
 		return community.title.toLowerCase().includes(searchTerm.toLowerCase())
 	})
 
-	// Функция для разбана пользователя
-	const handleSubmitDeleteBan = async (banId: number) => {
+	const handleSubmitDeleteBan = async (banId: number, communityId: number) => {
 		try {
+			// Удаляем запись из hostCommunitiesBans
 			const stringifiedQuery = qs.stringify(
 				{
 					where: {
@@ -46,16 +45,34 @@ export const CommunitiesBanForm: React.FC<Props> = ({
 				},
 				{ addQueryPrefix: true }
 			)
-			const req = await fetch(`/api/hostCommunitiesBans${stringifiedQuery}`, {
-				method: 'DELETE',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json'
+			const deleteResponse = await fetch(
+				`/api/hostCommunitiesBans${stringifiedQuery}`,
+				{
+					method: 'DELETE',
+					credentials: 'include',
+					headers: {
+						'Content-Type': 'application/json'
+					}
 				}
-			})
-			if (req.ok) {
-				router.refresh()
+			)
+			if (!deleteResponse.ok) {
+				throw new Error('Ошибка при удалении бана сообщества')
 			}
+
+			// Обновляем COMMUNITY_HAS_BANNED в коллекции communities
+			const updateResponse = await fetch(`/api/communities/${communityId}`, {
+				method: 'PATCH',
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					COMMUNITY_HAS_BANNED: false
+				})
+			})
+			if (!updateResponse.ok) {
+				throw new Error('Ошибка при обновлении статуса COMMUNITY_HAS_BANNED')
+			}
+
+			router.refresh()
 		} catch (err) {
 			console.log('Ошибка при разбане сообщества:', err)
 		}
@@ -136,7 +153,7 @@ export const CommunitiesBanForm: React.FC<Props> = ({
 													className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
 													onClick={async () => {
 														try {
-															await handleSubmitDeleteBan(ban.id)
+															await handleSubmitDeleteBan(ban.id, community.id)
 														} catch (error) {
 															console.error(
 																'Ошибка при разбане сообщества:',

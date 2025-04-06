@@ -12,13 +12,18 @@ export default async function CommunitiesPage() {
 		depth: 1
 	})
 
-	const result = await payload.find({
+	const resultCommunities = await payload.find({
 		collection: 'communities',
-		depth: 1,
-		overrideAccess: false
+		where: {
+			COMMUNITY_HAS_BANNED: {
+				equals: false
+			}
+		},
+		pagination: false,
+		overrideAccess: true
 	})
 
-	const communities = result.docs as Community[]
+	const communities = resultCommunities.docs as Community[]
 
 	return (
 		<>

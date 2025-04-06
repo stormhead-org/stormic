@@ -515,6 +515,7 @@ export interface Post {
   };
   bookmarks?: (number | User)[] | null;
   publishedAt?: string | null;
+  hasDeleted?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -900,6 +901,7 @@ export interface PostsSelect<T extends boolean = true> {
   likes?: T;
   bookmarks?: T;
   publishedAt?: T;
+  hasDeleted?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
