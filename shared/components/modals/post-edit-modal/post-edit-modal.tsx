@@ -11,7 +11,9 @@ import {
 import { useCurrentTime } from '@/shared/hooks/useCurrentTime'
 import { OutputData } from '@editorjs/editorjs'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { router } from 'next/client'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import React, { useCallback, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -34,91 +36,107 @@ interface Props {
 const Editor = dynamic(() => import('../../editorjs/Editor'), { ssr: false })
 
 export const PostEditModal: React.FC<Props> = ({
-	authorId,
-	authorAvatar,
-	authorName,
-	communities,
-	post,
-	authorUrl,
-	open,
-	onClose
-}) => {
+	                                               authorId,
+	                                               authorAvatar,
+	                                               authorName,
+	                                               communities,
+	                                               post,
+	                                               authorUrl,
+	                                               open,
+	                                               onClose
+                                               }) => {
+	const router = useRouter()
+	
 	const form = useForm<TFormTitleValues>({
 		resolver: zodResolver(formTitleSchema),
 		defaultValues: { title: post?.title || '' }
 	})
-
+	
 	const [content, setContent] = useState<OutputData | null>(
 		post?.content ? (post.content as unknown as OutputData) : null
 	)
-
 	const [selectedCommunityId, setSelectedCommunityId] = useState<number | null>(
-		post?.community && typeof post.community === 'object'
-			? post.community.id
-			: null
+		post?.community && typeof post.community === 'object' ? post.community.id : null
 	)
-
 	const [heroImage, setHeroImage] = useState<Media | undefined>(
-		post?.heroImage && typeof post.heroImage === 'object'
-			? (post.heroImage as Media)
-			: undefined
+		post?.heroImage && typeof post.heroImage === 'object' ? (post.heroImage as Media) : undefined
 	)
 	const [seotitle, setSeoTitle] = useState<string>(post?.meta?.title || '')
 	const [seodescription, setSeoDescription] = useState<string>(
 		post?.meta?.description || ''
 	)
 	const [seoImage, setSeoImage] = useState<Media | undefined>(
-		post?.meta?.image && typeof post.meta.image === 'object'
-			? (post.meta.image as Media)
-			: undefined
+		post?.meta?.image && typeof post.meta.image === 'object' ? (post.meta.image as Media) : undefined
 	)
-
+	
 	const handleChange = useCallback((newContent: OutputData) => {
 		setContent(newContent)
 	}, [])
-
+	
 	const currentTime = useCurrentTime()
-
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault()
-		if (content) {
-			const { title } = form.getValues()
-			const postData = {
-				title,
-				heroImage: heroImage?.id,
-				author: authorId,
-				community: selectedCommunityId,
-				content,
-				meta: {
-					title: seotitle,
-					description: seodescription,
-					image: seoImage?.id
-				},
-				publishedAt: post ? post.publishedAt : currentTime
+	
+	const savePost = async (status: 'published' | 'draft') => {
+		if (!content) return
+		
+		const { title } = form.getValues()
+		const postData = {
+			title,
+			heroImage: heroImage?.id,
+			author: authorId,
+			community: selectedCommunityId,
+			content,
+			meta: {
+				title: seotitle,
+				description: seodescription,
+				image: seoImage?.id
+			},
+			publishedAt: post ? post.publishedAt : currentTime,
+			_status: status
+		}
+		
+		try {
+			const url = post ? `/api/posts/${post.id}` : '/api/posts'
+			const method = post ? 'PATCH' : 'POST'
+			const response = await fetch(url, {
+				method,
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(postData)
+			})
+			if (response.ok) {
+				toast.success(
+					status === 'published'
+						? post
+							? 'Пост успешно обновлен'
+							: 'Пост успешно опубликован'
+						: post
+							? post._status === 'published'
+								? 'Пост снят с публикации'
+								: 'Черновик успешно обновлен'
+							: 'Черновик успешно сохранен',
+					{ icon: '✅' }
+				)
+				onClose()
+				router.refresh()
+			} else {
+				toast.error('Ошибка при сохранении', { icon: '❌' })
 			}
-			try {
-				const url = post ? `/api/posts/${post.id}` : '/api/posts'
-				const method = post ? 'PATCH' : 'POST'
-				const response = await fetch(url, {
-					method,
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify(postData)
-				})
-				if (response.ok) {
-					toast.success(
-						post ? 'Пост успешно обновлен' : 'Пост успешно опубликован',
-						{ icon: '✅' }
-					)
-					onClose()
-				} else {
-					toast.error('Ошибка при сохранении', { icon: '❌' })
-				}
-			} catch (error) {
-				toast.error('Ошибка при отправке запроса', { icon: '❌' })
-			}
+		} catch (error) {
+			toast.error('Ошибка при отправке запроса', { icon: '❌' })
 		}
 	}
-
+	
+	const handlePublish = async (e: React.FormEvent) => {
+		e.preventDefault()
+		await savePost('published')
+	}
+	
+	const handleSaveDraft = async (e: React.FormEvent) => {
+		e.preventDefault()
+		await savePost('draft')
+	}
+	
+	const isExistingPostPublished = post?._status === 'published'
+	
 	return (
 		<Dialog open={open} onOpenChange={onClose}>
 			<DialogContent className='bg-secondary p-4 w-full max-w-[100vw] h-[100vh] flex flex-col m-0'>
@@ -166,14 +184,22 @@ export const PostEditModal: React.FC<Props> = ({
 										/>
 									</div>
 								</div>
-								<div className='my-4 flex justify-start'>
+								<div className='my-4 flex justify-start gap-4'>
 									<Button
 										variant='blue'
 										type='submit'
-										onClick={handleSubmit}
+										onClick={handlePublish}
 										className='px-10'
 									>
-										{post ? 'Сохранить изменения' : 'Опубликовать'}
+										{post ? (isExistingPostPublished ? 'Сохранить изменения' : 'Опубликовать') : 'Опубликовать'}
+									</Button>
+									<Button
+										variant='outline'
+										type='submit'
+										onClick={handleSaveDraft}
+										className='px-10'
+									>
+										{post ? (isExistingPostPublished ? 'Снять с публикации' : 'Сохранить черновик') : 'Сохранить черновик'}
 									</Button>
 								</div>
 							</div>

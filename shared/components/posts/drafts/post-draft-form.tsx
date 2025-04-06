@@ -1,52 +1,65 @@
 'use client'
 
-import { Community, Post } from '@/payload-types'
-import { PostItem } from '@/shared/components/posts/post-items/post-item'
-import { Permissions } from '@/shared/lib/permissions'
+import { Community, Post, type User } from '@/payload-types'
+import { Title } from '@/shared/components'
+import { PostDraftItem } from '@/shared/components/posts/drafts/post-draft-item'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 import { Skeleton } from '../../ui/skeleton'
+import {
+	Table,
+	TableBody,
+	TableCaption,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '@/shared/components/ui/table'
 
 interface Props {
 	post: Post[]
 	communities: Community[]
-	postPermissions: Record<number, Permissions | null>
-	limit?: number
 	loading?: boolean
-	relatedPost?: boolean
 	className?: string
 }
 
-export const PostForm: React.FC<Props> = ({
-	post,
-	communities,
-	postPermissions,
-	limit = 5,
-	loading,
-	relatedPost,
-	className
-}) => {
+export const PostDraftForm: React.FC<Props> = ({
+	                                               post,
+	                                               communities,
+	                                               loading,
+	                                               className
+                                               }) => {
 	if (loading) {
 		return (
 			<div className={className}>
-				{[...Array(limit)].map((_, index) => (
-					<Skeleton key={index} className='h-6 mb-4 rounded-[8px]' />
+				{[...Array(5)].map((_, index) => (
+					<Skeleton key={index} className='h-12 mb-4 rounded-[8px]' />
 				))}
 			</div>
 		)
 	}
-
+	
 	return (
-		<div className={cn('', className)}>
-			{post.map(item => (
-				<PostItem
-					key={item.id}
-					post={item}
-					communities={communities}
-					permissions={postPermissions[item.id]} // Передаем права для конкретного поста
-					relatedPost={relatedPost}
-				/>
-			))}
+		<div className={cn('overflow-x-auto', className)}>
+			<Title text='Ваши черновики' />
+			<Table className='mt-4'>
+				<TableHeader>
+					<TableRow>
+						<TableHead className="w-[200px]">Название</TableHead>
+						<TableHead>Содержание</TableHead>
+						<TableHead>Сообщество</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{post.map(item => (
+							<PostDraftItem
+								key={item.id}
+								post={item}
+								communities={communities}
+								currentUser={item.author as User}
+							/>
+					))}
+				</TableBody>
+			</Table>
 		</div>
 	)
 }

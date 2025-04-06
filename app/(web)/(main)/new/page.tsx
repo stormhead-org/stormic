@@ -20,11 +20,18 @@ export default async function Home() {
 
 	const result = await payload.find({
 		collection: 'posts',
+		where: {
+			_status: {
+				equals: 'published'
+			}
+		},
+		pagination: false,
 		overrideAccess: true
 	})
 
 	const resultCommunities = await payload.find({
 		collection: 'communities',
+		pagination: false,
 		overrideAccess: true
 	})
 
@@ -34,6 +41,7 @@ export default async function Home() {
 	})
 
 	const posts = result.docs as Post[]
+	const communities = resultCommunities.docs as Community[]
 
 	// Получаем права для каждого поста
 	const postPermissions: Record<number, Permissions | null> = {}
@@ -50,8 +58,6 @@ export default async function Home() {
 			})
 		)
 	}
-
-	const communities = resultCommunities.docs as Community[]
 
 	return (
 		<>

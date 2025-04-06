@@ -1,55 +1,68 @@
 'use client'
 
 import { Community, Post, User } from '@/payload-types'
-import { PostBody } from '@/shared/components/posts/post-items/post-body'
-import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
-import { PostHeader } from '@/shared/components/posts/post-items/post-header'
-import { Permissions } from '@/shared/lib/permissions' // Импортируем тип Permissions
+import { PostEditModal } from '@/shared/components/modals/post-edit-modal/post-edit-modal'
 import { cn } from '@/shared/lib/utils'
-import { useSession } from '@/shared/providers/SessionProvider'
 import { OutputData } from '@editorjs/editorjs'
+import React, { useState } from 'react'
+import { TableCell, TableRow } from '@/shared/components/ui/table'
 
-export const PostItem: React.FC<{
+export const PostDraftItem: React.FC<{
 	post: Post
 	communities: Community[]
-	permissions: Permissions | null // Добавляем пропс permissions
-	relatedPost?: boolean
+	currentUser: User
 	className?: string
-}> = ({ post, communities, permissions, relatedPost = false, className }) => {
-	const session = useSession()
-	const currentUser = session && (session.user as User)
-
+}> = ({ post, communities, currentUser, className }) => {
+	const [openEditModal, setOpenEditModal] = useState(false)
+	
+	// Получаем название сообщества
+	const community = communities.find(
+		c => c.id === (typeof post.community === 'object' && post.community?.id ? post.community.id : post.community)
+	)
+	const communityName = community ? community.title : 'Без сообщества'
+	
+	// Получаем отрывок контента
+	const getContentExcerpt = (content: OutputData | null) => {
+		if (!content || !content.blocks || content.blocks.length === 0) return 'Нет контента'
+		const firstBlock = content.blocks[0]
+		return firstBlock.type === 'paragraph' && firstBlock.data.text
+			? firstBlock.data.text.slice(0, 30) + (firstBlock.data.text.length > 50 ? '...' : '')
+			: 'Контент без текста'
+	}
+	
+	// Обрезаем название поста до 20 символов
+	const getTitleExcerpt = (title: string | undefined) => {
+		if (!title) return 'Без названия'
+		return title.length > 20 ? title.slice(0, 20) + '...' : title
+	}
+	
 	return (
-		<div
-			className={cn(
-				'bg-secondary rounded-md mb-4 p-4 hover:bg-primary/5',
-				className
-			)}
-		>
-			<div data-post-id={post.id} className='post'>
-				<PostHeader
-					post={post}
-					communities={communities}
-					currentUser={currentUser}
-					permissions={permissions} // Передаем права
-				/>
-				<PostBody
-					postTitle={post.title}
-					postContent={post.content as unknown as OutputData}
-					heroImage={String(
-						'heroImage' in post &&
-							typeof post.heroImage === 'object' &&
-							post.heroImage !== null
-							? post.heroImage.url
-							: ''
-					)}
-					maxLength={300}
-					postUrl={`/p/${post.id}`}
-				/>
-				{!relatedPost ? (
-					<PostFooter postId={Number(post.id)} className='mt-4' />
-				) : null}
-			</div>
-		</div>
+		<>
+			<TableRow
+				className={cn('hover:bg-primary/5 cursor-pointer', className)}
+				onClick={() => setOpenEditModal(true)}
+			>
+				<TableCell>{getTitleExcerpt(post.title)}</TableCell>
+				<TableCell>{getContentExcerpt(post.content as unknown as OutputData)}</TableCell>
+				<TableCell>{communityName}</TableCell>
+			</TableRow>
+			<PostEditModal
+				open={openEditModal}
+				onClose={() => setOpenEditModal(false)}
+				post={post}
+				authorId={typeof post.author === 'object' && post.author?.id ? post.author.id : currentUser?.id || 0}
+				authorAvatar={
+					typeof post.author === 'object' &&
+					post.author?.avatar &&
+					typeof post.author.avatar === 'object' &&
+					'url' in post.author.avatar
+						? post.author.avatar.url
+						: ''
+				}
+				authorName={typeof post.author === 'object' && post.author?.name ? post.author.name : currentUser?.name || '#'}
+				authorUrl={typeof post.author === 'object' && post.author?.id ? `/u/${post.author.id}` : '#'}
+				communities={communities}
+			/>
+		</>
 	)
 }

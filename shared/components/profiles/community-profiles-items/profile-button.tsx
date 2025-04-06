@@ -93,8 +93,8 @@ export const ProfileButton: React.FC<Props> = ({
 								Профиль
 							</DropdownMenuItem>
 							<DropdownMenuItem
-								className='cursor-not-allowed'
-								// onClick={() => router.push('/#drafts')}
+								className='cursor-pointer'
+								onClick={() => router.push(`${userUrl}/drafts`)}
 							>
 								{/* {formatMessage({ id: 'profileButton.drafts' })} */}
 								Черновики
