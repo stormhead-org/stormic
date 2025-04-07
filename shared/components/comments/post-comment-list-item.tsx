@@ -41,13 +41,14 @@ export const PostCommentListItem = ({
 	const [isEditing, setIsEditing] = useState(false)
 
 	const isMessageOwner = currentUser != null && currentUser.id === author.id
-	const isOwner =
-		currentUser != null && currentUser.systemRoles.includes('owner')
+	// const isOwner =
+	// 	currentUser != null && currentUser.systemRoles.includes('owner')
 	// const isAdmin =
 	// 	currentUser != null && currentUser.userRoles.roleType === 'admin'
 	// const isModerator =
 	// 	currentUser != null && currentUser.userRoles.roleType === 'moderator'
-	const canDeleteMessage = !deleted && (isOwner || isMessageOwner)
+	const canDeleteMessage = !deleted && isMessageOwner
+	// (isOwner || isMessageOwner)
 	const canEditMessage = !deleted && isMessageOwner && !fileUrl
 
 	return (

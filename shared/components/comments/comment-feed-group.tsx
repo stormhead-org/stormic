@@ -1,10 +1,10 @@
 'use client'
 
 import { Title } from '@/shared/components'
-// import { CommentForm } from '@/shared/components/comments/comments-items/comment-form'
 import { SocketIndicator } from '@/shared/components/socket-indicator'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
+import { CommentForm } from './comments-items/comment-form'
 // import { useIntl } from 'react-intl'
 
 interface Props {
@@ -27,13 +27,13 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 			</div>
 
 			<div className='flex flex-col h-[87vh] overflow-auto no-scrollbar rounded-md'>
-				{/* <CommentForm
+				<CommentForm
 					maxLengthHeader={28}
 					maxLengthBody={56}
 					apiUrl='/api/comments'
 					paramKey='global'
 					paramValue={String('true')}
-				/> */}
+				/>
 			</div>
 		</div>
 	)

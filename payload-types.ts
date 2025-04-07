@@ -531,7 +531,7 @@ export interface Comment {
   author: number | User;
   content: string;
   media?: (number | null) | Media;
-  hasDeleted: boolean;
+  hasDeleted?: boolean | null;
   parentComment?: (number | null) | Comment;
   childrenComments?: {
     docs?: (number | Comment)[];

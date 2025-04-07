@@ -10,11 +10,8 @@ import { cn } from '@/shared/lib/utils'
 import { Loader2, ServerCrash } from 'lucide-react'
 import { ElementRef, useRef } from 'react'
 
-const DATE_FORMAT = 'd MMM yyyy, HH:mm'
-
-type CommentWithUser = Comment & {
-	author: User
-	childrenComments: CommentWithUser[]
+export interface CommentWithChildren extends Omit<Comment, 'childrenComments'> {
+	childrenComments: CommentWithChildren[]
 }
 
 interface CommentItemsProps {
@@ -24,44 +21,30 @@ interface CommentItemsProps {
 	apiUrl: string
 	socketUrl: string
 	socketQuery: Record<string, string>
-	paramKey: 'postId' | 'conversationId' | 'global'
+	paramKey: 'postId'
 	paramValue: string
 	className?: string
 }
 
 const getIndentationClass = (level: number) => {
-	switch (level) {
-		case 1:
-			return 'pl-6'
-		case 2:
-			return 'pl-6'
-		case 3:
-			return 'pl-6'
-		case 4:
-			return 'pl-6'
-		case 5:
-			return 'pl-6'
-		default:
-			return 'pl-0'
-	}
+	return `pl-${(level + 1) * 4}`
 }
 
 const renderCommentWithChildren = (
-	message: CommentWithUser,
+	message: CommentWithChildren,
 	currentUser: User | null,
 	postId: string,
 	communityId: number,
 	socketUrl: string,
 	socketQuery: Record<string, string>,
-	level = 0,
-	keyProp?: string | number
+	level = 0
 ) => {
 	const children = Array.isArray(message.childrenComments)
 		? message.childrenComments
 		: []
 
 	return (
-		<div key={keyProp ?? message.id} className={getIndentationClass(level)}>
+		<div key={message.id} className={getIndentationClass(level)}>
 			<PostCommentListItem
 				postId={postId}
 				communityId={communityId}
@@ -69,27 +52,29 @@ const renderCommentWithChildren = (
 				currentUser={currentUser}
 				author={message.author}
 				content={message.content}
-				fileUrl={message.commentMedia?.url}
-				deleted={message.hasDeleted}
+				fileUrl={message.commentMedia?.url || null}
+				deleted={message.hasDeleted || false}
 				timestamp={formatDateTime(message.createdAt)}
 				isUpdated={message.updatedAt !== message.createdAt}
 				socketUrl={socketUrl}
 				socketQuery={socketQuery}
 				className='mt-4 p-0 pl-4 cursor-default border-l-4 border-blue-600'
 			/>
-			{children.length > 0 &&
-				children.map(child =>
-					renderCommentWithChildren(
-						child,
-						currentUser,
-						postId,
-						communityId,
-						socketUrl,
-						socketQuery,
-						level + 1,
-						child.id
-					)
-				)}
+			{children.length > 0 && (
+				<div className='ml-4'>
+					{children.map(child =>
+						renderCommentWithChildren(
+							child,
+							currentUser,
+							postId,
+							communityId,
+							socketUrl,
+							socketQuery,
+							level + 1
+						)
+					)}
+				</div>
+			)}
 		</div>
 	)
 }
@@ -152,6 +137,9 @@ export const PostCommentsList = ({
 		)
 	}
 
+	// Здесь данные приходят в поле `items` – это дерево комментариев
+	const allComments = data?.pages?.flatMap(page => page.items) ?? []
+
 	return (
 		<div
 			ref={chatRef}
@@ -161,18 +149,15 @@ export const PostCommentsList = ({
 			)}
 		>
 			<div className='flex flex-col mt-auto'>
-				{data?.pages?.map((group, groupIndex) =>
-					group.items.map((message: CommentWithUser) =>
-						renderCommentWithChildren(
-							message,
-							currentUser,
-							postId,
-							communityId,
-							socketUrl,
-							socketQuery,
-							0,
-							message.id
-						)
+				{allComments.map((message: CommentWithChildren) =>
+					renderCommentWithChildren(
+						message,
+						currentUser,
+						postId,
+						communityId,
+						socketUrl,
+						socketQuery,
+						0
 					)
 				)}
 			</div>

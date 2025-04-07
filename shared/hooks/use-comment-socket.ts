@@ -1,111 +1,99 @@
+'use client'
 
-import { User } from '@/payload-types'
-import { useSocket } from '@/shared/providers/SocketProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
-
-type CommentSocketProps = {
-	addKey: string
-	updateKey: string
-	queryKey: string
-}
-
-type CommentWithUser = Comment & {
-	user: User
-	children?: CommentWithUser[] // Рекурсивный тип для вложенных комментариев
-}
+import { useSocket } from '../providers/SocketProvider'
 
 export const UseCommentSocket = ({
 	addKey,
 	updateKey,
-	queryKey,
-}: CommentSocketProps) => {
+	queryKey
+}: {
+	addKey: string
+	updateKey: string
+	queryKey: string
+}) => {
 	const { socket } = useSocket()
 	const queryClient = useQueryClient()
 
 	useEffect(() => {
-		if (!socket) {
-			return
-		}
+		if (!socket) return
 
-		// Событие добавления комментария
-		socket.on(addKey, (newComment: CommentWithUser) => {
-			// Обновляем локальные данные
+		socket.on(addKey, (newComment: any) => {
 			queryClient.setQueryData([queryKey], (oldData: any) => {
 				if (!oldData || !oldData.pages) {
-					return {
-						pages: {
-							items: [newComment],
-						},
-					}
+					return { pages: [{ items: [newComment] }], pageParams: [1] }
 				}
 
 				const newData = [...oldData.pages]
-				newData[0] = {
-					...newData[0],
-					items: [newComment, ...newData[0].items],
+				const firstPage = { ...newData[0] }
+
+				// Функция для добавления дочернего комментария в нужное место в массиве items
+				const addToChildren = (comments: any[], parentId: string): boolean => {
+					for (let comment of comments) {
+						if (comment.id === parentId) {
+							comment.childrenComments = [
+								...(comment.childrenComments || []),
+								newComment
+							]
+							return true
+						}
+						if (comment.childrenComments?.length) {
+							if (addToChildren(comment.childrenComments, parentId)) return true
+						}
+					}
+					return false
 				}
 
-				return {
-					...oldData,
-					pages: newData,
+				if (newComment.parentComment) {
+					// Если это ответ, ищем родительский комментарий по id
+					const parentId = newComment.parentComment
+					addToChildren(firstPage.items || [], parentId)
+				} else {
+					// Иначе добавляем его в корневой список
+					firstPage.items = [...(firstPage.items || []), newComment]
 				}
+
+				newData[0] = firstPage
+				return { ...oldData, pages: newData }
 			})
-
-			// Инвалидация кеша для обновления через сервер
-			queryClient.invalidateQueries({ queryKey: [queryKey] })
 		})
 
-		// Событие обновления комментария
-		socket.on(updateKey, (updatedComment: CommentWithUser) => {
-			// Обновляем локальные данные
+		socket.on(updateKey, (updatedComment: any) => {
 			queryClient.setQueryData([queryKey], (oldData: any) => {
-				if (!oldData || !oldData.pages) {
-					return oldData // Если нет старых данных, просто возвращаем их
-				}
+				if (!oldData || !oldData.pages) return oldData
 
-				const newData = oldData.pages.map((page: any) => {
-					return {
-						...page,
-						items: updateCommentRecursively(page.items, updatedComment), // Функция для обновления
-					}
-				})
+				const newData = oldData.pages.map((page: any) => ({
+					...page,
+					items: updateCommentRecursively(page.items || [], updatedComment)
+				}))
 
 				return {
 					...oldData,
-					pages: newData,
+					pages: newData
 				}
 			})
-
-			// Инвалидация кеша для обновления через сервер
-			queryClient.invalidateQueries({ queryKey: [queryKey] })
 		})
 
 		return () => {
 			socket.off(addKey)
 			socket.off(updateKey)
 		}
-	}, [queryClient, addKey, queryKey, socket, updateKey])
+	}, [queryClient, addKey, updateKey, queryKey, socket])
 }
 
-// Рекурсивное обновление комментария
-function updateCommentRecursively(
-	items: CommentWithUser[],
-	updatedComment: CommentWithUser
-): CommentWithUser[] {
+function updateCommentRecursively(items: any[], updatedComment: any): any[] {
 	return items.map(item => {
-		if (item.id === updatedComment.id) {
-			return updatedComment
-		}
-
-		// Если у комментария есть дочерние комментарии, обновляем их рекурсивно
-		if (item.children && item.children.length > 0) {
+		if (item.id === updatedComment.id) return updatedComment
+		if (item.childrenComments?.length > 0) {
 			return {
 				...item,
-				children: updateCommentRecursively(item.children, updatedComment),
+				childrenComments: updateCommentRecursively(
+					item.childrenComments,
+					updatedComment
+				)
 			}
 		}
-
 		return item
 	})
 }

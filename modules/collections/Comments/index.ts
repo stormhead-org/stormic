@@ -83,8 +83,7 @@ export const Comments: CollectionConfig = {
 			label: 'Комментарий удален?',
 			name: 'hasDeleted',
 			type: 'checkbox',
-			defaultValue: false,
-			required: true
+			defaultValue: false
 		},
 		{
 			label: 'Родительский комментарий',
@@ -111,5 +110,5 @@ export const Comments: CollectionConfig = {
 			relationTo: 'users',
 			required: false
 		}
-	],
+	]
 }

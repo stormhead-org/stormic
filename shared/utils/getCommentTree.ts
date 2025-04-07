@@ -1,27 +1,39 @@
-import type { Comment } from '@/payload-types'
+import type { Community, Media, Post, User } from '@/payload-types'
 import configPromise from '@payload-config'
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 
-// Функция для организации комментариев в иерархическую структуру
-const buildCommentTree = (comments: Comment[]) => {
-	const map = new Map<number, Comment & { childrenComments: Comment[] }>()
-	const roots: (Comment & { childrenComments: Comment[] })[] = []
+interface CommentWithChildren {
+	id: string
+	parentPost: string | Post
+	community: string | Community
+	author: string | User
+	content: string
+	media?: string | Media | null
+	hasDeleted?: boolean | null
+	parentComment?: string | CommentWithChildren | null
+	childrenComments: CommentWithChildren[]
+	likes?: (string | User)[] | null
+	updatedAt: string
+	createdAt: string
+}
 
-	// Инициализируем карту: для каждого комментария создаём поле childrenComments как пустой массив
+const buildCommentTree = (
+	comments: CommentWithChildren[]
+): CommentWithChildren[] => {
+	const map = new Map<string, CommentWithChildren>()
+	const roots: CommentWithChildren[] = []
+
 	comments.forEach(comment => {
 		map.set(comment.id, { ...comment, childrenComments: [] })
 	})
 
-	// Заполняем дерево: если есть parentComment, добавляем комментарий в массив детей родителя,
-	// иначе добавляем в корневой массив
 	comments.forEach(comment => {
 		if (comment.parentComment) {
 			const parentId =
-				typeof comment.parentComment === 'number'
+				typeof comment.parentComment === 'string'
 					? comment.parentComment
-					: comment.parentComment.id
-
+					: comment.parentComment?.id
 			const parent = map.get(parentId)
 			if (parent) {
 				parent.childrenComments.push(map.get(comment.id)!)
@@ -31,10 +43,19 @@ const buildCommentTree = (comments: Comment[]) => {
 		}
 	})
 
+	map.forEach(comment => {
+		if (comment.childrenComments.length) {
+			comment.childrenComments.sort(
+				(a, b) =>
+					new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+			)
+		}
+	})
+
 	return roots
 }
 
-export const getCommentTree = async (postId: number) => {
+export const getCommentTree = async (postId: string) => {
 	const payload = await getPayload({ config: configPromise })
 	try {
 		if (!postId) {
@@ -43,7 +64,7 @@ export const getCommentTree = async (postId: number) => {
 
 		const allComments = await payload.find({
 			collection: 'comments',
-			depth: 10, // Запрашиваем достаточно уровней вложенности
+			depth: 10,
 			page: 1,
 			limit: 40,
 			pagination: false,
@@ -58,13 +79,22 @@ export const getCommentTree = async (postId: number) => {
 			showHiddenFields: true
 		})
 
-		// Преобразуем структуру данных
-		const commentsWithChildren = allComments.docs.map(comment => ({
-			...comment,
-			childrenComments: (comment.childrenComments?.docs || [])
-				.map(childId => allComments.docs.find(c => c.id === childId))
-				.filter((child): child is Comment => Boolean(child)) // Удаляем null или undefined
-		}))
+		const commentsWithChildren: CommentWithChildren[] = allComments.docs.map(
+			(comment: any) => ({
+				id: comment.id,
+				parentPost: comment.parentPost,
+				community: comment.community,
+				author: comment.author,
+				content: comment.content,
+				media: comment.media || null,
+				hasDeleted: comment.hasDeleted || null,
+				parentComment: comment.parentComment || null,
+				childrenComments: [],
+				likes: comment.likes || null,
+				updatedAt: comment.updatedAt,
+				createdAt: comment.createdAt
+			})
+		)
 
 		const commentTree = buildCommentTree(commentsWithChildren)
 		return NextResponse.json({

@@ -39,12 +39,11 @@ export default async function handler(
 
 		let comment = await queryCommentById({ commentId })
 
-		const isMessageOwner =
-			Number(comment?.author?.id) === Number(profile?.user.id)
+		const isMessageOwner = Number(comment?.author?.id) === Number(profile?.id)
 
-		const isOwner =
-			Array.isArray(profile?.user.systemRoles) &&
-			profile.user.systemRoles.includes('owner')
+		// const isOwner =
+		// 	Array.isArray(profile?.systemRoles) &&
+		// 	profile.systemRoles.includes('owner')
 
 		// const isAdmin =
 		// 	Array.isArray(profile?.user.userRoles) &&
@@ -54,23 +53,23 @@ export default async function handler(
 		// 	Array.isArray(profile?.user.userRoles) &&
 		// 	profile.user.userRoles.some(role => role.roleType === 'moderator')
 
-		const canModify = isMessageOwner || isOwner
+		// const canModify = isMessageOwner || isOwner
+		const canModify = isMessageOwner
 
 		if (!canModify) {
 			return res.status(401).json({ error: 'Не авторизован' })
 		}
 
 		if (req.method === 'DELETE') {
-			comment = await payload.update({
+			const comment = await payload.update({
 				collection: 'comments',
 				data: {
 					content: 'Комментарий был удален',
 					hasDeleted: true
 				},
-				// file: null,
 				where: {
 					id: {
-						equals: commentId
+						equals: String(commentId)
 					}
 				}
 			})
@@ -81,7 +80,7 @@ export default async function handler(
 				return res.status(401).json({ error: 'Не авторизован' })
 			}
 
-			comment = await payload.update({
+			const comment = await payload.update({
 				collection: 'comments',
 				data: {
 					content
@@ -107,19 +106,14 @@ export default async function handler(
 	}
 }
 
-const queryPostById = cache(async ({ postId }: { postId: number }) => {
+const queryPostById = async ({ postId }: { postId: number }) => {
 	const payload = await getPayload({ config: configPromise })
-
 	const result = await payload.find({
 		collection: 'posts',
-		where: {
-			id: {
-				equals: postId
-			}
-		}
+		where: { id: { equals: postId } }
 	})
 	return result.docs?.[0] || null
-})
+}
 
 const queryCommentById = cache(async ({ commentId }: { commentId: number }) => {
 	const payload = await getPayload({ config: configPromise })

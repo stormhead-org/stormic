@@ -23,7 +23,7 @@ import React from 'react'
 interface Props {
 	postId: number
 	communityId: number
-	currentUser: User | null
+	currentUser?: User | null
 	commentsHeader: string
 	className?: string
 }

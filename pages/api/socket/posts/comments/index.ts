@@ -40,14 +40,13 @@ export default async function handler(
 		if (!post) {
 			return res.status(404).json({ error: 'Post not found' })
 		}
-
 		const newComment = await payload.create({
 			collection: 'comments',
 			data: {
 				content,
 				parentPost: postId,
 				community: communityId,
-				owner: profile.user.id,
+				author: profile.user.id,
 				parentComment: parentCommentId
 			},
 			overrideAccess: true,

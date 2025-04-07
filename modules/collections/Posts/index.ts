@@ -55,9 +55,8 @@ export const Posts: CollectionConfig<'posts'> = {
 					}
 
 					const postId = Number(req.routeParams.id)
-
 					const commentTree = await getCommentTree(postId)
-					return commentTree
+					return commentTree // Уже возвращает NextResponse
 				} catch (error) {
 					console.error('[CUSTOM_ENDPOINT]', error)
 					return Response.json(

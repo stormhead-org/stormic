@@ -1,8 +1,8 @@
+'use client'
 
-import { useSocket } from '@/shared/providers/SocketProvider'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import qs from 'query-string'
-
+import { useSocket } from '../providers/SocketProvider'
 
 interface ChatQueryProps {
 	queryKey: string
@@ -12,38 +12,40 @@ interface ChatQueryProps {
 }
 
 export const useCommentQuery = ({
-	                                queryKey,
-	                                apiUrl,
-	                                paramKey,
-	                                paramValue
-                                }: ChatQueryProps) => {
+	queryKey,
+	apiUrl,
+	paramKey,
+	paramValue
+}: ChatQueryProps) => {
 	const { isConnected } = useSocket()
-	
-	const fetchMessages = async ({ pageParam = undefined }) => {
+
+	const fetchMessages = async ({ pageParam = 1 }) => {
 		const url = qs.stringifyUrl(
 			{
 				url: apiUrl,
 				query: {
-					cursor: pageParam,
+					page: pageParam,
 					[paramKey]: paramValue
 				}
 			},
 			{ skipNull: true }
 		)
-		
+
 		const res = await fetch(url)
 		return res.json()
 	}
-	
+
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
 		useInfiniteQuery({
 			queryKey: [queryKey],
 			queryFn: fetchMessages,
-			getNextPageParam: lastPage => lastPage?.nextCursor,
+			getNextPageParam: lastPage => {
+				return lastPage.hasNextPage ? lastPage.page + 1 : undefined
+			},
 			refetchInterval: isConnected ? false : 1000,
-			initialPageParam: undefined
+			initialPageParam: 1
 		})
-	
+
 	return {
 		data,
 		fetchNextPage,

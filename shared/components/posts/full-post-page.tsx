@@ -1,20 +1,23 @@
 'use client'
 
-import { Community, Post } from '@/payload-types'
+import { Community, Post, User } from '@/payload-types'
 import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
+import { CommentFullPostGroup } from '../comments/comment-full-post-group'
 import { FullPostForm } from './full-post-items/full-post-form'
 
 interface Props {
 	post: Post[]
 	communities: Community[]
+	currentUser?: User | null
 	className?: string
 }
 
 export const FullPostPage: React.FC<Props> = ({
 	post,
 	communities,
+	currentUser,
 	className
 }) => {
 	if (!post || post.length === 0) {
@@ -30,13 +33,13 @@ export const FullPostPage: React.FC<Props> = ({
 				communities={communities}
 				// loading={loading}
 			/>
-			{/* <CommentFullPostGroup */}
-			{/* 	className='mb-4' */}
-			{/* 	postId={currentPost.id} */}
-			{/* 	communityId={currentPost.community.id} */}
-			{/* 	currentUser={currentUser} */}
-			{/* 	commentsHeader={String(0)} */}
-			{/* /> */}
+			<CommentFullPostGroup
+				className='mb-4'
+				postId={currentPost.id}
+				communityId={currentPost.community.id}
+				currentUser={currentUser}
+				commentsHeader={String(0)}
+			/>
 		</div>
 	)
 }
