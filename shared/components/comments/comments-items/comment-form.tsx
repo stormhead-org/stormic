@@ -83,12 +83,12 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 			{uniqueComments.map((message: any, index) => (
 				<CommentItem
 					key={`${message.id}-${index}`}
-					postTitle={message.postTitle}
+					postTitle={message.parentPost.title}
 					content={message.content}
-					postId={message.post_id}
-					authorName={message.author_fullName}
-					authorId={message.author_id}
-					authorAvatar={message.author_profile_picture}
+					postId={message.parentPost.id}
+					authorName={message.author.name}
+					authorId={message.author.id}
+					authorAvatar={message.author.avatar?.url}
 					maxLengthHeader={maxLengthHeader}
 					maxLengthBody={maxLengthBody}
 					fileUrl={message.fileUrl}

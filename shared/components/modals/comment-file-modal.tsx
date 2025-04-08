@@ -1,6 +1,5 @@
 'use client'
 
-// import { FileUpload } from '@/shared/components/file-upload'
 import { Button } from '@/shared/components/ui/button'
 import {
 	Dialog,

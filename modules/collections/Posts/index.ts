@@ -79,7 +79,6 @@ export const Posts: CollectionConfig<'posts'> = {
 					if (!status) {
 						return Response.json({ error: 'Post not found' }, { status: 404 })
 					}
-					console.log(status)
 					return Response.json(status)
 				} catch (error) {
 					return Response.json(
@@ -156,7 +155,6 @@ export const Posts: CollectionConfig<'posts'> = {
 					if (!status) {
 						return Response.json({ error: 'Post not found' }, { status: 404 })
 					}
-					console.log(status)
 					return Response.json(status)
 				} catch (error) {
 					return Response.json(

@@ -27,7 +27,7 @@ export const FullPostCommentHeader: React.FC<CommentHeaderProps> = ({
 		<div className={cn('flex justify-between w-full', className)}>
 			<div className='flex items-center'>
 				<Link href={`/u/${author.id}`}>
-					<ProfileAvatar avatarImage={String(author.userAvatar?.url)} />
+					<ProfileAvatar avatarImage={author.avatar?.url} />
 				</Link>
 				<div className='ml-2'>
 					<div className='flex items-center'>

@@ -32,6 +32,7 @@ export const useCommentQuery = ({
 		)
 
 		const res = await fetch(url)
+		console.log(res.json)
 		return res.json()
 	}
 

@@ -31,7 +31,6 @@ export const Comments: CollectionConfig = {
 							{ status: 404 }
 						)
 					}
-					console.log(status)
 					return Response.json(status)
 				} catch (error) {
 					return Response.json(

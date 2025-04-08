@@ -20,7 +20,7 @@ export const Users: CollectionConfig = {
 	access: {
 		admin: authenticated,
 		create: anyone,
-		read: authenticated,
+		read: anyone,
 		update: authenticated,
 		delete: authenticated
 	},
@@ -77,7 +77,6 @@ export const Users: CollectionConfig = {
 					if (!status) {
 						return Response.json({ error: 'User not found' }, { status: 404 })
 					}
-					console.log(status)
 					return Response.json(status)
 				} catch (error) {
 					return Response.json(

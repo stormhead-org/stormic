@@ -75,8 +75,8 @@ export const getCommentTree = async (postId: string) => {
 			},
 			sort: 'createdAt',
 			fallbackLocale: false,
-			overrideAccess: false,
-			showHiddenFields: true
+			overrideAccess: true,
+			showHiddenFields: false
 		})
 
 		const commentsWithChildren: CommentWithChildren[] = allComments.docs.map(
