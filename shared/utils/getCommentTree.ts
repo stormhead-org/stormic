@@ -67,7 +67,7 @@ export const getCommentTree = async (postId: string) => {
 			depth: 10,
 			page: 1,
 			limit: 40,
-			pagination: false,
+			pagination: true,
 			where: {
 				parentPost: {
 					equals: postId
