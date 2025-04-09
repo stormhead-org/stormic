@@ -4,6 +4,7 @@ import type { Media, User } from '@/payload-types'
 import { FullPostCommentBody } from '@/shared/components/comments/full-post-comments-items/full-post-comment-body'
 import { FullPostCommentFooter } from '@/shared/components/comments/full-post-comments-items/full-post-comment-footer'
 import { FullPostCommentHeader } from '@/shared/components/comments/full-post-comments-items/full-post-comment-header'
+import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 
@@ -17,6 +18,7 @@ interface PostCommentListItemProps {
 	media: Media
 	deleted: boolean
 	currentUser: User | null
+	permissions: Permissions | null,
 	isUpdated: boolean
 	socketUrl: string
 	socketQuery: Record<string, string>
@@ -33,6 +35,7 @@ export const PostCommentListItem = ({
 	media,
 	deleted,
 	currentUser,
+	permissions,
 	isUpdated,
 	socketUrl,
 	socketQuery,
@@ -41,13 +44,14 @@ export const PostCommentListItem = ({
 	const [isEditing, setIsEditing] = useState(false)
 
 	const isMessageOwner = currentUser != null && currentUser.id === author.id
-	// const isOwner =
+	const permissionCommentDelete = permissions?.COMMUNITY_COMMENTS_DELETE ?? false
+	const isCommunityOwner = permissions?.COMMUNITY_OWNER ?? false
 	// 	currentUser != null && currentUser.systemRoles.includes('owner')
 	// const isAdmin =
 	// 	currentUser != null && currentUser.userRoles.roleType === 'admin'
 	// const isModerator =
 	// 	currentUser != null && currentUser.userRoles.roleType === 'moderator'
-	const canDeleteMessage = !deleted && isMessageOwner
+	const canDeleteMessage = !deleted && (isMessageOwner || permissionCommentDelete || isCommunityOwner)
 	// (isOwner || isMessageOwner)
 	const canEditMessage = !deleted && isMessageOwner
 

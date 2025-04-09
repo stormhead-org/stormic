@@ -1,4 +1,5 @@
 import type { Community, Post, User } from '@/payload-types'
+import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -6,6 +7,7 @@ import { getPayload } from 'payload'
 import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { FullPostPage } from '@/shared/components/posts/full-post-page'
 import { getSession } from '@/shared/lib/auth'
+import React from 'react'
 import PageClient from './page.client'
 
 export default async function Post({
@@ -30,6 +32,9 @@ export default async function Post({
 		where: {
 			id: {
 				equals: Number(id)
+			},
+			_status: {
+				equals: 'published'
 			}
 		}
 	})
@@ -41,18 +46,26 @@ export default async function Post({
 
 	const post = resultPost.docs as Post[]
 	const communities = resultCommunities.docs as Community[]
-
-	if (!post) {
+	
+	if (!post || post.length === 0) {
 		return <PostNotFound />
 	}
-
+	
+	const currentPost = post[0]
+	
+	const permissions = currentUser
+		? await getUserPermissions(currentUser.id, currentPost.community.id)
+		: null
+	
+	
 	return (
 		<article>
 			<PageClient />
 			<div className='flex flex-col h-[91vh] overflow-auto no-scrollbar rounded-md'>
 				<FullPostPage
-					post={post}
+					post={currentPost}
 					communities={communities}
+					permissions={permissions}
 					currentUser={currentUser}
 				/>
 			</div>

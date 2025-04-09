@@ -57,9 +57,9 @@ export default async function handler(
 		// const canModify = isMessageOwner || isOwner
 		const canModify = isMessageOwner
 
-		if (!canModify) {
-			return res.status(401).json({ error: 'Не авторизован' })
-		}
+		// if (!canModify) {
+		// 	return res.status(401).json({ error: 'Не авторизован' })
+		// }
 
 		if (req.method === 'DELETE') {
 			const comment = await payload.update({

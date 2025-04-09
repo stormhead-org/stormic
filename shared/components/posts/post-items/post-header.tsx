@@ -94,15 +94,15 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 						</div>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='bg-secondary'>
-						{(permissions?.HOST_OWNER || permissions?.COMMUNITY_OWNER) && (
-							<DropdownMenuItem
-								className='cursor-pointer'
-								onClick={() => setOpenEditModal(true)}
-							>
-								Редактировать
-							</DropdownMenuItem>
-						)}
-						{(permissions?.HOST_OWNER ||
+							{(permissions?.HOST_OWNER || permissions?.COMMUNITY_OWNER || currentUser != null && currentUser.id === post.author?.id) && (
+								<DropdownMenuItem
+									className='cursor-pointer'
+									onClick={() => setOpenEditModal(true)}
+								>
+									Редактировать
+								</DropdownMenuItem>
+							)}
+						{(permissions?.HOST_OWNER || permissions?.COMMUNITY_OWNER ||
 							permissions?.COMMUNITY_POST_REMOVE_FROM_PUBLICATION) && (
 							<DropdownMenuItem
 								className='cursor-pointer'
@@ -111,7 +111,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 								Снять с публикации
 							</DropdownMenuItem>
 						)}
-						{(permissions?.HOST_OWNER ||
+						{(permissions?.HOST_OWNER || permissions?.COMMUNITY_OWNER ||
 							permissions?.COMMUNITY_POST_DELETE) && (
 							<DropdownMenuItem
 								className='cursor-pointer'

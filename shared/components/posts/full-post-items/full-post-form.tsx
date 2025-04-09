@@ -2,6 +2,7 @@
 
 import { Community, Post } from '@/payload-types'
 import { FullPostItem } from '@/shared/components/posts/full-post-items/full-post-item'
+import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 import { Skeleton } from '../../ui/skeleton'
@@ -9,6 +10,7 @@ import { Skeleton } from '../../ui/skeleton'
 interface Props {
 	post: Post
 	communities: Community[]
+	permissions: Permissions | null
 	loading?: boolean
 	className?: string
 }
@@ -16,6 +18,7 @@ interface Props {
 export const FullPostForm: React.FC<Props> = ({
 	post,
 	communities,
+	permissions,
 	loading,
 	className
 }) => {
@@ -29,7 +32,7 @@ export const FullPostForm: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<FullPostItem post={post} communities={communities} />
+			<FullPostItem post={post} communities={communities} permissions={permissions} />
 		</div>
 	)
 }

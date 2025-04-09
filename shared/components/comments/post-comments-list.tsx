@@ -6,6 +6,7 @@ import { useCommentQuery } from '@/shared/hooks/use-comment-query'
 import { useCommentScroll } from '@/shared/hooks/use-comment-scroll'
 import { UseCommentSocket } from '@/shared/hooks/use-comment-socket'
 import { formatDateTime } from '@/shared/lib/formatDateTime'
+import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { Loader2, ServerCrash } from 'lucide-react'
 import { ElementRef, useRef } from 'react'
@@ -18,6 +19,7 @@ interface CommentItemsProps {
 	currentUser: User | null
 	postId: string
 	communityId: number
+	permissions: Permissions | null
 	apiUrl: string
 	socketUrl: string
 	socketQuery: Record<string, string>
@@ -35,6 +37,7 @@ const renderCommentWithChildren = (
 	currentUser: User | null,
 	postId: string,
 	communityId: number,
+	permissions: Permissions | null,
 	socketUrl: string,
 	socketQuery: Record<string, string>,
 	level = 0
@@ -50,6 +53,7 @@ const renderCommentWithChildren = (
 				communityId={communityId}
 				id={String(message.id)}
 				currentUser={currentUser}
+				permissions={permissions}
 				author={message.author}
 				content={message.content}
 				media={message.media || null}
@@ -68,6 +72,7 @@ const renderCommentWithChildren = (
 							currentUser,
 							postId,
 							communityId,
+							permissions,
 							socketUrl,
 							socketQuery,
 							level + 1
@@ -86,6 +91,7 @@ export const PostCommentsList = ({
 	apiUrl,
 	socketUrl,
 	socketQuery,
+	permissions,
 	paramKey,
 	paramValue,
 	className
@@ -161,6 +167,7 @@ export const PostCommentsList = ({
 						currentUser,
 						postId,
 						communityId,
+						permissions,
 						socketUrl,
 						socketQuery,
 						0

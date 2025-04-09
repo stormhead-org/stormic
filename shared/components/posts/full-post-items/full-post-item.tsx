@@ -2,6 +2,7 @@ import { Community, Post, User } from '@/payload-types'
 import { PostFullBody } from '@/shared/components/posts/full-post-items/post-full-body'
 import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
+import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { useSession } from '@/shared/providers/SessionProvider'
 import { OutputData } from '@editorjs/editorjs'
@@ -11,12 +12,14 @@ import { PostItem } from '../post-items/post-item'
 interface FullPostItemProps {
 	post: Post
 	communities: Community[]
+	permissions: Permissions | null
 	className?: string
 }
 
 export const FullPostItem: React.FC<FullPostItemProps> = ({
 	post,
 	communities,
+	permissions,
 	className
 }) => {
 	const session = useSession()
@@ -27,6 +30,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 			<PostHeader
 				post={post}
 				communities={communities}
+				permissions={permissions}
 				currentUser={currentUser}
 			/>
 			<PostFullBody
@@ -45,6 +49,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 				<PostItem
 					post={post.relatedPost as Post}
 					communities={communities}
+					permissions={permissions}
 					relatedPost={true}
 					className={'mt-6'}
 				/>

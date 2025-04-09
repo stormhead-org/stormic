@@ -3,6 +3,7 @@
 import { User } from '@/payload-types'
 import { CommentInput } from '@/shared/components/comments/comment-input-items/comment-input'
 import { PostCommentsList } from '@/shared/components/comments/post-comments-list'
+import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { ListFilter } from 'lucide-react'
 import React from 'react'
@@ -23,6 +24,7 @@ import React from 'react'
 interface Props {
 	postId: number
 	communityId: number
+	permissions: Permissions | null
 	currentUser?: User | null
 	commentsHeader: string
 	className?: string
@@ -31,6 +33,7 @@ interface Props {
 export const CommentFullPostGroup: React.FC<Props> = ({
 	postId,
 	communityId,
+	permissions,
 	currentUser,
 	commentsHeader,
 	className
@@ -72,6 +75,7 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 				currentUser={currentUser}
 				postId={String(postId)}
 				communityId={communityId}
+				permissions={permissions}
 				apiUrl={`/api/posts/${postId}/comments`}
 				socketUrl={'/api/socket/posts/comments'}
 				socketQuery={{
