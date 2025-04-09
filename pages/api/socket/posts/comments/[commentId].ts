@@ -16,7 +16,7 @@ export default async function handler(
 		const profile = await getPagesSession(req, res)
 		const postId = Number(req.query.postId)
 		const commentId = Number(req.query.commentId)
-		const { content } = req.body
+		const { content, media } = req.body
 		const payload = await getPayload({ config: configPromise })
 
 		if (!profile) {
@@ -39,7 +39,8 @@ export default async function handler(
 
 		let comment = await queryCommentById({ commentId })
 
-		const isMessageOwner = Number(comment?.author?.id) === Number(profile?.id)
+		const isMessageOwner =
+			Number(comment?.author?.id) === Number(profile?.user.id)
 
 		// const isOwner =
 		// 	Array.isArray(profile?.systemRoles) &&
@@ -65,6 +66,7 @@ export default async function handler(
 				collection: 'comments',
 				data: {
 					content: 'Комментарий был удален',
+					media: null,
 					hasDeleted: true
 				},
 				where: {
@@ -83,7 +85,8 @@ export default async function handler(
 			const comment = await payload.update({
 				collection: 'comments',
 				data: {
-					content
+					content,
+					media
 				},
 				where: {
 					id: {

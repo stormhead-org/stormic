@@ -1,6 +1,7 @@
 import type { Community, Media, Post, User } from '@/payload-types'
 import configPromise from '@payload-config'
 import { NextResponse } from 'next/server'
+import type { PayloadRequest } from 'payload'
 import { getPayload } from 'payload'
 
 interface CommentWithChildren {
@@ -55,17 +56,24 @@ const buildCommentTree = (
 	return roots
 }
 
-export const getCommentTree = async (postId: string) => {
+export const getCommentTree = async (req: PayloadRequest) => {
 	const payload = await getPayload({ config: configPromise })
 	try {
+		if (!req.url) {
+			return new NextResponse('URL запроса не определен', { status: 400 })
+		}
+		const url = new URL(req.url)
+		const postId = req.routeParams?.id ?? url.searchParams.get('postId')
+		const page = parseInt(url.searchParams.get('page') || '1', 10)
+
 		if (!postId) {
 			return new NextResponse('Post ID не найден', { status: 400 })
 		}
 
 		const allComments = await payload.find({
 			collection: 'comments',
+			page,
 			depth: 10,
-			page: 1,
 			limit: 40,
 			pagination: true,
 			where: {
@@ -99,6 +107,7 @@ export const getCommentTree = async (postId: string) => {
 		const commentTree = buildCommentTree(commentsWithChildren)
 		return NextResponse.json({
 			items: commentTree,
+			page: allComments.page,
 			hasNextPage: allComments.hasNextPage,
 			hasPrevPage: allComments.hasPrevPage,
 			totalPages: allComments.totalPages,
@@ -109,3 +118,5 @@ export const getCommentTree = async (postId: string) => {
 		throw error
 	}
 }
+
+export default getCommentTree

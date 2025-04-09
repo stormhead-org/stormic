@@ -32,16 +32,17 @@ export const useCommentQuery = ({
 		)
 
 		const res = await fetch(url)
-		console.log(res.json)
-		return res.json()
+		const data = await res.json()
+		return data
 	}
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
 		useInfiniteQuery({
 			queryKey: [queryKey],
 			queryFn: fetchMessages,
-			getNextPageParam: lastPage => {
-				return lastPage.hasNextPage ? lastPage.page + 1 : undefined
+			getNextPageParam: (lastPage, allPages) => {
+				const currentPage = lastPage.page ?? allPages.length
+				return lastPage.hasNextPage ? currentPage + 1 : undefined
 			},
 			refetchInterval: isConnected ? false : 1000,
 			initialPageParam: 1

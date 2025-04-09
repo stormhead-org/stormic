@@ -52,7 +52,7 @@ const renderCommentWithChildren = (
 				currentUser={currentUser}
 				author={message.author}
 				content={message.content}
-				fileUrl={message.commentMedia?.url || null}
+				media={message.media || null}
 				deleted={message.hasDeleted || false}
 				timestamp={formatDateTime(message.createdAt)}
 				isUpdated={message.updatedAt !== message.createdAt}
@@ -137,8 +137,14 @@ export const PostCommentsList = ({
 		)
 	}
 
-	// Здесь данные приходят в поле `items` – это дерево комментариев
-	const allComments = data?.pages?.flatMap(page => page.items) ?? []
+	const allComments = Array.from(
+		new Map(
+			(data?.pages?.flatMap(page => page.items) ?? []).map(comment => [
+				comment.id,
+				comment
+			])
+		).values()
+	)
 
 	return (
 		<div

@@ -228,63 +228,84 @@ html {
 		@apply bg-background text-foreground;
 	}
 
-	/* h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		color: var(--txt-color-headers);
-		margin: 1em 0;
-		font-weight: 700;
-	} */
-
-	p {
-		margin: 0.5em 0;
-		line-height: 1.6;
-		font-size: 1rem;
-		color: var(--txt-color);
+	/* Заголовки */
+	h2 {
+		@apply text-4xl font-bold text-[var(--txt-color-headers)] mt-8 mb-4;
 	}
 
+	h3 {
+		@apply text-2xl font-bold text-[var(--txt-color-headers)] mt-6 mb-3;
+	}
+
+	h4 {
+		@apply text-xl font-bold text-[var(--txt-color-headers)] mt-5 mb-2;
+	}
+
+	/* Параграфы */
+	/* p {
+		@apply text-base leading-relaxed mb-4;
+	} */
+
+	/* Горизонтальная линия (ранее <br>) */
+	hr {
+		@apply my-6 border-t-2 border-white w-full;
+	}
+
+	/* Списки */
 	ul,
 	ol {
-		margin: 0.5em 0 0.5em 1.5em;
-		padding-left: 1em;
-		list-style-position: outside;
-		background-color: aqua;
+		@apply my-4 pl-6 list-outside;
+	}
+
+	ul {
+		@apply list-disc;
+	}
+
+	ol {
+		@apply list-decimal;
 	}
 
 	li {
-		margin: 0.2em 0;
-		background-color: brown;
+		@apply my-2 text-base;
 	}
 
+	/* Чеклист (кастомный стиль) */
+	ul.checklist {
+		@apply list-none pl-0;
+	}
+
+	ul.checklist li {
+		@apply flex items-center gap-2;
+	}
+
+	ul.checklist li:before {
+		content: '☐'; /* Пустой чекбокс */
+		@apply text-lg;
+	}
+
+	ul.checklist li:nth-child(1):before,
+	ul.checklist li:nth-child(3):before {
+		content: '☑'; /* Заполненный чекбокс */
+	}
+
+	/* Цитата */
 	blockquote {
-		border-left: 4px solid var(--primary);
-		padding-left: 1em;
-		color: var(--muted-foreground);
-		font-style: italic;
-		margin: 1em 0;
-		background-color: blueviolet;
+		@apply border-l-4 border-[var(--primary)] pl-4 text-muted-foreground italic my-4 bg-[rgba(139,0,255,0.1)];
+	}
+
+	/* Код */
+	pre {
+		@apply bg-[var(--primary)] p-4 rounded-lg overflow-x-auto my-4 font-mono text-sm;
 	}
 
 	code {
-		background: var(--muted);
-		color: var(--accent-foreground);
-		padding: 0.2em 0.4em;
-		border-radius: 0.25rem;
-		font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
-		font-size: 0.9em;
+		@apply text-foreground;
 	}
 
-	pre {
-		background-color: burlywood;
-		padding: 1em;
-		border-radius: 0.5rem;
-		overflow-x: auto;
-		font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
-		margin: 1em 0;
-	}
+	/* Изображение */
+	/* img {
+		@apply max-w-full h-auto my-4 rounded-lg;
+	} */
 }
 
 #nprogress .bar {

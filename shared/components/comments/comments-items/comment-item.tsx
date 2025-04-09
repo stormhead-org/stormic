@@ -1,3 +1,4 @@
+import { Media } from '@/payload-types'
 import { CommentBody } from '@/shared/components/comments/comments-items/comment-body'
 import { CommentHeader } from '@/shared/components/comments/comments-items/comment-header'
 import { cn } from '@/shared/lib/utils'
@@ -13,7 +14,7 @@ interface CommentItemProps {
 	publicationDate?: string
 	maxLengthHeader?: number
 	maxLengthBody?: number
-	fileUrl: string | null
+	media: Media
 	deleted: boolean
 	className?: string
 }
@@ -28,7 +29,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	publicationDate,
 	maxLengthHeader,
 	maxLengthBody,
-	fileUrl,
+	media,
 	deleted,
 	className
 }) => {
@@ -47,7 +48,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 				content={content}
 				maxLength={maxLengthBody}
 				postUrl={postId ? `/p/${postId}` : '#'}
-				fileUrl={fileUrl}
+				media={media}
 				deleted={deleted}
 			/>
 		</div>

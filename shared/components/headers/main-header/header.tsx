@@ -50,14 +50,16 @@ export const Header: React.FC<Props> = ({
 
 	return (
 		<header className={cn('border-b', className)}>
-			<Container className='flex items-center justify-between py-4'>
+			<Container className='flex items-center justify-between py-2'>
 				{/* Левая часть */}
 				<Link href='/'>
 					<div className='flex items-center gap-4 w-[250px]'>
 						<img src={logoImage || ''} alt='Logo' width={42} height={42} />
 						<div>
 							<h1 className='text-2xl uppercase font-black'>{stormicName}</h1>
-							<p className='text-sm text-gray-400 leading-3'>{description}</p>
+							<p className='text-sm text-gray-400 leading-3 mb-1'>
+								{description}
+							</p>
 						</div>
 					</div>
 				</Link>

@@ -15,7 +15,7 @@ export default async function handler(
 
 	try {
 		const profile = await getPagesSession(req, res)
-		const { content, fileUrl } = req.body
+		const { content, media } = req.body
 		const communityId = Number(req.query.communityId)
 		const postId = Number(req.query.postId)
 		const parentCommentId = req.query.parentCommentId
@@ -43,16 +43,16 @@ export default async function handler(
 		const newComment = await payload.create({
 			collection: 'comments',
 			data: {
-				content,
 				parentPost: postId,
 				community: communityId,
 				author: profile.user.id,
-				parentComment: parentCommentId
+				parentComment: parentCommentId,
+				content,
+				media
 			},
 			overrideAccess: true,
 			showHiddenFields: false,
-			disableVerificationEmail: false,
-			file: fileUrl
+			disableVerificationEmail: false
 		})
 
 		const postKey = `chat:${postId}:messages`

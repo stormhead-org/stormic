@@ -60,12 +60,13 @@ export const PostBody: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<Link href={postUrl}>
-				<Title text={postTitle} size='sm' className='font-extrabold my-2' />
-				<RichText
-					//data={truncateEditorState(postContent, maxLength)}
-					data={postContent}
-				/>
-
+				<div className='max-h-[18rem] overflow-hidden rounded-md'>
+					<Title text={postTitle} size='sm' className='font-extrabold my-2' />
+					<RichText
+						//data={truncateEditorState(postContent, maxLength)}
+						data={postContent}
+					/>
+				</div>
 				{heroImage && (
 					<img
 						className='rounded-md mt-4 object-cover h-80 w-full'

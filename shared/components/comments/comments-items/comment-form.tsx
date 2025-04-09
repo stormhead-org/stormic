@@ -39,7 +39,6 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 			paramValue
 		})
 
-	// Для глобальных комментариев нам не нужна иерархия – просто добавляем новый комментарий в начало
 	UseGlobalCommentSocket(queryKey, globalUpdateKey)
 
 	useCommentScroll({
@@ -71,9 +70,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 		)
 	}
 
-	// Здесь ожидается, что данные для глобальных комментариев приходят в поле `docs`
 	const allComments = data?.pages?.flatMap(page => page.docs) ?? []
-	// Если необходимо исключить дублирование по id, можно использовать:
 	const uniqueComments = Array.from(
 		new Map(allComments.map(msg => [msg.id, msg])).values()
 	)
@@ -91,8 +88,8 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 					authorAvatar={message.author.avatar?.url}
 					maxLengthHeader={maxLengthHeader}
 					maxLengthBody={maxLengthBody}
-					fileUrl={message.fileUrl}
-					deleted={message.deleted}
+					media={message.media}
+					deleted={message.hasDeleted}
 					className='bg-secondary/25 hover:bg-primary/5 mt-4'
 				/>
 			))}

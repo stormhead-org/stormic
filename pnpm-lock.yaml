@@ -17,9 +17,6 @@ importers:
       '@dnd-kit/utilities':
         specifier: ^3.2.2
         version: 3.2.2(react@19.0.0)
-      '@editorjs/checklist':
-        specifier: ^1.6.0
-        version: 1.6.0
       '@editorjs/code':
         specifier: ^2.9.3
         version: 2.9.3
@@ -38,9 +35,6 @@ importers:
       '@editorjs/image':
         specifier: ^2.10.2
         version: 2.10.2
-      '@editorjs/inline-code':
-        specifier: ^1.5.1
-        version: 1.5.1
       '@editorjs/list':
         specifier: ^2.0.6
         version: 2.0.6
@@ -50,15 +44,9 @@ importers:
       '@editorjs/quote':
         specifier: ^2.7.6
         version: 2.7.6
-      '@editorjs/raw':
-        specifier: ^2.5.1
-        version: 2.5.1
       '@editorjs/simple-image':
         specifier: ^1.6.0
         version: 1.6.0
-      '@editorjs/table':
-        specifier: ^2.4.4
-        version: 2.4.4
       '@emoji-mart/data':
         specifier: ^1.2.1
         version: 1.2.1
@@ -562,9 +550,6 @@ packages:
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
 
-  '@editorjs/checklist@1.6.0':
-    resolution: {integrity: sha512-hRNP36DInr73mSK3noHBQeoQb7DA12ANfqTXufEkTgQzx+k4mRJ0HdeGukTIR4JbwjHJ9ecUBnnQqIEGnxCFEg==}
-
   '@editorjs/code@2.9.3':
     resolution: {integrity: sha512-nXUrK3CjhpubvShYtcbkpZ9SU15IYwmJOsWZrlWYSzy9unZBRQthii6eABndsCtODzzV0yiSKmTp00RQkFow3Q==}
 
@@ -589,9 +574,6 @@ packages:
   '@editorjs/image@2.10.2':
     resolution: {integrity: sha512-SU0nP9NhqwA7+Jlco/E7zjYjtRUrVGSOW8bsrrEnH8my588UW7mPGa1zwAHFs/UMB0x8LXKOb1iq40db+2iC6A==}
 
-  '@editorjs/inline-code@1.5.1':
-    resolution: {integrity: sha512-XvKpqw9y1bOYgyuVUHGDuu7KlNWCYIXD5uU1Lpc4s4LJ8VN4TjWFGKJ3sS+LR7zzasWe8hu2ffR1JC6MHIS0EQ==}
-
   '@editorjs/list@2.0.6':
     resolution: {integrity: sha512-QmmRAMtIBlO9k8LxfiqhWM+CjrA9r1F5th3cI9UFhDMC78YqFdFNg+dWrH57bAW4063HJfS1ygbGoH/LfHBkww==}
 
@@ -601,14 +583,8 @@ packages:
   '@editorjs/quote@2.7.6':
     resolution: {integrity: sha512-D01KUMSDj2r+6Z+xjDkQqI+y6URpeHCvj0+P4pah+GtkG040lWjFb2H4pgHFXuol2cbfyAoraYSw85fuPheCvw==}
 
-  '@editorjs/raw@2.5.1':
-    resolution: {integrity: sha512-h7CjXtfSTe4Bj1CL84ch5NW0q0CdrlWsLzQ/kbaFTgx914CzKz4Ug+xgdvytVO1dd1QzB5/HCW0ic1VxtgkhMQ==}
-
   '@editorjs/simple-image@1.6.0':
     resolution: {integrity: sha512-WvdGfQPlozwZd3PXQrJnRXk6gEYbv1U2vRupYJ6lTd3/UsLInXYUX5jSFcnGB5ZMH3bd0JDZfcb4d4Sv1/1big==}
-
-  '@editorjs/table@2.4.4':
-    resolution: {integrity: sha512-2wWjxk48C9Z7uaBZIS5dML81c2VsD47Va9J4RDd2UboxcnYV8OZ4oYxKafH5RJIGPj8ykGaROIzyDVR1N4e7Cg==}
 
   '@emnapi/runtime@1.3.1':
     resolution: {integrity: sha512-kEBmG8KyqtxJZv+ygbEim+KCGtIq1fC22Ms3S4ziXmYKm8uyoLX0MHONVKwp+9opg390VaKRNt4a7A9NwmpNhw==}
@@ -5666,10 +5642,6 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.2': {}
 
-  '@editorjs/checklist@1.6.0':
-    dependencies:
-      '@codexteam/icons': 0.3.3
-
   '@editorjs/code@2.9.3':
     dependencies:
       '@codexteam/icons': 0.3.3
@@ -5699,10 +5671,6 @@ snapshots:
     dependencies:
       '@codexteam/icons': 0.3.3
 
-  '@editorjs/inline-code@1.5.1':
-    dependencies:
-      '@codexteam/icons': 0.3.3
-
   '@editorjs/list@2.0.6':
     dependencies:
       '@codexteam/icons': 0.3.3
@@ -5716,15 +5684,7 @@ snapshots:
       '@codexteam/icons': 0.3.3
       '@editorjs/dom': 0.0.5
 
-  '@editorjs/raw@2.5.1':
-    dependencies:
-      '@codexteam/icons': 0.0.4
-
   '@editorjs/simple-image@1.6.0':
-    dependencies:
-      '@codexteam/icons': 0.0.6
-
-  '@editorjs/table@2.4.4':
     dependencies:
       '@codexteam/icons': 0.0.6
 

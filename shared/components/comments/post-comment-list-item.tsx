@@ -1,6 +1,6 @@
 'use client'
 
-import type { User } from '@/payload-types'
+import type { Media, User } from '@/payload-types'
 import { FullPostCommentBody } from '@/shared/components/comments/full-post-comments-items/full-post-comment-body'
 import { FullPostCommentFooter } from '@/shared/components/comments/full-post-comments-items/full-post-comment-footer'
 import { FullPostCommentHeader } from '@/shared/components/comments/full-post-comments-items/full-post-comment-header'
@@ -14,7 +14,7 @@ interface PostCommentListItemProps {
 	content: string
 	author: User
 	timestamp: string
-	fileUrl: string | null
+	media: Media
 	deleted: boolean
 	currentUser: User | null
 	isUpdated: boolean
@@ -30,7 +30,7 @@ export const PostCommentListItem = ({
 	content,
 	author,
 	timestamp,
-	fileUrl,
+	media,
 	deleted,
 	currentUser,
 	isUpdated,
@@ -49,7 +49,7 @@ export const PostCommentListItem = ({
 	// 	currentUser != null && currentUser.userRoles.roleType === 'moderator'
 	const canDeleteMessage = !deleted && isMessageOwner
 	// (isOwner || isMessageOwner)
-	const canEditMessage = !deleted && isMessageOwner && !fileUrl
+	const canEditMessage = !deleted && isMessageOwner
 
 	return (
 		<>
@@ -59,7 +59,7 @@ export const PostCommentListItem = ({
 				<FullPostCommentBody
 					id={id}
 					content={content}
-					fileUrl={fileUrl}
+					media={media}
 					deleted={deleted}
 					isUpdated={isUpdated}
 					socketUrl={socketUrl}

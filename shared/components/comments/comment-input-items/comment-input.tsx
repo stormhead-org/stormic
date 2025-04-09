@@ -17,8 +17,7 @@ import qs from 'query-string'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { Button } from '../../ui/button'
-import { Input } from '../../ui/input'
+import { FormTextarea } from '../../form'
 import { ImageUploader } from './image-uploader'
 
 interface ChatInputProps {
@@ -58,9 +57,8 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 			})
 			const data = {
 				content: values.content,
-				media: commentImage?.id || null // Отправляем ID изображения
+				media: commentImage?.id || null
 			}
-			console.log('Отправляемые данные:', data) // Логируем для отладки
 			await axios.post(url, data)
 			form.reset()
 			setCommentImage(undefined)
@@ -79,26 +77,32 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<div className='relative p-4 pb-6'>
-									<div className='flex group cursor-pointer items-center'>
-										<ImageUploader
-											setCommentImage={setCommentImage}
-											setIsUploading={setIsUploading}
-										/>
+								<div className='relative p-4 pb-2'>
+									<div className='absolute z-10 top-[3.2rem] left-8'>
+										<div className='cursor-pointer'>
+											<EmojiPicker
+												onChange={(emoji: string) =>
+													field.onChange(`${field.value} ${emoji}`)
+												}
+											/>
+										</div>
+										<div className='group cursor-pointer'>
+											<ImageUploader
+												setCommentImage={setCommentImage}
+												setIsUploading={setIsUploading}
+											/>
+										</div>
 									</div>
-									<Input
+									<FormTextarea
 										disabled={isLoading}
-										className='px-14 py-6 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+										className='px-14 py-6 rounded-md'
 										placeholder='Оставить комментарий'
+										sideButton
+										onClickValue={form.handleSubmit(onSubmit)}
+										loading={isLoading}
+										variant='blue'
 										{...field}
 									/>
-									<div className='absolute top-7 right-8'>
-										<EmojiPicker
-											onChange={(emoji: string) =>
-												field.onChange(`${field.value} ${emoji}`)
-											}
-										/>
-									</div>
 								</div>
 							</FormControl>
 						</FormItem>
@@ -106,7 +110,7 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 				/>
 				{commentImage && (
 					<div
-						className='relative w-full h-32 bg-secondary rounded-md flex items-center justify-center cursor-pointer px-2'
+						className='relative w-24 h-16 rounded-md flex items-center justify-center cursor-pointer px-2 ml-4 mb-4'
 						style={{
 							backgroundImage: commentImage
 								? `url(${commentImage.url})`
@@ -126,16 +130,8 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 								<X size={36} />
 							</button>
 						)}
-						{isUploading && (
-							<div className='absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
-								<p className='text-white'>Загрузка...</p>
-							</div>
-						)}
 					</div>
 				)}
-				<Button type='submit' disabled={isLoading}>
-					{isUploading ? 'Загрузка...' : 'Отправить'}
-				</Button>
 			</form>
 		</Form>
 	)

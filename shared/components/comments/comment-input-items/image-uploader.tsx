@@ -42,7 +42,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 		<div>
 			<button
 				type='button'
-				className='absolute top-[26px] left-7 group-hover:text-blue-700 font-bold transition rounded-full flex items-center justify-center'
+				className='group-hover:text-blue-700 font-bold transition rounded-full flex items-center justify-center'
 				onClick={e => {
 					e.stopPropagation()
 					inputRef.current?.click()
