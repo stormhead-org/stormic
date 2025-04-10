@@ -37,10 +37,16 @@ export default async function CommunitiesLayout({
 			items: true
 		}
 	})
-
+	
 	const resultCommunities = await payload.find({
 		collection: 'communities',
-		depth: 1,
+		where: {
+			COMMUNITY_HAS_BANNED: {
+				equals: false
+			}
+		},
+		depth: 2,
+		pagination: false,
 		overrideAccess: false
 	})
 
