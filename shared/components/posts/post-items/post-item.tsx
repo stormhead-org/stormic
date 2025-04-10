@@ -7,22 +7,26 @@ import { PostHeader } from '@/shared/components/posts/post-items/post-header'
 import { Permissions } from '@/shared/lib/permissions' // Импортируем тип Permissions
 import { cn } from '@/shared/lib/utils'
 import { useSession } from '@/shared/providers/SessionProvider'
+import { usePostLikesStore } from '@/shared/stores/post-likes-store'
 import { OutputData } from '@editorjs/editorjs'
 
 export const PostItem: React.FC<{
 	post: Post
 	communities: Community[]
-	permissions: Permissions | null // Добавляем пропс permissions
+	permissions: Permissions | null
 	relatedPost?: boolean
 	className?: string
 }> = ({ post, communities, permissions, relatedPost = false, className }) => {
 	const session = useSession()
 	const currentUser = session && (session.user as User)
+	const commentsCount = usePostLikesStore(
+		state => state.commentsCount[post.id] || 0
+	)
 
 	return (
 		<div
 			className={cn(
-				'bg-secondary rounded-md mb-4 p-4 hover:bg-primary/5',
+				'bg-secondary rounded-md mt-4 p-4 hover:bg-primary/5',
 				className
 			)}
 		>
@@ -31,7 +35,7 @@ export const PostItem: React.FC<{
 					post={post}
 					communities={communities}
 					currentUser={currentUser}
-					permissions={permissions} // Передаем права
+					permissions={permissions}
 				/>
 				<PostBody
 					postTitle={post.title}
@@ -47,7 +51,11 @@ export const PostItem: React.FC<{
 					postUrl={`/p/${post.id}`}
 				/>
 				{!relatedPost ? (
-					<PostFooter postId={Number(post.id)} className='mt-4' />
+					<PostFooter
+						postId={Number(post.id)}
+						commentsCount={commentsCount}
+						className='mt-4'
+					/>
 				) : null}
 			</div>
 		</div>

@@ -11,6 +11,7 @@ interface Props {
 	post: Post
 	communities: Community[]
 	permissions: Permissions | null
+	commentsCount: number
 	loading?: boolean
 	className?: string
 }
@@ -19,6 +20,7 @@ export const FullPostForm: React.FC<Props> = ({
 	post,
 	communities,
 	permissions,
+	commentsCount,
 	loading,
 	className
 }) => {
@@ -32,7 +34,12 @@ export const FullPostForm: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<FullPostItem post={post} communities={communities} permissions={permissions} />
+			<FullPostItem
+				post={post}
+				communities={communities}
+				permissions={permissions}
+				commentsCount={commentsCount}
+			/>
 		</div>
 	)
 }

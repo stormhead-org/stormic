@@ -1,10 +1,21 @@
 'use client'
 
 import { Badge } from '@/shared/components/ui/badge'
+import { useEffect } from 'react'
 import { useSocket } from '../providers/SocketProvider'
 
 export const SocketIndicator = () => {
 	const { isConnected } = useSocket()
+
+	//TODO удалить потом чекер
+	const { socket } = useSocket()
+
+	useEffect(() => {
+		if (socket && socket.io) {
+			console.log('Current transport:', socket.io.engine.transport.name)
+		}
+	}, [socket])
+	///
 
 	if (!isConnected) {
 		return (

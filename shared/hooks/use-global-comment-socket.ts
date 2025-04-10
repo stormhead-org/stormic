@@ -61,7 +61,7 @@ export const UseGlobalCommentSocket = (
 
 function updateCommentRecursively(items: any[], updatedComment: any): any[] {
 	return items.map(item => {
-		if (item.comment_id === updatedComment.comment_id) return updatedComment
+		if (item.id === updatedComment.id) return updatedComment
 		if (item.children?.length > 0) {
 			return {
 				...item,

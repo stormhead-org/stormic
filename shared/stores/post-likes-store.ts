@@ -2,8 +2,9 @@ import { toast } from 'sonner'
 import { create } from 'zustand'
 
 interface LikeStoreState {
-	likesCount: Record<number, number> // Объект для хранения количества лайков по postId
-	isLiked: Record<number, boolean> // Объект для хранения состояния лайка по postId
+	likesCount: Record<number, number>
+	commentsCount: Record<number, number>
+	isLiked: Record<number, boolean>
 	toggleLike: (postId: number) => Promise<void>
 	initialize: (postId: number) => Promise<void>
 }
@@ -11,6 +12,7 @@ interface LikeStoreState {
 let debounceTimers: Record<number, NodeJS.Timeout | null> = {} // Объект для хранения таймеров по postId
 
 export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
+	commentsCount: {},
 	likesCount: {},
 	isLiked: {},
 	async toggleLike(postId: number) {
@@ -64,9 +66,10 @@ export const usePostLikesStore = create<LikeStoreState>((set, get) => ({
 		try {
 			const response = await fetch(`/api/posts/${postId}/status`)
 			if (!response.ok) throw new Error('Failed to fetch like status')
-			const { likesCount, isLiked } = await response.json()
+			const { likesCount, commentsCount, isLiked } = await response.json()
 			set(state => ({
 				likesCount: { ...state.likesCount, [postId]: likesCount },
+				commentsCount: { ...state.commentsCount, [postId]: commentsCount },
 				isLiked: { ...state.isLiked, [postId]: isLiked }
 			}))
 		} catch (error) {

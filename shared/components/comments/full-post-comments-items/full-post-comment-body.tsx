@@ -21,7 +21,7 @@ import { ImageUploader } from '../comment-input-items/image-uploader'
 export interface CommentItemProps {
 	id: string
 	content: string
-	media: Media | null // Может быть null, если изображения нет
+	media: Media | null
 	deleted: boolean
 	isUpdated: boolean
 	socketUrl: string
@@ -88,7 +88,8 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 			})
 			const data = {
 				content: values.content,
-				media: commentImage?.id
+				media: commentImage?.id || null,
+				hasUpdated: true
 			}
 			await axios.patch(url, data)
 			setIsEditing(false)
@@ -103,7 +104,7 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 				<p className={cn(deleted && 'italic text-zinc-500 dark:text-zinc-400')}>
 					{content}
 					{isUpdated && !deleted && (
-						<span className='text-[10px] mx- 2 text-zinc-500 dark:text-zinc-400'>
+						<span className='text-[10px] mx-2 text-zinc-500 dark:text-zinc-400'>
 							(ред.)
 						</span>
 					)}
@@ -135,7 +136,6 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 												</div>
 											</div>
 											<FormTextarea
-												disabled={isLoading}
 												className='px-14 py-6 rounded-md'
 												placeholder='Редактировать комментарий'
 												sideButton

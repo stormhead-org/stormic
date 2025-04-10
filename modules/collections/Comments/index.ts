@@ -85,6 +85,12 @@ export const Comments: CollectionConfig = {
 			defaultValue: false
 		},
 		{
+			label: 'Комментарий обновлен?',
+			name: 'hasUpdated',
+			type: 'checkbox',
+			defaultValue: false
+		},
+		{
 			label: 'Родительский комментарий',
 			name: 'parentComment',
 			type: 'relationship',

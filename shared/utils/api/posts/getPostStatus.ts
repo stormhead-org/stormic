@@ -4,21 +4,21 @@ import { getPayload, PayloadRequest } from 'payload'
 export const getPostStatus = async (
 	postId: string,
 	req: PayloadRequest
-): Promise<{ likesCount: number; isLiked: boolean } | null> => {
+): Promise<{
+	likesCount: number
+	commentsCount: number
+	isLiked: boolean
+} | null> => {
 	const payload = await getPayload({ config })
 
 	try {
-		const postResult = await payload.find({
+		const post = await payload.findByID({
 			collection: 'posts',
-			where: {
-				id: {
-					equals: postId
-				}
-			},
-			depth: 1 // Загружаем связанные данные
+			id: postId,
+			overrideAccess: true,
+			depth: 2
 		})
 
-		const post = postResult.docs[0]
 		if (!post) {
 			return null
 		}
@@ -27,19 +27,59 @@ export const getPostStatus = async (
 		let isLiked = false
 
 		// Получаем массив лайков из likes.docs
-		const likesDocs = post.likes?.docs || []
+		// const likesDocs = post.likes?.docs || []
+
+		const likesDocs = await payload.find({
+			collection: 'likePost',
+			depth: 2,
+			pagination: false,
+			where: {
+				post: {
+					equals: postId
+				}
+			},
+			sort: '-title',
+			overrideAccess: true
+		})
+
+		const likes = await payload.count({
+			collection: 'likePost',
+			where: {
+				post: {
+					equals: postId
+				}
+			},
+			overrideAccess: true
+		})
+
+		const comments = await payload.count({
+			collection: 'comments',
+			where: {
+				parentPost: {
+					equals: postId
+				}
+			},
+			overrideAccess: true
+		})
 
 		if (currentUser) {
 			const userId = currentUser.id
+
 			// Проверяем, есть ли текущий пользователь среди тех, кто лайкнул пост
-			isLiked = likesDocs.some((like: any) => like.user === userId)
+			isLiked = likesDocs.docs.some((like: any) => {
+				return typeof like.user === 'object' && like.user.id === userId
+			})
 		}
 
 		// Подсчитываем количество лайков
-		const likesCount = likesDocs.length
+		const likesCount = likes.totalDocs
+
+		// Подсчитываем количество коментов
+		const commentsCount = comments.totalDocs
 
 		return {
 			likesCount,
+			commentsCount,
 			isLiked
 		}
 	} catch (error) {

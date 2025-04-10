@@ -8,6 +8,7 @@ import {
 	SocialMenu
 } from '@/shared/components'
 import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
+import { NewPostButton } from '@/shared/components/new-post-button'
 import { getSession } from '@/shared/lib/auth'
 // import { getUserSession } from '@/shared/lib'
 import configPromise from '@payload-config'
@@ -54,16 +55,37 @@ export default async function CommunitiesLayout({
 						<div className='h-3/4'>
 							<FeedUserMenu />
 							<SocialMenu className='my-2' />
-							{/* <NewPostButton
+							<NewPostButton
 								className='my-4'
-								authorAvatar={String(user && user.profile_picture)}
-								authorName={String(user && user.fullName)}
+								authorId={(user && user.id) || 0}
+								authorAvatar={String(
+									user &&
+										'avatar' in user &&
+										typeof user.avatar === 'object' &&
+										user.avatar !== null
+										? user.avatar.url
+										: ''
+								)}
+								authorName={String(user && user.name)}
 								authorUrl={String(user && '/u/' + user.id)}
 								hasSession={!!user}
-								logoImage={logoImage?.url || '/logo.png'}
-								stormicName={stormicName?.content || 'Stormic'}
-								authImage={authImage ? authImage?.url : stormicBanner?.url}
-							/> */}
+								logoImage={String(
+									'logo' in resultGlobalHost &&
+										typeof resultGlobalHost.logo === 'object' &&
+										resultGlobalHost.logo !== null
+										? resultGlobalHost.logo.url
+										: ''
+								)}
+								stormicName={resultGlobalHost.title || ''}
+								authImage={String(
+									'authBanner' in resultGlobalHost &&
+										typeof resultGlobalHost.authBanner === 'object' &&
+										resultGlobalHost.authBanner !== null
+										? resultGlobalHost.authBanner.url
+										: ''
+								)}
+								communities={communities}
+							/>
 							<NavigationMenuForm
 								className='mt-4'
 								data={globalSideBarNavigation.items || []}

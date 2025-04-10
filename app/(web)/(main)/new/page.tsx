@@ -71,6 +71,7 @@ export default async function Home() {
 	return (
 		<>
 			<MainBannerForm
+				posts={posts}
 				stormicName={resultGlobalHost.title && String(resultGlobalHost.title)}
 				bannerUrl={
 					'banner' in resultGlobalHost &&

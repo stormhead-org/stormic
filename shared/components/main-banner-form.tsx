@@ -1,8 +1,10 @@
+import { Post } from '@/payload-types'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 import { SearchInput } from './search-input'
 
 interface Props {
+	posts: Post[]
 	stormicName: string | null | undefined
 	bannerUrl: string | null | undefined
 	search?: boolean
@@ -10,13 +12,14 @@ interface Props {
 }
 
 export const MainBannerForm: React.FC<Props> = ({
+	posts,
 	stormicName,
 	bannerUrl,
 	search = true,
-	className,
+	className
 }) => {
 	const styling = {
-		backgroundImage: `url('${String(bannerUrl)}')`,
+		backgroundImage: `url('${String(bannerUrl)}')`
 	}
 
 	return (
@@ -31,7 +34,7 @@ export const MainBannerForm: React.FC<Props> = ({
 					</span>
 				</div>
 			</div>
-			{search && <SearchInput className='w-96 -mt-6' />}
+			{search && <SearchInput posts={posts} className='w-96 -mt-6' />}
 		</div>
 	)
 }

@@ -1,4 +1,4 @@
-import { Community, HostCommunitiesBan, User } from '@/payload-types'
+import { Community, User } from '@/payload-types'
 import {
 	Container,
 	FeedUserMenu,
@@ -62,7 +62,7 @@ export default async function MainLayout({
 			<Container className='mt-4'>
 				<div className='flex gap-4'>
 					{/* Левая часть */}
-					<div className='w-1/4 h-[91vh] overflow-auto no-scrollbar rounded-md'>
+					<div className='w-1/4 h-[84vh] overflow-auto no-scrollbar'>
 						<FeedUserMenu />
 						<SocialMenu className='my-2' />
 
@@ -114,12 +114,12 @@ export default async function MainLayout({
 						<SideFooter className='mt-4' />
 					</div>
 					{/* Центральная часть */}
-					<div className='w-2/4 h-[91vh] overflow-auto no-scrollbar rounded-md'>
+					<div className='w-2/4 h-[84vh] overflow-auto no-scrollbar rounded-md'>
 						{children}
 					</div>
 
 					{/* Правая часть */}
-					<div className='w-1/4'>
+					<div className='w-1/4 h-[84vh] overflow-auto no-scrollbar rounded-md'>
 						<CommentFeedGroup />
 					</div>
 				</div>

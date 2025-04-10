@@ -106,7 +106,7 @@ export const getCommentTree = async (req: PayloadRequest) => {
 
 		const commentTree = buildCommentTree(commentsWithChildren)
 		return NextResponse.json({
-			items: commentTree,
+			docs: commentTree,
 			page: allComments.page,
 			hasNextPage: allComments.hasNextPage,
 			hasPrevPage: allComments.hasPrevPage,

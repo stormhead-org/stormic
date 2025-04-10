@@ -78,6 +78,7 @@ export interface Config {
     communityUsersBans: CommunityUsersBan;
     communityUsersMutes: CommunityUsersMute;
     likePost: LikePost;
+    likeComment: LikeComment;
     hostUsersMutes: HostUsersMute;
     hostUsersBans: HostUsersBan;
     hostCommunitiesMutes: HostCommunitiesMute;
@@ -100,7 +101,7 @@ export interface Config {
       followCommunities: 'followCommunity';
       ownerCommunities: 'communities';
       postsLikes: 'likePost';
-      commentsLikes: 'comments';
+      commentsLikes: 'likeComment';
     };
     posts: {
       comments: 'comments';
@@ -130,6 +131,7 @@ export interface Config {
     communityUsersBans: CommunityUsersBansSelect<false> | CommunityUsersBansSelect<true>;
     communityUsersMutes: CommunityUsersMutesSelect<false> | CommunityUsersMutesSelect<true>;
     likePost: LikePostSelect<false> | LikePostSelect<true>;
+    likeComment: LikeCommentSelect<false> | LikeCommentSelect<true>;
     hostUsersMutes: HostUsersMutesSelect<false> | HostUsersMutesSelect<true>;
     hostUsersBans: HostUsersBansSelect<false> | HostUsersBansSelect<true>;
     hostCommunitiesMutes: HostCommunitiesMutesSelect<false> | HostCommunitiesMutesSelect<true>;
@@ -245,7 +247,7 @@ export interface User {
     totalDocs?: number;
   };
   commentsLikes?: {
-    docs?: (number | Comment)[];
+    docs?: (number | LikeComment)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -532,6 +534,7 @@ export interface Comment {
   content: string;
   media?: (number | null) | Media;
   hasDeleted?: boolean | null;
+  hasUpdated?: boolean | null;
   parentComment?: (number | null) | Comment;
   childrenComments?: {
     docs?: (number | Comment)[];
@@ -550,6 +553,17 @@ export interface LikePost {
   id: number;
   user: number | User;
   post: number | Post;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "likeComment".
+ */
+export interface LikeComment {
+  id: number;
+  user: number | User;
+  comment: number | Comment;
   updatedAt: string;
   createdAt: string;
 }
@@ -772,6 +786,10 @@ export interface PayloadLockedDocument {
         value: number | LikePost;
       } | null)
     | ({
+        relationTo: 'likeComment';
+        value: number | LikeComment;
+      } | null)
+    | ({
         relationTo: 'hostUsersMutes';
         value: number | HostUsersMute;
       } | null)
@@ -953,6 +971,7 @@ export interface CommentsSelect<T extends boolean = true> {
   content?: T;
   media?: T;
   hasDeleted?: T;
+  hasUpdated?: T;
   parentComment?: T;
   childrenComments?: T;
   likes?: T;
@@ -1125,6 +1144,16 @@ export interface CommunityUsersMutesSelect<T extends boolean = true> {
 export interface LikePostSelect<T extends boolean = true> {
   user?: T;
   post?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "likeComment_select".
+ */
+export interface LikeCommentSelect<T extends boolean = true> {
+  user?: T;
+  comment?: T;
   updatedAt?: T;
   createdAt?: T;
 }

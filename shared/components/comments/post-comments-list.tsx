@@ -9,7 +9,6 @@ import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { Loader2, ServerCrash } from 'lucide-react'
-import { ElementRef, useRef } from 'react'
 
 export interface CommentWithChildren extends Omit<Comment, 'childrenComments'> {
 	childrenComments: CommentWithChildren[]
@@ -20,6 +19,8 @@ interface CommentItemsProps {
 	postId: string
 	communityId: number
 	permissions: Permissions | null
+	chatRef: React.RefObject<HTMLDivElement | null>
+	bottomRef: React.RefObject<HTMLDivElement | null>
 	apiUrl: string
 	socketUrl: string
 	socketQuery: Record<string, string>
@@ -57,9 +58,9 @@ const renderCommentWithChildren = (
 				author={message.author}
 				content={message.content}
 				media={message.media || null}
-				deleted={message.hasDeleted || false}
+				deleted={message.hasDeleted ?? false}
 				timestamp={formatDateTime(message.createdAt)}
-				isUpdated={message.updatedAt !== message.createdAt}
+				isUpdated={message.hasUpdated ?? false}
 				socketUrl={socketUrl}
 				socketQuery={socketQuery}
 				className='mt-4 p-0 pl-4 cursor-default border-l-4 border-blue-600'
@@ -92,6 +93,8 @@ export const PostCommentsList = ({
 	socketUrl,
 	socketQuery,
 	permissions,
+	chatRef,
+	bottomRef,
 	paramKey,
 	paramValue,
 	className
@@ -99,9 +102,6 @@ export const PostCommentsList = ({
 	const queryKey = `chat:${postId}`
 	const addKey = `chat:${postId}:messages`
 	const updateKey = `chat:${postId}:messages:update`
-
-	const chatRef = useRef<ElementRef<'div'>>(null)
-	const bottomRef = useRef<ElementRef<'div'>>(null)
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
 		useCommentQuery({
@@ -111,6 +111,7 @@ export const PostCommentsList = ({
 			paramValue
 		})
 
+	// Используем наш исправленный сокет-хук
 	UseCommentSocket({ queryKey, addKey, updateKey })
 
 	useCommentScroll({
@@ -118,7 +119,7 @@ export const PostCommentsList = ({
 		bottomRef,
 		loadMore: fetchNextPage,
 		shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
-		count: data?.pages?.[0]?.items?.length ?? 0
+		count: data?.pages?.[0]?.docs?.length ?? 0
 	})
 
 	if (status === 'pending') {
@@ -143,9 +144,10 @@ export const PostCommentsList = ({
 		)
 	}
 
+	// Получаем все загруженные топ-уровневые комментарии из всех страниц
 	const allComments = Array.from(
 		new Map(
-			(data?.pages?.flatMap(page => page.items) ?? []).map(comment => [
+			(data?.pages?.flatMap(page => page.docs) ?? []).map((comment: any) => [
 				comment.id,
 				comment
 			])
@@ -153,13 +155,7 @@ export const PostCommentsList = ({
 	)
 
 	return (
-		<div
-			ref={chatRef}
-			className={cn(
-				'flex flex-col flex-1 overflow-y-auto h-screen no-scrollbar',
-				className
-			)}
-		>
+		<div ref={chatRef} className={cn('flex flex-col flex-1', className)}>
 			<div className='flex flex-col mt-auto'>
 				{allComments.map((message: CommentWithChildren) =>
 					renderCommentWithChildren(

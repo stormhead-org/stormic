@@ -1,57 +1,94 @@
+import config from '@payload-config'
 import { Message } from 'amqplib'
-import { prisma } from '../../prisma/prisma-client'
+import { getPayload } from 'payload'
 import { consumeCommentLikeQueue } from '../lib/rabbitmq-client'
 
-interface CommentLikeMessage {
-	action: 'like' | 'unlike';
-	commentId: number;
-	userId: number;
-}
+async function processCommentLikeMessage(msg: Message) {
+	const content = JSON.parse(msg.content.toString()) // Парсинг содержимого сообщения
+	const { action, commentId, userId } = content
 
-export async function processCommentLikeMessage(msg: Message) {
-	try {
-		const message: CommentLikeMessage = JSON.parse(msg.content.toString())
-		const { action, commentId, userId } = message
-		
-		if (action === 'like') {
+	console.log(`Processing like message: ${JSON.stringify(content)}`)
+
+	const payload = await getPayload({ config })
+
+	if (action === 'like') {
+		try {
+			console.log(`User ${userId} is liking comment ${commentId}`)
 			// Проверяем, существует ли лайк
-			const existingLike = await prisma.commentLike.findFirst({
-				where: { user_id: userId, comment_id: commentId }
+			const existingLike = await payload.find({
+				collection: 'likeComment',
+				where: {
+					user: { equals: userId },
+					comment: { equals: commentId }
+				},
+				limit: 1
 			})
-			
-			if (!existingLike) {
-				// Добавляем лайк
-				await prisma.commentLike.create({
-					data: { user_id: userId, comment_id: commentId }
-				})
-				
-				// Увеличиваем счетчик лайков
-				await prisma.comment.update({
-					where: { comment_id: commentId },
-					data: { likes_count: { increment: 1 } }
-				})
+
+			if (existingLike.docs.length > 0) {
+				console.log(`User ${userId} has already liked comment ${commentId}`)
+				return // Если лайк уже есть, ничего не делаем
 			}
-		} else if (action === 'unlike') {
-			// Проверяем, существует ли лайк
-			const existingLike = await prisma.commentLike.findFirst({
-				where: { user_id: userId, comment_id: commentId }
+
+			// Проверяем, существуют ли пользователь и коммент
+			await payload.findByID({
+				collection: 'users',
+				id: userId
 			})
-			
-			if (existingLike) {
-				// Удаляем лайк
-				await prisma.commentLike.delete({
-					where: { like_id: existingLike.like_id }
-				})
-				
-				// Уменьшаем счетчик лайков
-				await prisma.comment.update({
-					where: { comment_id: commentId },
-					data: { likes_count: { decrement: 1 } }
-				})
-			}
+			await payload.findByID({
+				collection: 'comments',
+				id: commentId
+			})
+
+			// Создаем новую запись в коллекции likeComment
+			await payload.create({
+				collection: 'likeComment',
+				data: {
+					user: userId,
+					comment: commentId
+				},
+				overrideAccess: true
+			})
+
+			console.log(`User ${userId} liked comment ${commentId}`)
+		} catch (error) {
+			console.error(`Failed to create like relationship: ${error}`)
+			throw error
 		}
-	} catch (error) {
-		console.error('Error processing comment like message:', error)
+	} else if (action === 'unlike') {
+		try {
+			console.log(`User ${userId} is unliking comment ${commentId}`)
+
+			// Ищем запись в likeComment для удаления
+			const likeRecord = await payload.find({
+				collection: 'likeComment',
+				where: {
+					user: { equals: userId },
+					comment: { equals: commentId }
+				},
+				limit: 1
+			})
+
+			if (likeRecord.docs.length === 0) {
+				console.log(
+					`No like relationship found for user ${userId} and comment ${commentId}`
+				)
+				return // Если записи нет, ничего не делаем
+			}
+
+			// Удаляем запись из likeComment
+			await payload.delete({
+				collection: 'likeComment',
+				id: likeRecord.docs[0].id,
+				overrideAccess: true
+			})
+
+			console.log(`User ${userId} unliked comment ${commentId}`)
+		} catch (error) {
+			console.error(`Failed to delete like relationship: ${error}`)
+			throw error // Пробрасываем ошибку
+		}
+	} else {
+		console.warn(`Unknown action: ${action}`)
 	}
 }
 

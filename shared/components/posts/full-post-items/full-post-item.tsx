@@ -13,6 +13,7 @@ interface FullPostItemProps {
 	post: Post
 	communities: Community[]
 	permissions: Permissions | null
+	commentsCount: number
 	className?: string
 }
 
@@ -20,6 +21,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 	post,
 	communities,
 	permissions,
+	commentsCount,
 	className
 }) => {
 	const session = useSession()
@@ -57,7 +59,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 			<PostFooter
 				postId={post.id}
 				// postTags={postTags}
-				// commentsCount={commentsCount}
+				commentsCount={commentsCount}
 				// viewsCount={viewsCount}
 				className='mt-4'
 			/>

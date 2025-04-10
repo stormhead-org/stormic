@@ -26,7 +26,7 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 				<SocketIndicator />
 			</div>
 
-			<div className='flex flex-col h-[87vh] overflow-auto no-scrollbar rounded-md'>
+			<div className='flex flex-col rounded-md'>
 				<CommentForm
 					maxLengthHeader={28}
 					maxLengthBody={56}

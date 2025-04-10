@@ -315,8 +315,8 @@ export const Users: CollectionConfig = {
 			label: 'Лайки комментариев',
 			name: 'commentsLikes',
 			type: 'join',
-			collection: 'comments',
-			on: 'likes',
+			collection: 'likeComment',
+			on: 'user',
 			maxDepth: 1
 		},
 		{

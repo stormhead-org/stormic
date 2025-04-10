@@ -98,7 +98,7 @@ export const MainForm: React.FC<Props> = ({
 				<Title text='Роли' size='sm' className='mt-2' />
 			</div>
 			<div
-				className='flex mt-4 bg-gray-700 hover:bg-gray-600 cursor-pointer items-center justify-around rounded-md w-full'
+				className='flex mt-4 py-3 bg-gray-700 hover:bg-gray-600 cursor-pointer items-center justify-around rounded-md w-full'
 				onClick={() => {
 					if (everyoneRole) {
 						setSelectedRoleId(everyoneRole.id)

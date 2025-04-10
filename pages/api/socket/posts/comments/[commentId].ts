@@ -16,7 +16,7 @@ export default async function handler(
 		const profile = await getPagesSession(req, res)
 		const postId = Number(req.query.postId)
 		const commentId = Number(req.query.commentId)
-		const { content, media } = req.body
+		const { content, media, hasUpdated } = req.body
 		const payload = await getPayload({ config: configPromise })
 
 		if (!profile) {
@@ -62,17 +62,13 @@ export default async function handler(
 		// }
 
 		if (req.method === 'DELETE') {
-			const comment = await payload.update({
+			comment = await payload.update({
 				collection: 'comments',
+				id: commentId,
 				data: {
 					content: 'Комментарий был удален',
 					media: null,
 					hasDeleted: true
-				},
-				where: {
-					id: {
-						equals: String(commentId)
-					}
 				}
 			})
 		}
@@ -82,16 +78,13 @@ export default async function handler(
 				return res.status(401).json({ error: 'Не авторизован' })
 			}
 
-			const comment = await payload.update({
+			comment = await payload.update({
 				collection: 'comments',
+				id: commentId,
 				data: {
 					content,
-					media
-				},
-				where: {
-					id: {
-						equals: commentId
-					}
+					media,
+					hasUpdated
 				}
 			})
 		}

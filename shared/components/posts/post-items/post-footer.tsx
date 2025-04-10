@@ -8,7 +8,7 @@ import React from 'react'
 export interface PostFooterProps {
 	postId: number
 	postTags?: string[]
-	// commentsCount: number;
+	commentsCount: number
 	// viewsCount: number;
 	className?: string
 }
@@ -16,7 +16,7 @@ export interface PostFooterProps {
 export const PostFooter: React.FC<PostFooterProps> = ({
 	postId,
 	postTags,
-	// commentsCount,
+	commentsCount,
 	// viewsCount,
 	className
 }) => {
@@ -40,7 +40,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({
 					<div className='group mr-4 cursor-pointer'>
 						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
 							<MessageCircle className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' />{' '}
-							{/* {commentsCount} */}2
+							{commentsCount}
 						</p>
 					</div>
 					<BookmarkButton postId={postId} />

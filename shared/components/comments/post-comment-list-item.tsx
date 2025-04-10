@@ -18,7 +18,7 @@ interface PostCommentListItemProps {
 	media: Media
 	deleted: boolean
 	currentUser: User | null
-	permissions: Permissions | null,
+	permissions: Permissions | null
 	isUpdated: boolean
 	socketUrl: string
 	socketQuery: Record<string, string>
@@ -44,15 +44,11 @@ export const PostCommentListItem = ({
 	const [isEditing, setIsEditing] = useState(false)
 
 	const isMessageOwner = currentUser != null && currentUser.id === author.id
-	const permissionCommentDelete = permissions?.COMMUNITY_COMMENTS_DELETE ?? false
+	const permissionCommentDelete =
+		permissions?.COMMUNITY_COMMENTS_DELETE ?? false
 	const isCommunityOwner = permissions?.COMMUNITY_OWNER ?? false
-	// 	currentUser != null && currentUser.systemRoles.includes('owner')
-	// const isAdmin =
-	// 	currentUser != null && currentUser.userRoles.roleType === 'admin'
-	// const isModerator =
-	// 	currentUser != null && currentUser.userRoles.roleType === 'moderator'
-	const canDeleteMessage = !deleted && (isMessageOwner || permissionCommentDelete || isCommunityOwner)
-	// (isOwner || isMessageOwner)
+	const canDeleteMessage =
+		!deleted && (isMessageOwner || permissionCommentDelete || isCommunityOwner)
 	const canEditMessage = !deleted && isMessageOwner
 
 	return (
@@ -71,19 +67,20 @@ export const PostCommentListItem = ({
 					setIsEditing={setIsEditing}
 					socketQuery={socketQuery}
 				/>
-
-				<FullPostCommentFooter
-					postId={Number(postId)}
-					communityId={Number(communityId)}
-					id={id}
-					parentCommentAuthorName={author.name}
-					canDeleteMessage={canDeleteMessage}
-					canEditMessage={canEditMessage}
-					socketUrl={socketUrl}
-					socketQuery={socketQuery}
-					isEditing={isEditing}
-					setIsEditing={setIsEditing}
-				/>
+				{!deleted && (
+					<FullPostCommentFooter
+						postId={Number(postId)}
+						communityId={Number(communityId)}
+						id={id}
+						parentCommentAuthorName={author.name}
+						canDeleteMessage={canDeleteMessage}
+						canEditMessage={canEditMessage}
+						socketUrl={socketUrl}
+						socketQuery={socketQuery}
+						isEditing={isEditing}
+						setIsEditing={setIsEditing}
+					/>
+				)}
 			</div>
 		</>
 	)

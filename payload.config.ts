@@ -22,6 +22,7 @@ import { HostCommunitiesMutes } from './modules/collections/HostCommunitiesMutes
 import { HostRoles } from './modules/collections/HostRoles'
 import { HostUsersBans } from './modules/collections/HostUsersBans'
 import { HostUsersMutes } from './modules/collections/HostUsersMutes'
+import { LikeComment } from './modules/collections/LikeComment'
 import { LikePost } from './modules/collections/LikePost'
 import { Posts } from './modules/collections/Posts'
 import { Roles } from './modules/collections/Roles'
@@ -74,6 +75,7 @@ export default buildConfig({
 		CommunityUsersBans,
 		CommunityUsersMutes,
 		LikePost,
+		LikeComment,
 		HostUsersMutes,
 		HostUsersBans,
 		HostCommunitiesMutes,

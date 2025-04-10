@@ -9,22 +9,12 @@ import { ListFilter } from 'lucide-react'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 
-// export interface Comment {
-// 	postId: number
-// 	comment_id: number
-// 	content: string
-// 	author_id: number
-// 	author_fullName: string
-// 	author_profile_picture: string
-// 	publication_date: string
-// 	parent_comment_id: number | null
-// 	children: Comment[]
-// }
-
 interface Props {
 	postId: number
 	communityId: number
 	permissions: Permissions | null
+	chatRef: React.RefObject<HTMLDivElement | null>
+	bottomRef: React.RefObject<HTMLDivElement | null>
 	currentUser?: User | null
 	commentsHeader: string
 	className?: string
@@ -34,6 +24,8 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 	postId,
 	communityId,
 	permissions,
+	chatRef,
+	bottomRef,
 	currentUser,
 	commentsHeader,
 	className
@@ -44,8 +36,8 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 		<div className={cn('bg-secondary rounded-md p-4', className)}>
 			<div className='flex justify-between items-center'>
 				{commentsHeader > String(0) ? (
-					<p className='pl-1 text-lg cursor-default'>
-						{commentsHeader}
+					<p className='pl-4 text-lg cursor-default'>
+						{commentsHeader}{' '}
 						{/* {formatMessage({ id: 'commentInputForm.commentsHeaderCount' })} */}
 						комментариев
 					</p>
@@ -76,6 +68,8 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 				postId={String(postId)}
 				communityId={communityId}
 				permissions={permissions}
+				chatRef={chatRef}
+				bottomRef={bottomRef}
 				apiUrl={`/api/posts/${postId}/comments`}
 				socketUrl={'/api/socket/posts/comments'}
 				socketQuery={{
