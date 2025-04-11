@@ -33,8 +33,8 @@ export const moderators: CollectionAfterReadHook = async ({
 			systemArrayModeratorsDoc => ({
 				id: systemArrayModeratorsDoc.id,
 				name: systemArrayModeratorsDoc.name,
-				authorAvatar: systemArrayModeratorsDoc.userAvatar,
-				userDescription: systemArrayModeratorsDoc.userDescription
+				authorAvatar: systemArrayModeratorsDoc.avatar,
+				userDescription: systemArrayModeratorsDoc.description
 			})
 		)
 	}

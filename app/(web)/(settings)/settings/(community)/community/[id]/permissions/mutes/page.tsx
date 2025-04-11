@@ -10,7 +10,7 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Профиль'
+	title: 'Сообщество: Настройки'
 }
 
 type Args = {

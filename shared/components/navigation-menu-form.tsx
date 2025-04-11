@@ -22,7 +22,7 @@ import { cn } from '../lib/utils'
 // }
 
 interface Props {
-	data: SidebarNavigation[]
+	data: SidebarNavigation
 	className?: string
 }
 
@@ -32,21 +32,21 @@ export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 
 	return (
 		<div className={cn('', className)}>
-			{data.map(item => (
+			{data.items?.map(item => (
 				<div
 					key={item.id}
 					className={cn(
 						'flex gap-2 pl-2 text-lg font-bold items-center justify-start w-full h-12 rounded-md hover:bg-blue-700 hover:text-white cursor-pointer mb-1',
 						`${
-							pathname === `/p/${item.post.id}`
+							pathname === `/p/${item.post?.id}`
 								? 'bg-blue-800 text-white hover:bg-blue-800'
 								: ''
 						}`
 					)}
-					onClick={() => router.push(`/p/${item.post.id}`)}
+					onClick={() => router.push(`/p/${item.post?.id}`)}
 				>
 					<LinkIcon size={22} />
-					{item.post.title}
+					{item.post?.title}
 				</div>
 			))}
 		</div>

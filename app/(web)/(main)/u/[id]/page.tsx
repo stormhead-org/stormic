@@ -3,13 +3,9 @@ import { UserBan } from '@/shared/components/info-blocks/user-ban'
 import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
 import { UserProfileGroup } from '@/shared/components/profiles/user-profile-group'
 import { getSession } from '@/shared/lib/auth'
-import { generateMeta } from '@/shared/lib/generateMeta'
 import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import { Permissions } from '@/shared/lib/permissions'
 import configPromise from '@payload-config'
-import { equal } from 'assert'
-import type { Metadata } from 'next'
-import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
@@ -20,11 +16,8 @@ type Args = {
 }
 
 export default async function UserPage({ params: paramsPromise }: Args) {
-	const { isEnabled: draft } = await draftMode()
 	const { id = null } = await paramsPromise
-	// const url = '/u/' + id
 	const user = await queryUserById({ id })
-	// const posts = await queryPostByUserId({ id })
 
 	if (!user) {
 		return <UserNotFound />
@@ -100,6 +93,7 @@ export default async function UserPage({ params: paramsPromise }: Args) {
 		<>
 			<UserProfileGroup
 				user={user}
+				currentUser={currentUser !== null ? currentUser : undefined}
 				posts={posts}
 				communities={communities}
 				postPermissions={postPermissions}
@@ -109,14 +103,14 @@ export default async function UserPage({ params: paramsPromise }: Args) {
 	)
 }
 
-export async function generateMetadata({
-	params: paramsPromise
-}: Args): Promise<Metadata> {
-	const { id = null } = await paramsPromise
-	const user = await queryUserById({ id })
+// export async function generateMetadata({
+// 	params: paramsPromise
+// }: Args): Promise<Metadata> {
+// 	const { id = null } = await paramsPromise
+// 	const user = await queryUserById({ id })
 
-	return generateMeta({ doc: user })
-}
+// 	return generateMeta({ doc: user })
+// }
 
 const queryUserById = cache(async ({ id }: { id: number | null }) => {
 	if (!id) return null
@@ -126,7 +120,7 @@ const queryUserById = cache(async ({ id }: { id: number | null }) => {
 	const user = await payload.findByID({
 		collection: 'users',
 		id: id,
-		depth: 1
+		depth: 2
 	})
 
 	return user || null

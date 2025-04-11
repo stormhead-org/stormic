@@ -10,10 +10,10 @@ import { Permissions } from '@/shared/lib/permissions'
 import { GripHorizontal, Settings } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import CommunityFollowButton from '../../community-follow-button'
-import { useSession } from '@/shared/providers/SessionProvider'
 
 interface Props {
 	data: User | Community
+	currentUser?: User
 	permissions?: Permissions | null
 	hasUser: boolean
 	className?: string
@@ -21,6 +21,7 @@ interface Props {
 
 export const ProfileHeader: React.FC<Props> = ({
 	data,
+	currentUser,
 	permissions,
 	hasUser,
 	className
@@ -28,8 +29,6 @@ export const ProfileHeader: React.FC<Props> = ({
 	// const { formatMessage } = useIntl()
 
 	const router = useRouter()
-	const session = useSession()
-	const currentUser = session && (session.user as User)
 
 	return (
 		<div className={cn('', className)}>
@@ -63,11 +62,14 @@ export const ProfileHeader: React.FC<Props> = ({
 					/>
 					<div className='flex items-center'>
 						<div className='mt-16'>
-							{hasUser ? (
-								<UserFollowButton userId={data.id} />
-							) : (
-								<CommunityFollowButton communityId={data.id} />
-							)}
+							{currentUser &&
+								(hasUser ? (
+									currentUser.id !== data.id && (
+										<UserFollowButton userId={data.id} />
+									)
+								) : (
+									<CommunityFollowButton communityId={data.id} />
+								))}
 						</div>
 
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>

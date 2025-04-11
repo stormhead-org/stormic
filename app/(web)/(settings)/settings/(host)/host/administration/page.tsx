@@ -9,7 +9,7 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Профиль'
+	title: 'Платформа: Настройки'
 }
 
 export default async function HostAdministrationSettings() {

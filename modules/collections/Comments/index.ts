@@ -1,6 +1,8 @@
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { getCommentStatus } from '@/shared/utils/api/comments/getCommentStatus'
+import { likeComment } from '@/shared/utils/api/comments/likeComment'
+import { unlikeComment } from '@/shared/utils/api/comments/unlikeComment'
 import type { CollectionConfig } from 'payload'
 
 export const Comments: CollectionConfig = {
@@ -12,6 +14,60 @@ export const Comments: CollectionConfig = {
 		update: authenticated
 	},
 	endpoints: [
+		{
+			path: '/:id/like',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await likeComment(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing like:', error)
+
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'User ID is required in path' ||
+						error.message === 'Valid Comment Id is required'
+					) {
+						return Response.json(
+							{ error: 'Valid Comment Id is required' },
+							{ status: 400 }
+						)
+					}
+
+					return Response.json({ error: 'Failed to like' }, { status: 500 })
+				}
+			}
+		},
+		{
+			path: '/:id/unlike',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await unlikeComment(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error('Error while processing unlike:', error)
+
+					if (error.message === 'Unauthorized') {
+						return Response.json({ error: 'Unauthorized' }, { status: 401 })
+					}
+					if (
+						error.message === 'User ID is required in path' ||
+						error.message === 'Valid Comment Id is required'
+					) {
+						return Response.json(
+							{ error: 'Valid Comment Id is required' },
+							{ status: 400 }
+						)
+					}
+
+					return Response.json({ error: 'Failed to unlike' }, { status: 500 })
+				}
+			}
+		},
 		{
 			path: '/:id/status',
 			method: 'get',

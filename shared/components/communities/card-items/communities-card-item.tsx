@@ -5,7 +5,7 @@ import CommunityFollowButton from '@/shared/components/community-follow-button'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
-import { Component, Newspaper, UserRoundPlus, UsersRound } from 'lucide-react'
+import { Newspaper, UserRoundPlus, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -35,7 +35,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 	description,
 	url,
 	postCount,
-	className,
+	className
 }) => {
 	const router = useRouter()
 	const truncatedName = truncateText(name, 26)
@@ -78,7 +78,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 					</div>
 				</div>
 				<div className='w-2/12 h-full  bg-primary/5 rounded-r-md'>
-					<div className='flex group w-full h-1/2 hover:bg-secondary rounded-r-md cursor-pointer'>
+					<div className='flex h-full group hover:bg-gray-800 rounded-r-md cursor-pointer items-center'>
 						<Button
 							variant='secondary'
 							type='button'
@@ -89,7 +89,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 							<UsersRound />
 						</Button>
 					</div>
-					<div className='flex group w-full h-1/2 rounded-r-md'>
+					{/* <div className='flex group w-full h-1/2 rounded-r-md'>
 						<Button
 							variant='secondary'
 							type='button'
@@ -99,7 +99,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 						>
 							<Component />
 						</Button>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>

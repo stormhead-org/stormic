@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 
 export const metadata: Metadata = {
-	title: 'Настройки платформы: роли'
+	title: 'Платформа: Настройки'
 }
 
 export default async function HostPermissionsSettings() {

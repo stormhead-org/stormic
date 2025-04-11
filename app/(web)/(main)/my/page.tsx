@@ -1,9 +1,10 @@
-import { Community, Post, type User } from '@/payload-types'
+import { Community, FollowCommunity, Post, type User } from '@/payload-types'
 import { MainBannerForm } from '@/shared/components'
 import { MyFeedEmpty } from '@/shared/components/info-blocks/my-feed-empty'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { getSession } from '@/shared/lib/auth'
 import { Permissions } from '@/shared/lib/permissions'
+import { getMediaUrl, getRelationIds } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -39,8 +40,8 @@ export default async function Feed() {
 	)
 
 	// Извлекаем ID сообществ из followCommunities
-	const followedCommunityIds = (user.followCommunities?.docs || []).map(
-		community => community.id
+	const followedCommunityIds = getRelationIds<FollowCommunity>(
+		user.followCommunities?.docs
 	)
 
 	let feedIds: (string | number)[] = []
@@ -58,7 +59,7 @@ export default async function Feed() {
 		})
 
 		const userPostIds = usersWithPosts.docs.flatMap(user =>
-			(user.posts?.docs || []).map(post => post.id)
+			getRelationIds<Post>(user.posts?.docs)
 		)
 		feedIds = [...feedIds, ...userPostIds]
 	}
@@ -76,7 +77,7 @@ export default async function Feed() {
 		})
 
 		const communityPostIds = communitiesWithPosts.docs.flatMap(community =>
-			(community.posts?.docs || []).map(post => post.id)
+			getRelationIds<Post>(community.posts?.docs)
 		)
 		feedIds = [...feedIds, ...communityPostIds]
 	}
@@ -114,17 +115,16 @@ export default async function Feed() {
 	// Получаем права для каждого поста
 	const postPermissions: Record<number, Permissions | null> = {}
 
+	const bannerUrl =
+		typeof resultGlobalHost.banner === 'object'
+			? getMediaUrl(resultGlobalHost.banner, '/logo.png')
+			: '/logo.png'
+
 	return (
 		<>
 			<MainBannerForm
-				stormicName={resultGlobalHost.title && String(resultGlobalHost.title)}
-				bannerUrl={
-					'banner' in resultGlobalHost &&
-					typeof resultGlobalHost.banner === 'object' &&
-					resultGlobalHost.banner !== null
-						? resultGlobalHost.banner.url
-						: ''
-				}
+				stormicName={resultGlobalHost.title || 'Stormic'}
+				bannerUrl={bannerUrl}
 			/>
 			<PostForm
 				limit={5}

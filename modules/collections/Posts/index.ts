@@ -1,5 +1,4 @@
 import { authenticated } from '@/modules/access/authenticated'
-import { authenticatedOrPublished } from '@/modules/access/authenticatedOrPublished'
 import { addBookmark } from '@/shared/utils/api/bookmarks/addBookmark'
 import { getBookmarkStatus } from '@/shared/utils/api/bookmarks/getBookmarkStatus'
 import { removeBookmark } from '@/shared/utils/api/bookmarks/removeBookmark'
@@ -21,7 +20,7 @@ export const Posts: CollectionConfig<'posts'> = {
 	access: {
 		create: authenticated,
 		delete: authenticated,
-		read: authenticatedOrPublished,
+		read: authenticated,
 		update: authenticated
 	},
 	defaultPopulate: {
@@ -121,7 +120,7 @@ export const Posts: CollectionConfig<'posts'> = {
 					const result = await unlikePost(req)
 					return Response.json(result)
 				} catch (error: any) {
-					req.payload.logger.error('Error while processing follow:', error)
+					req.payload.logger.error('Error while processing unlike:', error)
 
 					if (error.message === 'Unauthorized') {
 						return Response.json({ error: 'Unauthorized' }, { status: 401 })

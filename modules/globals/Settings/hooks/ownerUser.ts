@@ -20,8 +20,8 @@ export const ownerUser: GlobalAfterReadHook = async ({
 				doc.hostOwner = {
 					id: ownerDoc.id,
 					name: ownerDoc.name,
-					userDescription: ownerDoc.userDescription,
-					userAvatar: ownerDoc.userAvatar
+					userDescription: ownerDoc.description,
+					userAvatar: ownerDoc.avatar
 				}
 			}
 		}

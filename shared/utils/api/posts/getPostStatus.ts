@@ -26,9 +26,7 @@ export const getPostStatus = async (
 		const currentUser = req.user
 		let isLiked = false
 
-		// Получаем массив лайков из likes.docs
-		// const likesDocs = post.likes?.docs || []
-
+		// Получаем массив лайков из likePost
 		const likesDocs = await payload.find({
 			collection: 'likePost',
 			depth: 2,
@@ -38,7 +36,6 @@ export const getPostStatus = async (
 					equals: postId
 				}
 			},
-			sort: '-title',
 			overrideAccess: true
 		})
 

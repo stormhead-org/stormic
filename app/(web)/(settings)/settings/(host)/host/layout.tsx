@@ -3,6 +3,7 @@ import { Container } from '@/shared/components'
 import { SettingsHostSideMenu } from '@/shared/components/host/settings/settings-page-items/community-profile-settings-items/settings-host-side-menu'
 import { AccessDenied } from '@/shared/components/info-blocks/access-denied'
 import { getSession } from '@/shared/lib/auth'
+import { getRelationProp } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -27,7 +28,9 @@ export default async function SettingsLayout({
 		depth: 2
 	})
 
-	if (currentUser && currentUser.id !== resultGlobalHost.owner.id) {
+	const ownerId = getRelationProp<User, 'id'>(resultGlobalHost.owner, 'id', 0)
+
+	if (currentUser && currentUser.id !== ownerId) {
 		return <AccessDenied />
 	}
 

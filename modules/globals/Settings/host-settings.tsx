@@ -1,5 +1,4 @@
 import { GlobalConfig } from 'payload'
-import { ownerUser } from './hooks/ownerUser'
 
 export const HostSettings: GlobalConfig = {
 	label: 'Настройки инстанса',

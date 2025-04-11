@@ -17,8 +17,8 @@ export const communityOwner: CollectionAfterReadHook = async ({
 			doc.communityOwner = {
 				id: authorDoc.id,
 				name: authorDoc.name,
-				authorAvatar: authorDoc.userAvatar,
-				userDescription: authorDoc.userDescription
+				authorAvatar: authorDoc.avatar,
+				userDescription: authorDoc.description
 			}
 		}
 	}

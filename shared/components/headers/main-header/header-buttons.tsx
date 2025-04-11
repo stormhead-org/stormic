@@ -2,7 +2,7 @@
 
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
-import { Component, LibraryBig, Lightbulb, Newspaper, UsersRound } from 'lucide-react'
+import { Lightbulb, Newspaper, UsersRound } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -11,18 +11,22 @@ interface Props {
 }
 
 export const HeaderButtons: React.FC<Props> = ({ className }) => {
-	
 	const router = useRouter()
 	const pathname = usePathname()
-	
+
 	const HeaderButtonsArray = [
 		{ id: 1, icon: <Newspaper size={24} />, path: '/', disabled: false },
-		{ id: 2, icon: <UsersRound size={24} />, path: '/communities', disabled: false },
-		{ id: 3, icon: <Component size={24} />, path: '/', disabled: true },
-		{ id: 4, icon: <LibraryBig size={24} />, path: '/wiki', disabled: true },
-		{ id: 5, icon: <Lightbulb size={24} />, path: '/about', disabled: false }
+		{
+			id: 2,
+			icon: <UsersRound size={24} />,
+			path: '/communities',
+			disabled: false
+		},
+		// { id: 3, icon: <Component size={24} />, path: '/', disabled: true },
+		// { id: 4, icon: <LibraryBig size={24} />, path: '/wiki', disabled: true },
+		{ id: 3, icon: <Lightbulb size={24} />, path: '/about', disabled: false }
 	]
-	
+
 	return (
 		<div className={className}>
 			<div className='flex justify-evenly items-center'>

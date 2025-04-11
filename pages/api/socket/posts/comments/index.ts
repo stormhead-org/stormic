@@ -1,4 +1,5 @@
 import { NextApiResponseServerIo } from '@/@types/socket'
+import { User } from '@/payload-types'
 import { getPagesSession } from '@/shared/lib/pagesAuth'
 import configPromise from '@payload-config'
 import { NextApiRequest } from 'next'
@@ -14,7 +15,7 @@ export default async function handler(
 	}
 
 	try {
-		const profile = await getPagesSession(req, res)
+		const profile: User | null = await getPagesSession(req, res)
 		const { content, media } = req.body
 		const communityId = Number(req.query.communityId)
 		const postId = Number(req.query.postId)
@@ -45,7 +46,7 @@ export default async function handler(
 			data: {
 				parentPost: postId,
 				community: communityId,
-				author: profile.user.id,
+				author: profile.id,
 				parentComment: parentCommentId,
 				content,
 				media

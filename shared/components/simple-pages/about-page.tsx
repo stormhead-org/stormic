@@ -1,6 +1,6 @@
 'use client'
 
-import { HostSetting } from '@/payload-types'
+import { HostSetting, User } from '@/payload-types'
 import { ProfileAvatar } from '@/shared/components'
 import {
 	Accordion,
@@ -9,6 +9,7 @@ import {
 	AccordionTrigger
 } from '@/shared/components/ui/accordion'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import {
 	Delete,
 	Gavel,
@@ -46,11 +47,17 @@ export const AboutPage: React.FC<Props> = ({
 		return <div>Owner not found</div>
 	}
 
-	const truncatedName = truncateText(hostInfo.owner?.name || '', 20)
+	const truncatedName = truncateText((hostInfo.owner as User).name || '', 20)
 	const truncatedDescription = truncateText(
-		hostInfo.owner?.description || '',
+		(hostInfo.owner as User).description || '',
 		24
 	)
+
+	const ownerId = getRelationProp<User, 'id'>(hostInfo.owner, 'id', 0)
+	const avatarImage =
+		typeof hostInfo.owner === 'object'
+			? getMediaUrl(hostInfo.owner.avatar, '/logo.png')
+			: '/logo.png'
 
 	return (
 		<div className={cn('', className)}>
@@ -127,11 +134,11 @@ export const AboutPage: React.FC<Props> = ({
 						{/* {formatMessage({ id: 'aboutPage.managed' })} */}
 						Управляется
 					</p>
-					<Link href={'/u/' + hostInfo.owner?.id}>
+					<Link href={'/u/' + ownerId}>
 						<div className='flex gap-2 mt-2 items-center'>
 							<ProfileAvatar
 								className='w-14 h-14 border-none bg-secondary hover:bg-secondary'
-								avatarImage={String(hostInfo.owner?.avatar?.url || '')}
+								avatarImage={avatarImage}
 								avatarSize={Number(54)}
 							/>
 							<div className='flex h-full my-auto'>

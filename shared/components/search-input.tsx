@@ -2,8 +2,6 @@
 
 import { Post } from '@/payload-types'
 import { cn } from '@/shared/lib/utils'
-// import { Api } from '@/shared/services/api-client'
-// import { Post } from '@prisma/client'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'

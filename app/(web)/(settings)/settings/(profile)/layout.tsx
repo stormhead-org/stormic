@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import React from 'react'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Настройки'
+	title: 'Профиль: Настройки'
 }
 
 export default async function SettingsLayout({

@@ -17,11 +17,11 @@ type Args = {
 	}
 }
 
-export default async function Community({ params: paramsPromise }: Args) {
+export default async function CommunityPage({ params: paramsPromise }: Args) {
 	const { id = null } = await paramsPromise
-	const community = await queryCommunityById({ id })
+	const communityResult = await queryCommunityById({ id })
 
-	if (!community) {
+	if (!communityResult) {
 		return <CommunityNotFound />
 	}
 
@@ -33,7 +33,7 @@ export default async function Community({ params: paramsPromise }: Args) {
 		collection: 'hostCommunitiesBans',
 		where: {
 			community: {
-				equals: community.id
+				equals: communityResult.id
 			}
 		},
 		pagination: false,
@@ -41,7 +41,7 @@ export default async function Community({ params: paramsPromise }: Args) {
 	})
 
 	const permissions = currentUser
-		? await getUserPermissions(currentUser.id, community.id)
+		? await getUserPermissions(currentUser.id, communityResult.id)
 		: null
 
 	if (hostCommunityBan.docs.length !== 0) {
@@ -98,9 +98,10 @@ export default async function Community({ params: paramsPromise }: Args) {
 	return (
 		<>
 			<CommunityProfileGroup
-				community={community}
+				community={communityResult}
 				permissions={permissions || null}
 				posts={posts}
+				currentUser={currentUser}
 				communities={communities}
 				postPermissions={postPermissions}
 				className='mt-4'

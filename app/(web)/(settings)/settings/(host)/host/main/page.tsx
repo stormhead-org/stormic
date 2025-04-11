@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Профиль'
+	title: 'Платформа: Настройки'
 }
 
 export default async function HostMainSettings() {

@@ -1,6 +1,7 @@
 import { Community } from '@/payload-types'
 import { CommunitiesCardGroup } from '@/shared/components/communities/communities-card-group'
 import { NewCommunityButton } from '@/shared/components/new-community-button'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
@@ -9,7 +10,7 @@ export default async function CommunitiesPage() {
 
 	const resultGlobalHost = await payload.findGlobal({
 		slug: 'host-settings',
-		depth: 1
+		depth: 2
 	})
 
 	const resultCommunities = await payload.find({
@@ -25,27 +26,25 @@ export default async function CommunitiesPage() {
 
 	const communities = resultCommunities.docs as Community[]
 
+	const authImage =
+		typeof resultGlobalHost.authBanner === 'object'
+			? getMediaUrl(resultGlobalHost.authBanner, '/logo.png')
+			: '/logo.png'
+
+	const logoImage =
+		typeof resultGlobalHost.logo === 'object'
+			? getMediaUrl(resultGlobalHost.logo, '/logo.png')
+			: '/logo.png'
+
 	return (
 		<>
 			<div className='flex w-full gap-4'>
 				<div className='w-8/12 bg-primary/10 rounded-md'></div>
 				<div className='w-4/12'>
 					<NewCommunityButton
-						authImage={
-							'hostAuthBanner' in resultGlobalHost &&
-							typeof resultGlobalHost.hostAuthBanner === 'object' &&
-							resultGlobalHost.hostAuthBanner !== null
-								? resultGlobalHost.hostAuthBanner.url
-								: ''
-						}
-						logoImage={
-							'hostLogo' in resultGlobalHost &&
-							typeof resultGlobalHost.hostLogo === 'object' &&
-							resultGlobalHost.hostLogo !== null
-								? resultGlobalHost.hostLogo.url
-								: ''
-						}
-						stormicName={resultGlobalHost.hostTitle}
+						authImage={authImage}
+						logoImage={logoImage}
+						stormicName={resultGlobalHost.title}
 					/>
 				</div>
 			</div>

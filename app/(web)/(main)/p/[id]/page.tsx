@@ -1,12 +1,14 @@
-import type { Community, Post, User } from '@/payload-types'
+import type { Community, User } from '@/payload-types'
 import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
+import { PostDeleted } from '@/shared/components/info-blocks/post-deleted'
 import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { FullPostPage } from '@/shared/components/posts/full-post-page'
 import { getSession } from '@/shared/lib/auth'
+import { getRelationProp } from '@/shared/utils/payload/getTypes'
 import PageClient from './page.client'
 
 export default async function Post({
@@ -25,35 +27,44 @@ export default async function Post({
 
 	const payload = await getPayload({ config: configPromise })
 
-	const resultPost = await payload.find({
+	// const resultPost = await payload.find({
+	// 	collection: 'posts',
+	// 	overrideAccess: true,
+	// 	where: {
+	// 		id: {
+	// 			equals: Number(id)
+	// 		},
+	// 		_status: {
+	// 			equals: 'published'
+	// 		}
+	// 	}
+	// })
+
+	const post = await payload.findByID({
 		collection: 'posts',
-		overrideAccess: true,
-		where: {
-			id: {
-				equals: Number(id)
-			},
-			_status: {
-				equals: 'published'
-			}
-		}
+		id: id,
+		overrideAccess: true
 	})
+
+	if (!post || post._status === 'draft') {
+		return <PostNotFound />
+	}
+
+	if (post.hasDeleted === true) {
+		return <PostDeleted />
+	}
 
 	const resultCommunities = await payload.find({
 		collection: 'communities',
 		overrideAccess: true
 	})
 
-	const post = resultPost.docs as Post[]
 	const communities = resultCommunities.docs as Community[]
 
-	if (!post || post.length === 0) {
-		return <PostNotFound />
-	}
-
-	const currentPost = post[0]
+	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
 
 	const permissions = currentUser
-		? await getUserPermissions(currentUser.id, currentPost.community.id)
+		? await getUserPermissions(currentUser.id, communityId)
 		: null
 
 	return (
@@ -68,7 +79,7 @@ export default async function Post({
 				/>
 			</div> */}
 			<FullPostPage
-				post={currentPost}
+				post={post}
 				communities={communities}
 				permissions={permissions}
 				currentUser={currentUser}

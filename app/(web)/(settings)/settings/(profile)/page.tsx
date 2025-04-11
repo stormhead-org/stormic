@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Профиль'
+	title: 'Профиль: Настройки'
 }
 
 export default async function SettingProfileRedirect() {

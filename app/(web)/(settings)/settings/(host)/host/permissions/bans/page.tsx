@@ -9,7 +9,7 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 
 export const metadata: Metadata = {
-	title: 'Настройки платформы: баны'
+	title: 'Платформа: Настройки'
 }
 
 export default async function HostPermissionsSettings() {

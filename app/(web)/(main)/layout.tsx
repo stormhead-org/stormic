@@ -28,7 +28,7 @@ export default async function MainLayout({
 	const payload = await getPayload({ config })
 
 	const session = (await getSession()) as { user: User } | null
-	const user = session && session.user
+	const currentUser = session && session.user
 
 	const resultGlobalHost = await payload.findGlobal({
 		slug: 'host-settings',
@@ -67,39 +67,14 @@ export default async function MainLayout({
 						<SocialMenu className='my-2' />
 
 						<NewPostButton
-							className='my-4'
-							authorId={(user && user.id) || 0}
-							authorAvatar={String(
-								user &&
-									'avatar' in user &&
-									typeof user.avatar === 'object' &&
-									user.avatar !== null
-									? user.avatar.url
-									: ''
-							)}
-							authorName={String(user && user.name)}
-							authorUrl={String(user && '/u/' + user.id)}
-							hasSession={!!user}
-							logoImage={String(
-								'logo' in resultGlobalHost &&
-									typeof resultGlobalHost.logo === 'object' &&
-									resultGlobalHost.logo !== null
-									? resultGlobalHost.logo.url
-									: ''
-							)}
-							stormicName={resultGlobalHost.title || ''}
-							authImage={String(
-								'authBanner' in resultGlobalHost &&
-									typeof resultGlobalHost.authBanner === 'object' &&
-									resultGlobalHost.authBanner !== null
-									? resultGlobalHost.authBanner.url
-									: ''
-							)}
+							host={resultGlobalHost}
 							communities={communities}
+							currentUser={currentUser !== null ? currentUser : undefined}
+							className='my-4'
 						/>
 						<NavigationMenuForm
 							className='mt-4'
-							data={globalSideBarNavigation.items || []}
+							data={globalSideBarNavigation}
 						/>
 						<CommunitiesForm
 							// title={formatMessage({ id: 'categoryGroup.communitiesPageLink' })}

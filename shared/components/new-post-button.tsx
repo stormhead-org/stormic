@@ -1,60 +1,60 @@
 'use client'
 
-import { Community } from '@/payload-types'
+import { Community, HostSetting, User } from '@/payload-types'
 import { AuthModal } from '@/shared/components/modals'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 import { cn } from '../lib/utils'
+import { getMediaUrl } from '../utils/payload/getTypes'
 import { PostEditModal } from './modals/post-edit-modal'
 import { Button } from './ui/button'
 
 interface Props {
-	authorId: number
-	authorAvatar: string
-	authorName: string
-	authorUrl: string
+	host: HostSetting
 	communities: Community[]
-	stormicName: string
-	logoImage?: string
-	authImage?: string
-	hasSession: boolean
+	currentUser?: User
 	className?: string
 }
-
 export const NewPostButton: React.FC<Props> = ({
-	authorId,
-	authorAvatar,
-	authorName,
-	authorUrl,
+	host,
 	communities,
-	logoImage,
-	authImage,
-	stormicName,
-	hasSession,
+	currentUser,
 	className
 }) => {
 	// const { formatMessage } = useIntl()
 	const [openEditModal, setOpenEditModal] = React.useState(false)
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 
+	const authorAvatarUrl =
+		typeof currentUser?.avatar === 'object'
+			? getMediaUrl(currentUser.avatar, '/logo.png')
+			: '/logo.png'
+
+	const logoImageUrl =
+		typeof host.logo === 'object'
+			? getMediaUrl(host.logo, '/logo.png')
+			: '/logo.png'
+
+	const authImageUrl =
+		typeof host.authBanner === 'object'
+			? getMediaUrl(host.authBanner, '/defaultBanner.jpg')
+			: '/defaultBanner.jpg'
+
 	return (
 		<div className={cn('', className)}>
 			<PostEditModal
+				communities={communities}
+				currentUser={currentUser}
 				open={openEditModal}
 				onClose={() => setOpenEditModal(false)}
-				authorId={authorId}
-				authorAvatar={authorAvatar}
-				authorName={authorName}
-				authorUrl={authorUrl}
-				communities={communities}
 			/>
 
 			<AuthModal
 				open={openAuthModal}
 				onClose={() => setOpenAuthModal(false)}
-				logoImage={logoImage}
-				authImage={authImage}
-				stormicName={stormicName}
+				logoImage={logoImageUrl}
+				authImage={authImageUrl}
+				stormicName={host.title || 'Stormic'}
 			/>
 
 			<Button
@@ -62,7 +62,7 @@ export const NewPostButton: React.FC<Props> = ({
 				className='h-12 w-full text-lg font-bold'
 				type='button'
 				onClick={
-					hasSession
+					currentUser
 						? () => setOpenEditModal(true)
 						: () => setOpenAuthModal(true)
 				}

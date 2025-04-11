@@ -9,6 +9,7 @@ import React from 'react'
 
 interface Props {
 	data: User | Community
+	currentUser?: User
 	permissions?: Permissions | null
 	hasUser: boolean
 	className?: string
@@ -16,6 +17,7 @@ interface Props {
 
 export const ProfileItem: React.FC<Props> = ({
 	data,
+	currentUser,
 	permissions,
 	hasUser,
 	className
@@ -25,6 +27,7 @@ export const ProfileItem: React.FC<Props> = ({
 			<div className='rounded-md bg-secondary'>
 				<ProfileHeader
 					data={data}
+					currentUser={currentUser}
 					permissions={permissions}
 					hasUser={hasUser}
 				/>

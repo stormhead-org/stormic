@@ -8,35 +8,54 @@ export const getCommentStatus = async (
 	const payload = await getPayload({ config })
 
 	try {
-		const commentResult = await payload.find({
+		const comment = await payload.findByID({
 			collection: 'comments',
-			where: {
-				id: {
-					equals: commentId
-				}
-			},
-			depth: 1
+			id: commentId,
+			overrideAccess: true,
+			depth: 2
 		})
 
-		const comment = commentResult.docs[0]
 		if (!comment) {
 			return null
 		}
 
-		const user = req.user
+		const currentUser = req.user
 		let hasLiked = false
 
-		if (user) {
-			// const userId = user.id as string
-			const userId = user.id as unknown as string
-			hasLiked =
-				Array.isArray(comment.likes) &&
-				comment.likes.some((like: any) => {
-					return typeof like === 'string' ? like === userId : like.id === userId
-				})
+		// Получаем массив лайков из likeComment
+		const likesDocs = await payload.find({
+			collection: 'likeComment',
+			depth: 2,
+			pagination: false,
+			where: {
+				comment: {
+					equals: commentId
+				}
+			},
+			overrideAccess: true
+		})
+
+		const likes = await payload.count({
+			collection: 'likeComment',
+			where: {
+				comment: {
+					equals: commentId
+				}
+			},
+			overrideAccess: true
+		})
+
+		if (currentUser) {
+			const userId = currentUser.id
+
+			// Проверяем, есть ли текущий пользователь среди тех, кто лайкнул коммент
+			hasLiked = likesDocs.docs.some((like: any) => {
+				return typeof like.user === 'object' && like.user.id === userId
+			})
 		}
 
-		const likesCount = Array.isArray(comment.likes) ? comment.likes.length : 0
+		// Подсчитываем количество лайков
+		const likesCount = likes.totalDocs
 
 		return {
 			likesCount,

@@ -1,5 +1,7 @@
 import { NextApiResponseServerIo } from '@/@types/socket'
+import { User } from '@/payload-types'
 import { getPagesSession } from '@/shared/lib/pagesAuth'
+import { getRelationProp } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import { NextApiRequest } from 'next'
 import { getPayload } from 'payload'
@@ -13,7 +15,7 @@ export default async function handler(
 		return res.status(405).json({ error: 'Method запрещен' })
 	}
 	try {
-		const profile = await getPagesSession(req, res)
+		const profile: User | null = await getPagesSession(req, res)
 		const postId = Number(req.query.postId)
 		const commentId = Number(req.query.commentId)
 		const { content, media, hasUpdated } = req.body
@@ -39,8 +41,11 @@ export default async function handler(
 
 		let comment = await queryCommentById({ commentId })
 
-		const isMessageOwner =
-			Number(comment?.author?.id) === Number(profile?.user.id)
+		const commentAuthorId = getRelationProp<User, 'id'>(comment.author, 'id', 0)
+
+		const profileId = profile.id
+
+		const isMessageOwner = commentAuthorId === profileId
 
 		// const isOwner =
 		// 	Array.isArray(profile?.systemRoles) &&

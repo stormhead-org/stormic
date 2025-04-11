@@ -1,6 +1,6 @@
 'use client'
 
-import { Community, Media, Post } from '@/payload-types'
+import { Community, Media, Post, User } from '@/payload-types'
 import { Button } from '@/shared/components/ui/button'
 import {
 	Dialog,
@@ -14,6 +14,7 @@ import {
 	removePostFromPublication,
 	restorePost
 } from '@/shared/utils/api/posts/post-utils'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { OutputData } from '@editorjs/editorjs'
 import { zodResolver } from '@hookform/resolvers/zod'
 import dynamic from 'next/dynamic'
@@ -27,12 +28,9 @@ import { SidebarProvider, SidebarTrigger } from '../../ui/sidebar'
 import { formTitleSchema, TFormTitleValues } from './schemas'
 
 interface Props {
-	authorId: number
-	authorAvatar: string
-	authorName: string
-	communities: Community[]
 	post?: Post
-	authorUrl: string
+	communities: Community[]
+	currentUser: User
 	open: boolean
 	onClose: () => void
 }
@@ -40,12 +38,9 @@ interface Props {
 const Editor = dynamic(() => import('../../editorjs/Editor'), { ssr: false })
 
 export const PostEditModal: React.FC<Props> = ({
-	authorId,
-	authorAvatar,
-	authorName,
-	communities,
 	post,
-	authorUrl,
+	communities,
+	currentUser,
 	open,
 	onClose
 }) => {
@@ -91,7 +86,7 @@ export const PostEditModal: React.FC<Props> = ({
 		const postData = {
 			title: form.getValues().title,
 			heroImage: heroImage?.id,
-			author: authorId,
+			author: currentUser.id,
 			community: selectedCommunityId,
 			content,
 			meta: {
@@ -154,15 +149,20 @@ export const PostEditModal: React.FC<Props> = ({
 		e.preventDefault()
 		if (post) {
 			if (post.hasDeleted) {
-				await restorePost(post, router) // Используем утилиту для восстановления
+				await restorePost(post, router)
 			} else {
-				await deletePost(post, router) // Используем утилиту для удаления
+				await deletePost(post, router)
 			}
 		}
 	}
 
 	const isExistingPostPublished = post?._status === 'published'
 	const isPostDeleted = post?.hasDeleted ?? false
+
+	const authorAvatar =
+		typeof currentUser.avatar === 'object'
+			? getMediaUrl(currentUser.avatar, '/logo.png')
+			: '/logo.png'
 
 	return (
 		<Dialog open={open} onOpenChange={onClose}>
@@ -173,7 +173,7 @@ export const PostEditModal: React.FC<Props> = ({
 				<SidebarProvider>
 					<div className='flex h-full w-full'>
 						<MetaSidebar
-							authorName={authorName}
+							authorName={currentUser.name}
 							authorAvatar={authorAvatar}
 							communities={communities}
 							selectedCommunityId={selectedCommunityId}

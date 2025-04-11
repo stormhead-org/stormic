@@ -1,5 +1,4 @@
 import { Community, Post, User } from '@/payload-types'
-import { SettingsHostPermissionsBansGroup } from '@/shared/components/host/settings/permissions/bans/settings-host-permissions-bans-group'
 import { SettingsHostPermissionsTopMenu } from '@/shared/components/host/settings/settings-page-items/community-profile-settings-items/settings-host-permissions-top-menu'
 import { PostDeletedForm } from '@/shared/components/posts/deleted/post-deleted-form'
 import { getSession } from '@/shared/lib/auth'
@@ -7,10 +6,9 @@ import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
-import { cache } from 'react'
 
 export const metadata: Metadata = {
-	title: 'Права доступа: Удаленные'
+	title: 'Платформа: Настройки'
 }
 
 export default async function HostPermissionsSettings() {

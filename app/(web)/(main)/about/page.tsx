@@ -2,6 +2,7 @@ import { User } from '@/payload-types'
 import { MainBannerForm } from '@/shared/components'
 import { AboutPage } from '@/shared/components/simple-pages/about-page'
 import { getSession } from '@/shared/lib/auth'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -21,22 +22,23 @@ export default async function About() {
 		depth: 2
 	})
 
+	const bannerUrl =
+		typeof resultGlobalHost.owner === 'object'
+			? getMediaUrl(resultGlobalHost.owner.avatar, '/logo.png')
+			: '/logo.png'
+
+	const ownerId = getRelationProp<User, 'id'>(resultGlobalHost.owner, 'id', 0)
+
 	return (
 		<>
 			{/* Центральная часть */}
 			<MainBannerForm
 				stormicName={resultGlobalHost.title && String(resultGlobalHost.title)}
-				bannerUrl={
-					'banner' in resultGlobalHost &&
-					typeof resultGlobalHost.banner === 'object' &&
-					resultGlobalHost.banner !== null
-						? resultGlobalHost.banner.url
-						: ''
-				}
+				bannerUrl={bannerUrl}
 			/>
 			<AboutPage
 				hostInfo={resultGlobalHost}
-				hasOwner={currentUser && currentUser.id === resultGlobalHost.owner.id}
+				hasOwner={currentUser && currentUser.id === ownerId}
 			/>
 		</>
 	)

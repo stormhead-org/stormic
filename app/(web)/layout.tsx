@@ -7,6 +7,7 @@ import { getServerSideURL } from '@/shared/lib/getURL'
 import { mergeOpenGraph } from '@/shared/lib/mergeOpenGraph'
 import { Providers } from '@/shared/providers'
 import { InitTheme } from '@/shared/providers/Theme/InitTheme'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
@@ -84,26 +85,24 @@ export default async function HomeLayout({
 			depth: 1
 		})
 
+		const logoImageUrl =
+			typeof resultGlobalHost.logo === 'object'
+				? getMediaUrl(resultGlobalHost.logo, '/logo.png')
+				: '/logo.png'
+
+		const authImageUrl =
+			typeof resultGlobalHost.authBanner === 'object'
+				? getMediaUrl(resultGlobalHost.authBanner, '/defaultBanner.jpg')
+				: '/defaultBanner.jpg'
+
 		return baseLayout(
 			<>
 				<Suspense>
 					<Header
 						session={false}
-						logoImage={
-							'logo' in resultGlobalHost &&
-							typeof resultGlobalHost.logo === 'object' &&
-							resultGlobalHost.logo !== null
-								? resultGlobalHost.logo.url
-								: ''
-						}
+						logoImage={logoImageUrl}
 						stormicName={resultGlobalHost.title}
-						authImage={
-							'authBanner' in resultGlobalHost &&
-							typeof resultGlobalHost.authBanner === 'object' &&
-							resultGlobalHost.authBanner !== null
-								? resultGlobalHost.authBanner.url
-								: ''
-						}
+						authImage={authImageUrl}
 						description={resultGlobalHost.slogan}
 						avatarImage=''
 						userUrl=''
@@ -137,35 +136,31 @@ export default async function HomeLayout({
 		depth: 1
 	})
 
+	const logoImageUrl =
+		typeof resultGlobalHost.logo === 'object'
+			? getMediaUrl(resultGlobalHost.logo, '/logo.png')
+			: '/logo.png'
+
+	const authImageUrl =
+		typeof resultGlobalHost.authBanner === 'object'
+			? getMediaUrl(resultGlobalHost.authBanner, '/defaultBanner.jpg')
+			: '/defaultBanner.jpg'
+
+	const avatarImageUrl =
+		typeof currentUser.avatar === 'object'
+			? getMediaUrl(currentUser.avatar, '/logo.png')
+			: '/logo.png'
+
 	return baseLayout(
 		<>
 			<Suspense>
 				<Header
 					session={true}
-					logoImage={
-						'logo' in resultGlobalHost &&
-						typeof resultGlobalHost.logo === 'object' &&
-						resultGlobalHost.logo !== null
-							? resultGlobalHost.logo.url
-							: ''
-					}
-					stormicName={resultGlobalHost.title}
-					authImage={
-						'authBanner' in resultGlobalHost &&
-						typeof resultGlobalHost.authBanner === 'object' &&
-						resultGlobalHost.authBanner !== null
-							? resultGlobalHost.authBanner.url
-							: ''
-					}
-					description={resultGlobalHost.slogan}
-					avatarImage={
-						currentUser &&
-						'avatar' in currentUser &&
-						typeof currentUser.avatar === 'object' &&
-						currentUser.avatar !== null
-							? currentUser.avatar.url
-							: ''
-					}
+					logoImage={logoImageUrl}
+					stormicName={resultGlobalHost.title || 'Stormic'}
+					authImage={authImageUrl}
+					description={resultGlobalHost.slogan || 'код, GitHub и ты'}
+					avatarImage={avatarImageUrl}
 					userUrl={`/u/${session?.user.id}`}
 				/>
 			</Suspense>

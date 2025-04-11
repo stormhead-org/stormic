@@ -4,6 +4,7 @@ import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { getSession } from '@/shared/lib/auth'
 import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import { Permissions } from '@/shared/lib/permissions'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -68,18 +69,17 @@ export default async function Home() {
 		)
 	}
 
+	const bannerUrl =
+		typeof resultGlobalHost.banner === 'object'
+			? getMediaUrl(resultGlobalHost.banner, '/logo.png')
+			: '/logo.png'
+
 	return (
 		<>
 			<MainBannerForm
 				posts={posts}
-				stormicName={resultGlobalHost.title && String(resultGlobalHost.title)}
-				bannerUrl={
-					'banner' in resultGlobalHost &&
-					typeof resultGlobalHost.banner === 'object' &&
-					resultGlobalHost.banner !== null
-						? resultGlobalHost.banner.url
-						: ''
-				}
+				stormicName={resultGlobalHost.title || 'Stormic'}
+				bannerUrl={bannerUrl}
 			/>
 			<PostForm
 				limit={5}

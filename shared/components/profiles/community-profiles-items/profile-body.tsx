@@ -82,7 +82,7 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 			<div className='flex mt-2'>
 				<Button
 					variant='blue'
-					className='h-10 w-26 text-md font-bold p-0 bg-transparent border-b-4 border-transparent hover:border-blue-700 hover:bg-transparent rounded-none text-primary'
+					className='h-10 w-26 text-md font-bold p-0 bg-transparent border-b-4 border-transparent border-blue-700 hover:bg-transparent rounded-none text-primary'
 					type='button'
 					// onClick={() => router.push('/write')}
 				>

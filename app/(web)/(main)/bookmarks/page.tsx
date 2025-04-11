@@ -33,7 +33,10 @@ export default async function Bookmarks() {
 		depth: 1
 	})
 
-	const bookmarkIds = (user.bookmarks?.docs || []).map(post => post.id)
+	const bookmarkIds = (user.bookmarks?.docs || [])
+		.filter((post): post is Post => typeof post === 'object')
+		.map(post => post.id)
+
 	if (!bookmarkIds || bookmarkIds.length === 0) {
 		return <BookmarksEmpty />
 	}
