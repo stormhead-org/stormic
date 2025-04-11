@@ -1,6 +1,6 @@
 import { User } from '@/payload-types'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
-import { SettingsCommunityPermissionsRolesGroup } from '@/shared/components/profiles/settings/community/permissions/settings-community-permissions-roles-group'
+import { SettingsCommunityPermissionsRolesGroup } from '@/shared/components/profiles/settings/community/permissions/roles/settings-community-permissions-roles-group'
 import { SettingsCommunityPermissionsTopMenu } from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-permissions-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'

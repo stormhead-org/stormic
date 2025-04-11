@@ -16,13 +16,13 @@ import { toast } from 'sonner'
 import {
 	formSettingsUserSchema,
 	TFormSettingsUserValues
-} from './forms/schemas'
+} from '../../forms/schemas'
 
 interface Props {
 	user: User
 }
 
-export const SettingsProfilePageGroup: React.FC<Props> = ({ user }) => {
+export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 	const form = useForm<TFormSettingsUserValues>({
 		resolver: zodResolver(formSettingsUserSchema),
 		defaultValues: {
@@ -32,7 +32,7 @@ export const SettingsProfilePageGroup: React.FC<Props> = ({ user }) => {
 				? user.tableInfo.map(info => ({
 						label: info.label ?? '',
 						value: info.value ?? ''
-				  }))
+					}))
 				: []
 		}
 	})

@@ -21,15 +21,6 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 
-// interface User {
-// 	id: number;
-// 	fullName: string;
-// 	profile_picture: string | null;
-// 	email: string;
-// 	role: string;
-// 	bio: string | null;
-// }
-
 interface Props {
 	hostInfo: HostSetting
 	hasOwner?: boolean

@@ -2,7 +2,7 @@
 
 import { InfoBlock } from '@/shared/components'
 import { cn } from '@/shared/lib/utils'
-import { signOut } from '@/shared/utils/signOut'
+import { signOut } from '@/shared/utils/api/users/signOut'
 import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { toast } from 'sonner'

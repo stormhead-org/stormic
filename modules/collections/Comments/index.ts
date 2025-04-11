@@ -1,6 +1,6 @@
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
-import { getCommentStatus } from '@/shared/utils/getCommentStatus'
+import { getCommentStatus } from '@/shared/utils/api/comments/getCommentStatus'
 import type { CollectionConfig } from 'payload'
 
 export const Comments: CollectionConfig = {

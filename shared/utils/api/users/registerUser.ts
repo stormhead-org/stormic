@@ -1,10 +1,10 @@
 // Файл: src/shared/utils/registerUser.ts
 'use server'
 
-import { getPayload } from 'payload'
-import config from '@payload-config' // Убедитесь, что путь к конфигу правильный
-import { TFormRegisterValues } from '../components/modals/auth-modal/forms/schemas'
 import { HostRole, User } from '@/payload-types'
+import config from '@payload-config'
+import { getPayload } from 'payload'
+import { TFormRegisterValues } from '../../../components/modals/auth-modal/forms/schemas'
 
 // Тип данных для создания пользователя (без hostRoles, так как это join)
 interface UserCreateData {

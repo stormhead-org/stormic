@@ -1,6 +1,6 @@
 import NotAuth from '@/app/(web)/(main)/not-auth/page'
 import { User } from '@/payload-types'
-import { SettingsHostPermissionsRolesGroup } from '@/shared/components/host/settings/permissions/settings-host-permissions-roles-group'
+import { SettingsHostPermissionsRolesGroup } from '@/shared/components/host/settings/permissions/roles/settings-host-permissions-roles-group'
 import { SettingsHostPermissionsTopMenu } from '@/shared/components/host/settings/settings-page-items/community-profile-settings-items/settings-host-permissions-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'

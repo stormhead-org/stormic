@@ -3,10 +3,10 @@ import { authenticatedOrPublished } from '@/modules/access/authenticatedOrPublis
 import { addBookmark } from '@/shared/utils/api/bookmarks/addBookmark'
 import { getBookmarkStatus } from '@/shared/utils/api/bookmarks/getBookmarkStatus'
 import { removeBookmark } from '@/shared/utils/api/bookmarks/removeBookmark'
+import { getCommentTree } from '@/shared/utils/api/comments/getCommentTree'
 import { getPostStatus } from '@/shared/utils/api/posts/getPostStatus'
 import { likePost } from '@/shared/utils/api/posts/likePost'
 import { unlikePost } from '@/shared/utils/api/posts/unlikePost'
-import { getCommentTree } from '@/shared/utils/getCommentTree'
 import {
 	MetaDescriptionField,
 	MetaImageField,

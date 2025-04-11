@@ -3,9 +3,9 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { getUserPermissions } from '@/shared/lib/getUserPermissions'
-import { followUser } from '@/shared/utils/followUser'
-import { getUserStatus } from '@/shared/utils/getUserStatus'
-import { unfollowUser } from '@/shared/utils/unfollowUser'
+import { followUser } from '@/shared/utils/api/users/followUser'
+import { getUserStatus } from '@/shared/utils/api/users/getUserStatus'
+import { unfollowUser } from '@/shared/utils/api/users/unfollowUser'
 import { userData } from './hooks/userData'
 
 export const Users: CollectionConfig = {

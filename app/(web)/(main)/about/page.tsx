@@ -2,7 +2,6 @@ import { User } from '@/payload-types'
 import { MainBannerForm } from '@/shared/components'
 import { AboutPage } from '@/shared/components/simple-pages/about-page'
 import { getSession } from '@/shared/lib/auth'
-import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -34,7 +33,6 @@ export default async function About() {
 						? resultGlobalHost.banner.url
 						: ''
 				}
-				search={false}
 			/>
 			<AboutPage
 				hostInfo={resultGlobalHost}

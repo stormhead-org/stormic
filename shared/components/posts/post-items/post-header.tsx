@@ -6,10 +6,14 @@ import UserFollowButton from '@/shared/components/user-follow-button'
 import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
+import {
+	deletePost,
+	removePostFromPublication
+} from '@/shared/utils/api/posts/post-utils'
 import { GripHorizontal } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
 import { useRouter } from 'next/navigation'
+import React from 'react'
 import { PostEditModal } from '../../modals/post-edit-modal'
 import {
 	DropdownMenu,
@@ -17,10 +21,6 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger
 } from '../../ui/dropdown-menu'
-import {
-	deletePost,
-	removePostFromPublication
-} from '@/shared/utils/post-utils'
 
 export interface PostHeaderProps {
 	post: Post
@@ -94,15 +94,18 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 						</div>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='bg-secondary'>
-							{(permissions?.HOST_OWNER || permissions?.COMMUNITY_OWNER || currentUser != null && currentUser.id === post.author?.id) && (
-								<DropdownMenuItem
-									className='cursor-pointer'
-									onClick={() => setOpenEditModal(true)}
-								>
-									Редактировать
-								</DropdownMenuItem>
-							)}
-						{(permissions?.HOST_OWNER || permissions?.COMMUNITY_OWNER ||
+						{(permissions?.HOST_OWNER ||
+							permissions?.COMMUNITY_OWNER ||
+							(currentUser != null && currentUser.id === post.author?.id)) && (
+							<DropdownMenuItem
+								className='cursor-pointer'
+								onClick={() => setOpenEditModal(true)}
+							>
+								Редактировать
+							</DropdownMenuItem>
+						)}
+						{(permissions?.HOST_OWNER ||
+							permissions?.COMMUNITY_OWNER ||
 							permissions?.COMMUNITY_POST_REMOVE_FROM_PUBLICATION) && (
 							<DropdownMenuItem
 								className='cursor-pointer'
@@ -111,7 +114,8 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 								Снять с публикации
 							</DropdownMenuItem>
 						)}
-						{(permissions?.HOST_OWNER || permissions?.COMMUNITY_OWNER ||
+						{(permissions?.HOST_OWNER ||
+							permissions?.COMMUNITY_OWNER ||
 							permissions?.COMMUNITY_POST_DELETE) && (
 							<DropdownMenuItem
 								className='cursor-pointer'

@@ -1,6 +1,6 @@
 import { User } from '@/payload-types'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
-import { SettingsCommunityAdministrationGroup } from '@/shared/components/profiles/settings/community/settings-community-administration-group'
+import { SettingsCommunityAdministrationGroup } from '@/shared/components/profiles/settings/community/administration/settings-community-administration-group'
 import { SettingsCommunityAdministrationTopMenu } from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-administration-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'

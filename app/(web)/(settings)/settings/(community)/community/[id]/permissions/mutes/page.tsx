@@ -1,6 +1,6 @@
 import { User } from '@/payload-types'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
-import { SettingsCommunityMutesGroup } from '@/shared/components/profiles/settings/community/mutes/settings-community-mutes-group'
+import { SettingsCommunityMutesGroup } from '@/shared/components/profiles/settings/community/permissions/mutes/settings-community-mutes-group'
 import { SettingsCommunityPermissionsTopMenu } from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-permissions-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'

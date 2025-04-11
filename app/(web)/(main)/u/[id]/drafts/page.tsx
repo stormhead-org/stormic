@@ -1,11 +1,6 @@
 import { Community, Post, User } from '@/payload-types'
-import { MainBannerForm } from '@/shared/components'
-import { UserBan } from '@/shared/components/info-blocks/user-ban'
 import { PostDraftForm } from '@/shared/components/posts/drafts/post-draft-form'
-import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { getSession } from '@/shared/lib/auth'
-import { getUserPermissions } from '@/shared/lib/getUserPermissions'
-import { Permissions } from '@/shared/lib/permissions' // Импортируем тип Permissions
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'

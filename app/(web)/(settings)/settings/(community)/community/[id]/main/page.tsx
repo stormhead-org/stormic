@@ -1,7 +1,7 @@
 import { User } from '@/payload-types'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
 import { UserNotFound } from '@/shared/components/info-blocks/user-not-found'
-import { SettingsCommunityMainGroup } from '@/shared/components/profiles/settings/community/settings-community-main-group'
+import { SettingsCommunityMainGroup } from '@/shared/components/profiles/settings/community/main/settings-community-main-group'
 import { SettingsCommunityMainTopMenu } from '@/shared/components/profiles/settings/community/settings-page-items/community-profile-settings-items/settings-community-main-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'

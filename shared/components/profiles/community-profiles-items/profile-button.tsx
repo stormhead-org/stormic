@@ -13,7 +13,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { CircleUser } from 'lucide-react'
 // import { signOut, useSession } from 'next-auth/react'
-import { signOut } from '@/shared/utils/signOut'
+import { signOut } from '@/shared/utils/api/users/signOut'
 import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { toast } from 'sonner'

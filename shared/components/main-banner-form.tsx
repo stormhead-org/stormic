@@ -4,10 +4,9 @@ import React from 'react'
 import { SearchInput } from './search-input'
 
 interface Props {
-	posts: Post[]
+	posts?: Post[]
 	stormicName: string | null | undefined
 	bannerUrl: string | null | undefined
-	search?: boolean
 	className?: string
 }
 
@@ -15,7 +14,6 @@ export const MainBannerForm: React.FC<Props> = ({
 	posts,
 	stormicName,
 	bannerUrl,
-	search = true,
 	className
 }) => {
 	const styling = {
@@ -34,7 +32,7 @@ export const MainBannerForm: React.FC<Props> = ({
 					</span>
 				</div>
 			</div>
-			{search && <SearchInput posts={posts} className='w-96 -mt-6' />}
+			{posts && <SearchInput posts={posts} className='w-96 -mt-6' />}
 		</div>
 	)
 }

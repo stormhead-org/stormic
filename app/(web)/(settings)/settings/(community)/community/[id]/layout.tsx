@@ -28,14 +28,16 @@ export default async function SettingsLayout({
 			<Container className='mt-4'>
 				<div className='flex gap-4'>
 					{/* Левая часть */}
-					<div className='w-1/4 h-full'>
+					<div className='w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
 						<div className='h-3/4'>
 							{id && <SettingsCommunitySideMenu communityId={id} />}
 						</div>
 					</div>
 
 					{/* Правая часть */}
-					<div className='w-3/4'>{children}</div>
+					<div className='w-3/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar rounded-md'>
+						{children}
+					</div>
 				</div>
 			</Container>
 		</>

@@ -9,6 +9,11 @@ import {
 	DialogTitle
 } from '@/shared/components/ui/dialog'
 import { useCurrentTime } from '@/shared/hooks/useCurrentTime'
+import {
+	deletePost,
+	removePostFromPublication,
+	restorePost
+} from '@/shared/utils/api/posts/post-utils'
 import { OutputData } from '@editorjs/editorjs'
 import { zodResolver } from '@hookform/resolvers/zod'
 import dynamic from 'next/dynamic'
@@ -20,11 +25,6 @@ import { FormInput } from '../../form'
 import { MetaSidebar } from '../../post-edit/items/meta-sidebar'
 import { SidebarProvider, SidebarTrigger } from '../../ui/sidebar'
 import { formTitleSchema, TFormTitleValues } from './schemas'
-import {
-	deletePost,
-	removePostFromPublication,
-	restorePost
-} from '@/shared/utils/post-utils'
 
 interface Props {
 	authorId: number
