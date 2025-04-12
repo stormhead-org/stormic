@@ -1,6 +1,7 @@
 # *
 User-agent: *
 Disallow: /admin/*
+Disallow: /settings/*
 
 # Host
 Host: http://localhost:3000

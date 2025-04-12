@@ -10,7 +10,7 @@ module.exports = {
 		policies: [
 			{
 				userAgent: '*',
-				disallow: '/admin/*',
+				disallow: ['/admin/*', '/settings/*'],
 			},
 		],
 		additionalSitemaps: [`${SITE_URL}/posts-sitemap.xml`],
