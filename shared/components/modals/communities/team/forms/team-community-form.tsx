@@ -1,4 +1,4 @@
-import { Community } from '@/payload-types'
+import { Community, type User } from '@/payload-types'
 import { ProfileAvatar, Title } from '@/shared/components'
 import {
 	Accordion,
@@ -6,6 +6,7 @@ import {
 	AccordionItem,
 	AccordionTrigger
 } from '@/shared/components/ui/accordion'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import Link from 'next/link'
 import React from 'react'
 
@@ -22,12 +23,22 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 }
 
 export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
-	const truncatedName = truncateText(community.owner?.name || '', 20)
-	const truncatedDescription = truncateText(
-		community.owner?.description || '',
-		24
-	)
 
+	const truncatedName = truncateText(
+		getRelationProp<User, 'name'>(community.owner, 'name', '') || '',
+		20
+	);
+	const truncatedDescription = truncateText(
+		getRelationProp<User, 'description'>(community.owner, 'description', '') || '',
+		24
+	);
+	
+	const ownerId = getRelationProp<User, 'id'>(community.owner, 'id', 0)
+	const avatarImageUrl =
+		typeof community.owner === 'object'
+			? getMediaUrl(community.owner.avatar, '/logo.png')
+			: '/logo.png'
+	
 	return (
 		<div className='min-w-[50rem]'>
 			<div className='w-full flex justify-center items-center'>
@@ -41,11 +52,11 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 						className='font-bold mr-2'
 					/>
 					<Title text='Владелец' size='sm' className='font-bold mr-2 mt-4' />
-					<Link href={'/u/' + community.owner?.id}>
+					<Link href={'/u/' + ownerId}>
 						<div className='flex gap-2 mt-2 items-center'>
 							<ProfileAvatar
 								className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
-								avatarImage={community.owner?.avatar?.url}
+								avatarImage={avatarImageUrl}
 								// avatarImage={String(community.owner?.userAvatar?.url || '')}
 								avatarSize={Number(44)}
 							/>
@@ -66,27 +77,36 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 						<p className='text-md mt-1'>Модераторы не назначены</p>
 					) : (
 						<>
-							{community.moderators?.map((item, index) => (
-								<Link key={index} href={'/u/' + item.id}>
-									<div className='flex gap-4 mt-1'>
-										<ProfileAvatar
-											className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
-											avatarImage={String(item.avatar?.url || '')}
-											avatarSize={Number(44)}
-										/>
-										<div className='flex h-full my-auto'>
-											<div>
-												<p className='font-semibold text-md'>
-													{truncateText(item.name || '', 20)}
-												</p>
-												<p className='-mt-1 text-gray-400 text-sm font-semibold'>
-													{truncateText(item.description || '', 24)}
-												</p>
+							{community.moderators?.map((item, index) => {
+								if (typeof item !== 'object') {
+									return null;
+								}
+								
+								return (
+									<Link key={index} href={`/u/${getRelationProp<User, 'id'>(item, 'id', 0)}`}>
+										<div className="flex gap-4 mt-1">
+											<ProfileAvatar
+												className="w-11 h-11 border-none bg-secondary hover:bg-secondary"
+												avatarImage={getMediaUrl(item.avatar, '')}
+												avatarSize={44}
+											/>
+											<div className="flex h-full my-auto">
+												<div>
+													<p className="font-semibold text-md">
+														{truncateText(getRelationProp<User, 'name'>(item, 'name', ''), 20)}
+													</p>
+													<p className="mt-1 text-gray-400 text-sm font-semibold">
+														{truncateText(
+															getRelationProp<User, 'description'>(item, 'description', '') || '',
+															24
+														)}
+													</p>
+												</div>
 											</div>
 										</div>
-									</div>
-								</Link>
-							))}
+									</Link>
+								);
+							})}
 						</>
 					)}
 				</div>

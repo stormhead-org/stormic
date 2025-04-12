@@ -6,7 +6,6 @@ import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
-import { cache } from 'react'
 
 export const metadata: Metadata = {
 	title: 'Платформа: Настройки'
@@ -43,17 +42,3 @@ export default async function HostAdministrationSettings() {
 		</>
 	)
 }
-
-const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
-	if (!id) return null
-
-	const payload = await getPayload({ config: configPromise })
-
-	const community = await payload.findByID({
-		collection: 'communities',
-		id: id,
-		depth: 2
-	})
-
-	return community || null
-})

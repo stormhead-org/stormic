@@ -49,7 +49,7 @@ export default async function HostPermissionsSettings() {
 	return (
 		<>
 			<SettingsHostPermissionsTopMenu />
-			<PostDeletedForm post={posts} communities={communities} />
+			<PostDeletedForm post={posts} communities={communities} currentUser={currentUser} />
 		</>
 	)
 }

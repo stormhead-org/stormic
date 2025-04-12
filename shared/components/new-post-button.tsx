@@ -42,21 +42,24 @@ export const NewPostButton: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<PostEditModal
-				communities={communities}
-				currentUser={currentUser}
-				open={openEditModal}
-				onClose={() => setOpenEditModal(false)}
-			/>
-
-			<AuthModal
-				open={openAuthModal}
-				onClose={() => setOpenAuthModal(false)}
-				logoImage={logoImageUrl}
-				authImage={authImageUrl}
-				stormicName={host.title || 'Stormic'}
-			/>
-
+			{currentUser ? (
+				<PostEditModal
+					communities={communities}
+					currentUser={currentUser}
+					open={openEditModal}
+					onClose={() => setOpenEditModal(false)}
+				/>
+			) : (
+				<AuthModal
+					open={openAuthModal}
+					onClose={() => setOpenAuthModal(false)}
+					logoImage={logoImageUrl}
+					authImage={authImageUrl}
+					stormicName={host.title || 'Stormic'}
+				/>
+			
+			)}
+			
 			<Button
 				variant='blue'
 				className='h-12 w-full text-lg font-bold'

@@ -18,6 +18,7 @@ import {
 interface Props {
 	post: Post[]
 	communities: Community[]
+	currentUser: User
 	loading?: boolean
 	className?: string
 }
@@ -25,6 +26,7 @@ interface Props {
 export const PostDraftForm: React.FC<Props> = ({
 	post,
 	communities,
+	currentUser,
 	loading,
 	className
 }) => {
@@ -55,6 +57,7 @@ export const PostDraftForm: React.FC<Props> = ({
 							key={item.id}
 							post={item}
 							communities={communities}
+							currentUser={currentUser}
 						/>
 					))}
 				</TableBody>

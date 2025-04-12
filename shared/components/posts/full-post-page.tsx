@@ -4,6 +4,7 @@ import { Community, Post, User } from '@/payload-types'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { usePostLikesStore } from '@/shared/stores/post-likes-store'
+import { getRelationProp } from '@/shared/utils/payload/getTypes'
 import React, { ElementRef, useRef } from 'react'
 import { CommentFullPostGroup } from '../comments/comment-full-post-group'
 import { FullPostForm } from './full-post-items/full-post-form'
@@ -28,7 +29,9 @@ export const FullPostPage: React.FC<Props> = ({
 	const commentsCount = usePostLikesStore(
 		state => state.commentsCount[post.id] || 0
 	)
-
+	
+	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
+	
 	return (
 		<div ref={chatRef} className={cn('', className)}>
 			<FullPostForm
@@ -40,7 +43,7 @@ export const FullPostPage: React.FC<Props> = ({
 			/>
 			<CommentFullPostGroup
 				postId={post.id}
-				communityId={post.community.id}
+				communityId={communityId}
 				permissions={permissions}
 				chatRef={chatRef}
 				bottomRef={bottomRef}

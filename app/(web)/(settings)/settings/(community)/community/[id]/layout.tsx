@@ -7,10 +7,8 @@ export const metadata: Metadata = {
 	title: 'Stormic: Настройки'
 }
 
-type Args = {
-	params: {
-		id?: string
-	}
+interface PageProps {
+	params: Promise<{ id: string }>;
 }
 
 export default async function SettingsLayout({
@@ -19,7 +17,7 @@ export default async function SettingsLayout({
 }: Readonly<
 	{
 		children: React.ReactNode
-	} & Args
+	} & PageProps
 >) {
 	const { id } = await paramsPromise
 

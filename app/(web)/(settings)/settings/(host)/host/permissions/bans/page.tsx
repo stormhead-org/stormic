@@ -6,7 +6,6 @@ import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
-import { cache } from 'react'
 
 export const metadata: Metadata = {
 	title: 'Платформа: Настройки'
@@ -20,11 +19,6 @@ export default async function HostPermissionsSettings() {
 	if (!currentUser) {
 		return redirect('/')
 	}
-
-	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings',
-		depth: 2
-	})
 
 	const users = await payload.find({
 		collection: 'users',
@@ -63,17 +57,3 @@ export default async function HostPermissionsSettings() {
 		</>
 	)
 }
-
-const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
-	if (!id) return null
-
-	const payload = await getPayload({ config: configPromise })
-
-	const community = await payload.findByID({
-		collection: 'communities',
-		id: id,
-		depth: 2
-	})
-
-	return community || null
-})

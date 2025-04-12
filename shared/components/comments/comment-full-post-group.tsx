@@ -64,7 +64,7 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 				}}
 			/>
 			<PostCommentsList
-				currentUser={currentUser}
+				currentUser={currentUser !== null ? currentUser : undefined}
 				postId={String(postId)}
 				communityId={communityId}
 				permissions={permissions}

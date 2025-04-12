@@ -6,7 +6,6 @@ import { getSession } from '@/shared/lib/auth'
 import { getServerSideURL } from '@/shared/lib/getURL'
 import { mergeOpenGraph } from '@/shared/lib/mergeOpenGraph'
 import { Providers } from '@/shared/providers'
-import { InitTheme } from '@/shared/providers/Theme/InitTheme'
 import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -46,7 +45,6 @@ export default async function HomeLayout({
 	const baseLayout = (content: React.ReactNode) => (
 		<html lang='en' suppressHydrationWarning>
 			<head>
-				<InitTheme />
 				{/* <link href='/favicon.ico' rel='icon' sizes='32x32' />
         <link href='/favicon.svg' rel='icon' type='image/svg+xml'/> */}
 			</head>

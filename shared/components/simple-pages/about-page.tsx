@@ -172,7 +172,7 @@ export const AboutPage: React.FC<Props> = ({
 				collapsible
 			>
 				<AccordionItem value='about'>
-					<AccordionTrigger>
+					<AccordionTrigger className='text-lg'>
 						{/* {formatMessage({ id: 'aboutPage.about' })} */}О Проекте
 					</AccordionTrigger>
 					<AccordionContent className='text-base'>
@@ -187,10 +187,10 @@ export const AboutPage: React.FC<Props> = ({
 				defaultValue='about'
 				collapsible
 			>
-				<p className='pt-4 text-base'>Правила</p>
+				<p className='pt-4 text-lg'>Правила</p>
 				{hostInfo.rules?.map((item, index) => (
 					<AccordionItem key={index} value={`key-${index}`}>
-						<AccordionTrigger>
+						<AccordionTrigger className='text-lg'>
 							{/* {formatMessage({ id: 'aboutPage.rules' })} */}
 							{`${index + 1}. ${item.nameRule}`}
 						</AccordionTrigger>

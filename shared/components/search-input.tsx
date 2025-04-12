@@ -1,7 +1,8 @@
 'use client'
 
-import { Post } from '@/payload-types'
+import { Post, User } from '@/payload-types'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -54,8 +55,10 @@ export const SearchInput: React.FC<Props> = ({ posts, className }) => {
 		postId: item.id,
 		postTitle: item.title,
 		postUrl: '/p/' + item.id,
-		authorName: item.author?.name,
-		authorAvatar: item.author?.avatar?.url
+		authorName: getRelationProp<User, 'name'>(item.author, 'name', '#'),
+		authorAvatar: typeof item.author === 'object'
+			? getMediaUrl(item.author?.avatar, '/logo.png')
+			: '/logo.png'
 	}))
 
 	const filteredItems = items.filter(item =>

@@ -49,7 +49,7 @@ export default async function PostDrafts() {
 
 	return (
 		<>
-			<PostDraftForm post={posts} communities={communities} className='mt-4' />
+			<PostDraftForm post={posts} communities={communities} currentUser={currentUser} className='mt-4' />
 		</>
 	)
 }

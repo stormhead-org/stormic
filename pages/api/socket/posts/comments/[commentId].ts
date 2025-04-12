@@ -15,7 +15,7 @@ export default async function handler(
 		return res.status(405).json({ error: 'Method запрещен' })
 	}
 	try {
-		const profile: User | null = await getPagesSession(req, res)
+		const profile = await getPagesSession(req, res)
 		const postId = Number(req.query.postId)
 		const commentId = Number(req.query.commentId)
 		const { content, media, hasUpdated } = req.body
@@ -60,7 +60,7 @@ export default async function handler(
 		// 	profile.user.userRoles.some(role => role.roleType === 'moderator')
 
 		// const canModify = isMessageOwner || isOwner
-		const canModify = isMessageOwner
+		// const canModify = isMessageOwner
 
 		// if (!canModify) {
 		// 	return res.status(401).json({ error: 'Не авторизован' })

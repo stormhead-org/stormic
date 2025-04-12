@@ -13,15 +13,11 @@ export const metadata: Metadata = {
 	title: 'Сообщество: Настройки'
 }
 
-type Args = {
-	params: {
-		id?: number
-	}
+interface PageProps {
+	params: Promise<{ id: string }>;
 }
 
-export default async function CommunityAdministrationSettings({
-	params: paramsPromise
-}: Args) {
+export default async function CommunityAdministrationSettings({ params: paramsPromise }: PageProps) {
 	const { id = null } = await paramsPromise
 	const session = (await getSession()) as { user: User } | null
 	const currentUser = session && session.user
@@ -56,7 +52,7 @@ export default async function CommunityAdministrationSettings({
 	)
 }
 
-const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
+const queryCommunityById = cache(async ({ id }: { id: string | null }) => {
 	if (!id) return null
 
 	const payload = await getPayload({ config: configPromise })

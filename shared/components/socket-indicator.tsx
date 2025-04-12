@@ -2,7 +2,7 @@
 
 import { Badge } from '@/shared/components/ui/badge'
 import { useEffect } from 'react'
-import { useSocket } from '../providers/SocketProvider'
+import { useSocket } from '../providers/items/SocketProvider'
 
 export const SocketIndicator = () => {
 	const { isConnected } = useSocket()

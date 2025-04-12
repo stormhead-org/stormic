@@ -3,6 +3,7 @@
 import { Community } from '@/payload-types'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -83,7 +84,7 @@ export const CommunitiesPostForm: React.FC<Props> = ({
 						)}
 					>
 						<img
-							src={item.logo?.url || '/logo.png'}
+							src={getMediaUrl(item.logo, '/logo.png')}
 							alt={item.title}
 							className='w-8 h-8 rounded-full mr-2'
 						/>

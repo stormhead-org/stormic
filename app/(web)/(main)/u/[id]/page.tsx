@@ -9,13 +9,11 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
-type Args = {
-	params: {
-		id?: number
-	}
+interface PageProps {
+	params: Promise<{ id: string }>;
 }
 
-export default async function UserPage({ params: paramsPromise }: Args) {
+export default async function UserPage({ params: paramsPromise }: PageProps) {
 	const { id = null } = await paramsPromise
 	const user = await queryUserById({ id })
 
@@ -103,16 +101,7 @@ export default async function UserPage({ params: paramsPromise }: Args) {
 	)
 }
 
-// export async function generateMetadata({
-// 	params: paramsPromise
-// }: Args): Promise<Metadata> {
-// 	const { id = null } = await paramsPromise
-// 	const user = await queryUserById({ id })
-
-// 	return generateMeta({ doc: user })
-// }
-
-const queryUserById = cache(async ({ id }: { id: number | null }) => {
+const queryUserById = cache(async ({ id }: { id: string | null }) => {
 	if (!id) return null
 
 	const payload = await getPayload({ config: configPromise })

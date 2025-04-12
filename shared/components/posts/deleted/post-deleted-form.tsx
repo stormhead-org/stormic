@@ -1,8 +1,6 @@
 'use client'
 
 import { Community, Post, type User } from '@/payload-types'
-import { Title } from '@/shared/components'
-import { PostDraftItem } from '@/shared/components/posts/drafts/post-draft-item'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 import { Skeleton } from '../../ui/skeleton'
@@ -19,6 +17,7 @@ import { PostDeletedItem } from './post-deleted-item'
 interface Props {
 	post: Post[]
 	communities: Community[]
+	currentUser: User
 	loading?: boolean
 	className?: string
 }
@@ -26,6 +25,7 @@ interface Props {
 export const PostDeletedForm: React.FC<Props> = ({
 	post,
 	communities,
+	currentUser,
 	loading,
 	className
 }) => {
@@ -61,6 +61,7 @@ export const PostDeletedForm: React.FC<Props> = ({
 								key={item.id}
 								post={item}
 								communities={communities}
+								currentUser={currentUser}
 							/>
 						))}
 					</TableBody>

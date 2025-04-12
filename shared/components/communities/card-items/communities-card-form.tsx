@@ -2,6 +2,7 @@
 
 import { CommunitiesCardItem } from '@/shared/components/communities/card-items/communities-card-item'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 import { Community } from '@/payload-types'
@@ -39,7 +40,7 @@ export const CommunitiesCardForm: React.FC<Props> = ({
 					<CommunitiesCardItem
 						key={index}
 						communityId={item.id}
-						image={item.logo?.url || ''}
+						image={getMediaUrl(item.logo, '/logo.png')}
 						name={item.title}
 						description={item.description}
 						url={`/c/${item.id}`}

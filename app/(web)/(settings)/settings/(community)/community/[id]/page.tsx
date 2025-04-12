@@ -5,15 +5,11 @@ export const metadata: Metadata = {
 	title: 'Сообщество: Настройки'
 }
 
-type Args = {
-	params: {
-		id?: number
-	}
+interface PageProps {
+	params: Promise<{ id: string }>;
 }
 
-export default async function SettingCommunityRedirect({
-	params: paramsPromise
-}: Args) {
+export default async function SettingCommunityRedirect({ params: paramsPromise }: PageProps) {
 	const { id = null } = await paramsPromise
 
 	return redirect(`/settings/community/${id}/main`)

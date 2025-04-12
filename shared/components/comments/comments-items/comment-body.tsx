@@ -51,16 +51,19 @@ export const CommentBody: React.FC<CommentItemProps> = ({
 				{media && (
 					<div className=''>
 						<div className='relative rounded-md overflow-hidden flex items-center justify-center bg-primary/10 p-1 mb-1 h-40 w-full'>
-							<CommentImageGallery images={media ? [media.url] : []} />
+							
 							{media?.url && (
-								<a
-									href={media.url}
-									target='_blank'
-									rel='noopener noreferrer'
-									className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer'
-								>
-									<Link2 />
-								</a>
+								<div>
+									<CommentImageGallery images={[media.url]} />
+									<a
+										href={media.url}
+										target='_blank'
+										rel='noopener noreferrer'
+										className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer'
+									>
+										<Link2 />
+									</a>
+								</div>
 							)}
 						</div>
 					</div>

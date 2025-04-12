@@ -10,6 +10,7 @@ import {
 	deletePost,
 	removePostFromPublication
 } from '@/shared/utils/api/posts/post-utils'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import { GripHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -47,26 +48,35 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 	const handleDeletePost = async () => {
 		await deletePost(post, router)
 	}
-
+	
+	const authorId = getRelationProp<User, 'id'>(post.author, 'id', 0)
+	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
+	const avatarImageUrl =
+		typeof post.author === 'object'
+			? getMediaUrl(post.author?.avatar, '/logo.png')
+			: '/logo.png'
+	const authorName = getRelationProp<User, 'name'>(post.author, 'name', '')
+	const communityTitle = getRelationProp<Community, 'title'>(post.community, 'title', '')
+	
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
 			<div className='flex items-center'>
-				<Link className='' href={`/u/${post.author?.id}` || '#'}>
-					<ProfileAvatar avatarImage={String(post.author?.avatar?.url)} />
+				<Link className='' href={`/u/${authorId}` || '#'}>
+					<ProfileAvatar avatarImage={avatarImageUrl} />
 				</Link>
 				<div className='ml-2'>
 					<Link
 						className='hover:text-a-color-hover'
-						href={`/u/${post.author?.id}` || '#'}
+						href={`/u/${authorId}` || '#'}
 					>
-						{post.author?.name || '#'}
+						{authorName}
 					</Link>
 					<br />
 					<Link
 						className='text-sm hover:text-a-color-hover'
-						href={post.community ? `/c/${post.community.id}` : '#'}
+						href={post.community ? `/c/${communityId}` : '#'}
 					>
-						{post.community?.title || '#'}
+						{communityTitle}
 					</Link>
 					<span className='ml-2 text-sm cursor-default'>
 						{formatDateTime(post.publishedAt ? post.publishedAt : '#')}
@@ -74,17 +84,16 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 				</div>
 			</div>
 			<div className='flex items-center'>
-				<UserFollowButton userId={post.author?.id} />
-				<PostEditModal
-					open={openEditModal}
-					onClose={() => setOpenEditModal(false)}
-					post={post}
-					authorId={post.author?.id}
-					authorAvatar={post.author?.avatar?.url}
-					authorName={post.author?.name || '#'}
-					authorUrl={`/u/${post.author?.id}` || '#'}
-					communities={communities}
-				/>
+				<UserFollowButton userId={authorId} />
+				{currentUser && (
+					<PostEditModal
+						open={openEditModal}
+						onClose={() => setOpenEditModal(false)}
+						communities={communities}
+						currentUser={currentUser}
+						post={post}
+					/>
+				)}
 				<DropdownMenu key={openEditModal ? 'open' : 'closed'}>
 					<DropdownMenuTrigger asChild>
 						<div className='group'>
@@ -96,7 +105,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 					<DropdownMenuContent align='end' className='bg-secondary'>
 						{(permissions?.HOST_OWNER ||
 							permissions?.COMMUNITY_OWNER ||
-							(currentUser != null && currentUser.id === post.author?.id)) && (
+							(currentUser != null && currentUser.id === authorId)) && (
 							<DropdownMenuItem
 								className='cursor-pointer'
 								onClick={() => setOpenEditModal(true)}

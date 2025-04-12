@@ -1,6 +1,7 @@
 import type { User } from '@/payload-types'
 import { ProfileAvatar } from '@/shared/components'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { Crown, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -23,11 +24,17 @@ export const FullPostCommentHeader: React.FC<CommentHeaderProps> = ({
 	publicationDate,
 	className
 }) => {
+	
+	const avatarImageUrl =
+		typeof author.avatar === 'object'
+			? getMediaUrl(author.avatar, '/logo.png')
+			: '/logo.png'
+	
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
 			<div className='flex items-center'>
 				<Link href={`/u/${author.id}`}>
-					<ProfileAvatar avatarImage={author.avatar?.url} />
+					<ProfileAvatar avatarImage={avatarImageUrl} />
 				</Link>
 				<div className='ml-2'>
 					<div className='flex items-center'>

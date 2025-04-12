@@ -3,21 +3,17 @@ import { CommunityBan } from '@/shared/components/info-blocks/community-ban'
 import { CommunityNotFound } from '@/shared/components/info-blocks/community-not-found'
 import { CommunityProfileGroup } from '@/shared/components/profiles/community-profile-group'
 import { getSession } from '@/shared/lib/auth'
-import { generateMeta } from '@/shared/lib/generateMeta'
 import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import { Permissions } from '@/shared/lib/permissions'
 import configPromise from '@payload-config'
-import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
-type Args = {
-	params: {
-		id?: number
-	}
+interface PageProps {
+	params: Promise<{ id: string }>;
 }
 
-export default async function CommunityPage({ params: paramsPromise }: Args) {
+export default async function CommunityPage({ params: paramsPromise }: PageProps) {
 	const { id = null } = await paramsPromise
 	const communityResult = await queryCommunityById({ id })
 
@@ -110,16 +106,7 @@ export default async function CommunityPage({ params: paramsPromise }: Args) {
 	)
 }
 
-export async function generateMetadata({
-	params: paramsPromise
-}: Args): Promise<Metadata> {
-	const { id = null } = await paramsPromise
-	const community = await queryCommunityById({ id })
-
-	return generateMeta({ doc: community })
-}
-
-const queryCommunityById = cache(async ({ id }: { id: number | null }) => {
+const queryCommunityById = cache(async ({ id }: { id: string | null }) => {
 	if (!id) return null
 
 	const payload = await getPayload({ config: configPromise })

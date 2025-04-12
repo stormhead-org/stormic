@@ -3,6 +3,7 @@
 import { CommunitiesItem } from '@/shared/components/communities/list-items/communities-item'
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -89,7 +90,7 @@ export const CommunitiesForm: React.FC<Props> = ({
 					<CommunitiesItem
 						key={index}
 						text={item.title}
-						image={item.logo?.url || '/logo.png'}
+						image={getMediaUrl(item.logo, '/logo.png')}
 						url={`/c/${item.id}`}
 						name={item.title}
 					/>

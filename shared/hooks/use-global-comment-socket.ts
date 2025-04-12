@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { useSocket } from '../providers/SocketProvider'
+import { useSocket } from '../providers/items/SocketProvider'
 
 export const UseGlobalCommentSocket = (
 	queryKey: string,

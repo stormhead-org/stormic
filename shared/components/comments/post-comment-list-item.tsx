@@ -15,9 +15,9 @@ interface PostCommentListItemProps {
 	content: string
 	author: User
 	timestamp: string
-	media: Media
+	media?: Media
 	deleted: boolean
-	currentUser: User | null
+	currentUser?: User
 	permissions: Permissions | null
 	isUpdated: boolean
 	socketUrl: string

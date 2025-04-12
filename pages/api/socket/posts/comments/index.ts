@@ -1,5 +1,4 @@
 import { NextApiResponseServerIo } from '@/@types/socket'
-import { User } from '@/payload-types'
 import { getPagesSession } from '@/shared/lib/pagesAuth'
 import configPromise from '@payload-config'
 import { NextApiRequest } from 'next'
@@ -15,7 +14,7 @@ export default async function handler(
 	}
 
 	try {
-		const profile: User | null = await getPagesSession(req, res)
+		const profile = await getPagesSession(req, res)
 		const { content, media } = req.body
 		const communityId = Number(req.query.communityId)
 		const postId = Number(req.query.postId)
@@ -23,9 +22,9 @@ export default async function handler(
 			? Number(req.query.parentCommentId)
 			: null
 		const payload = await getPayload({ config: configPromise })
-
+		
 		if (!profile) {
-			return res.status(401).json({ error: 'Not authorized' })
+			return res.status(401).json({ error: 'Не авторизован' })
 		}
 
 		if (!postId) {
@@ -41,6 +40,7 @@ export default async function handler(
 		if (!post) {
 			return res.status(404).json({ error: 'Post not found' })
 		}
+		
 		const newComment = await payload.create({
 			collection: 'comments',
 			data: {

@@ -3,7 +3,7 @@
 import { User } from '@/payload-types'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
-import { useSession } from '@/shared/providers/SessionProvider'
+import { useSession } from '../../../../../../providers/items/SessionProvider'
 import { signOut } from '@/shared/utils/api/users/signOut'
 import {
 	ChevronLeft,

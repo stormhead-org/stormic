@@ -1,35 +1,35 @@
-import type { User } from '@/payload-types'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { User } from '@/payload-types';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export async function getPagesSession(
 	req: NextApiRequest,
 	res: NextApiResponse
 ): Promise<User | null> {
-	const token = req.cookies['payload-token']
-
+	const token = req.cookies['payload-token'];
+	
 	if (!token) {
-		return null
+		return null;
 	}
-
+	
 	try {
 		const response = await fetch(
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`,
 			{
 				headers: {
-					Authorization: `Bearer ${token}`
+					Authorization: `Bearer ${token}`,
 				},
-				cache: 'no-store'
+				cache: 'no-store',
 			}
-		)
-
+		);
+		
 		if (!response.ok) {
-			return null
+			return null;
 		}
-
-		const user = await response.json()
-		return user || null
+		
+		const data = await response.json();
+		return data.user || null; // Извлекаем user из ответа
 	} catch (error) {
-		console.error('Ошибка получения сессии:', error)
-		return null
+		console.error('Ошибка получения сессии:', error);
+		return null;
 	}
 }

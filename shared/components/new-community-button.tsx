@@ -6,7 +6,7 @@ import React from 'react'
 // import { useIntl } from 'react-intl'
 import { User } from '@/payload-types'
 import { cn } from '../lib/utils'
-import { useSession } from '../providers/SessionProvider'
+import { useSession } from '../providers/items/SessionProvider'
 import { Button } from './ui/button'
 
 interface Props {

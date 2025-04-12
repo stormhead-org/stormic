@@ -9,6 +9,7 @@ import {
 	DialogHeader,
 	DialogTitle
 } from '@/shared/components/ui/dialog'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { CircleUser, Shield } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
@@ -211,7 +212,7 @@ export const RoleAddUserHostModal: React.FC<Props> = ({
 												<Avatar className='rounded-full'>
 													<AvatarImage
 														className='m-auto rounded-full'
-														src={item.avatar?.url}
+														src={getMediaUrl(item.avatar, '')}
 														style={{ width: 34, height: 34 }}
 													/>
 													<AvatarFallback>

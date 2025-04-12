@@ -10,8 +10,9 @@ import { TableCell, TableRow } from '@/shared/components/ui/table'
 export const PostDeletedItem: React.FC<{
 	post: Post
 	communities: Community[]
+	currentUser: User
 	className?: string
-}> = ({ post, communities, className }) => {
+}> = ({ post, communities, currentUser, className }) => {
 	const [openEditModal, setOpenEditModal] = useState(false)
 
 	// Получаем название сообщества
@@ -54,33 +55,11 @@ export const PostDeletedItem: React.FC<{
 				<TableCell>{communityName}</TableCell>
 			</TableRow>
 			<PostEditModal
+				communities={communities}
+				currentUser={currentUser}
 				open={openEditModal}
 				onClose={() => setOpenEditModal(false)}
 				post={post}
-				authorId={
-					typeof post.author === 'object' && post.author?.id
-						? post.author.id
-						: 0
-				}
-				authorAvatar={
-					typeof post.author === 'object' &&
-					post.author?.avatar &&
-					typeof post.author.avatar === 'object' &&
-					'url' in post.author.avatar
-						? post.author.avatar.url
-						: ''
-				}
-				authorName={
-					typeof post.author === 'object' && post.author?.name
-						? post.author.name
-						: '#'
-				}
-				authorUrl={
-					typeof post.author === 'object' && post.author?.id
-						? `/u/${post.author.id}`
-						: '#'
-				}
-				communities={communities}
 			/>
 		</>
 	)

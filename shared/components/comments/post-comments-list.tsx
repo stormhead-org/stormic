@@ -15,7 +15,6 @@ export interface CommentWithChildren extends Omit<Comment, 'childrenComments'> {
 }
 
 interface CommentItemsProps {
-	currentUser: User | null
 	postId: string
 	communityId: number
 	permissions: Permissions | null
@@ -26,6 +25,7 @@ interface CommentItemsProps {
 	socketQuery: Record<string, string>
 	paramKey: 'postId'
 	paramValue: string
+	currentUser?: User
 	className?: string
 }
 
@@ -35,18 +35,23 @@ const getIndentationClass = (level: number) => {
 
 const renderCommentWithChildren = (
 	message: CommentWithChildren,
-	currentUser: User | null,
 	postId: string,
 	communityId: number,
 	permissions: Permissions | null,
 	socketUrl: string,
 	socketQuery: Record<string, string>,
-	level = 0
+	currentUser?: User,
+	level = 0,
 ) => {
-	const children = Array.isArray(message.childrenComments)
-		? message.childrenComments
-		: []
-
+	const children = Array.isArray(message.childrenComments) ? message.childrenComments : [];
+	
+	const author = typeof message.author === 'object' ? message.author : null;
+	if (!author) {
+		return null;
+	}
+	
+	const media = message.media && typeof message.media === 'object' ? message.media : undefined;
+	
 	return (
 		<div key={message.id} className={getIndentationClass(level)}>
 			<PostCommentListItem
@@ -55,9 +60,9 @@ const renderCommentWithChildren = (
 				id={String(message.id)}
 				currentUser={currentUser}
 				permissions={permissions}
-				author={message.author}
+				author={author}
 				content={message.content}
-				media={message.media || null}
+				media={media}
 				deleted={message.hasDeleted ?? false}
 				timestamp={formatDateTime(message.createdAt)}
 				isUpdated={message.hasUpdated ?? false}
@@ -70,13 +75,13 @@ const renderCommentWithChildren = (
 					{children.map(child =>
 						renderCommentWithChildren(
 							child,
-							currentUser,
 							postId,
 							communityId,
 							permissions,
 							socketUrl,
 							socketQuery,
-							level + 1
+							currentUser,
+							level + 1,
 						)
 					)}
 				</div>
@@ -160,12 +165,12 @@ export const PostCommentsList = ({
 				{allComments.map((message: CommentWithChildren) =>
 					renderCommentWithChildren(
 						message,
-						currentUser,
 						postId,
 						communityId,
 						permissions,
 						socketUrl,
 						socketQuery,
+						currentUser,
 						0
 					)
 				)}

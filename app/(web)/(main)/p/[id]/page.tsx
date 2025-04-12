@@ -9,16 +9,16 @@ import { PostNotFound } from '@/shared/components/info-blocks/post-not-found'
 import { FullPostPage } from '@/shared/components/posts/full-post-page'
 import { getSession } from '@/shared/lib/auth'
 import { getRelationProp } from '@/shared/utils/payload/getTypes'
-import PageClient from './page.client'
 
-export default async function Post({
-	params
-}: {
-	params: Promise<{ id: string }>
-}) {
-	const { id } = await params
+interface PageProps {
+	params: Promise<{ id: string }>;
+}
 
-	if (!id || isNaN(Number(id))) {
+
+export default async function Post({ params: paramsPromise }: PageProps) {
+	const { id = null } = await paramsPromise
+
+	if (!id) {
 		return <PostNotFound />
 	}
 
@@ -68,22 +68,11 @@ export default async function Post({
 		: null
 
 	return (
-		<article>
-			<PageClient />
-			{/* <div className='flex flex-col h-[91vh] overflow-auto no-scrollbar rounded-md'>
-				<FullPostPage
-					post={currentPost}
-					communities={communities}
-					permissions={permissions}
-					currentUser={currentUser}
-				/>
-			</div> */}
 			<FullPostPage
 				post={post}
 				communities={communities}
 				permissions={permissions}
 				currentUser={currentUser}
 			/>
-		</article>
 	)
 }

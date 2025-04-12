@@ -28,21 +28,21 @@ import { SidebarProvider, SidebarTrigger } from '../../ui/sidebar'
 import { formTitleSchema, TFormTitleValues } from './schemas'
 
 interface Props {
-	post?: Post
 	communities: Community[]
 	currentUser: User
 	open: boolean
 	onClose: () => void
+	post?: Post
 }
 
 const Editor = dynamic(() => import('../../editorjs/Editor'), { ssr: false })
 
 export const PostEditModal: React.FC<Props> = ({
-	post,
 	communities,
 	currentUser,
 	open,
-	onClose
+	onClose,
+	post,
 }) => {
 	const router = useRouter()
 

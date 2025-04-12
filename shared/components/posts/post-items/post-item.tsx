@@ -6,7 +6,7 @@ import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
 import { Permissions } from '@/shared/lib/permissions' // Импортируем тип Permissions
 import { cn } from '@/shared/lib/utils'
-import { useSession } from '@/shared/providers/SessionProvider'
+import { useSession } from '../../../providers/items/SessionProvider'
 import { usePostLikesStore } from '@/shared/stores/post-likes-store'
 import { OutputData } from '@editorjs/editorjs'
 
