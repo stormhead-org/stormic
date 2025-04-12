@@ -21,21 +21,35 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10.8.0
+          dest: ~/.pnpm
+        env:
+          PNPM_HOME: ~/.pnpm
+          PATH: ~/.pnpm:$PATH
 
       - name: Verify pnpm installation
-        run: pnpm --version
+        run: |
+          echo "PATH=$PATH"
+          pnpm --version
+        env:
+          PNPM_HOME: ~/.pnpm
+          PATH: ~/.pnpm:$PATH
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          PNPM_HOME: ~/.pnpm
+          PATH: ~/.pnpm:$PATH
 
       - name: Build Next.js app
         run: pnpm build
+        env:
+          PNPM_HOME: ~/.pnpm
+          PATH: ~/.pnpm:$PATH
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
