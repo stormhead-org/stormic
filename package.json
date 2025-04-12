@@ -1,6 +1,6 @@
 {
 	"name": "stormic",
-	"version": "0.0.4-preview",
+	"version": "0.0.1-beta",
 	"private": true,
 	"type": "module",
 	"scripts": {
