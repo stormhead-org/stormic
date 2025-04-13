@@ -99,9 +99,9 @@ export default async function HomeLayout({
 					<Header
 						session={false}
 						logoImage={logoImageUrl}
-						stormicName={resultGlobalHost.title}
+						stormicName={resultGlobalHost.title || 'Stormic'}
 						authImage={authImageUrl}
-						description={resultGlobalHost.slogan}
+						description={resultGlobalHost.slogan || 'код, GitHub и ты'}
 						avatarImage=''
 						userUrl=''
 					/>

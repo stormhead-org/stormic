@@ -71,8 +71,8 @@ export default async function Home() {
 
 	const bannerUrl =
 		typeof resultGlobalHost.banner === 'object'
-			? getMediaUrl(resultGlobalHost.banner, '/logo.png')
-			: '/logo.png'
+			? getMediaUrl(resultGlobalHost.banner, '/defaultBanner.jpg')
+			: '/defaultBanner.jpg'
 
 	return (
 		<>
