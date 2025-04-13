@@ -1,33 +1,33 @@
-# Базовый образ для установки зависимостей
+# === ЭТАП ЗАВИСИМОСТЕЙ (deps) ===
 FROM node:20-alpine AS deps
 WORKDIR /app
 RUN npm install -g pnpm
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-# Сборка приложения
+# === ЭТАП СБОРКИ (builder) ===
 FROM node:20-alpine AS builder
 WORKDIR /app
 RUN npm install -g pnpm
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Переменные, необходимые для сборки
-ARG NEXT_PUBLIC_SERVER_URL
-ARG NEXT_PUBLIC_BASE_URL
-ARG DATABASE_URI
-ARG PAYLOAD_SECRET
-ARG CRON_SECRET
-ARG SMTP_HOST
-ARG SMTP_USER
-ARG SMTP_PASS
-ARG RABBITMQ_URL
-ARG S3_BUCKET
-ARG S3_REGION
-ARG S3_ENDPOINT
-ARG S3_ACCESS_KEY_ID
-ARG S3_SECRET_ACCESS_KEY
-ARG NEXT_PUBLIC_YANDEX_METRIKA
+# Передача фиктивных значений для секретов на этапе сборки
+ARG NEXT_PUBLIC_SERVER_URL=dummy
+ARG NEXT_PUBLIC_BASE_URL=dummy
+ARG DATABASE_URI=dummy
+ARG PAYLOAD_SECRET=dummy
+ARG CRON_SECRET=dummy
+ARG SMTP_HOST=dummy
+ARG SMTP_USER=dummy
+ARG SMTP_PASS=dummy
+ARG RABBITMQ_URL=dummy
+ARG S3_BUCKET=dummy
+ARG S3_REGION=dummy
+ARG S3_ENDPOINT=dummy
+ARG S3_ACCESS_KEY_ID=dummy
+ARG S3_SECRET_ACCESS_KEY=dummy
+ARG NEXT_PUBLIC_YANDEX_METRIKA=dummy
 
 ENV NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL
 ENV NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL
@@ -47,16 +47,20 @@ ENV NEXT_PUBLIC_YANDEX_METRIKA=$NEXT_PUBLIC_YANDEX_METRIKA
 
 RUN pnpm build
 
-# Финальный образ для продакшена
+# === ФИНАЛЬНЫЙ ОБРАЗ (runner) ===
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
+# Только production-зависимости
 COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm && pnpm install --prod --frozen-lockfile
 
+# Копирование результатов сборки
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
+
+# Копирование файлов для воркеров
 COPY --from=builder /app/workers.ts ./workers.ts
 COPY --from=builder /app/shared/workers ./shared/workers
 
