@@ -12,8 +12,7 @@ RUN npm install -g pnpm
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Передача всех переменных окружения для сборки
-
+# Переменные, необходимые для сборки
 ARG NEXT_PUBLIC_SERVER_URL
 ARG NEXT_PUBLIC_BASE_URL
 ARG DATABASE_URI
@@ -44,7 +43,7 @@ ENV S3_REGION=$S3_REGION
 ENV S3_ENDPOINT=$S3_ENDPOINT
 ENV S3_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID
 ENV S3_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY
-ENV NEXT_PUBLIC_YANDEX_METRIKA=$NEXT_PUBLIC_YANDEX_MET
+ENV NEXT_PUBLIC_YANDEX_METRIKA=$NEXT_PUBLIC_YANDEX_METRIKA
 
 RUN pnpm build
 
@@ -58,6 +57,9 @@ RUN npm install -g pnpm && pnpm install --prod --frozen-lockfile
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/workers.ts ./workers.ts
+COPY --from=builder /app/shared/workers ./shared/workers
 
 EXPOSE 3000
+# Команда по умолчанию для основного приложения
 CMD ["pnpm", "start"]
