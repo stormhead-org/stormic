@@ -61,5 +61,4 @@ COPY --from=builder /app/workers.ts ./workers.ts
 COPY --from=builder /app/shared/workers ./shared/workers
 
 EXPOSE 3000
-# Команда по умолчанию для основного приложения
 CMD ["pnpm", "start"]
