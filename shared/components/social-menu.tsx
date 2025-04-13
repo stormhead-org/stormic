@@ -7,11 +7,11 @@ import React from 'react'
 import { cn } from '../lib/utils'
 
 const socialMenu = [
-	{ id: 1, icon: <Twitter size={24} />, path: '/placeholder1' },
-	{ id: 2, icon: <Facebook size={24} />, path: '/placeholder2' },
-	{ id: 3, icon: <Github size={24} />, path: '/placeholder3' },
-	{ id: 4, icon: <Instagram size={24} />, path: '/placeholder4' },
-	{ id: 5, icon: <Twitch size={24} />, path: '/placeholder5' }
+	{ id: 1, icon: <Twitter size={24} />, path: '/#1' },
+	{ id: 2, icon: <Facebook size={24} />, path: '/#2' },
+	{ id: 3, icon: <Github size={24} />, path: '/#3' },
+	{ id: 4, icon: <Instagram size={24} />, path: '/#4' },
+	{ id: 5, icon: <Twitch size={24} />, path: '/#5' }
 ]
 
 interface Props {

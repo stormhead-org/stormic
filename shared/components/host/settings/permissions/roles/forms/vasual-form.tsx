@@ -81,7 +81,6 @@ export const VisualForm: React.FC<Props> = ({
 
 			const result = await response.json()
 			router.refresh()
-			console.log('Роль обновлена:', result)
 		} catch (error) {
 			console.error('Ошибка при обновлении роли:', error)
 		}

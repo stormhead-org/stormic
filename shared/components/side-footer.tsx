@@ -28,17 +28,9 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 				<Link
 					className='text-a-color hover:text-a-color-hover'
 					// href='/rules'>{formatMessage({ id: 'sideFooter.rules' })}</Link> |{' '}
-					href='/rules'
+					href='/about'
 				>
 					Правила
-				</Link>{' '}
-				|{' '}
-				<Link
-					className='text-a-color hover:text-a-color-hover'
-					href='/privacy_policy'
-				>
-					{/* {formatMessage({ id: 'sideFooter.privacyPolicy' })} */}
-					Политика конфиденциальности
 				</Link>
 				<br />
 				<br />
@@ -53,20 +45,12 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 				|{' '}
 				<Link
 					className='text-a-color hover:text-a-color-hover'
-					// href='https://stormic.app/rules/'>{formatMessage({ id: 'sideFooter.keyBinds' })}</Link> |{' '}
-					href='https://stormic.app/rules/'
-				>
-					Сочетания клавиш
-				</Link>{' '}
-				|{' '}
-				<Link
-					className='text-a-color hover:text-a-color-hover'
 					href='https://github.com/stormhead-org/stormic'
 				>
 					{/* {formatMessage({ id: 'sideFooter.sourceCode' })} */}
 					Исходный код
 				</Link>{' '}
-				| {version}
+				| v{version}
 				<br />
 				<br />
 				{/* {formatMessage({ id: 'sideFooter.madeWithLove' })}{' '} */}
@@ -79,15 +63,14 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 				</Link>
 				<br />
 				{/* {formatMessage({ id: 'sideFooter.community' })} */}
-				Сообщетсво{' '}
+				Сообщество{' '}
 				<Link
 					className='text-a-color hover:text-a-color-hover'
 					href='https://stormic.app/'
 				>
 					Stormic
 				</Link>{' '}
-				{/* {formatMessage({ id: "sideFooter.communityDate" })} */}© 2023 -
-				2024
+				{/* {formatMessage({ id: "sideFooter.communityDate" })} */}© 2025
 			</span>
 		</div>
 	)

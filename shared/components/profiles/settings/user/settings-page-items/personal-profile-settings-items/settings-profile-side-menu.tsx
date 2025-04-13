@@ -3,7 +3,7 @@
 import { User } from '@/payload-types'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
-import { useSession } from '../../../../../../providers/items/SessionProvider'
+import { useSession } from '@/shared/providers/items/SessionProvider'
 import { signOut } from '@/shared/utils/api/users/signOut'
 import {
 	ChevronLeft,
@@ -38,40 +38,40 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 			path: '/settings/profile',
 			disabled: false
 		},
+		// {
+		// 	id: 2,
+		// 	// text: formatMessage({ id: 'settingsProfileSideMenu.account' }),
+		// 	text: 'Учетная запись',
+		// 	icon: <LockKeyhole />,
+		// 	path: '/settings/auth',
+		// 	disabled: true
+		// },
+		// {
+		// 	id: 3,
+		// 	// text: formatMessage({ id: 'settingsProfileSideMenu.relationships' }),
+		// 	text: 'Подписки и подписчики',
+		// 	icon: <Users />,
+		// 	path: '/settings/auth#2',
+		// 	disabled: true
+		// },
+		// {
+		// 	id: 4,
+		// 	// text: formatMessage({ id: 'settingsProfileSideMenu.filters' }),
+		// 	text: 'Фильтры',
+		// 	icon: <Filter />,
+		// 	path: '/settings/auth#3',
+		// 	disabled: true
+		// },
+		// {
+		// 	id: 5,
+		// 	// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
+		// 	text: 'Настройки',
+		// 	icon: <Settings />,
+		// 	path: '/settings/preferences',
+		// 	disabled: true
+		// },
 		{
 			id: 2,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.account' }),
-			text: 'Учетная запись',
-			icon: <LockKeyhole />,
-			path: '/settings/auth',
-			disabled: true
-		},
-		{
-			id: 3,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.relationships' }),
-			text: 'Подписки и подписчики',
-			icon: <Users />,
-			path: '/settings/auth#2',
-			disabled: true
-		},
-		{
-			id: 4,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.filters' }),
-			text: 'Фильтры',
-			icon: <Filter />,
-			path: '/settings/auth#3',
-			disabled: true
-		},
-		{
-			id: 5,
-			// text: formatMessage({ id: 'settingsProfileSideMenu.settings' }),
-			text: 'Настройки',
-			icon: <Settings />,
-			path: '/settings/preferences',
-			disabled: true
-		},
-		{
-			id: 6,
 			// text: formatMessage({ id: 'settingsProfileSideMenu.logout' }),
 			text: 'В профиль',
 			icon: <ChevronLeft />,

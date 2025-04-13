@@ -96,8 +96,6 @@ export const RoleAddUserModal: React.FC<Props> = ({
 				throw new Error('Ошибка при получении текущей роли')
 			}
 
-			console.log('Current role data:', JSON.stringify(roleData, null, 2))
-
 			// Текущий список пользователей роли
 			const currentUsers = Array.isArray(roleData.docs[0]?.users)
 				? roleData.docs[0].users.map((user: any) =>
@@ -105,12 +103,8 @@ export const RoleAddUserModal: React.FC<Props> = ({
 					)
 				: []
 
-			console.log('Current users:', currentUsers)
-
 			// Объединяем текущих пользователей с новыми, убираем дубликаты
 			const updatedUsers = [...new Set([...currentUsers, ...userIds])]
-
-			console.log('Updated users to send:', updatedUsers)
 
 			// Отправляем обновлённый список
 			const patchReq = await fetch(`/api/roles${stringifiedQuery}`, {
@@ -124,8 +118,6 @@ export const RoleAddUserModal: React.FC<Props> = ({
 			if (!patchReq.ok) {
 				throw new Error('Ошибка при обновлении роли: ' + JSON.stringify(data))
 			}
-
-			console.log('PATCH response:', JSON.stringify(data, null, 2))
 
 			setSelectedUsers([])
 			handleClose()
