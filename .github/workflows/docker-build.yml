@@ -48,7 +48,10 @@ jobs:
           cache: 'pnpm'
 
       - name: Install pnpm
-        run: npm install -g pnpm@10.8.0
+        run: |
+          npm install -g pnpm@10.8.0
+          echo "PATH=$HOME/.npm-global/bin:$PATH" >> $GITHUB_ENV
+          pnpm --version
 
       - name: Verify pnpm installation
         run: pnpm --version
