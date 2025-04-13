@@ -16,13 +16,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install -y sed coreutils
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -30,10 +26,7 @@ jobs:
           node-version: '20'
 
       - name: Install pnpm
-        run: |
-          npm install -g pnpm@10.8.0
-          echo "PATH=$HOME/.npm-global/bin:$PATH" >> $GITHUB_ENV
-          pnpm --version
+        run: npm install -g pnpm@10.8.0
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
