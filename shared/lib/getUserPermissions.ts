@@ -113,7 +113,6 @@ export async function getUserPermissions(
 
 		// Проверяем роли пользователя
 		if (!user.communitiesRoles || !('docs' in user.communitiesRoles)) {
-			console.log('No communitiesRoles or invalid structure')
 			return {
 				...mergePermissions([]),
 				COMMUNITY_OWNER: isCommunityOwner,
@@ -126,7 +125,6 @@ export async function getUserPermissions(
 		const rolesArray = user.communitiesRoles.docs as Role[]
 
 		if (!Array.isArray(rolesArray) || rolesArray.length === 0) {
-			console.log('No roles found in communitiesRoles.docs')
 			return {
 				...mergePermissions([]),
 				COMMUNITY_OWNER: isCommunityOwner,

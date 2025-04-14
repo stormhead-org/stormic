@@ -11,6 +11,7 @@ import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { Link2, X } from 'lucide-react'
+import Link from 'next/link'
 import qs from 'query-string'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -179,21 +180,19 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 			)}
 			{!isEditing && media && (
 				<div className=''>
-					<div className='relative rounded-md overflow-hidden flex items-center justify-center bg-primary/10 p-1 mb-1 h-60 w-full'>
-						
+					<div className='relative rounded-md overflow-hidden flex items-center justify-center bg-primary/10 mb-1 mt-2 h-60 w-full'>
 						{media?.url && (
 							<div>
 								<CommentImageGallery images={[media.url]} />
-								<a
+								<Link
 									href={media.url}
 									target='_blank'
 									rel='noopener noreferrer'
-									className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer'
+									className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer text-black dark:text-white'
 								>
 									<Link2 />
-								</a>
+								</Link>
 							</div>
-							
 						)}
 					</div>
 				</div>

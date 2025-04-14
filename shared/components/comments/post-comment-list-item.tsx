@@ -7,6 +7,7 @@ import { FullPostCommentHeader } from '@/shared/components/comments/full-post-co
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
+import useSWR from 'swr'
 
 interface PostCommentListItemProps {
 	id: string
@@ -24,6 +25,8 @@ interface PostCommentListItemProps {
 	socketQuery: Record<string, string>
 	className?: string
 }
+
+const fetcher = (url: string) => fetch(url).then(res => res.json())
 
 export const PostCommentListItem = ({
 	id,
@@ -51,10 +54,34 @@ export const PostCommentListItem = ({
 		!deleted && (isMessageOwner || permissionCommentDelete || isCommunityOwner)
 	const canEditMessage = !deleted && isMessageOwner
 
+	// Запрашиваем права автора
+	const { data: authorPermissions, error } = useSWR<Permissions | null>(
+		`/api/permissions/${author.id}/${communityId}`,
+		fetcher,
+		{
+			fallbackData: null,
+			revalidateOnFocus: false,
+			dedupingInterval: 60000
+		}
+	)
+
+	// Формируем roleIconMap как массив ролей
+	const roleIconMap: ('hostOwner' | 'communityOwner')[] = []
+	if (authorPermissions?.HOST_OWNER) {
+		roleIconMap.push('hostOwner')
+	}
+	if (authorPermissions?.COMMUNITY_OWNER) {
+		roleIconMap.push('communityOwner')
+	}
+
 	return (
 		<>
 			<div className={cn('rounded-md p-2 w-full', className)}>
-				<FullPostCommentHeader author={author} publicationDate={timestamp} />
+				<FullPostCommentHeader
+					author={author}
+					roleIconMap={roleIconMap}
+					publicationDate={timestamp}
+				/>
 
 				<FullPostCommentBody
 					id={id}

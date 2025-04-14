@@ -6,9 +6,11 @@ import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
 import { Permissions } from '@/shared/lib/permissions' // Импортируем тип Permissions
 import { cn } from '@/shared/lib/utils'
-import { useSession } from '../../../providers/items/SessionProvider'
 import { usePostLikesStore } from '@/shared/stores/post-likes-store'
+import { createVisibilityObserver } from '@/shared/utils/api/posts/visibility-observer'
 import { OutputData } from '@editorjs/editorjs'
+import { useEffect, useRef } from 'react'
+import { useSession } from '../../../providers/items/SessionProvider'
 
 export const PostItem: React.FC<{
 	post: Post
@@ -23,6 +25,22 @@ export const PostItem: React.FC<{
 		state => state.commentsCount[post.id] || 0
 	)
 
+	const ref = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		const observer = createVisibilityObserver()
+
+		if (ref.current) {
+			observer.observe(ref.current)
+		}
+
+		return () => {
+			if (ref.current) {
+				observer.unobserve(ref.current)
+			}
+		}
+	}, [post.id])
+
 	return (
 		<div
 			className={cn(
@@ -30,7 +48,7 @@ export const PostItem: React.FC<{
 				className
 			)}
 		>
-			<div data-post-id={post.id} className='post'>
+			<div ref={ref} data-post-id={post.id} className='post'>
 				<PostHeader
 					post={post}
 					communities={communities}
@@ -54,6 +72,7 @@ export const PostItem: React.FC<{
 					<PostFooter
 						postId={Number(post.id)}
 						commentsCount={commentsCount}
+						views={post.views}
 						className='mt-4'
 					/>
 				) : null}

@@ -21,7 +21,7 @@ html {
 		--card: 0 0% 100%;
 		--card-foreground: 222.2 84% 4.9%;
 
-		--bg-color-ui-item: 216 39.13% 22.55%;
+		--bg-color-ui-item: 226 86.58% 48.04%;
 		--txt-color: 210 5.36% 78.04%;
 		--txt-color-headers: 210 5.88% 80%;
 		--a-color: 218, 70%, 67%;
@@ -67,7 +67,6 @@ html {
 		--card: 217.24, 32.58%, 17.45%;
 		--card-foreground: 210 40% 98%;
 
-		--bg-color-ui-item: 216 39.13% 22.55%;
 		--txt-color: 210 5.36% 78.04%;
 		--txt-color-headers: 210 5.88% 80%;
 		--a-color: 218, 70%, 67%;
@@ -161,7 +160,7 @@ html {
 
 .dark *::selection,
 .dark .ce-block.ce-block--selected .ce-block__content {
-	background-color: var(--a-color);
+	background-color: var(--bg-color-ui-item);
 }
 
 .dark .ce-popover__items {
@@ -226,6 +225,10 @@ html {
 
 	body {
 		@apply bg-background text-foreground;
+	}
+
+	a {
+		@apply text-blue-700 hover:text-blue-800;
 	}
 
 	/* Заголовки */

@@ -32,19 +32,6 @@ export const SearchInput: React.FC<Props> = ({ posts, className }) => {
 		setFocused(false)
 	})
 
-	// useDebounce(
-	// 	async () => {
-	// 		try {
-	// 			const response = await Api.posts.search(searchQuery)
-	// 			setPosts(response)
-	// 		} catch (error) {
-	// 			console.log(error)
-	// 		}
-	// 	},
-	// 	250,
-	// 	[searchQuery]
-	// )
-
 	const onClickItem = () => {
 		setFocused(false)
 		setSearchQuery('')
@@ -56,9 +43,10 @@ export const SearchInput: React.FC<Props> = ({ posts, className }) => {
 		postTitle: item.title,
 		postUrl: '/p/' + item.id,
 		authorName: getRelationProp<User, 'name'>(item.author, 'name', '#'),
-		authorAvatar: typeof item.author === 'object'
-			? getMediaUrl(item.author?.avatar, '/logo.png')
-			: '/logo.png'
+		authorAvatar:
+			typeof item.author === 'object'
+				? getMediaUrl(item.author?.avatar, '/logo.png')
+				: '/logo.png'
 	}))
 
 	const filteredItems = items.filter(item =>

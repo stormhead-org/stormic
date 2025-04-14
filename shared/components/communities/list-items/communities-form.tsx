@@ -5,7 +5,6 @@ import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
 import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import Link from 'next/link'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 import { Community } from '@/payload-types'
@@ -67,13 +66,11 @@ export const CommunitiesForm: React.FC<Props> = ({
 	return (
 		<div className={cn(hasPost && 'max-w-[200px]', className)}>
 			{!hasPost && (
-				<Link href={`/communities`}>
-					<Title
-						text={title}
-						size='xs'
-						className='font-bold text-a-color hover:text-a-color-hover mb-6'
-					/>
-				</Link>
+				<Title
+					text={title}
+					size='xs'
+					className='font-bold text-a-color hover:text-a-color-hover mb-6'
+				/>
 			)}
 			{showAll && (
 				<div className={cn(hasPost ? 'mb-2]' : 'mb-5', className)}>

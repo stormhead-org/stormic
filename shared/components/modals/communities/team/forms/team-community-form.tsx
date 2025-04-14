@@ -23,22 +23,22 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 }
 
 export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
-
 	const truncatedName = truncateText(
 		getRelationProp<User, 'name'>(community.owner, 'name', '') || '',
 		20
-	);
+	)
 	const truncatedDescription = truncateText(
-		getRelationProp<User, 'description'>(community.owner, 'description', '') || '',
+		getRelationProp<User, 'description'>(community.owner, 'description', '') ||
+			'',
 		24
-	);
-	
+	)
+
 	const ownerId = getRelationProp<User, 'id'>(community.owner, 'id', 0)
 	const avatarImageUrl =
 		typeof community.owner === 'object'
 			? getMediaUrl(community.owner.avatar, '/logo.png')
 			: '/logo.png'
-	
+
 	return (
 		<div className='min-w-[50rem]'>
 			<div className='w-full flex justify-center items-center'>
@@ -57,12 +57,13 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 							<ProfileAvatar
 								className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
 								avatarImage={avatarImageUrl}
-								// avatarImage={String(community.owner?.userAvatar?.url || '')}
 								avatarSize={Number(44)}
 							/>
-							<div className='flex h-full my-auto'>
-								<div>
-									<p className='font-semibold text-md'>{truncatedName}</p>
+							<div className='flex h-full items-center'>
+								<div className='-mt-1'>
+									<p className='font-semibold text-md text-black dark:text-white'>
+										{truncatedName}
+									</p>
 									<p className='-mt-2 text-gray-400 text-sm font-semibold'>
 										{truncatedDescription}
 									</p>
@@ -79,25 +80,35 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 						<>
 							{community.moderators?.map((item, index) => {
 								if (typeof item !== 'object') {
-									return null;
+									return null
 								}
-								
+
 								return (
-									<Link key={index} href={`/u/${getRelationProp<User, 'id'>(item, 'id', 0)}`}>
-										<div className="flex gap-4 mt-1">
+									<Link
+										key={index}
+										href={`/u/${getRelationProp<User, 'id'>(item, 'id', 0)}`}
+									>
+										<div className='flex gap-4 mt-1'>
 											<ProfileAvatar
-												className="w-11 h-11 border-none bg-secondary hover:bg-secondary"
+												className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
 												avatarImage={getMediaUrl(item.avatar, '')}
 												avatarSize={44}
 											/>
-											<div className="flex h-full my-auto">
+											<div className='flex h-full my-auto'>
 												<div>
-													<p className="font-semibold text-md">
-														{truncateText(getRelationProp<User, 'name'>(item, 'name', ''), 20)}
-													</p>
-													<p className="mt-1 text-gray-400 text-sm font-semibold">
+													<p className='font-semibold text-md'>
 														{truncateText(
-															getRelationProp<User, 'description'>(item, 'description', '') || '',
+															getRelationProp<User, 'name'>(item, 'name', ''),
+															20
+														)}
+													</p>
+													<p className='mt-1 text-gray-400 text-sm font-semibold'>
+														{truncateText(
+															getRelationProp<User, 'description'>(
+																item,
+																'description',
+																''
+															) || '',
 															24
 														)}
 													</p>
@@ -105,7 +116,7 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 											</div>
 										</div>
 									</Link>
-								);
+								)
 							})}
 						</>
 					)}

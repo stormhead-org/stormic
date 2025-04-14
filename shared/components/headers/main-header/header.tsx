@@ -56,8 +56,10 @@ export const Header: React.FC<Props> = ({
 					<div className='flex items-center gap-4 w-[250px]'>
 						<img src={logoImage || ''} alt='Logo' width={42} height={42} />
 						<div>
-							<h1 className='text-2xl uppercase font-black'>{stormicName}</h1>
-							<p className='text-sm text-gray-400 leading-3 mb-1'>
+							<h1 className='text-2xl uppercase font-black text-gray-700 dark:text-white'>
+								{stormicName}
+							</h1>
+							<p className='text-sm text-gray-700 dark:text-white leading-3 mb-1'>
 								{description}
 							</p>
 						</div>

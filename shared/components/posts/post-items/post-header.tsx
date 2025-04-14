@@ -48,7 +48,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 	const handleDeletePost = async () => {
 		await deletePost(post, router)
 	}
-	
+
 	const authorId = getRelationProp<User, 'id'>(post.author, 'id', 0)
 	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
 	const avatarImageUrl =
@@ -56,8 +56,12 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 			? getMediaUrl(post.author?.avatar, '/logo.png')
 			: '/logo.png'
 	const authorName = getRelationProp<User, 'name'>(post.author, 'name', '')
-	const communityTitle = getRelationProp<Community, 'title'>(post.community, 'title', '')
-	
+	const communityTitle = getRelationProp<Community, 'title'>(
+		post.community,
+		'title',
+		''
+	)
+
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
 			<div className='flex items-center'>
@@ -66,14 +70,14 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 				</Link>
 				<div className='ml-2'>
 					<Link
-						className='hover:text-a-color-hover'
+						className='text-black dark:text-white font-bold'
 						href={`/u/${authorId}` || '#'}
 					>
 						{authorName}
 					</Link>
 					<br />
 					<Link
-						className='text-sm hover:text-a-color-hover'
+						className='text-sm text-black dark:text-white'
 						href={post.community ? `/c/${communityId}` : '#'}
 					>
 						{communityTitle}

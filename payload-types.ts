@@ -517,6 +517,7 @@ export interface Post {
   };
   bookmarks?: (number | User)[] | null;
   publishedAt?: string | null;
+  views: number;
   hasDeleted?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -919,6 +920,7 @@ export interface PostsSelect<T extends boolean = true> {
   likes?: T;
   bookmarks?: T;
   publishedAt?: T;
+  views?: T;
   hasDeleted?: T;
   updatedAt?: T;
   createdAt?: T;

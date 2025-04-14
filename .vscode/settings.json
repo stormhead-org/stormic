@@ -1,3 +1,9 @@
 {
-	"cSpell.words": ["RABBITMQ", "Stormic", "unfollow"]
+	"cSpell.words": [
+		"agentkeepalive",
+		"payloadcms",
+		"RABBITMQ",
+		"Stormic",
+		"unfollow"
+	]
 }

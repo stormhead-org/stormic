@@ -141,9 +141,11 @@ export const AboutPage: React.FC<Props> = ({
 								avatarImage={avatarImage}
 								avatarSize={Number(54)}
 							/>
-							<div className='flex h-full my-auto'>
-								<div>
-									<p className='font-semibold text-md'>{truncatedName}</p>
+							<div className='flex h-full items-center'>
+								<div className='-mt-2'>
+									<p className='font-semibold text-md text-black dark:text-white'>
+										{truncatedName}
+									</p>
 									<p className='-mt-2 text-gray-400 text-sm font-semibold'>
 										{truncatedDescription}
 									</p>

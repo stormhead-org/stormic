@@ -54,8 +54,12 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 								/>
 								<div className='flex h-full my-auto'>
 									<div>
-										<p className='font-bold text-md'>{truncatedName}</p>
-										<p className='mt-1'>{truncatedDescription}</p>
+										<p className='font-bold text-md text-black dark:text-white'>
+											{truncatedName}
+										</p>
+										<p className='mt-1 text-black dark:text-white'>
+											{truncatedDescription}
+										</p>
 									</div>
 								</div>
 							</div>

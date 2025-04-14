@@ -20,7 +20,7 @@ export const CommunitiesItem: React.FC<CategoryItemProps> = ({
 	name,
 	url,
 	image,
-	className,
+	className
 }) => {
 	const pathname = usePathname()
 
@@ -29,9 +29,9 @@ export const CommunitiesItem: React.FC<CategoryItemProps> = ({
 			<Link href={String(url)}>
 				<div
 					className={cn(
-						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-700 hover:text-white cursor-pointer mb-1 space-x-2',
+						'flex items-center justify-between w-full h-12 rounded-[6px] hover:bg-blue-800 text-black dark:text-white hover:text-white cursor-pointer mb-1 space-x-2',
 						`${
-							pathname === url ? 'bg-blue-800 text-white hover:bg-blue-800' : ''
+							pathname === url ? 'bg-blue-700 text-white hover:bg-blue-700' : ''
 						}`
 					)}
 				>

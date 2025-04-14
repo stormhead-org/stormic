@@ -2,6 +2,7 @@ import { Media } from '@/payload-types'
 import CommentImageGallery from '@/shared/components/comments/comment-image-gallery'
 import { cn } from '@/shared/lib/utils'
 import { Link2 } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 
 export interface CommentItemProps {
@@ -41,7 +42,9 @@ export const CommentBody: React.FC<CommentItemProps> = ({
 					<a href={postUrl}>
 						<p
 							className={cn(
-								deleted && 'italic text-zinc-500 dark:text-zinc-400'
+								deleted
+									? 'italic text-zinc-500 dark:text-zinc-400'
+									: 'text-black dark:text-white'
 							)}
 						>
 							{truncatedContent}
@@ -49,20 +52,19 @@ export const CommentBody: React.FC<CommentItemProps> = ({
 					</a>
 				)}
 				{media && (
-					<div className=''>
-						<div className='relative rounded-md overflow-hidden flex items-center justify-center bg-primary/10 p-1 mb-1 h-40 w-full'>
-							
+					<div className='mt-2'>
+						<div className='relative rounded-md overflow-hidden flex items-center justify-center bg-primary/10 mb-1 h-40 w-full'>
 							{media?.url && (
 								<div>
 									<CommentImageGallery images={[media.url]} />
-									<a
+									<Link
 										href={media.url}
 										target='_blank'
 										rel='noopener noreferrer'
-										className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer'
+										className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer text-black dark:text-white'
 									>
 										<Link2 />
-									</a>
+									</Link>
 								</div>
 							)}
 						</div>

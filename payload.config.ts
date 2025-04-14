@@ -8,6 +8,8 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { en } from '@payloadcms/translations/languages/en'
 import { ru } from '@payloadcms/translations/languages/ru'
+import { NodeHttpHandler } from '@smithy/node-http-handler'
+import { HttpAgent } from 'agentkeepalive'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import sharp from 'sharp'
@@ -33,6 +35,13 @@ import { getServerSideURL } from './shared/lib/getURL'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+const agent = new HttpAgent({
+	maxSockets: 500,
+	maxFreeSockets: 100,
+	timeout: 60000,
+	freeSocketTimeout: 30000
+})
 
 export default buildConfig({
 	admin: {
@@ -141,6 +150,9 @@ export default buildConfig({
 					accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
 					secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || ''
 				},
+				requestHandler: new NodeHttpHandler({
+					httpAgent: agent
+				}),
 				forcePathStyle: true
 			}
 		}),

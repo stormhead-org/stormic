@@ -32,7 +32,7 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 					maxLengthBody={56}
 					apiUrl='/api/comments'
 					paramKey='global'
-					paramValue={String('true')}
+					paramValue='true'
 				/>
 			</div>
 		</div>

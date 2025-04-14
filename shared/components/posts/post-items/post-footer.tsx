@@ -9,7 +9,7 @@ export interface PostFooterProps {
 	postId: number
 	postTags?: string[]
 	commentsCount: number
-	// viewsCount: number;
+	views: number
 	className?: string
 }
 
@@ -17,7 +17,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({
 	postId,
 	postTags,
 	commentsCount,
-	// viewsCount,
+	views,
 	className
 }) => {
 	return (
@@ -53,7 +53,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({
 				<div className='group cursor-pointer'>
 					<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
 						<Eye className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' />{' '}
-						{/* {viewsCount} */}4
+						{views}
 					</p>
 				</div>
 			</div>

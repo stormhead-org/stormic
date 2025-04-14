@@ -44,12 +44,15 @@ export const CommentHeader: React.FC<CommentHeaderProps> = ({
 					<ProfileAvatar avatarImage={authorAvatar || ''} />
 				</Link>
 				<div className='ml-2'>
-					<Link className='hover:text-a-color-hover' href={authorUrl}>
+					<Link
+						className='text-black dark:text-white font-bold'
+						href={authorUrl}
+					>
 						{authorName}
 					</Link>
 					<br />
 					{postUrl ? (
-						<Link className='text-sm hover:text-a-color-hover' href={postUrl}>
+						<Link className='text-sm text-black dark:text-white' href={postUrl}>
 							{truncatedContent}
 						</Link>
 					) : (

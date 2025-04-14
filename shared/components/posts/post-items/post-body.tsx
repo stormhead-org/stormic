@@ -14,41 +14,6 @@ interface Props {
 	maxLength: number
 }
 
-// const truncateEditorState = (
-// 	serializedState: SerializedEditorState,
-// 	maxLength: number
-// ): SerializedEditorState => {
-// 	if (!serializedState || !serializedState.root) return serializedState
-
-// 	let charCount = 0
-
-// 	const truncateNode = (node: any): any => {
-// 		if (charCount >= maxLength) return null
-
-// 		if (node.children) {
-// 			const newChildren = []
-// 			for (const child of node.children) {
-// 				const newChild = truncateNode(child)
-// 				if (!newChild) break
-// 				newChildren.push(newChild)
-// 			}
-// 			return { ...node, children: newChildren }
-// 		} else if (node.text) {
-// 			const remaining = maxLength - charCount
-// 			const truncatedText = node.text.slice(0, remaining)
-// 			charCount += truncatedText.length
-// 			return { ...node, text: truncatedText }
-// 		}
-
-// 		return node
-// 	}
-
-// 	return {
-// 		...serializedState,
-// 		root: truncateNode(serializedState.root)
-// 	}
-// }
-
 export const PostBody: React.FC<Props> = ({
 	postTitle,
 	postContent,
@@ -61,10 +26,15 @@ export const PostBody: React.FC<Props> = ({
 		<div className={cn('', className)}>
 			<Link href={postUrl}>
 				<div className='max-h-[18rem] overflow-hidden rounded-md'>
-					<Title text={postTitle} size='sm' className='font-extrabold my-2' />
+					<Title
+						text={postTitle}
+						size='sm'
+						className='font-extrabold my-2 text-black dark:text-white'
+					/>
 					<RichText
 						//data={truncateEditorState(postContent, maxLength)}
 						data={postContent}
+						className='text-black dark:text-white text-justify'
 					/>
 				</div>
 				{heroImage && (

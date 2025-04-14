@@ -1,3 +1,4 @@
+import { anyone } from '@/modules/access/anyone'
 import { authenticated } from '@/modules/access/authenticated'
 import { addBookmark } from '@/shared/utils/api/bookmarks/addBookmark'
 import { getBookmarkStatus } from '@/shared/utils/api/bookmarks/getBookmarkStatus'
@@ -5,6 +6,7 @@ import { removeBookmark } from '@/shared/utils/api/bookmarks/removeBookmark'
 import { getCommentTree } from '@/shared/utils/api/comments/getCommentTree'
 import { getPostStatus } from '@/shared/utils/api/posts/getPostStatus'
 import { likePost } from '@/shared/utils/api/posts/likePost'
+import { postView } from '@/shared/utils/api/posts/postView'
 import { unlikePost } from '@/shared/utils/api/posts/unlikePost'
 import {
 	MetaDescriptionField,
@@ -20,7 +22,7 @@ export const Posts: CollectionConfig<'posts'> = {
 	access: {
 		create: authenticated,
 		delete: authenticated,
-		read: authenticated,
+		read: anyone,
 		update: authenticated
 	},
 	defaultPopulate: {
@@ -226,6 +228,33 @@ export const Posts: CollectionConfig<'posts'> = {
 					)
 				}
 			}
+		},
+		{
+			path: '/:id/views',
+			method: 'post',
+			handler: async req => {
+				try {
+					const result = await postView(req)
+					return Response.json(result)
+				} catch (error: any) {
+					req.payload.logger.error(
+						'Error while processing increment post view:',
+						error
+					)
+
+					if (error.message === 'Valid Post ID is required') {
+						return Response.json(
+							{ error: 'Valid Post ID is required' },
+							{ status: 400 }
+						)
+					}
+
+					return Response.json(
+						{ error: 'Failed to increment post view' },
+						{ status: 500 }
+					)
+				}
+			}
 		}
 	],
 	fields: [
@@ -358,6 +387,13 @@ export const Posts: CollectionConfig<'posts'> = {
 					}
 				]
 			}
+		},
+		{
+			label: 'Просмотры',
+			name: 'views',
+			type: 'number',
+			defaultValue: 0,
+			required: true
 		},
 		{
 			label: 'Пост удален',

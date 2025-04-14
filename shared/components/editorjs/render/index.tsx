@@ -9,7 +9,7 @@ interface RichTextProps {
 	className?: string
 }
 
-const RichText: React.FC<RichTextProps> = ({ data, className = '' }) => {
+const RichText: React.FC<RichTextProps> = ({ data, className }) => {
 	if (!data) return null
 
 	const edjsParser = EditorJsHtml()

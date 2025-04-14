@@ -19,7 +19,7 @@ const SessionContext = createContext<Session | null>(null)
 
 export default function SessionProvider({
 	session,
-	children,
+	children
 }: {
 	session: Session
 	children: React.ReactNode
@@ -33,6 +33,5 @@ export default function SessionProvider({
 
 export function useSession() {
 	const session = useContext(SessionContext)
-	// console.log(session)
 	return session
 }
