@@ -169,7 +169,7 @@ export const AboutPage: React.FC<Props> = ({
 				collapsible
 			>
 				<AccordionItem value='about'>
-					<AccordionTrigger className='text-lg'>
+					<AccordionTrigger className='text-lg -mb-4'>
 						{/* {formatMessage({ id: 'aboutPage.about' })} */}О Проекте
 					</AccordionTrigger>
 					<AccordionContent className='text-base'>
@@ -179,15 +179,15 @@ export const AboutPage: React.FC<Props> = ({
 			</Accordion>
 
 			<Accordion
-				className='mt-4 px-4 rounded-md bg-secondary'
+				className='mt-7 px-4 rounded-md bg-secondary'
 				type='single'
 				defaultValue='about'
 				collapsible
 			>
 				<p className='pt-4 text-lg'>Правила</p>
 				{hostInfo.rules?.map((item, index) => (
-					<AccordionItem key={index} value={`key-${index}`}>
-						<AccordionTrigger className='text-lg'>
+					<AccordionItem className='-mt-4' key={index} value={`key-${index}`}>
+						<AccordionTrigger className='text-lg -my-2'>
 							{/* {formatMessage({ id: 'aboutPage.rules' })} */}
 							{`${index + 1}. ${item.nameRule}`}
 						</AccordionTrigger>
