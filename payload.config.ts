@@ -9,7 +9,7 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { en } from '@payloadcms/translations/languages/en'
 import { ru } from '@payloadcms/translations/languages/ru'
 import { NodeHttpHandler } from '@smithy/node-http-handler'
-import { HttpAgent } from 'agentkeepalive'
+import { HttpsAgent } from 'agentkeepalive'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import sharp from 'sharp'
@@ -36,42 +36,15 @@ import { getServerSideURL } from './shared/lib/getURL'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const agent = new HttpAgent({
+const agent = new HttpsAgent({
 	maxSockets: 500,
 	maxFreeSockets: 100,
 	timeout: 60000,
 	freeSocketTimeout: 30000
 })
+console.log('Using httpsAgent with maxSockets:', agent.maxSockets)
 
 export default buildConfig({
-	admin: {
-		user: Users.slug,
-		importMap: {
-			baseDir: path.resolve(dirname)
-		},
-		livePreview: {
-			breakpoints: [
-				{
-					label: 'Mobile',
-					name: 'mobile',
-					width: 375,
-					height: 667
-				},
-				{
-					label: 'Tablet',
-					name: 'tablet',
-					width: 768,
-					height: 1024
-				},
-				{
-					label: 'Desktop',
-					name: 'desktop',
-					width: 1440,
-					height: 900
-				}
-			]
-		}
-	},
 	collections: [
 		Users,
 		Posts,
@@ -151,7 +124,7 @@ export default buildConfig({
 					secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || ''
 				},
 				requestHandler: new NodeHttpHandler({
-					httpAgent: agent
+					httpsAgent: agent
 				}),
 				forcePathStyle: true
 			}
