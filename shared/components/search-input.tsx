@@ -91,7 +91,7 @@ export const SearchInput: React.FC<Props> = ({ posts, className }) => {
 							<Link
 								onClick={onClickItem}
 								key={item.postId}
-								className='flex items-center gap-3 mx-2 px-3 py-2 hover:bg-blue-700 hover:text-white rounded-md'
+								className='flex items-center gap-3 mx-2 px-3 py-2 hover:bg-blue-700 text-black hover:text-white dark:text-white rounded-md'
 								href={item.postUrl}
 							>
 								<img
