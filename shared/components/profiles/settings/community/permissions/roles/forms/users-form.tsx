@@ -7,6 +7,7 @@ import {
 } from '@/shared/components/ui/avatar'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import { CircleUser, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
@@ -39,13 +40,8 @@ export const UsersForm: React.FC<Props> = ({
 
 	const filteredUsers =
 		selectedRole.users?.filter((user): user is User => {
-			return (
-				typeof user === 'object' &&
-				user != null && // Убеждаемся, что user не null/undefined
-				'name' in user && // Проверяем наличие поля name
-				typeof user.name === 'string' && // Убеждаемся, что name — строка
-				user.name.toLowerCase().includes(searchTerm.toLowerCase())
-			)
+			const userName = getRelationProp<User, 'name'>(user, 'name', '')
+			return userName.toLowerCase().includes(searchTerm.toLowerCase())
 		}) || []
 
 	const handleSubmitDeleteUserRole = async (
@@ -135,53 +131,55 @@ export const UsersForm: React.FC<Props> = ({
 							<div className='p-2 text-gray-500'>Участники не найдены</div>
 						) : (
 							<div className='flex flex-col'>
-								{filteredUsers.map(user => (
-									<div
-										key={user.id}
-										className='flex w-full p-1 cursor-pointer hover:bg-gray-600 bg-gray-700 rounded-md mt-2 items-center justify-between'
-									>
-										<div className='flex w-11/12'>
-											<div className='w-full flex justify-items-start items-center gap-2 bg-transparent text-primary'>
-												<Avatar className='rounded-full'>
-													<AvatarImage
-														className='m-auto rounded-full'
-														src={
-															typeof user.avatar === 'object' &&
-															user.avatar?.url
-																? user.avatar.url
-																: undefined
-														}
-														style={{ width: 34, height: 34 }}
+								{filteredUsers.map(user => {
+									const avatarImageUrl =
+										typeof user === 'object'
+											? getMediaUrl(user.avatar, '/logo.png')
+											: '/logo.png'
+
+									return (
+										<div
+											key={user.id}
+											className='flex w-full p-1 cursor-pointer hover:bg-gray-600 bg-gray-700 rounded-md mt-2 items-center justify-between'
+										>
+											<div className='flex w-11/12'>
+												<div className='w-full flex justify-items-start items-center gap-2 bg-transparent text-primary'>
+													<Avatar className='rounded-full'>
+														<AvatarImage
+															className='m-auto rounded-full'
+															src={avatarImageUrl}
+															style={{ width: 34, height: 34 }}
+														/>
+														<AvatarFallback>
+															<CircleUser />
+														</AvatarFallback>
+													</Avatar>
+													<span>{user.name}</span>
+												</div>
+											</div>
+											<div className='group -my-7 w-1/12'>
+												<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+													<X
+														className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+														onClick={async () => {
+															try {
+																await handleSubmitDeleteUserRole(
+																	selectedRole.id,
+																	user.id
+																)
+															} catch (error) {
+																console.error(
+																	'Ошибка при удалении пользователя из роли:',
+																	error
+																)
+															}
+														}}
 													/>
-													<AvatarFallback>
-														<CircleUser />
-													</AvatarFallback>
-												</Avatar>
-												<span>{user.name}</span>
+												</p>
 											</div>
 										</div>
-										<div className='group -my-7 w-1/12'>
-											<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
-												<X
-													className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
-													onClick={async () => {
-														try {
-															await handleSubmitDeleteUserRole(
-																selectedRole.id,
-																user.id
-															)
-														} catch (error) {
-															console.error(
-																'Ошибка при удалении пользователя из роли:',
-																error
-															)
-														}
-													}}
-												/>
-											</p>
-										</div>
-									</div>
-								))}
+									)
+								})}
 							</div>
 						)}
 					</div>

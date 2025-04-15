@@ -9,7 +9,7 @@ import {
 	DialogHeader,
 	DialogTitle
 } from '@/shared/components/ui/dialog'
-import { getMediaUrl } from '@/shared/utils/payload/getTypes'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import { CircleUser, Shield } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
@@ -24,12 +24,6 @@ interface Props {
 	onClose: () => void
 	users: User[]
 	selectedRole: HostRole
-}
-
-interface UserWithDetails {
-	id: number
-	name: string
-	avatar?: { url: string }
 }
 
 export const RoleAddUserHostModal: React.FC<Props> = ({
@@ -47,7 +41,7 @@ export const RoleAddUserHostModal: React.FC<Props> = ({
 	const [selectedUsers, setSelectedUsers] = useState<number[]>([])
 
 	const filteredUsers =
-		users?.filter((item): item is User & { user: UserWithDetails } => {
+		users?.filter((item): item is User & { user: User } => {
 			const isAlreadyInRole =
 				selectedRole.users?.some(user => {
 					const userId = typeof user === 'object' && user?.id ? user.id : user
@@ -56,13 +50,10 @@ export const RoleAddUserHostModal: React.FC<Props> = ({
 						: userId === item
 				}) || false
 
+			const userName = getRelationProp<User, 'name'>(item, 'name', '')
+
 			return (
-				typeof item === 'object' &&
-				item != null &&
-				typeof item === 'object' &&
-				'name' in item &&
-				typeof item.name === 'string' &&
-				item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+				userName.toLowerCase().includes(searchTerm.toLowerCase()) &&
 				!isAlreadyInRole
 			)
 		}) || []

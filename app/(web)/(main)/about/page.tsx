@@ -33,7 +33,7 @@ export default async function About() {
 		<>
 			{/* Центральная часть */}
 			<MainBannerForm
-				stormicName={resultGlobalHost.title && String(resultGlobalHost.title)}
+				stormicName={resultGlobalHost.title || 'Stormic'}
 				bannerUrl={bannerUrl}
 			/>
 			<AboutPage

@@ -4,6 +4,7 @@ import { PostFooter } from '@/shared/components/posts/post-items/post-footer'
 import { PostHeader } from '@/shared/components/posts/post-items/post-header'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { OutputData } from '@editorjs/editorjs'
 import React from 'react'
 import { useSession } from '../../../providers/items/SessionProvider'
@@ -27,6 +28,9 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 	const session = useSession()
 	const currentUser = session && (session.user as User)
 
+	const heroImageUrl =
+		typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage, '') : ''
+
 	return (
 		<div className={cn('bg-secondary rounded-md mb-4 p-4', className)}>
 			<PostHeader
@@ -38,13 +42,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 			<PostFullBody
 				className='cursor-default'
 				postTitle={post.title}
-				heroImage={String(
-					'heroImage' in post &&
-						typeof post.heroImage === 'object' &&
-						post.heroImage !== null
-						? post.heroImage.url
-						: ''
-				)}
+				heroImage={heroImageUrl}
 				postContent={post.content as unknown as OutputData}
 			/>
 			{post.relatedPost && (

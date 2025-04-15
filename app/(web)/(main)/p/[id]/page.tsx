@@ -11,9 +11,8 @@ import { getSession } from '@/shared/lib/auth'
 import { getRelationProp } from '@/shared/utils/payload/getTypes'
 
 interface PageProps {
-	params: Promise<{ id: string }>;
+	params: Promise<{ id: string }>
 }
-
 
 export default async function Post({ params: paramsPromise }: PageProps) {
 	const { id = null } = await paramsPromise
@@ -22,57 +21,55 @@ export default async function Post({ params: paramsPromise }: PageProps) {
 		return <PostNotFound />
 	}
 
-	const session = (await getSession()) as { user: User } | null
-	const currentUser = session && session.user
+	try {
+		const session = (await getSession()) as { user: User } | null
+		const currentUser = session && session.user
 
-	const payload = await getPayload({ config: configPromise })
+		const payload = await getPayload({ config: configPromise })
 
-	// const resultPost = await payload.find({
-	// 	collection: 'posts',
-	// 	overrideAccess: true,
-	// 	where: {
-	// 		id: {
-	// 			equals: Number(id)
-	// 		},
-	// 		_status: {
-	// 			equals: 'published'
-	// 		}
-	// 	}
-	// })
+		const post = await payload.findByID({
+			collection: 'posts',
+			id: id,
+			overrideAccess: true
+		})
 
-	const post = await payload.findByID({
-		collection: 'posts',
-		id: id,
-		overrideAccess: true
-	})
+		if (!post || post._status === 'draft') {
+			return <PostNotFound />
+		}
 
-	if (!post || post._status === 'draft') {
-		return <PostNotFound />
-	}
+		if (post.hasDeleted === true) {
+			return <PostDeleted />
+		}
 
-	if (post.hasDeleted === true) {
-		return <PostDeleted />
-	}
+		const resultCommunities = await payload.find({
+			collection: 'communities',
+			overrideAccess: true
+		})
 
-	const resultCommunities = await payload.find({
-		collection: 'communities',
-		overrideAccess: true
-	})
+		const communities = resultCommunities.docs as Community[]
 
-	const communities = resultCommunities.docs as Community[]
+		const communityId = getRelationProp<Community, 'id'>(
+			post.community,
+			'id',
+			0
+		)
 
-	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
+		const permissions = currentUser
+			? await getUserPermissions(currentUser.id, communityId)
+			: null
 
-	const permissions = currentUser
-		? await getUserPermissions(currentUser.id, communityId)
-		: null
-
-	return (
+		return (
 			<FullPostPage
 				post={post}
 				communities={communities}
 				permissions={permissions}
 				currentUser={currentUser}
 			/>
-	)
+		)
+	} catch (error: unknown) {
+		const errorMessage =
+			error instanceof Error ? error.message : 'Unknown error'
+		console.error(`Error loading post: ${errorMessage}`)
+		return <PostNotFound />
+	}
 }

@@ -9,6 +9,7 @@ import {
 	DialogHeader,
 	DialogTitle
 } from '@/shared/components/ui/dialog'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import { CircleUser } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -24,12 +25,6 @@ interface Props {
 	open: boolean
 	onClose: () => void
 	bannedUsers: number[]
-}
-
-interface UserWithDetails {
-	id: number
-	name: string
-	avatar?: { url: string }
 }
 
 export const CommunityUsersBansModal: React.FC<Props> = ({
@@ -49,13 +44,10 @@ export const CommunityUsersBansModal: React.FC<Props> = ({
 	const [selectedUsers, setSelectedUsers] = useState<number[]>([])
 
 	const filteredUsers = communityUsers.filter(item => {
-		const user = item.user as UserWithDetails
+		const user = item.user as User
+		const userName = getRelationProp<User, 'name'>(user, 'name', '')
 		return (
-			typeof user === 'object' &&
-			user != null &&
-			'name' in user &&
-			typeof user.name === 'string' &&
-			user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+			userName.toLowerCase().includes(searchTerm.toLowerCase()) &&
 			!bannedUsers.includes(user.id) &&
 			user.id !== currentUser.id
 		)
@@ -157,7 +149,11 @@ export const CommunityUsersBansModal: React.FC<Props> = ({
 							) : (
 								<div className='flex flex-col gap-2 w-full h-[40vh] overflow-auto'>
 									{filteredUsers.map(item => {
-										const user = item.user as UserWithDetails
+										const user = item.user as User
+										const avatarImageUrl =
+											typeof user === 'object'
+												? getMediaUrl(user.avatar, '/logo.png')
+												: '/logo.png'
 										return (
 											<div
 												key={item.id}
@@ -184,7 +180,7 @@ export const CommunityUsersBansModal: React.FC<Props> = ({
 													<Avatar className='rounded-full'>
 														<AvatarImage
 															className='m-auto rounded-full'
-															src={user.avatar?.url}
+															src={avatarImageUrl}
 															style={{ width: 34, height: 34 }}
 														/>
 														<AvatarFallback>

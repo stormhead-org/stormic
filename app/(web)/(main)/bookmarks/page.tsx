@@ -4,6 +4,7 @@ import { BookmarksEmpty } from '@/shared/components/info-blocks/bookmarks-empty'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { getSession } from '@/shared/lib/auth'
 import { Permissions } from '@/shared/lib/permissions'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -67,17 +68,16 @@ export default async function Bookmarks() {
 	// Получаем права для каждого поста
 	const postPermissions: Record<number, Permissions | null> = {}
 
+	const bannerUrl =
+		typeof resultGlobalHost.banner === 'object'
+			? getMediaUrl(resultGlobalHost.banner, '/defaultBanner.jpg')
+			: '/defaultBanner.jpg'
+
 	return (
 		<>
 			<MainBannerForm
-				stormicName={resultGlobalHost.title && String(resultGlobalHost.title)}
-				bannerUrl={
-					'banner' in resultGlobalHost &&
-					typeof resultGlobalHost.banner === 'object' &&
-					resultGlobalHost.banner !== null
-						? resultGlobalHost.banner.url
-						: ''
-				}
+				stormicName={resultGlobalHost.title || 'Stormic'}
+				bannerUrl={bannerUrl}
 			/>
 			<PostForm
 				limit={5}

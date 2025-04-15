@@ -198,7 +198,7 @@ export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
 									<FormInput
 										name='slogan'
 										type='text'
-										placeholder='Код, GitHub и ты'
+										placeholder='код, GitHub и ты'
 										className='mt-2'
 									/>
 

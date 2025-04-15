@@ -9,6 +9,7 @@ import {
 } from '@/shared/components/ui/avatar'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { CircleUser, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
@@ -106,6 +107,10 @@ export const UsersBanForm: React.FC<Props> = ({
 						<div className='flex flex-col'>
 							{filteredBans.map(ban => {
 								const user = ban.user as User
+								const userAvatarUrl =
+									typeof user.avatar === 'object'
+										? getMediaUrl(user.avatar, '/logo.png')
+										: '/logo.png'
 								return (
 									<div
 										key={ban.id}
@@ -116,12 +121,7 @@ export const UsersBanForm: React.FC<Props> = ({
 												<Avatar className='rounded-full'>
 													<AvatarImage
 														className='m-auto rounded-full'
-														src={
-															typeof user.avatar === 'object' &&
-															user.avatar?.url
-																? user.avatar.url
-																: undefined
-														}
+														src={userAvatarUrl}
 														style={{ width: 34, height: 34 }}
 													/>
 													<AvatarFallback>

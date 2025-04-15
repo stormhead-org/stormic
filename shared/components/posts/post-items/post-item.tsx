@@ -8,6 +8,7 @@ import { Permissions } from '@/shared/lib/permissions' // Импортируем
 import { cn } from '@/shared/lib/utils'
 import { usePostLikesStore } from '@/shared/stores/post-likes-store'
 import { createVisibilityObserver } from '@/shared/utils/api/posts/visibility-observer'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { OutputData } from '@editorjs/editorjs'
 import { useEffect, useRef } from 'react'
 import { useSession } from '../../../providers/items/SessionProvider'
@@ -41,6 +42,9 @@ export const PostItem: React.FC<{
 		}
 	}, [post.id])
 
+	const heroImageUrl =
+		typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage, '') : ''
+
 	return (
 		<div
 			className={cn(
@@ -58,13 +62,7 @@ export const PostItem: React.FC<{
 				<PostBody
 					postTitle={post.title}
 					postContent={post.content as unknown as OutputData}
-					heroImage={String(
-						'heroImage' in post &&
-							typeof post.heroImage === 'object' &&
-							post.heroImage !== null
-							? post.heroImage.url
-							: ''
-					)}
+					heroImage={heroImageUrl}
 					maxLength={300}
 					postUrl={`/p/${post.id}`}
 				/>

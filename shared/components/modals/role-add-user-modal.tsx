@@ -1,6 +1,6 @@
 'use client'
 
-import { FollowCommunity, Role } from '@/payload-types'
+import { FollowCommunity, Role, User } from '@/payload-types'
 import {
 	Dialog,
 	DialogContent,
@@ -9,6 +9,7 @@ import {
 	DialogHeader,
 	DialogTitle
 } from '@/shared/components/ui/dialog'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import { CircleUser, Shield } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
@@ -23,12 +24,6 @@ interface Props {
 	onClose: () => void
 	communityUsers: FollowCommunity[]
 	selectedRole: Role
-}
-
-interface UserWithDetails {
-	id: number
-	name: string
-	avatar?: { url: string }
 }
 
 export const RoleAddUserModal: React.FC<Props> = ({
@@ -46,27 +41,25 @@ export const RoleAddUserModal: React.FC<Props> = ({
 	const [selectedUsers, setSelectedUsers] = useState<number[]>([])
 
 	const filteredUsers =
-		communityUsers?.filter(
-			(item): item is FollowCommunity & { user: UserWithDetails } => {
-				const isAlreadyInRole =
-					selectedRole.users?.some(user => {
-						const userId = typeof user === 'object' && user?.id ? user.id : user
-						return typeof item.user === 'object' && item.user?.id
-							? userId === item.user.id
-							: userId === item.user
-					}) || false
+		communityUsers?.filter((item): item is FollowCommunity & { user: User } => {
+			const isAlreadyInRole =
+				selectedRole.users?.some(user => {
+					const userId = typeof user === 'object' && user?.id ? user.id : user
+					return typeof item.user === 'object' && item.user?.id
+						? userId === item.user.id
+						: userId === item.user
+				}) || false
 
-				return (
-					typeof item === 'object' &&
-					item.user != null &&
-					typeof item.user === 'object' &&
-					'name' in item.user &&
-					typeof item.user.name === 'string' &&
-					item.user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-					!isAlreadyInRole
-				)
-			}
-		) || []
+			return (
+				typeof item === 'object' &&
+				item.user != null &&
+				typeof item.user === 'object' &&
+				'name' in item.user &&
+				typeof item.user.name === 'string' &&
+				item.user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+				!isAlreadyInRole
+			)
+		}) || []
 
 	const handleSubmitAddUsers = async (roleId: number, userIds: number[]) => {
 		const communityId =
@@ -185,43 +178,53 @@ export const RoleAddUserModal: React.FC<Props> = ({
 								<div className='p-2 text-gray-500'>Участники не найдены</div>
 							) : (
 								<div className='flex flex-col gap-2 w-full h-[40vh] overflow-auto'>
-									{filteredUsers.map(item => (
-										<div
-											key={item.id}
-											className='flex items-center gap-2 w-full px-2 py-1 cursor-pointer rounded-md bg-secondary hover:bg-gray-800'
-											onClick={() =>
-												handleCheckboxChange(
-													item.user.id,
-													!selectedUsers.includes(item.user.id)
-												)
-											}
-										>
-											<Checkbox
-												checked={selectedUsers.includes(item.user.id)}
-												onClick={event => event.stopPropagation()}
-												onCheckedChange={checked =>
-													handleCheckboxChange(item.user.id, checked as boolean)
+									{filteredUsers.map(item => {
+										const avatarImageUrl =
+											typeof item.user === 'object'
+												? getMediaUrl(item.user.avatar, '/logo.png')
+												: '/logo.png'
+
+										return (
+											<div
+												key={item.id}
+												className='flex items-center gap-2 w-full px-2 py-1 cursor-pointer rounded-md bg-secondary hover:bg-gray-800'
+												onClick={() =>
+													handleCheckboxChange(
+														item.user.id,
+														!selectedUsers.includes(item.user.id)
+													)
 												}
-												disabled={
-													selectedUsers.length >= 30 &&
-													!selectedUsers.includes(item.user.id)
-												}
-											/>
-											<div className='flex justify-items-start items-center gap-2 bg-transparent text-primary'>
-												<Avatar className='rounded-full'>
-													<AvatarImage
-														className='m-auto rounded-full'
-														src={item.user.avatar?.url}
-														style={{ width: 34, height: 34 }}
-													/>
-													<AvatarFallback>
-														<CircleUser />
-													</AvatarFallback>
-												</Avatar>
-												<span>{item.user.name}</span>
+											>
+												<Checkbox
+													checked={selectedUsers.includes(item.user.id)}
+													onClick={event => event.stopPropagation()}
+													onCheckedChange={checked =>
+														handleCheckboxChange(
+															item.user.id,
+															checked as boolean
+														)
+													}
+													disabled={
+														selectedUsers.length >= 30 &&
+														!selectedUsers.includes(item.user.id)
+													}
+												/>
+												<div className='flex justify-items-start items-center gap-2 bg-transparent text-primary'>
+													<Avatar className='rounded-full'>
+														<AvatarImage
+															className='m-auto rounded-full'
+															src={avatarImageUrl}
+															style={{ width: 34, height: 34 }}
+														/>
+														<AvatarFallback>
+															<CircleUser />
+														</AvatarFallback>
+													</Avatar>
+													<span>{item.user.name}</span>
+												</div>
 											</div>
-										</div>
-									))}
+										)
+									})}
 								</div>
 							)}
 						</div>

@@ -20,6 +20,7 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import { OwnerNotFound } from '../info-blocks/owner-not-found'
 // import { useIntl } from 'react-intl'
 
 interface Props {
@@ -44,7 +45,7 @@ export const AboutPage: React.FC<Props> = ({
 	// const { formatMessage } = useIntl()
 
 	if (!hostInfo.owner) {
-		return <div>Owner not found</div>
+		return <OwnerNotFound />
 	}
 
 	const truncatedName = truncateText((hostInfo.owner as User).name || '', 20)
@@ -109,12 +110,6 @@ export const AboutPage: React.FC<Props> = ({
 								onClick={() => router.push('/settings/host/permissions/bans')}
 							/>
 						</div>
-						{/* <div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
-						<MessageCircleOff
-							className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
-							onClick={() => router.push('/settings/host/permissions/mutes')}
-						/>
-					</div> */}
 					</div>
 
 					<div className='flex gap-2'>

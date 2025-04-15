@@ -9,6 +9,7 @@ import {
 	DialogHeader,
 	DialogTitle
 } from '@/shared/components/ui/dialog'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import { CircleUser } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -22,12 +23,6 @@ interface Props {
 	open: boolean
 	onClose: () => void
 	bannedCommunities: number[]
-}
-
-interface CommunityWithDetails {
-	id: number
-	title: string
-	logo?: { url: string }
 }
 
 export const HostCommunitiesBansModal: React.FC<Props> = ({
@@ -45,13 +40,14 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 	const [selectedCommunities, setSelectedCommunities] = useState<number[]>([])
 
 	const filteredCommunities = communities.filter(item => {
-		const community = item as CommunityWithDetails
+		const community = item as Community
+		const communityTitle = getRelationProp<Community, 'title'>(
+			community,
+			'title',
+			''
+		)
 		return (
-			typeof community === 'object' &&
-			community != null &&
-			'title' in community &&
-			typeof community.title === 'string' &&
-			community.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+			communityTitle.toLowerCase().includes(searchTerm.toLowerCase()) &&
 			!bannedCommunities.includes(community.id)
 		)
 	})
@@ -161,7 +157,11 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 							) : (
 								<div className='flex flex-col gap-2 w-full h-[40vh] overflow-auto'>
 									{filteredCommunities.map(item => {
-										const community = item as CommunityWithDetails
+										const community = item as Community
+										const communityLogoUrl =
+											typeof community.logo === 'object'
+												? getMediaUrl(community.logo, '/logo.png')
+												: '/logo.png'
 										return (
 											<div
 												key={item.id}
@@ -191,7 +191,7 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 													<Avatar className='rounded-full'>
 														<AvatarImage
 															className='m-auto rounded-full'
-															src={community.logo?.url}
+															src={communityLogoUrl}
 															style={{ width: 34, height: 34 }}
 														/>
 														<AvatarFallback>

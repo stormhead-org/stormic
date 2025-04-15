@@ -42,7 +42,6 @@ const agent = new HttpsAgent({
 	timeout: 60000,
 	freeSocketTimeout: 30000
 })
-console.log('Using httpsAgent with maxSockets:', agent.maxSockets)
 
 export default buildConfig({
 	collections: [
