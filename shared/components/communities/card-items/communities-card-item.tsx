@@ -5,6 +5,7 @@ import CommunityFollowButton from '@/shared/components/community-follow-button'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
+import { CommunityPostsCounter } from '@/shared/stores/state-counters/community-posts-counter'
 import { Newspaper, UserRoundPlus, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -12,12 +13,10 @@ import React from 'react'
 
 export interface CommunitiesCardItemProps {
 	communityId: number
-	image?: string
 	name: string
 	description: string | null | undefined
 	url?: string
-	postCount: number
-	followersCount: number
+	image?: string
 	className?: string
 }
 
@@ -34,7 +33,6 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 	name,
 	description,
 	url,
-	postCount,
 	className
 }) => {
 	const router = useRouter()
@@ -68,7 +66,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 					<div className='flex items-center border-t-2 border-t-blue-700 mt-4 w-full pt-3'>
 						<div className='flex gap-8 w-1/2'>
 							<div className='flex gap-2 items-center'>
-								<p className='font-bold'>{postCount}</p>
+								<CommunityPostsCounter communityId={communityId || 0} />
 								<Newspaper size={20} />
 							</div>
 							<div className='flex gap-2 items-center'>

@@ -6,6 +6,7 @@ import { ProfileHeader } from '@/shared/components/profiles/community-profiles-i
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
+import { TeamCommunityModal } from '../../modals/communities/team'
 
 interface Props {
 	data: User | Community
@@ -22,16 +23,31 @@ export const ProfileItem: React.FC<Props> = ({
 	hasUser,
 	className
 }) => {
+	const [openTeamCommunityModal, setOpenTeamCommunityModal] =
+		React.useState(false)
+
 	return (
 		<div className={cn('', className)}>
 			<div className='rounded-md bg-secondary'>
+				{!hasUser && (
+					<TeamCommunityModal
+						data={data as Community}
+						open={openTeamCommunityModal}
+						onClose={() => setOpenTeamCommunityModal(false)}
+					/>
+				)}
 				<ProfileHeader
 					data={data}
 					currentUser={currentUser}
 					permissions={permissions}
+					setOpenTeamCommunityModal={setOpenTeamCommunityModal}
 					hasUser={hasUser}
 				/>
-				<ProfileBody data={data} hasUser={hasUser} />
+				<ProfileBody
+					data={data}
+					setOpenTeamCommunityModal={setOpenTeamCommunityModal}
+					hasUser={hasUser}
+				/>
 			</div>
 		</div>
 	)

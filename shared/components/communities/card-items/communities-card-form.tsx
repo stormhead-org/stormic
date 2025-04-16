@@ -44,8 +44,6 @@ export const CommunitiesCardForm: React.FC<Props> = ({
 						name={item.title}
 						description={item.description}
 						url={`/c/${item.id}`}
-						postCount={0}
-						followersCount={0}
 					/>
 				))}
 			</div>

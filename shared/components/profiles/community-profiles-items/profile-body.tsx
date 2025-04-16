@@ -6,11 +6,11 @@ import { cn } from '@/shared/lib/utils'
 import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
 import { UserFollowersCounter } from '@/shared/stores/state-counters/user-followers-counter'
 import React from 'react'
-import { TeamCommunityModal } from '../../modals/communities/team'
 // import { useIntl } from 'react-intl'
 
 interface Props {
 	data: User | Community
+	setOpenTeamCommunityModal: (OpenTeamCommunityModal: boolean) => void
 	hasUser: boolean
 	className?: string
 }
@@ -22,25 +22,22 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 	return text
 }
 
-export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
+export const ProfileBody: React.FC<Props> = ({
+	data,
+	setOpenTeamCommunityModal,
+	hasUser,
+	className
+}) => {
 	// const { formatMessage } = useIntl()
 
 	const description = hasUser
 		? (data as User).description
 		: (data as Community).description
 
-	const [openTeamCommunityModal, setOpenTeamCommunityModal] =
-		React.useState(false)
-
 	const truncatedDescription = truncateText(description || '', 296)
 
 	return (
 		<div className={cn('mx-6', className)}>
-			<TeamCommunityModal
-				data={data as Community}
-				open={openTeamCommunityModal}
-				onClose={() => setOpenTeamCommunityModal(false)}
-			/>
 			<p className='text-md mt-2 text-justify'>{truncatedDescription}</p>
 			{description && description?.length > 296 && (
 				<span
@@ -89,7 +86,7 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 					{/* {formatMessage({ id: 'profileBody.tabPosts' })} */}
 					Посты
 				</Button>
-				{hasUser && (
+				{/* {hasUser && (
 					<>
 						<Button
 							variant='secondary'
@@ -97,24 +94,11 @@ export const ProfileBody: React.FC<Props> = ({ data, hasUser, className }) => {
 							type='button'
 							// onClick={() => router.push('/write')}
 						>
-							{/* {formatMessage({ id: 'profileBody.tabComments' })} */}
+							{formatMessage({ id: 'profileBody.tabComments' })}
 							Комментарии
 						</Button>
 					</>
-				)}
-				{!hasUser && (
-					<>
-						<Button
-							variant='secondary'
-							className='h-10 w-26 text-md font-bold p-0 bg-transparent border-b-4 border-transparent hover:border-blue-700 hover:bg-transparent ml-8 rounded-none text-primary'
-							type='button'
-							onClick={() => setOpenTeamCommunityModal(true)}
-						>
-							{/* {formatMessage({ id: 'profileBody.modalModTeam' })} */}О
-							сообществе
-						</Button>
-					</>
-				)}
+				)} */}
 			</div>
 		</div>
 	)

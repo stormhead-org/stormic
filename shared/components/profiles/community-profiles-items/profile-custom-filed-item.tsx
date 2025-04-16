@@ -22,7 +22,7 @@ export const ProfileCustomFieldItem: React.FC<Props> = ({
 	fieldsKey,
 	fieldsValue,
 	loading,
-	className,
+	className
 }) => {
 	const truncatedContent = truncateText(fieldsValue, 54)
 
@@ -32,7 +32,8 @@ export const ProfileCustomFieldItem: React.FC<Props> = ({
 				{fieldsKey}
 			</p>
 			<Link
-				className='text-md mt-1 text-a-color hover:text-a-color-hover'
+				className='text-md mt-1 hover:text-a-color-hover'
+				target='_blank'
 				href={truncatedContent}
 			>
 				{truncatedContent}

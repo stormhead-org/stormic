@@ -40,7 +40,7 @@ export const CommentHeader: React.FC<CommentHeaderProps> = ({
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
 			<div className='flex items-center'>
-				<Link href={authorUrl}>
+				<Link href={authorUrl} className='text-black dark:text-white'>
 					<ProfileAvatar avatarImage={authorAvatar || ''} />
 				</Link>
 				<div className='ml-2'>

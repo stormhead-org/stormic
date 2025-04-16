@@ -4,21 +4,21 @@ import { getPayload, PayloadRequest } from 'payload'
 export const getCommunityStatus = async (
 	communityId: string,
 	req: PayloadRequest
-): Promise<{ followersCount: number; isFollowing: boolean } | null> => {
+): Promise<{
+	followersCount: number
+	postsCount: number
+	isFollowing: boolean
+} | null> => {
 	const payload = await getPayload({ config })
 
 	try {
-		const communityResult = await payload.find({
+		const community = await payload.findByID({
 			collection: 'communities',
-			where: {
-				id: {
-					equals: communityId
-				}
-			},
-			depth: 1 // Загружаем связанные данные
+			id: communityId,
+			depth: 1,
+			overrideAccess: true
 		})
 
-		const community = communityResult.docs[0]
 		if (!community) {
 			return null
 		}
@@ -29,6 +29,9 @@ export const getCommunityStatus = async (
 		// Получаем массив подписок из followers.docs
 		const followersDocs = community.followers?.docs || []
 
+		// Получаем массив постов из posts.docs
+		const postsDocs = community.posts?.docs || []
+
 		if (currentUser) {
 			const userId = currentUser.id
 			// Проверяем, есть ли текущий пользователь среди подписчиков
@@ -38,8 +41,11 @@ export const getCommunityStatus = async (
 		// Подсчитываем количество подписчиков
 		const followersCount = followersDocs.length
 
+		// Подсчитываем количество постов
+		const postsCount = postsDocs.length
 		return {
 			followersCount,
+			postsCount,
 			isFollowing
 		}
 	} catch (error) {

@@ -7,11 +7,11 @@ interface Props {
 	className?: string
 }
 
-export const CommunityFollowersCounter: React.FC<Props> = ({
+export const CommunityPostsCounter: React.FC<Props> = ({
 	communityId,
 	className
 }) => {
-	const { initialize, followersCount } = useCommunityFollowStore()
+	const { initialize, postsCount } = useCommunityFollowStore()
 
 	// Инициализация данных подписки при монтировании компонента
 	useEffect(() => {
@@ -23,7 +23,7 @@ export const CommunityFollowersCounter: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<p className='text-md font-bold'>
-				{communityId !== undefined ? followersCount[communityId] || 0 : 0}
+				{communityId !== undefined ? postsCount[communityId] || 0 : 0}
 			</p>
 		</div>
 	)
