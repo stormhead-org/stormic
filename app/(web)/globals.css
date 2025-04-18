@@ -158,6 +158,11 @@ html {
 	background-color: var(--a-color);
 }
 
+/* .dark *::selection,
+.dark .ce-block.ce-block--selected .ce-block__content {
+	background-color: var(--bg-color-ui-item);
+} */
+
 .dark *::selection,
 .dark .ce-block.ce-block--selected .ce-block__content {
 	background-color: var(--bg-color-ui-item);
@@ -293,12 +298,12 @@ html {
 
 	/* Цитата */
 	blockquote {
-		@apply border-l-4 border-[var(--primary)] pl-4 text-muted-foreground italic my-4 bg-[rgba(139,0,255,0.1)];
+		@apply border-l-4 border-primary pl-4 italic my-4 py-2 bg-gray-400/40 dark:bg-gray-800 rounded-md;
 	}
 
 	/* Код */
 	pre {
-		@apply bg-[var(--primary)] p-4 rounded-lg overflow-x-auto my-4 font-mono text-sm;
+		@apply bg-gray-400/40 dark:bg-gray-800 rounded-md p-4 overflow-x-auto my-4 font-mono text-sm;
 	}
 
 	code {
