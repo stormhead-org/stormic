@@ -36,7 +36,7 @@ export const SocialMenu: React.FC<Props> = ({
 				<img
 					src="/icons/social/mastodon-icon.svg"
 					alt="Mastodon icon"
-					className="w-8 h-8 dark:filter dark:brightness-0 dark:invert"
+					className="w-6 h-6 group-hover:filter group-hover:brightness-0 group-hover:invert dark:filter dark:brightness-0 dark:invert"
 				/>
 			),
 			path: socialNavigation.mastodon,
@@ -58,7 +58,7 @@ export const SocialMenu: React.FC<Props> = ({
 			id: 5,
 			icon: <Globe size={24} />,
 			path: socialNavigation.site,
-			name: 'Site'
+			name: 'Сайт'
 		}
 	].filter(
 		(
@@ -76,7 +76,7 @@ export const SocialMenu: React.FC<Props> = ({
 							key={item.id}
 							href={item.path}
 							target='_blank'
-							className='text-black dark:text-white hover:bg-blue-700 hover:text-white cursor-pointer rounded-full items-center p-2 justify-center'
+							className='group text-black dark:text-white hover:bg-blue-700 hover:text-white cursor-pointer rounded-full items-center p-2 justify-center'
 							title={item.name}
 						>
 							{item.icon}

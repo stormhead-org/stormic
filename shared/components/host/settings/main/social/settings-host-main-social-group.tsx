@@ -83,7 +83,7 @@ export const SettingsHostMainSocialGroup: React.FC<Props> = ({
 								<img
 									src="/icons/social/mastodon-icon.svg"
 									alt="Mastodon icon"
-									className="w-8 h-8 dark:filter dark:brightness-0 dark:invert"
+									className="w-7 h-7 dark:filter dark:brightness-0 dark:invert"
 								/>
 							),
 						},
