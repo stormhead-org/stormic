@@ -106,15 +106,25 @@ export const SettingsHostMainNavigationGroup: React.FC<Props> = ({
 	return (
 		<form onSubmit={form.handleSubmit(onSubmit)}>
 			<Container className='bg-secondary rounded-md mt-1 p-4'>
-				<Title text='Редактирование навигации' size='sm' className='mt-2' />
 				<p className='text-justify'>
 					Добавьте до 10 постов в левое меню навигации. Используйте поиск, чтобы
 					найти нужные посты.
 				</p>
+				
+				<div className='w-full border-b-2 border-b-blue-600 pb-4'>
+					<Title
+						// text={formatMessage({ id: 'profilePageEditGroup.titleBaseInfo' })}
+						text='Редактирование навигации'
+						size='sm'
+						className='mt-2'
+					/>
+				</div>
 
 				{/* Поиск постов */}
 				<div className='mt-4'>
-					<Label htmlFor='search'>Поиск постов</Label>
+					<p>
+						Поиск постов
+					</p>
 					<Input
 						id='search'
 						type='text'

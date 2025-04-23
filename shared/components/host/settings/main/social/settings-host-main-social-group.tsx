@@ -58,15 +58,19 @@ export const SettingsHostMainSocialGroup: React.FC<Props> = ({
 	return (
 		<form onSubmit={form.handleSubmit(onSubmit)}>
 			<Container className='bg-secondary rounded-md mt-1 p-4'>
-				<Title
-					text='Редактирование социальных сетей'
-					size='sm'
-					className='mt-2'
-				/>
 				<p className='text-justify'>
 					Добавьте ссылки на ваши профили в социальных сетях. Оставьте поле
 					пустым, чтобы отключить ссылку.
 				</p>
+				
+				<div className='w-full border-b-2 border-b-blue-600 pb-4'>
+					<Title
+						// text={formatMessage({ id: 'profilePageEditGroup.titleBaseInfo' })}
+						text='Редактирование социальных сетей'
+						size='sm'
+						className='mt-2'
+					/>
+				</div>
 
 				{/* Поля для социальных сетей */}
 				<div className='mt-4 space-y-4'>
@@ -90,7 +94,6 @@ export const SettingsHostMainSocialGroup: React.FC<Props> = ({
 								{social.icon}
 							</div>
 							<div className='flex-1'>
-								<Label htmlFor={social.name}>{social.label}</Label>
 								<Input
 									id={social.name}
 									type='text'
