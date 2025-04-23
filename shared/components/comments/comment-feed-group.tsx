@@ -15,7 +15,7 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 	// const { formatMessage } = useIntl()
 
 	return (
-		<div className={cn('', className)}>
+		<div className={cn('-mt-4', className)}>
 			<div className='flex justify-between items-center'>
 				<Title
 					// text={formatMessage({ id: 'commentFeedGroup.discussingTitle' })}

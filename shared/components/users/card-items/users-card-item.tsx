@@ -1,22 +1,21 @@
 'use client'
 
 import { ProfileAvatar } from '@/shared/components'
-import CommunityFollowButton from '@/shared/components/community-follow-button'
 import { Button } from '@/shared/components/ui/button'
+import UserFollowButton from '@/shared/components/user-follow-button'
 import { cn } from '@/shared/lib/utils'
-import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
-import { CommunityPostsCounter } from '@/shared/stores/state-counters/community-posts-counter'
-import { Component, Newspaper, UserRoundPlus } from 'lucide-react'
+import { UserFollowersCounter } from '@/shared/stores/state-counters/user-followers-counter'
+import { UserRoundPlus, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
-export interface CommunitiesCardItemProps {
-	communityId: number
+export interface Props {
+	userId: number
 	name: string
 	description: string | null | undefined
 	url?: string
-	image?: string
+	avatarUrl?: string
 	className?: string
 }
 
@@ -27,9 +26,9 @@ const truncateText = (text: string, maxLength: number | undefined) => {
 	return text
 }
 
-export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
-	communityId,
-	image,
+export const UsersCardItem: React.FC<Props> = ({
+	userId,
+	avatarUrl,
 	name,
 	description,
 	url,
@@ -47,7 +46,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 							<div className='flex gap-4'>
 								<ProfileAvatar
 									className='w-16 h-16 border-none bg-secondary hover:bg-secondary'
-									avatarImage={String(image)}
+									avatarImage={String(avatarUrl)}
 									avatarSize={Number(64)}
 								/>
 								<div className='flex h-full my-auto'>
@@ -65,17 +64,17 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 					</Link>
 					<div className='flex items-center border-t-2 border-t-blue-700 mt-4 w-full pt-3'>
 						<div className='flex gap-8 w-1/2'>
-							<div className='flex gap-2 items-center'>
-								<CommunityPostsCounter communityId={communityId || 0} />
+							{/* <div className='flex gap-2 items-center'>
+								<CommunityPostsCounter communityId={userId || 0} />
 								<Newspaper size={20} />
-							</div>
+							</div> */}
 							<div className='flex gap-2 items-center'>
-								<CommunityFollowersCounter communityId={communityId || 0} />
+								<UserFollowersCounter userId={userId} />
 								<UserRoundPlus size={20} />
 							</div>
 						</div>
 						<div className='flex justify-end w-1/2'>
-							<CommunityFollowButton communityId={communityId} />
+							<UserFollowButton userId={userId} />
 						</div>
 					</div>
 				</div>
@@ -88,7 +87,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 							className='h-14 w-14 m-auto group hover:bg-secondary text-primary rounded-full'
 							onClick={() => router.push(String(url))}
 						>
-							<Component className='group-hover:text-blue-700' />
+							<UsersRound className='group-hover:text-blue-700' />
 						</Button>
 					</div>
 					{/* <div className='flex group w-full h-1/2 rounded-r-md'>

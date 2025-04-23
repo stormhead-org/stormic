@@ -43,6 +43,11 @@ export default async function MainLayout({
 		}
 	})
 
+	const resultSocialNavigation = await payload.findGlobal({
+		slug: 'social-navigation',
+		depth: 2
+	})
+
 	const resultCommunities = await payload.find({
 		collection: 'communities',
 		where: {
@@ -64,7 +69,10 @@ export default async function MainLayout({
 					{/* Левая часть */}
 					<div className='w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
 						<FeedUserMenu />
-						<SocialMenu className='my-2' />
+						<SocialMenu
+							socialNavigation={resultSocialNavigation}
+							className='my-2'
+						/>
 
 						<NewPostButton
 							host={resultGlobalHost}

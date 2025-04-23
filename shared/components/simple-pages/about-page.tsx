@@ -13,6 +13,8 @@ import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import {
 	Delete,
 	Gavel,
+	LinkIcon,
+	Radio,
 	Settings,
 	ShieldCheck,
 	UserRoundCog
@@ -84,7 +86,19 @@ export const AboutPage: React.FC<Props> = ({
 						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
 							<Settings
 								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
-								onClick={() => router.push('/settings/host/main')}
+								onClick={() => router.push('/settings/host/main/platform')}
+							/>
+						</div>
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<LinkIcon
+								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								onClick={() => router.push('/settings/host/main/navigation')}
+							/>
+						</div>
+						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<Radio
+								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								onClick={() => router.push('/settings/host/main/social')}
 							/>
 						</div>
 					</div>
@@ -141,7 +155,7 @@ export const AboutPage: React.FC<Props> = ({
 									<p className='font-semibold text-md text-black dark:text-white'>
 										{truncatedName}
 									</p>
-									<p className='-mt-2 text-gray-400 text-sm font-semibold'>
+									<p className='-mt-1 text-black dark:text-white text-sm font-semibold'>
 										{truncatedDescription}
 									</p>
 								</div>

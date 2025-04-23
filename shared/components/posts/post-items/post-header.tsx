@@ -11,10 +11,11 @@ import {
 	removePostFromPublication
 } from '@/shared/utils/api/posts/post-utils'
 import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
-import { GripHorizontal } from 'lucide-react'
+import { Crown, GripHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import { ActionTooltip } from '../../action-tooltip'
 import { PostEditModal } from '../../modals/post-edit-modal'
 import {
 	DropdownMenu,
@@ -23,19 +24,32 @@ import {
 	DropdownMenuTrigger
 } from '../../ui/dropdown-menu'
 
-export interface PostHeaderProps {
+export interface Props {
 	post: Post
 	communities: Community[]
-	currentUser?: User | null
 	permissions: Permissions | null
+	roleIconMap?: ('hostOwner' | 'communityOwner')[]
+	currentUser?: User | null
 	className?: string
 }
 
-export const PostHeader: React.FC<PostHeaderProps> = ({
+const roleIconMapConfig = {
+	hostOwner: {
+		icon: <Crown className='h-4 w-4 text-rose-500 ml-2' />,
+		label: 'Владелец платформы'
+	},
+	communityOwner: {
+		icon: <Crown className='h-4 w-4 text-indigo-500 ml-2' />,
+		label: 'Владелец сообщества'
+	}
+}
+
+export const PostHeader: React.FC<Props> = ({
 	post,
 	communities,
-	currentUser,
 	permissions,
+	roleIconMap,
+	currentUser,
 	className
 }) => {
 	const [openEditModal, setOpenEditModal] = React.useState(false)
@@ -69,13 +83,21 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 					<ProfileAvatar avatarImage={avatarImageUrl} />
 				</Link>
 				<div className='ml-2'>
-					<Link
-						className='text-black dark:text-white font-bold'
-						href={`/u/${authorId}` || '#'}
-					>
-						{authorName}
-					</Link>
-					<br />
+					<div className='flex items-center'>
+						<Link
+							className='text-black dark:text-white font-bold'
+							href={`/u/${authorId}` || '#'}
+						>
+							{authorName}
+						</Link>
+						{roleIconMap &&
+							roleIconMap.length > 0 &&
+							roleIconMap.map(role => (
+								<ActionTooltip key={role} label={roleIconMapConfig[role].label}>
+									{roleIconMapConfig[role].icon}
+								</ActionTooltip>
+							))}
+					</div>
 					<Link
 						className='text-sm text-black dark:text-white'
 						href={post.community ? `/c/${communityId}` : '#'}
@@ -88,7 +110,9 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 				</div>
 			</div>
 			<div className='flex items-center'>
-				<UserFollowButton userId={authorId} />
+				{currentUser && currentUser.id !== authorId && (
+					<UserFollowButton userId={authorId} />
+				)}
 				{currentUser && (
 					<PostEditModal
 						open={openEditModal}
@@ -98,47 +122,61 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 						post={post}
 					/>
 				)}
-				<DropdownMenu key={openEditModal ? 'open' : 'closed'}>
-					<DropdownMenuTrigger asChild>
-						<div className='group'>
-							<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
-								<GripHorizontal className='group-hover:bg-blue-800/20 rounded-full cursor-pointer ml-2 w-7 h-7 p-1' />
-							</p>
-						</div>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align='end' className='bg-secondary'>
-						{(permissions?.HOST_OWNER ||
+				{currentUser && (
+					<DropdownMenu key={openEditModal ? 'open' : 'closed'}>
+						<DropdownMenuTrigger asChild>
+							<div className='group'>
+								<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+									<GripHorizontal className='group-hover:bg-blue-800/20 rounded-full cursor-pointer ml-2 w-7 h-7 p-1' />
+								</p>
+							</div>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align='end' className='bg-secondary'>
+							{permissions?.HOST_OWNER ||
 							permissions?.COMMUNITY_OWNER ||
-							(currentUser != null && currentUser.id === authorId)) && (
-							<DropdownMenuItem
-								className='cursor-pointer'
-								onClick={() => setOpenEditModal(true)}
-							>
-								Редактировать
-							</DropdownMenuItem>
-						)}
-						{(permissions?.HOST_OWNER ||
-							permissions?.COMMUNITY_OWNER ||
-							permissions?.COMMUNITY_POST_REMOVE_FROM_PUBLICATION) && (
-							<DropdownMenuItem
-								className='cursor-pointer'
-								onClick={handleRemoveFromPublication}
-							>
-								Снять с публикации
-							</DropdownMenuItem>
-						)}
-						{(permissions?.HOST_OWNER ||
-							permissions?.COMMUNITY_OWNER ||
-							permissions?.COMMUNITY_POST_DELETE) && (
-							<DropdownMenuItem
-								className='cursor-pointer'
-								onClick={handleDeletePost}
-							>
-								Удалить
-							</DropdownMenuItem>
-						)}
-					</DropdownMenuContent>
-				</DropdownMenu>
+							(currentUser != null && currentUser.id === authorId) ||
+							permissions?.COMMUNITY_POST_REMOVE_FROM_PUBLICATION ||
+							permissions?.COMMUNITY_POST_DELETE ? (
+								<>
+									{(permissions?.HOST_OWNER ||
+										permissions?.COMMUNITY_OWNER ||
+										(currentUser != null && currentUser.id === authorId)) && (
+										<DropdownMenuItem
+											className='cursor-pointer'
+											onClick={() => setOpenEditModal(true)}
+										>
+											Редактировать
+										</DropdownMenuItem>
+									)}
+									{(permissions?.HOST_OWNER ||
+										permissions?.COMMUNITY_OWNER ||
+										permissions?.COMMUNITY_POST_REMOVE_FROM_PUBLICATION) && (
+										<DropdownMenuItem
+											className='cursor-pointer'
+											onClick={handleRemoveFromPublication}
+										>
+											Снять с публикации
+										</DropdownMenuItem>
+									)}
+									{(permissions?.HOST_OWNER ||
+										permissions?.COMMUNITY_OWNER ||
+										permissions?.COMMUNITY_POST_DELETE) && (
+										<DropdownMenuItem
+											className='cursor-pointer'
+											onClick={handleDeletePost}
+										>
+											Удалить
+										</DropdownMenuItem>
+									)}
+								</>
+							) : (
+								<DropdownMenuItem className='cursor-default'>
+									Нет доступных действий
+								</DropdownMenuItem>
+							)}
+						</DropdownMenuContent>
+					</DropdownMenu>
+				)}
 			</div>
 		</div>
 	)

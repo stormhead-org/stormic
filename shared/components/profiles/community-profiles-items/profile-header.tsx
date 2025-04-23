@@ -6,7 +6,7 @@ import UserFollowButton from '@/shared/components/user-follow-button'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { getMediaUrl } from '@/shared/utils/payload/getTypes'
-import { BadgeInfo, GripHorizontal, Settings } from 'lucide-react'
+import { Info, Settings } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import CommunityFollowButton from '../../community-follow-button'
@@ -90,24 +90,24 @@ export const ProfileHeader: React.FC<Props> = ({
 
 						{!hasUser && (
 							<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
-								<BadgeInfo
+								<Info
 									onClick={() => setOpenTeamCommunityModal(true)}
 									className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
 								/>
 							</div>
 						)}
 
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						{/* <div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
 							<GripHorizontal className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1' />
-						</div>
+						</div> */}
 					</div>
 				</div>
 				<span className='font-bold text-2xl'>{displayName}</span>
-				{hasUser && (
+				{/* {hasUser && (
 					<>
 						<span className='text-md text-green-500 font-bold'>+{0}</span>
 					</>
-				)}
+				)} */}
 			</div>
 		</div>
 	)

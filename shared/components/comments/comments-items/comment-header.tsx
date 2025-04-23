@@ -1,14 +1,17 @@
 import { ProfileAvatar } from '@/shared/components'
 import { cn } from '@/shared/lib/utils'
+import { Crown } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { ActionTooltip } from '../../action-tooltip'
 
 interface CommentHeaderProps {
 	postTitle: string
-	maxLength?: number
 	authorName: string
-	authorAvatar?: string
 	authorUrl: string
+	roleIconMap?: ('hostOwner' | 'communityOwner')[]
+	maxLength?: number
+	authorAvatar?: string
 	postUrl?: string
 	publicationDate?: string
 	className?: string
@@ -25,11 +28,23 @@ const truncateText = (
 	return text
 }
 
+const roleIconMapConfig = {
+	hostOwner: {
+		icon: <Crown className='h-4 w-4 text-rose-500 ml-2' />,
+		label: 'Владелец платформы'
+	},
+	communityOwner: {
+		icon: <Crown className='h-4 w-4 text-indigo-500 ml-2' />,
+		label: 'Владелец сообщества'
+	}
+}
+
 export const CommentHeader: React.FC<CommentHeaderProps> = ({
 	postTitle,
 	maxLength,
 	authorName,
 	authorAvatar,
+	roleIconMap,
 	authorUrl,
 	postUrl,
 	publicationDate,
@@ -44,13 +59,22 @@ export const CommentHeader: React.FC<CommentHeaderProps> = ({
 					<ProfileAvatar avatarImage={authorAvatar || ''} />
 				</Link>
 				<div className='ml-2'>
-					<Link
-						className='text-black dark:text-white font-bold'
-						href={authorUrl}
-					>
-						{authorName}
-					</Link>
-					<br />
+					<div className='flex items-center'>
+						<Link
+							className='text-black dark:text-white font-bold'
+							href={authorUrl}
+						>
+							{authorName}
+						</Link>
+						{roleIconMap &&
+							roleIconMap.length > 0 &&
+							roleIconMap.map(role => (
+								<ActionTooltip key={role} label={roleIconMapConfig[role].label}>
+									{roleIconMapConfig[role].icon}
+								</ActionTooltip>
+							))}
+					</div>
+
 					{postUrl ? (
 						<Link className='text-sm text-black dark:text-white' href={postUrl}>
 							{truncatedContent}

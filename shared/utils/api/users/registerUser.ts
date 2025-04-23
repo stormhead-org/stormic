@@ -1,4 +1,3 @@
-// Файл: src/shared/utils/registerUser.ts
 'use server'
 
 import { HostRole, User } from '@/payload-types'
@@ -6,7 +5,6 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 import { TFormRegisterValues } from '../../../components/modals/auth-modal/forms/schemas'
 
-// Тип данных для создания пользователя (без hostRoles, так как это join)
 interface UserCreateData {
 	email: string
 	name: string

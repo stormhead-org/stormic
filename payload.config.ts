@@ -30,6 +30,7 @@ import { Posts } from './modules/collections/Posts'
 import { Roles } from './modules/collections/Roles'
 import { SidebarNavigation } from './modules/globals/Navigation'
 import { HostSettings } from './modules/globals/Settings'
+import { SocialNavigation } from './modules/globals/Social'
 import { revalidateRedirects } from './shared/hooks/revalidateRedirects'
 import { getServerSideURL } from './shared/lib/getURL'
 
@@ -62,7 +63,7 @@ export default buildConfig({
 		HostCommunitiesMutes,
 		HostCommunitiesBans
 	],
-	globals: [HostSettings, SidebarNavigation],
+	globals: [HostSettings, SidebarNavigation, SocialNavigation],
 	cors: [getServerSideURL()].filter(Boolean),
 	secret: process.env.PAYLOAD_SECRET || '',
 	typescript: {

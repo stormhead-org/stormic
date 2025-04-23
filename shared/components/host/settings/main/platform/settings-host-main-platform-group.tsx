@@ -22,7 +22,10 @@ interface Props {
 	host: HostSetting
 }
 
-export const SettingsHostMainGroup: React.FC<Props> = ({ ownerId, host }) => {
+export const SettingsHostMainPlatformGroup: React.FC<Props> = ({
+	ownerId,
+	host
+}) => {
 	const form = useForm<TFormSettingsHostValues>({
 		resolver: zodResolver(formSettingsHostSchema),
 		defaultValues: {

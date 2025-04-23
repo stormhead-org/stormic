@@ -1,5 +1,6 @@
 'use client'
 
+import { Comment } from '@/payload-types'
 import { CommentItem } from '@/shared/components/comments/comments-items/comment-item'
 import { useCommentQuery } from '@/shared/hooks/use-comment-query'
 import { useCommentScroll } from '@/shared/hooks/use-comment-scroll'
@@ -77,19 +78,12 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 
 	return (
 		<div ref={chatRef} className={cn('', className)}>
-			{uniqueComments.map((message: any, index) => (
+			{uniqueComments.map((message: Comment, index) => (
 				<CommentItem
 					key={`${message.id}-${index}`}
-					postTitle={message.parentPost.title}
-					content={message.content}
-					postId={message.parentPost.id}
-					authorName={message.author.name}
-					authorId={message.author.id}
-					authorAvatar={message.author.avatar?.url}
+					comment={message}
 					maxLengthHeader={maxLengthHeader}
 					maxLengthBody={maxLengthBody}
-					media={message.media}
-					deleted={message.hasDeleted}
 					className='bg-secondary/25 hover:bg-primary/5 mt-4'
 				/>
 			))}

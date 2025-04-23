@@ -22,7 +22,7 @@ export const SettingsHostSideMenu: React.FC<Props> = ({ className }) => {
 			// text: formatMessage({ id: 'settingsProfileSideMenu.main' }),
 			text: 'Основные',
 			icon: <Settings />,
-			path: '/settings/host/main',
+			path: '/settings/host/main/platform',
 			disabled: false
 		},
 		{

@@ -149,10 +149,12 @@ export interface Config {
   globals: {
     'host-settings': HostSetting;
     'sidebar-navigation': SidebarNavigation;
+    'social-navigation': SocialNavigation;
   };
   globalsSelect: {
     'host-settings': HostSettingsSelect<false> | HostSettingsSelect<true>;
     'sidebar-navigation': SidebarNavigationSelect<false> | SidebarNavigationSelect<true>;
+    'social-navigation': SocialNavigationSelect<false> | SocialNavigationSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1327,6 +1329,20 @@ export interface SidebarNavigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-navigation".
+ */
+export interface SocialNavigation {
+  id: number;
+  twitter?: string | null;
+  facebook?: string | null;
+  github?: string | null;
+  instagram?: string | null;
+  twitch?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "host-settings_select".
  */
 export interface HostSettingsSelect<T extends boolean = true> {
@@ -1361,6 +1377,20 @@ export interface SidebarNavigationSelect<T extends boolean = true> {
         post?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-navigation_select".
+ */
+export interface SocialNavigationSelect<T extends boolean = true> {
+  twitter?: T;
+  facebook?: T;
+  github?: T;
+  instagram?: T;
+  twitch?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

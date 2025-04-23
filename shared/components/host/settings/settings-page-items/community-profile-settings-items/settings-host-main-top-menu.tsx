@@ -1,6 +1,5 @@
 'use client'
 
-import type { Community } from '@/payload-types'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
@@ -11,9 +10,7 @@ interface Props {
 	className?: string
 }
 
-export const SettingsHostMainTopMenu: React.FC<Props> = ({
-	className
-}) => {
+export const SettingsHostMainTopMenu: React.FC<Props> = ({ className }) => {
 	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
@@ -23,23 +20,23 @@ export const SettingsHostMainTopMenu: React.FC<Props> = ({
 			id: 1,
 			// text: formatMessage({ id: 'profileEditTopMenu.editProfile' }),
 			text: 'Платформа',
-			path: `/settings/host/main`,
+			path: '/settings/host/main/platform',
+			disabled: false
+		},
+		{
+			id: 2,
+			// text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
+			text: 'Навигация',
+			path: '/settings/host/main/navigation',
+			disabled: false
+		},
+		{
+			id: 3,
+			// text: formatMessage({ id: 'profileEditTopMenu.verification' }),
+			text: 'Социальные сети',
+			path: '/settings/host/main/social',
 			disabled: false
 		}
-		// {
-		// 	id: 2,
-		// 	// text: formatMessage({ id: 'profileEditTopMenu.privacyAndReach' }),
-		// 	text: 'Внешний вид',
-		// 	path: `/settings/community/${data.id}/main#2`,
-		// 	disabled: true
-		// },
-		// {
-		// 	id: 3,
-		// 	// text: formatMessage({ id: 'profileEditTopMenu.verification' }),
-		// 	text: 'Верификация ссылок',
-		// 	path: `/settings/community/${data.id}/main#3`,
-		// 	disabled: true
-		// }
 	]
 
 	return (

@@ -2,7 +2,7 @@
 import { BookmarkButton } from '@/shared/components/bookmark-button'
 import { PostLikeButton } from '@/shared/components/post-like-button'
 import { cn } from '@/shared/lib/utils'
-import { Eye, MessageCircle, Redo } from 'lucide-react'
+import { Eye, MessageCircle } from 'lucide-react'
 import React from 'react'
 
 export interface PostFooterProps {
@@ -44,11 +44,11 @@ export const PostFooter: React.FC<PostFooterProps> = ({
 						</p>
 					</div>
 					<BookmarkButton postId={postId} />
-					<div className='group cursor-pointer'>
+					{/* <div className='group cursor-pointer'>
 						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
 							<Redo className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' />
 						</p>
-					</div>
+					</div> */}
 				</div>
 				<div className='group cursor-pointer'>
 					<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>

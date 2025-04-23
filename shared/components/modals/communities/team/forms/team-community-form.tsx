@@ -64,7 +64,7 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 									<p className='font-semibold text-md text-black dark:text-white'>
 										{truncatedName}
 									</p>
-									<p className='-mt-2 text-gray-400 text-sm font-semibold'>
+									<p className='-mt-1 text-black dark:text-white text-sm font-semibold'>
 										{truncatedDescription}
 									</p>
 								</div>
@@ -72,7 +72,13 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 						</div>
 					</Link>
 					<Title text='Связаться' size='sm' className='font-bold mr-2 mt-4' />
-					<p className='text-md mt-1'>{community.contacts}</p>
+					<p className='text-md mt-1'>
+						{community.contacts ? (
+							community.contacts
+						) : (
+							<p>Контакты не указаны</p>
+						)}
+					</p>
 					<Title text='Модераторы' size='sm' className='font-bold mr-2 mt-4' />
 					{!community.moderators || community.moderators.length === 0 ? (
 						<p className='text-md mt-1'>Модераторы не назначены</p>
@@ -102,7 +108,7 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 															20
 														)}
 													</p>
-													<p className='mt-1 text-gray-400 text-sm font-semibold'>
+													<p className='-mt-1 text-black dark:text-white text-sm font-semibold'>
 														{truncateText(
 															getRelationProp<User, 'description'>(
 																item,

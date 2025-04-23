@@ -1,6 +1,6 @@
 import NotAuth from '@/app/(web)/(main)/not-auth/page'
 import { User } from '@/payload-types'
-import { SettingsHostMainGroup } from '@/shared/components/host/settings/main/settings-host-main-group'
+import { SettingsHostMainSocialGroup } from '@/shared/components/host/settings/main/social/settings-host-main-social-group'
 import { SettingsHostMainTopMenu } from '@/shared/components/host/settings/settings-page-items/community-profile-settings-items/settings-host-main-top-menu'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 	title: 'Платформа: Настройки'
 }
 
-export default async function HostMainSettings() {
+export default async function HostMainNavigationSettings() {
 	const session = (await getSession()) as { user: User } | null
 	const currentUser = session && session.user
 
@@ -21,21 +21,15 @@ export default async function HostMainSettings() {
 
 	const payload = await getPayload({ config: configPromise })
 
-	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings',
+	const resultSocialNavigation = await payload.findGlobal({
+		slug: 'social-navigation',
 		depth: 2
 	})
-
-	// const isOwner = currentUser.id === resultGlobalHost.owner.id
-	//
-	// if (!isOwner) {
-	// 	return <AccessDenied />
-	// }
 
 	return (
 		<>
 			<SettingsHostMainTopMenu />
-			<SettingsHostMainGroup ownerId={currentUser.id} host={resultGlobalHost} />
+			<SettingsHostMainSocialGroup initialData={resultSocialNavigation} />
 		</>
 	)
 }

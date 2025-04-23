@@ -1,13 +1,13 @@
 export async function settingsHost({
 	ownerId,
-	                                   logo,
-	                                   banner,
-	                                   authBanner,
-	                                   title,
+	logo,
+	banner,
+	authBanner,
+	title,
 	slogan,
-	                                   description,
-	                                   email,
-	                                   rules,
+	description,
+	email,
+	rules
 }: {
 	ownerId: number
 	logo?: number

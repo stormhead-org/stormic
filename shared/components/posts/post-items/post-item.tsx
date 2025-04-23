@@ -8,10 +8,13 @@ import { Permissions } from '@/shared/lib/permissions' // Импортируем
 import { cn } from '@/shared/lib/utils'
 import { usePostLikesStore } from '@/shared/stores/post-likes-store'
 import { createVisibilityObserver } from '@/shared/utils/api/posts/visibility-observer'
-import { getMediaUrl } from '@/shared/utils/payload/getTypes'
+import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import { OutputData } from '@editorjs/editorjs'
 import { useEffect, useRef } from 'react'
+import useSWR from 'swr'
 import { useSession } from '../../../providers/items/SessionProvider'
+
+const fetcher = (url: string) => fetch(url).then(res => res.json())
 
 export const PostItem: React.FC<{
 	post: Post
@@ -45,6 +48,30 @@ export const PostItem: React.FC<{
 	const heroImageUrl =
 		typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage, '') : ''
 
+	const authorId = getRelationProp<User, 'id'>(post.author, 'id', 0)
+
+	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
+
+	// Запрашиваем права автора
+	const { data: authorPermissions, error } = useSWR<Permissions | null>(
+		`/api/permissions/${authorId}/${communityId}`,
+		fetcher,
+		{
+			fallbackData: null,
+			revalidateOnFocus: false,
+			dedupingInterval: 60000
+		}
+	)
+
+	// Формируем roleIconMap как массив ролей
+	const roleIconMap: ('hostOwner' | 'communityOwner')[] = []
+	if (authorPermissions?.HOST_OWNER) {
+		roleIconMap.push('hostOwner')
+	}
+	if (authorPermissions?.COMMUNITY_OWNER) {
+		roleIconMap.push('communityOwner')
+	}
+
 	return (
 		<div
 			className={cn(
@@ -56,8 +83,9 @@ export const PostItem: React.FC<{
 				<PostHeader
 					post={post}
 					communities={communities}
-					currentUser={currentUser}
 					permissions={permissions}
+					roleIconMap={roleIconMap}
+					currentUser={currentUser}
 				/>
 				<PostBody
 					postTitle={post.title}

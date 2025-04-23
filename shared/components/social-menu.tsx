@@ -1,39 +1,81 @@
 'use client'
 
+import { SocialNavigation } from '@/payload-types'
 import { Facebook, Github, Instagram, Twitch, Twitter } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { JSX } from 'react'
 import { cn } from '../lib/utils'
-
-const socialMenu = [
-	{ id: 1, icon: <Twitter size={24} />, path: '/#1' },
-	{ id: 2, icon: <Facebook size={24} />, path: '/#2' },
-	{ id: 3, icon: <Github size={24} />, path: '/#3' },
-	{ id: 4, icon: <Instagram size={24} />, path: '/#4' },
-	{ id: 5, icon: <Twitch size={24} />, path: '/#5' }
-]
 
 interface Props {
 	className?: string
+	socialNavigation: SocialNavigation
 }
 
-export const SocialMenu: React.FC<Props> = ({ className }) => {
+export const SocialMenu: React.FC<Props> = ({
+	className,
+	socialNavigation
+}) => {
 	const router = useRouter()
+
+	const socialMenu: {
+		id: number
+		icon: JSX.Element
+		path: string
+		name: string
+	}[] = [
+		{
+			id: 1,
+			icon: <Twitter size={24} />,
+			path: socialNavigation.twitter,
+			name: 'Twitter'
+		},
+		{
+			id: 2,
+			icon: <Facebook size={24} />,
+			path: socialNavigation.facebook,
+			name: 'Facebook'
+		},
+		{
+			id: 3,
+			icon: <Github size={24} />,
+			path: socialNavigation.github,
+			name: 'GitHub'
+		},
+		{
+			id: 4,
+			icon: <Instagram size={24} />,
+			path: socialNavigation.instagram,
+			name: 'Instagram'
+		},
+		{
+			id: 5,
+			icon: <Twitch size={24} />,
+			path: socialNavigation.twitch,
+			name: 'Twitch'
+		}
+	].filter(
+		(
+			item
+		): item is { id: number; icon: JSX.Element; path: string; name: string } =>
+			item.path != null && item.path.trim() !== ''
+	)
 
 	return (
 		<div className={cn('', className)}>
 			<div className='flex flex-1 justify-evenly items-center'>
-				{socialMenu.map(item => (
-					<Link
-						key={item.id}
-						onClick={() => router.push(item.path)}
-						href={item.path}
-						className='text-black dark:text-white hover:bg-blue-700 hover:text-white cursor-pointer rounded-full items-center p-2 justify-center'
-					>
-						{item.icon}
-					</Link>
-				))}
+				{socialMenu.length !== 0 &&
+					socialMenu.map(item => (
+						<Link
+							key={item.id}
+							href={item.path}
+							target='_blank'
+							className='text-black dark:text-white hover:bg-blue-700 hover:text-white cursor-pointer rounded-full items-center p-2 justify-center'
+							title={item.name}
+						>
+							{item.icon}
+						</Link>
+					))}
 			</div>
 		</div>
 	)
