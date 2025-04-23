@@ -1,7 +1,7 @@
 'use client'
 
 import { SocialNavigation } from '@/payload-types'
-import { Facebook, Github, Instagram, Twitch, Twitter } from 'lucide-react'
+import { Facebook, Github, Globe, Instagram, Twitch, Twitter } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { JSX } from 'react'
@@ -32,9 +32,15 @@ export const SocialMenu: React.FC<Props> = ({
 		},
 		{
 			id: 2,
-			icon: <Facebook size={24} />,
-			path: socialNavigation.facebook,
-			name: 'Facebook'
+			icon: (
+				<img
+					src="/icons/social/mastodon-icon.svg"
+					alt="Mastodon icon"
+					className="w-8 h-8 dark:filter dark:brightness-0 dark:invert"
+				/>
+			),
+			path: socialNavigation.mastodon,
+			name: 'Mastodon'
 		},
 		{
 			id: 3,
@@ -50,9 +56,9 @@ export const SocialMenu: React.FC<Props> = ({
 		},
 		{
 			id: 5,
-			icon: <Twitch size={24} />,
-			path: socialNavigation.twitch,
-			name: 'Twitch'
+			icon: <Globe size={24} />,
+			path: socialNavigation.site,
+			name: 'Site'
 		}
 	].filter(
 		(

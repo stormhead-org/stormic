@@ -11,8 +11,8 @@ export const SocialNavigation: GlobalConfig = {
 			required: false
 		},
 		{
-			label: 'Facebook',
-			name: 'facebook',
+			label: 'Mastodon',
+			name: 'mastodon',
 			type: 'text',
 			required: false
 		},
@@ -29,8 +29,8 @@ export const SocialNavigation: GlobalConfig = {
 			required: false
 		},
 		{
-			label: 'Twitch',
-			name: 'twitch',
+			label: 'Site',
+			name: 'site',
 			type: 'text',
 			required: false
 		}

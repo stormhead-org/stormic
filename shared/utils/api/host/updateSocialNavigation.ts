@@ -1,9 +1,9 @@
 export async function updateSocialNavigation(data: {
 	twitter?: string | null
-	facebook?: string | null
+	mastodon?: string | null
 	github?: string | null
 	instagram?: string | null
-	twitch?: string | null
+	site?: string | null
 }): Promise<void> {
 	try {
 		const req = await fetch('/api/globals/social-navigation', {

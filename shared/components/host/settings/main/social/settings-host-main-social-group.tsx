@@ -6,7 +6,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { updateSocialNavigation } from '@/shared/utils/api/host/updateSocialNavigation'
-import { Facebook, Github, Instagram, Twitch, Twitter } from 'lucide-react'
+import { Facebook, Github, Globe, Instagram, Twitter } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,10 +18,10 @@ interface Props {
 
 interface FormValues {
 	twitter?: string | null
-	facebook?: string | null
+	mastodon?: string | null
 	github?: string | null
 	instagram?: string | null
-	twitch?: string | null
+	site?: string | null
 }
 
 export const SettingsHostMainSocialGroup: React.FC<Props> = ({
@@ -30,10 +30,10 @@ export const SettingsHostMainSocialGroup: React.FC<Props> = ({
 	const form = useForm<FormValues>({
 		defaultValues: {
 			twitter: initialData.twitter || '',
-			facebook: initialData.facebook || '',
+			mastodon: initialData.mastodon || '',
 			github: initialData.github || '',
 			instagram: initialData.instagram || '',
-			twitch: initialData.twitch || ''
+			site: initialData.site || ''
 		}
 	})
 	const router = useRouter()
@@ -42,10 +42,10 @@ export const SettingsHostMainSocialGroup: React.FC<Props> = ({
 		try {
 			await updateSocialNavigation({
 				twitter: data.twitter || null,
-				facebook: data.facebook || null,
+				mastodon: data.mastodon || null,
 				github: data.github || null,
 				instagram: data.instagram || null,
-				twitch: data.twitch || null
+				site: data.site || null
 			})
 			toast.success('Социальные сети успешно обновлены', { icon: '✅' })
 			router.refresh()
@@ -77,9 +77,15 @@ export const SettingsHostMainSocialGroup: React.FC<Props> = ({
 					{[
 						{ name: 'twitter', label: 'Twitter', icon: <Twitter size={24} /> },
 						{
-							name: 'facebook',
-							label: 'Facebook',
-							icon: <Facebook size={24} />
+							name: 'mastodon',
+							label: 'Mastodon',
+							icon: (
+								<img
+									src="/icons/social/mastodon-icon.svg"
+									alt="Mastodon icon"
+									className="w-8 h-8 dark:filter dark:brightness-0 dark:invert"
+								/>
+							),
 						},
 						{ name: 'github', label: 'GitHub', icon: <Github size={24} /> },
 						{
@@ -87,7 +93,7 @@ export const SettingsHostMainSocialGroup: React.FC<Props> = ({
 							label: 'Instagram',
 							icon: <Instagram size={24} />
 						},
-						{ name: 'twitch', label: 'Twitch', icon: <Twitch size={24} /> }
+						{ name: 'site', label: 'сайт', icon: <Globe size={24} /> }
 					].map(social => (
 						<div key={social.name} className='flex items-center gap-4'>
 							<div className='w-10 flex items-center justify-center'>

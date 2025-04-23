@@ -1334,10 +1334,10 @@ export interface SidebarNavigation {
 export interface SocialNavigation {
   id: number;
   twitter?: string | null;
-  facebook?: string | null;
+  mastodon?: string | null;
   github?: string | null;
   instagram?: string | null;
-  twitch?: string | null;
+  site?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1387,10 +1387,10 @@ export interface SidebarNavigationSelect<T extends boolean = true> {
  */
 export interface SocialNavigationSelect<T extends boolean = true> {
   twitter?: T;
-  facebook?: T;
+  mastodon?: T;
   github?: T;
   instagram?: T;
-  twitch?: T;
+  site?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
