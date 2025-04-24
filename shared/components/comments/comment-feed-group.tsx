@@ -23,7 +23,9 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 					size='sm'
 					className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-l-blue-700'
 				/>
-				<SocketIndicator />
+				<div className='mt-2'>
+					<SocketIndicator />
+				</div>
 			</div>
 
 			<div className='flex flex-col rounded-md'>

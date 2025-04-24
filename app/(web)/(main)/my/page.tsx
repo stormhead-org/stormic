@@ -95,7 +95,9 @@ export default async function Feed() {
 				in: feedIds
 			}
 		},
-		depth: 1
+		depth: 1,
+		pagination: false,
+		overrideAccess: true
 	})
 
 	const resultCommunities = await payload.find({
