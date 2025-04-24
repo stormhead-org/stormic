@@ -163,7 +163,6 @@ html {
 	background-color: var(--bg-color-ui-item);
 } */
 
-.dark *::selection,
 .dark .ce-block.ce-block--selected .ce-block__content {
 	background-color: var(--bg-color-ui-item);
 }
