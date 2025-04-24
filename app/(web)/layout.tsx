@@ -1,6 +1,7 @@
 import { User } from '@/payload-types'
 import { Header } from '@/shared/components/headers/main-header/header'
 import { UserBanLogin } from '@/shared/components/info-blocks/user-ban-login'
+import { MobileBottomNavBar } from '@/shared/components/mobile/mobile-bottom-nav-bar'
 import YandexMetrika from '@/shared/components/yandex-metrika'
 import { getSession } from '@/shared/lib/auth'
 import { getServerSideURL } from '@/shared/lib/getURL'
@@ -163,6 +164,9 @@ export default async function HomeLayout({
 				/>
 			</Suspense>
 			{children}
+			<div className='sticky bottom-0 lg:hidden'>
+				<MobileBottomNavBar />
+			</div>
 		</>
 	)
 }

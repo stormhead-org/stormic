@@ -80,13 +80,14 @@ export default async function Home() {
 				posts={posts}
 				stormicName={resultGlobalHost.title || 'Stormic'}
 				bannerUrl={bannerUrl}
+				className='hidden lg:block'
 			/>
 			<PostForm
 				limit={5}
 				post={posts}
 				communities={communities}
 				postPermissions={postPermissions}
-				className='mt-4'
+				className='lg:mt-4'
 			/>
 		</>
 	)

@@ -49,13 +49,24 @@ export const Header: React.FC<Props> = ({
 	}, [])
 
 	return (
-		<header className={cn('border-b', className)}>
+		<header
+			className={cn(
+				'sticky bg-background lg:bg-transparent top-0 border-b border-blue-700 z-10',
+				className
+			)}
+		>
 			<Container className='flex items-center justify-between h-[4rem]'>
 				{/* Левая часть */}
 				<Link href='/'>
-					<div className='flex items-center gap-4 w-[250px]'>
-						<img src={logoImage || ''} alt='Logo' width={42} height={42} />
-						<div>
+					<div className='lg:flex lg:items-center lg:gap-4 lg:w-[250px]'>
+						<img
+							src={logoImage || ''}
+							alt='Logo'
+							width={42}
+							height={42}
+							className='ml-2 lg:ml-0'
+						/>
+						<div className='hidden lg:block'>
 							<h1 className='text-2xl uppercase font-black text-gray-700 dark:text-white'>
 								{stormicName}
 							</h1>
@@ -67,12 +78,12 @@ export const Header: React.FC<Props> = ({
 				</Link>
 
 				{/* Центральная */}
-				<div className='w-[500px]'>
+				<div className='hidden lg:block lg:w-[500px]'>
 					<HeaderButtons />
 				</div>
 
 				{/* Правая часть */}
-				<div className='flex items-center gap-3 w-[250px] justify-end'>
+				<div className='hidden lg:flex lg:items-center lg:gap-3 lg:w-[250px] lg:justify-end'>
 					<HeaderUserBar
 						session={session}
 						avatarImage={avatarImage || ''}

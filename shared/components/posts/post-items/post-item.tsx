@@ -75,7 +75,7 @@ export const PostItem: React.FC<{
 	return (
 		<div
 			className={cn(
-				'bg-secondary rounded-md mt-4 p-4 hover:bg-primary/5',
+				'bg-secondary rounded-md m-2 lg:m-0 lg:mt-4 p-4 hover:bg-primary/5',
 				className
 			)}
 		>

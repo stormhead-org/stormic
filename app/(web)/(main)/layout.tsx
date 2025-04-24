@@ -64,10 +64,10 @@ export default async function MainLayout({
 
 	return (
 		<>
-			<Container className='mt-4'>
-				<div className='flex gap-4'>
+			<Container className='lg:mt-4'>
+				<div className='lg:flex lg:gap-4'>
 					{/* Левая часть */}
-					<div className='w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
+					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar'>
 						<FeedUserMenu />
 						<SocialMenu
 							socialNavigation={resultSocialNavigation}
@@ -97,12 +97,12 @@ export default async function MainLayout({
 						<SideFooter className='mt-4' />
 					</div>
 					{/* Центральная часть */}
-					<div className='w-2/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar rounded-md'>
+					<div className='w-full lg:w-2/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-md'>
 						{children}
 					</div>
 
 					{/* Правая часть */}
-					<div className='w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar rounded-md'>
+					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-md'>
 						<CommentFeedGroup />
 					</div>
 				</div>

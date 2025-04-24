@@ -7,9 +7,11 @@ interface Props {
 
 export const Container: React.FC<React.PropsWithChildren<Props>> = ({
 	className,
-	children,
+	children
 }) => {
 	return (
-		<div className={cn('mx-auto max-w-[1200px]', className)}>{children}</div>
+		<div className={cn('mx-auto max-w-[640px] lg:max-w-[1200px]', className)}>
+			{children}
+		</div>
 	)
 }
