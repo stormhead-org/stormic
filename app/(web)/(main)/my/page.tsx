@@ -95,7 +95,6 @@ export default async function Feed() {
 				in: feedIds
 			}
 		},
-		depth: 1,
 		pagination: false,
 		overrideAccess: true
 	})

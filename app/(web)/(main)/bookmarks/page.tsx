@@ -48,7 +48,6 @@ export default async function Bookmarks() {
 				in: bookmarkIds
 			}
 		},
-		depth: 1,
 		pagination: false,
 		overrideAccess: true
 	})
