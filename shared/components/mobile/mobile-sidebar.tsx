@@ -53,33 +53,6 @@ export const MetaSidebar: React.FC<Props> = ({
 	setSeoImage,
 	className
 }) => {
-	const seoForm = useForm({
-		defaultValues: {
-			seotitle: seotitle || '',
-			seodescription: seodescription || ''
-		}
-	})
-
-	// Синхронизация начальных значений при изменении внешних пропсов
-	useEffect(() => {
-		seoForm.reset({
-			seotitle: seotitle || '',
-			seodescription: seodescription || ''
-		})
-	}, [seotitle, seodescription, seoForm])
-
-	// Обработчики изменения для передачи значений в родительский компонент
-	const handleSeoTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value
-		setSeoTitle(value)
-	}
-
-	const handleSeoDescriptionChange = (
-		e: React.ChangeEvent<HTMLTextAreaElement>
-	) => {
-		const value = e.target.value
-		setSeoDescription(value)
-	}
 
 	return (
 		<Sidebar side='left' collapsible='icon' className={className}>

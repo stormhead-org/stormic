@@ -108,6 +108,9 @@ export default async function HomeLayout({
 					/>
 				</Suspense>
 				{children}
+				<div className='sticky bottom-0 lg:hidden'>
+					<MobileBottomNavBar />
+				</div>
 			</>
 		)
 	}
