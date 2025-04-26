@@ -1,4 +1,4 @@
-import { User } from '@/payload-types'
+import { Community, User } from '@/payload-types'
 import { Header } from '@/shared/components/headers/main-header/header'
 import { UserBanLogin } from '@/shared/components/info-blocks/user-ban-login'
 import { MobileBottomNavBar } from '@/shared/components/mobile/mobile-bottom-nav-bar'
@@ -41,6 +41,33 @@ export default async function HomeLayout({
 	const payload = await getPayload({ config: configPromise })
 	const session = (await getSession()) as { user: User } | null
 	const currentUser = session && session.user
+
+	const sideBarNavigation = await payload.findGlobal({
+		slug: 'sidebar-navigation',
+		depth: 1,
+		select: {
+			items: true
+		}
+	})
+
+	const socialNavigation = await payload.findGlobal({
+		slug: 'social-navigation',
+		depth: 2
+	})
+
+	const resultCommunities = await payload.find({
+		collection: 'communities',
+		where: {
+			COMMUNITY_HAS_BANNED: {
+				equals: false
+			}
+		},
+		depth: 2,
+		pagination: false,
+		overrideAccess: false
+	})
+
+	const communities = resultCommunities.docs as Community[]
 
 	// Базовая разметка, которая будет использоваться в обоих случаях
 	const baseLayout = (content: React.ReactNode) => (
@@ -98,6 +125,9 @@ export default async function HomeLayout({
 			<>
 				<Suspense>
 					<Header
+						communities={communities}
+						sideBarNavigation={sideBarNavigation}
+						socialNavigation={socialNavigation}
 						session={false}
 						logoImage={logoImageUrl}
 						stormicName={resultGlobalHost.title || 'Stormic'}
@@ -157,6 +187,9 @@ export default async function HomeLayout({
 		<>
 			<Suspense>
 				<Header
+					communities={communities}
+					sideBarNavigation={sideBarNavigation}
+					socialNavigation={socialNavigation}
 					session={true}
 					logoImage={logoImageUrl}
 					stormicName={resultGlobalHost.title || 'Stormic'}

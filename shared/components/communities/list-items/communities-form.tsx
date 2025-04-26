@@ -4,7 +4,7 @@ import { CommunitiesItem } from '@/shared/components/communities/list-items/comm
 import { Title } from '@/shared/components/title'
 import { cn } from '@/shared/lib/utils'
 import { getMediaUrl } from '@/shared/utils/payload/getTypes'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp, Component } from 'lucide-react'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 import { Community } from '@/payload-types'
@@ -44,7 +44,10 @@ export const CommunitiesForm: React.FC<Props> = ({
 	if (loading) {
 		return (
 			<div className={className}>
-				<Title text={title} size='xs' className='mb-4' />
+				<div className='flex items-center gap-2'>
+					<Component size={22} />
+					<Title text={title} size='xs' className='' />
+				</div>
 
 				{...Array(limit)
 					.fill(0)
@@ -66,11 +69,15 @@ export const CommunitiesForm: React.FC<Props> = ({
 	return (
 		<div className={cn(hasPost && 'max-w-[200px]', className)}>
 			{!hasPost && (
-				<Title
-					text={title}
-					size='xs'
-					className='font-bold text-a-color hover:text-a-color-hover mb-6'
-				/>
+				<div className='flex items-center gap-2'>
+					<Component size={22} />
+
+					<Title
+						text={title}
+						size='xs'
+						className='text-a-color hover:text-a-color-hover'
+					/>
+				</div>
 			)}
 			{showAll && (
 				<div className={cn(hasPost ? 'mb-2]' : 'mb-5', className)}>

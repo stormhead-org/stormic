@@ -20,28 +20,48 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 		{
 			id: 1,
 			text: 'Популярное',
-			icon: <Flame size={22} />,
+			icon: (isActive: boolean) => (
+				<Flame
+					size={22}
+					className={cn('text-primary', isActive && 'text-blue-700')}
+				/>
+			),
 			path: '/',
 			disabled: true
 		},
 		{
 			id: 2,
 			text: 'Свежее',
-			icon: <Zap size={22} />,
+			icon: (isActive: boolean) => (
+				<Zap
+					size={22}
+					className={cn('text-primary', isActive && 'text-blue-700')}
+				/>
+			),
 			path: '/new',
 			disabled: false
 		},
 		{
 			id: 3,
 			text: 'Моя Лента',
-			icon: <CheckCheck size={22} />,
+			icon: (isActive: boolean) => (
+				<CheckCheck
+					size={22}
+					className={cn('text-primary', isActive && 'text-blue-700')}
+				/>
+			),
 			path: '/my',
 			disabled: false
 		},
 		{
 			id: 4,
 			text: 'Закладки',
-			icon: <BookmarkCheck size={22} />,
+			icon: (isActive: boolean) => (
+				<BookmarkCheck
+					size={22}
+					className={cn('text-primary', isActive && 'text-blue-700')}
+				/>
+			),
 			path: '/bookmarks',
 			disabled: false
 		}
@@ -49,22 +69,25 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 
 	return (
 		<div className={cn('', className)}>
-			{userMenu.map(item => (
-				<Button
-					key={item.id}
-					variant='blue'
-					type='button'
-					disabled={item.disabled}
-					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-blue-700 text-primary hover:text-white',
-						`${pathname === item.path ? 'bg-blue-800 hover:bg-blue-800 text-white' : ''}`
-					)}
-					onClick={() => router.push(item.path)}
-				>
-					{item.icon}
-					{item.text}
-				</Button>
-			))}
+			{userMenu.map(item => {
+				const isActive = pathname === item.path
+				return (
+					<Button
+						key={item.id}
+						variant='blue'
+						type='button'
+						disabled={item.disabled}
+						className={cn(
+							'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl',
+							isActive && 'bg-secondary hover:bg-secondary'
+						)}
+						onClick={() => router.push(item.path)}
+					>
+						{typeof item.icon === 'function' ? item.icon(isActive) : item.icon}
+						{item.text}
+					</Button>
+				)
+			})}
 		</div>
 	)
 }

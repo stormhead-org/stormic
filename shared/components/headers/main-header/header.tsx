@@ -1,29 +1,33 @@
 'use client'
 
+import { Community, SidebarNavigation, SocialNavigation } from '@/payload-types'
 import { Container, HeaderButtons, HeaderUserBar } from '@/shared/components'
-import { FormInput } from '@/shared/components/form'
-import { MetaSidebar } from '@/shared/components/post-edit/items/meta-sidebar'
-import { Button } from '@/shared/components/ui/button'
-import { SidebarProvider, SidebarTrigger } from '@/shared/components/ui/sidebar'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
-import { FormProvider } from 'react-hook-form'
 import { toast } from 'sonner'
+import { MobileSidebar } from '../../mobile/mobile-sidebar'
+import { SidebarProvider, SidebarTrigger } from '../../ui/sidebar-tablet'
 
 interface Props {
+	communities: Community[]
+	sideBarNavigation: SidebarNavigation
+	socialNavigation: SocialNavigation
 	avatarImage: string | null | undefined
 	userUrl: string
 	logoImage: string | null | undefined
 	stormicName: string | null | undefined
-	authImage?: string | null | undefined
 	session: boolean
 	description: string | null | undefined
+	authImage?: string | null | undefined
 	className?: string
 }
 
 export const Header: React.FC<Props> = ({
+	communities,
+	sideBarNavigation,
+	socialNavigation,
 	avatarImage,
 	userUrl,
 	logoImage,
@@ -60,58 +64,46 @@ export const Header: React.FC<Props> = ({
 				className
 			)}
 		>
-				<Container>
-					<div className='flex items-center justify-between h-[4rem] mx-2 lg:mx-0 bg-secondary lg:bg-transparent border-b border-blue-700 lg:border-none rounded-md lg:rounded-none'>
+			<Container>
+				<div className='flex items-center justify-between h-[4rem] mx-2 lg:mx-0 bg-secondary lg:bg-transparent border-b border-blue-700 lg:border-none rounded-md lg:rounded-none'>
+					<SidebarProvider>
+						<MobileSidebar
+							communities={communities}
+							sideBarNavigation={sideBarNavigation}
+							socialNavigation={socialNavigation}
+							className='lg:hidden'
+						/>
 						{/* Левая часть */}
-						<SidebarProvider>
-							<div className='flex h-full w-full'>
-								<MetaSidebar
-									authorName={currentUser.name}
-									authorAvatar={authorAvatar}
-									communities={communities}
-									selectedCommunityId={selectedCommunityId}
-									setSelectedCommunityId={setSelectedCommunityId}
-									heroImage={heroImage}
-									setHeroImage={setHeroImage}
-									seotitle={seotitle}
-									setSeoTitle={setSeoTitle}
-									seodescription={seodescription}
-									setSeoDescription={setSeoDescription}
-									seoImage={seoImage}
-									setSeoImage={setSeoImage}
-									className='w-64 flex-shrink-0'
-								/>
-								<SidebarTrigger className='' />
-								
-							</div>
-						</SidebarProvider>
-						<Link href='/'>
-							<div className='lg:flex lg:items-center lg:gap-4 lg:w-[250px]'>
-								<img
-									src={logoImage || ''}
-									alt='Logo'
-									width={42}
-									height={42}
-									className='ml-2 lg:ml-0'
-								/>
-								<div className='hidden lg:block'>
-									<h1 className='text-2xl uppercase font-black text-gray-700 dark:text-white'>
-										{stormicName}
-									</h1>
-									<p className='text-sm text-gray-700 dark:text-white leading-3 mb-1'>
-										{description}
-									</p>
+						<div className='w-1/4 flex items-center'>
+							<SidebarTrigger className='block lg:hidden mx-2 -mt-1' />
+							<Link href='/'>
+								<div className='lg:flex lg:items-center lg:gap-4 lg:w-[250px]'>
+									<img
+										src={logoImage || ''}
+										alt='Logo'
+										width={42}
+										height={42}
+										className=''
+									/>
+									<div className='hidden lg:block'>
+										<h1 className='text-2xl uppercase font-black text-gray-700 dark:text-white'>
+											{stormicName}
+										</h1>
+										<p className='text-sm text-gray-700 dark:text-white leading-3 mb-1'>
+											{description}
+										</p>
+									</div>
 								</div>
-							</div>
-						</Link>
-						
-						{/* Центральная */}
-						<div className='hidden lg:block lg:w-[500px]'>
-							<HeaderButtons />
+							</Link>
 						</div>
-						
+
+						{/* Центральная */}
+						<div className='hidden lg:block lg:w-2/4'>
+							<HeaderButtons className='w-full' />
+						</div>
+
 						{/* Правая часть */}
-						<div className='hidden lg:flex lg:items-center lg:gap-3 lg:w-[250px] lg:justify-end'>
+						<div className='hidden lg:flex lg:items-center lg:gap-3 lg:w-1/4 lg:justify-end'>
 							<HeaderUserBar
 								session={session}
 								avatarImage={avatarImage || ''}
@@ -121,8 +113,9 @@ export const Header: React.FC<Props> = ({
 								stormicName={stormicName || ''}
 							/>
 						</div>
-					</div>
-				</Container>
+					</SidebarProvider>
+				</div>
+			</Container>
 		</header>
 	)
 }
