@@ -1,9 +1,10 @@
 'use client'
 
 import packageJson from '@/package.json'
-import Link from 'next/link'
+import { Button } from '@/shared/components/ui/button'
+import { Book, CodeXml, Gem } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
-// import { useIntl } from 'react-intl'
 import { cn } from '../lib/utils'
 
 interface Props {
@@ -12,55 +13,77 @@ interface Props {
 
 export const SideFooter: React.FC<Props> = ({ className }) => {
 	const version = packageJson.version
-	// const { formatMessage } = useIntl()
+	const router = useRouter()
+	const pathname = usePathname()
+
+	const platformFooter = [
+		{
+			id: 2,
+			text: 'Правила',
+			icon: (isActive: boolean) => (
+				<Book
+					size={22}
+					className={cn('text-primary', isActive && 'text-theme')}
+				/>
+			),
+			path: '/about',
+			disabled: false
+		},
+		{
+			id: 3,
+			text: `v${version}`,
+			icon: (isActive: boolean) => (
+				<CodeXml
+					size={22}
+					className={cn('text-primary', isActive && 'text-theme')}
+				/>
+			),
+			path: 'https://github.com/stormhead-org/stormic',
+			disabled: false
+		},
+		{
+			id: 4,
+			text: 'powered by Stormic',
+			icon: (isActive: boolean) => (
+				<Gem
+					size={22}
+					className={cn('text-primary', isActive && 'text-theme')}
+				/>
+			),
+			path: 'https://stormic.app/about/',
+			disabled: false
+		}
+	]
+
+	const handleNavigation = (path: string) => {
+		if (path.startsWith('http') || path.startsWith('https')) {
+			window.open(path, '_blank', 'noopener,noreferrer')
+		} else {
+			router.push(path)
+		}
+	}
+
 	return (
 		<div className={cn('', className)}>
-			<span className=''>
-				{process.env.NEXT_PUBLIC_BASE_URL}:{' '}
-				<Link
-					// href='/about'>{formatMessage({ id: 'sideFooter.about' })}</Link> |{' '}
-					href='/about'
-				>
-					О Проекте
-				</Link>{' '}
-				|{' '}
-				<Link
-					// href='/rules'>{formatMessage({ id: 'sideFooter.rules' })}</Link> |{' '}
-					href='/about'
-				>
-					Правила
-				</Link>
-				<br />
-				<br />
-				stormic:{' '}
-				<Link
-					// href='https://stormic.app/about/'>{formatMessage({ id: 'sideFooter.about' })}</Link> |{' '}
-					target='_blank'
-					href='https://stormic.app/about/'
-				>
-					О Проекте
-				</Link>{' '}
-				|{' '}
-				<Link target='_blank' href='https://github.com/stormhead-org/stormic'>
-					{/* {formatMessage({ id: 'sideFooter.sourceCode' })} */}
-					Исходный код
-				</Link>{' '}
-				| v{version}
-				<br />
-				<br />
-				{/* {formatMessage({ id: 'sideFooter.madeWithLove' })}{' '} */}
-				Сделано с любовью и{' '}
-				<Link target='_blank' href='https://github.com/vercel/next.js'>
-					NextJS
-				</Link>
-				<br />
-				{/* {formatMessage({ id: 'sideFooter.community' })} */}
-				Сообщество{' '}
-				<Link target='_blank' href='https://stormic.app/'>
-					Stormic
-				</Link>{' '}
-				{/* {formatMessage({ id: "sideFooter.communityDate" })} */}© 2025
-			</span>
+			{platformFooter.map(item => {
+				const isActive = pathname === item.path
+				return (
+					<Button
+						key={item.id}
+						variant='blue'
+						type='button'
+						disabled={item.disabled}
+						className={cn(
+							'flex gap-2 justify-start w-full mb-1 h-12 text-base font-normal bg-transparent hover:bg-secondary text-primary rounded-xl',
+							isActive && 'bg-secondary hover:bg-secondary'
+						)}
+						onClick={() => handleNavigation(item.path)}
+					>
+						{typeof item.icon === 'function' ? item.icon(isActive) : item.icon}
+						{item.text}
+					</Button>
+				)
+			})}
 		</div>
 	)
 }

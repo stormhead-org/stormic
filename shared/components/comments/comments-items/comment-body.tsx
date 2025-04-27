@@ -1,6 +1,7 @@
 import { Media } from '@/payload-types'
 import CommentImageGallery from '@/shared/components/comments/comment-image-gallery'
 import { cn } from '@/shared/lib/utils'
+import { truncateText } from '@/shared/utils/textUtils'
 import { Link2 } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -12,13 +13,6 @@ export interface CommentItemProps {
 	media: Media
 	deleted: boolean
 	className?: string
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const CommentBody: React.FC<CommentItemProps> = ({

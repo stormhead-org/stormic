@@ -1,10 +1,9 @@
 import { Community, Post, User } from '@/payload-types'
-import { MainBannerForm } from '@/shared/components'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
+import { SortFreshFeedButtons } from '@/shared/components/sort-fresh-feed-buttons'
 import { getSession } from '@/shared/lib/auth'
 import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import { Permissions } from '@/shared/lib/permissions'
-import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -45,11 +44,6 @@ export default async function Home() {
 		overrideAccess: true
 	})
 
-	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings',
-		depth: 1
-	})
-
 	const posts = result.docs as Post[]
 	const communities = resultCommunities.docs as Community[]
 
@@ -69,25 +63,15 @@ export default async function Home() {
 		)
 	}
 
-	const bannerUrl =
-		typeof resultGlobalHost.banner === 'object'
-			? getMediaUrl(resultGlobalHost.banner, '/defaultBanner.jpg')
-			: '/defaultBanner.jpg'
-
 	return (
 		<>
-			<MainBannerForm
-				posts={posts}
-				stormicName={resultGlobalHost.title || 'Stormic'}
-				bannerUrl={bannerUrl}
-				className='hidden lg:block'
-			/>
+			<SortFreshFeedButtons />
 			<PostForm
 				limit={5}
 				post={posts}
 				communities={communities}
 				postPermissions={postPermissions}
-				className='lg:mt-4'
+				className='lg:mt-3'
 			/>
 		</>
 	)

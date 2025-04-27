@@ -6,6 +6,7 @@ import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
 import { CommunityPostsCounter } from '@/shared/stores/state-counters/community-posts-counter'
+import { truncateText } from '@/shared/utils/textUtils'
 import { Component, Newspaper, UserRoundPlus } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -18,13 +19,6 @@ export interface CommunitiesCardItemProps {
 	url?: string
 	image?: string
 	className?: string
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({

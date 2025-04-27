@@ -5,6 +5,7 @@ import { Button } from '@/shared/components/ui/button'
 import UserFollowButton from '@/shared/components/user-follow-button'
 import { cn } from '@/shared/lib/utils'
 import { UserFollowersCounter } from '@/shared/stores/state-counters/user-followers-counter'
+import { truncateText } from '@/shared/utils/textUtils'
 import { UserRoundPlus, UsersRound } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -17,13 +18,6 @@ export interface Props {
 	url?: string
 	avatarUrl?: string
 	className?: string
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const UsersCardItem: React.FC<Props> = ({

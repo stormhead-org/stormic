@@ -7,7 +7,6 @@ import { getSession } from '@/shared/lib/auth'
 import { getServerSideURL } from '@/shared/lib/getURL'
 import { mergeOpenGraph } from '@/shared/lib/mergeOpenGraph'
 import { Providers } from '@/shared/providers'
-import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
@@ -106,35 +105,19 @@ export default async function HomeLayout({
 
 	// Если пользователь не авторизован
 	if (!currentUser) {
-		const resultGlobalHost = await payload.findGlobal({
+		const hostSettings = await payload.findGlobal({
 			slug: 'host-settings',
 			depth: 1
 		})
-
-		const logoImageUrl =
-			typeof resultGlobalHost.logo === 'object'
-				? getMediaUrl(resultGlobalHost.logo, '/logo.png')
-				: '/logo.png'
-
-		const authImageUrl =
-			typeof resultGlobalHost.authBanner === 'object'
-				? getMediaUrl(resultGlobalHost.authBanner, '/defaultBanner.jpg')
-				: '/defaultBanner.jpg'
 
 		return baseLayout(
 			<>
 				<Suspense>
 					<Header
+						hostSettings={hostSettings}
 						communities={communities}
 						sideBarNavigation={sideBarNavigation}
 						socialNavigation={socialNavigation}
-						session={false}
-						logoImage={logoImageUrl}
-						stormicName={resultGlobalHost.title || 'Stormic'}
-						authImage={authImageUrl}
-						description={resultGlobalHost.slogan || 'код, GitHub и ты'}
-						avatarImage=''
-						userUrl=''
 					/>
 				</Suspense>
 				{children}
@@ -163,40 +146,20 @@ export default async function HomeLayout({
 	}
 
 	// Если пользователь авторизован и не забанен
-	const resultGlobalHost = await payload.findGlobal({
+	const hostSettings = await payload.findGlobal({
 		slug: 'host-settings',
 		depth: 1
 	})
-
-	const logoImageUrl =
-		typeof resultGlobalHost.logo === 'object'
-			? getMediaUrl(resultGlobalHost.logo, '/logo.png')
-			: '/logo.png'
-
-	const authImageUrl =
-		typeof resultGlobalHost.authBanner === 'object'
-			? getMediaUrl(resultGlobalHost.authBanner, '/defaultBanner.jpg')
-			: '/defaultBanner.jpg'
-
-	const avatarImageUrl =
-		typeof currentUser.avatar === 'object'
-			? getMediaUrl(currentUser.avatar, '/logo.png')
-			: '/logo.png'
 
 	return baseLayout(
 		<>
 			<Suspense>
 				<Header
+					hostSettings={hostSettings}
 					communities={communities}
 					sideBarNavigation={sideBarNavigation}
 					socialNavigation={socialNavigation}
-					session={true}
-					logoImage={logoImageUrl}
-					stormicName={resultGlobalHost.title || 'Stormic'}
-					authImage={authImageUrl}
-					description={resultGlobalHost.slogan || 'код, GitHub и ты'}
-					avatarImage={avatarImageUrl}
-					userUrl={`/u/${session?.user.id}`}
+					currentUser={currentUser}
 				/>
 			</Suspense>
 			{children}

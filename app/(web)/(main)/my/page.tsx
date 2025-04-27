@@ -1,10 +1,9 @@
 import { Community, FollowCommunity, Post, type User } from '@/payload-types'
-import { MainBannerForm } from '@/shared/components'
 import { MyFeedEmpty } from '@/shared/components/info-blocks/my-feed-empty'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { getSession } from '@/shared/lib/auth'
 import { Permissions } from '@/shared/lib/permissions'
-import { getMediaUrl, getRelationIds } from '@/shared/utils/payload/getTypes'
+import { getRelationIds } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
@@ -22,11 +21,6 @@ export default async function Feed() {
 	if (!currentUser) {
 		return redirect('/not-auth')
 	}
-
-	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings',
-		depth: 1
-	})
 
 	const user = await payload.findByID({
 		collection: 'users',
@@ -116,23 +110,13 @@ export default async function Feed() {
 	// Получаем права для каждого поста
 	const postPermissions: Record<number, Permissions | null> = {}
 
-	const bannerUrl =
-		typeof resultGlobalHost.banner === 'object'
-			? getMediaUrl(resultGlobalHost.banner, '/defaultBanner.jpg')
-			: '/defaultBanner.jpg'
-
 	return (
 		<>
-			<MainBannerForm
-				stormicName={resultGlobalHost.title || 'Stormic'}
-				bannerUrl={bannerUrl}
-			/>
 			<PostForm
 				limit={5}
 				post={posts}
 				communities={communities}
 				postPermissions={postPermissions}
-				className='mt-4'
 				// loading={loading}
 			/>
 		</>

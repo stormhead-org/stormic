@@ -7,7 +7,6 @@ import {
 	SocialMenu
 } from '@/shared/components'
 import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
-import { NewPostButton } from '@/shared/components/new-post-button'
 import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -63,31 +62,22 @@ export default async function CommunitiesLayout({
 					<div className='w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
 						<div className='h-3/4'>
 							<FeedUserMenu />
+
+							<CommunitiesForm
+								limit={10}
+								items={communities}
+								className='mt-1'
+								// loading={loading}
+							/>
+
 							<SocialMenu
 								socialNavigation={resultSocialNavigation}
-								className='my-2'
+								className='mt-1'
 							/>
-							<NewPostButton
-								host={resultGlobalHost}
-								communities={communities}
-								currentUser={currentUser !== null ? currentUser : undefined}
-								className='my-4'
-							/>
-							<NavigationMenuForm
-								className='mt-4'
-								data={globalSideBarNavigation}
-							/>
-							<CommunitiesForm
-								// title={formatMessage({ id: 'categoryGroup.communitiesPageLink' })}
-								title={'Сообщества'}
-								limit={5}
-								defaultItems={communities.slice(0, 5)}
-								items={communities}
-								// loading={loading}
-								className='mt-4'
-								hasPost={false}
-							/>
-							<SideFooter className='mt-4' />
+
+							<NavigationMenuForm data={globalSideBarNavigation} />
+
+							<SideFooter className='border-t border-theme pt-1 mt-1 rounded-xl' />
 						</div>
 					</div>
 

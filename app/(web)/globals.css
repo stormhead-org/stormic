@@ -27,6 +27,10 @@ html {
 		--a-color: 218, 70%, 67%;
 		--a-color-hover: 218, 100%, 67%;
 		--notification-color-red: 0 100% 33.33%;
+		/*blue-700*/
+		--theme-color: 48.8% 0.243 264.376;
+		/*blue-800*/
+		--theme-color-hover: 42.4% 0.199 265.638;
 
 		--popover: 0 0% 100%;
 		--popover-foreground: 222.2 84% 4.9%;
@@ -72,6 +76,56 @@ html {
 		--a-color: 218, 70%, 67%;
 		--a-color-hover: 218, 100%, 67%;
 		--notification-color-red: 0 100% 33.33%;
+		/*blue-700*/
+		--theme-color: 48.8% 0.243 264.376;
+		/*blue-800*/
+		--theme-color-hover: 42.4% 0.199 265.638;
+
+		--popover: 222.2 84% 4.9%;
+		--popover-foreground: 210 40% 98%;
+
+		--primary: 210 40% 98%;
+		--primary-foreground: 222.2 47.4% 11.2%;
+
+		--secondary: 217.2 32.6% 15%;
+		--secondary-foreground: 210 40% 98%;
+
+		--muted: 217.2 32.6% 17.5%;
+		--muted-foreground: 215 20.2% 65.1%;
+
+		--accent: 217.2 32.6% 17.5%;
+		--accent-foreground: 210 40% 98%;
+
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 210 40% 98%;
+
+		--border: 217.2 32.6% 17.5%;
+		--input: 217.2 32.6% 17.5%;
+		--ring: 212.7 26.8% 83.9%;
+		--sidebar-background: 222.22, 47.37%, 11.18%;
+		--sidebar-foreground: 210 40% 98%;
+		--sidebar-primary: 210 40% 98%;
+		--sidebar-primary-foreground: 222.2 47.4% 11.2%;
+		--sidebar-accent: 217.2 32.6% 17.5%;
+		--sidebar-accent-foreground: 210 40% 98%;
+		--sidebar-border: 220 13% 91%;
+		--sidebar-ring: 222.2 84% 4.9%;
+	}
+
+	.yellow {
+		--background: 222.22, 47.37%, 11.18%;
+		--foreground: 210 40% 98%;
+
+		--card: 217.24, 32.58%, 17.45%;
+		--card-foreground: 210 40% 98%;
+
+		--txt-color: 210 5.36% 78.04%;
+		--txt-color-headers: 210 5.88% 80%;
+		--a-color: 218, 70%, 67%;
+		--a-color-hover: 218, 100%, 67%;
+		--notification-color: 0 100% 33.33%;
+		--theme-color: 48.8% 0.243 264.376;
+		--theme-color-hover: 43.26 96.41% 56.27%;
 
 		--popover: 222.2 84% 4.9%;
 		--popover-foreground: 210 40% 98%;
@@ -252,7 +306,6 @@ html {
 	/* p {
 		@apply text-base leading-relaxed mb-4;
 	} */
-
 	/* Горизонтальная линия (ранее <br>) */
 	hr {
 		@apply my-6 border-t-2 border-white w-full;
@@ -333,6 +386,7 @@ html {
 	* {
 		@apply border-border outline-ring/50;
 	}
+
 	body {
 		@apply bg-background text-foreground;
 	}

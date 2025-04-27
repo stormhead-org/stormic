@@ -3,6 +3,7 @@
 import { Post, User } from '@/payload-types'
 import { cn } from '@/shared/lib/utils'
 import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
+import { truncateText } from '@/shared/utils/textUtils'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -12,13 +13,6 @@ import { useClickAway } from 'react-use'
 interface Props {
 	posts: Post[]
 	className?: string
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const SearchInput: React.FC<Props> = ({ posts, className }) => {
@@ -62,13 +56,13 @@ export const SearchInput: React.FC<Props> = ({ posts, className }) => {
 			<div
 				ref={ref}
 				className={cn(
-					'flex rounded-2xl flex-1 justify-between relative h-11 z-30 mx-auto',
+					'flex rounded-xl flex-1 justify-between relative h-11 z-30 mx-auto',
 					className
 				)}
 			>
 				<Search className='absolute top-1/2 translate-y-[-50%] left-3 h-5 text-gray-400' />
 				<input
-					className='rounded-2xl outline-none w-full pl-11 bg-secondary'
+					className='rounded-xl outline-none w-full pl-11 bg-secondary'
 					type='text'
 					// placeholder={formatMessage({ id: 'mainBannerForm.searchInputPlaceholder' })}
 					placeholder='Поиск...'
@@ -91,7 +85,7 @@ export const SearchInput: React.FC<Props> = ({ posts, className }) => {
 							<Link
 								onClick={onClickItem}
 								key={item.postId}
-								className='flex items-center gap-3 mx-2 px-3 py-2 hover:bg-blue-700 text-black hover:text-white dark:text-white rounded-md'
+								className='flex items-center gap-3 mx-2 px-3 py-2 hover:bg-gray-200 dark:hover:bg-gray-800 text-black hover:text-black dark:text-white rounded-xl'
 								href={item.postUrl}
 							>
 								<img

@@ -1,8 +1,10 @@
 'use client'
 
 import { type Post, SidebarNavigation } from '@/payload-types'
+import { Button } from '@/shared/components/ui/button'
 import { getRelationProp } from '@/shared/utils/payload/getTypes'
-import { LinkIcon } from 'lucide-react'
+import { truncateText } from '@/shared/utils/textUtils'
+import { Link2 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { cn } from '../lib/utils'
@@ -10,13 +12,6 @@ import { cn } from '../lib/utils'
 interface Props {
 	data: SidebarNavigation
 	className?: string
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
@@ -31,23 +26,32 @@ export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 					return null
 				}
 
+				const isActive = pathname === `/p/${postId}`
+
 				return (
-					<div
+					<Button
 						key={item.id}
+						variant='blue'
+						type='button'
 						className={cn(
-							'flex gap-2 pl-2 text-base items-center justify-start w-full h-12 rounded-md text-primary hover:bg-secondary cursor-pointer mb-1',
+							'flex gap-2 justify-start w-full mt-1 h-12 text-base font-normal bg-transparent hover:bg-secondary text-primary rounded-xl',
 							pathname === `/p/${postId}`
 								? 'bg-secondary hover:bg-secondary'
 								: ''
 						)}
 						onClick={() => router.push(`/p/${postId}`)}
 					>
-						<LinkIcon size={22} />
-						{truncateText(
-							getRelationProp<Post, 'title'>(item.post, 'title', 'Untitled'),
-							28
-						)}
-					</div>
+						<Link2
+							size={22}
+							className={cn('text-primary', isActive && 'text-theme')}
+						/>
+						<span>
+							{truncateText(
+								getRelationProp<Post, 'title'>(item.post, 'title', 'Untitled'),
+								24
+							)}
+						</span>
+					</Button>
 				)
 			})}
 		</div>

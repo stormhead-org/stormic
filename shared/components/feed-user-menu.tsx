@@ -2,9 +2,10 @@
 
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
-import { BookmarkCheck, CheckCheck, Flame, Zap } from 'lucide-react'
+import { BookmarkCheck, CheckCheck, Compass, Flame, Zap } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
+
 // import { useIntl } from 'react-intl'
 
 interface Props {
@@ -23,7 +24,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<Flame
 					size={22}
-					className={cn('text-primary', isActive && 'text-blue-700')}
+					className={cn('text-primary', isActive && 'text-theme')}
 				/>
 			),
 			path: '/',
@@ -35,7 +36,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<Zap
 					size={22}
-					className={cn('text-primary', isActive && 'text-blue-700')}
+					className={cn('text-primary', isActive && 'text-theme')}
 				/>
 			),
 			path: '/new',
@@ -47,7 +48,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<CheckCheck
 					size={22}
-					className={cn('text-primary', isActive && 'text-blue-700')}
+					className={cn('text-primary', isActive && 'text-theme')}
 				/>
 			),
 			path: '/my',
@@ -59,10 +60,22 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<BookmarkCheck
 					size={22}
-					className={cn('text-primary', isActive && 'text-blue-700')}
+					className={cn('text-primary', isActive && 'text-theme')}
 				/>
 			),
 			path: '/bookmarks',
+			disabled: false
+		},
+		{
+			id: 5,
+			text: 'Обзор',
+			icon: (isActive: boolean) => (
+				<Compass
+					size={22}
+					className={cn('text-primary', isActive && 'text-theme')}
+				/>
+			),
+			path: '/explore',
 			disabled: false
 		}
 	]
@@ -78,7 +91,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 						type='button'
 						disabled={item.disabled}
 						className={cn(
-							'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl',
+							'flex gap-2 justify-start w-full mb-1 h-12 text-base font-medium bg-transparent hover:bg-secondary text-primary rounded-xl',
 							isActive && 'bg-secondary hover:bg-secondary'
 						)}
 						onClick={() => router.push(item.path)}

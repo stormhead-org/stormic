@@ -7,19 +7,13 @@ import {
 	AccordionTrigger
 } from '@/shared/components/ui/accordion'
 import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
+import { truncateText } from '@/shared/utils/textUtils'
 import Link from 'next/link'
 import React from 'react'
 
 interface Props {
 	community: Community
 	onClose?: VoidFunction
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {

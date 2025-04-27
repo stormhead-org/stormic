@@ -1,8 +1,15 @@
 'use client'
 
-import { Community, SidebarNavigation, SocialNavigation } from '@/payload-types'
+import {
+	Community,
+	type HostSetting,
+	SidebarNavigation,
+	SocialNavigation,
+	type User
+} from '@/payload-types'
 import { Container, HeaderButtons, HeaderUserBar } from '@/shared/components'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
@@ -11,30 +18,20 @@ import { MobileSidebar } from '../../mobile/mobile-sidebar'
 import { SidebarProvider, SidebarTrigger } from '../../ui/sidebar-tablet'
 
 interface Props {
+	hostSettings: HostSetting
 	communities: Community[]
 	sideBarNavigation: SidebarNavigation
 	socialNavigation: SocialNavigation
-	avatarImage: string | null | undefined
-	userUrl: string
-	logoImage: string | null | undefined
-	stormicName: string | null | undefined
-	session: boolean
-	description: string | null | undefined
-	authImage?: string | null | undefined
+	currentUser?: User
 	className?: string
 }
 
 export const Header: React.FC<Props> = ({
+	hostSettings,
 	communities,
 	sideBarNavigation,
 	socialNavigation,
-	avatarImage,
-	userUrl,
-	logoImage,
-	session,
-	stormicName,
-	authImage,
-	description,
+	currentUser,
 	className
 }) => {
 	const router = useRouter()
@@ -57,15 +54,20 @@ export const Header: React.FC<Props> = ({
 		}
 	}, [])
 
+	const logoImageUrl =
+		typeof hostSettings.logo === 'object'
+			? getMediaUrl(hostSettings.logo, '/logo.png')
+			: '/logo.png'
+
 	return (
 		<header
 			className={cn(
-				'sticky top-0 pt-2 z-10 bg-background lg:mx-0 lg:pt-0 lg:bg-transparent lg:border-b lg:border-blue-700',
+				'sticky top-0 pt-2 z-10 bg-background lg:mx-0 lg:pt-0 lg:bg-transparent lg:border-b lg:border-theme',
 				className
 			)}
 		>
 			<Container>
-				<div className='flex items-center justify-between h-[4rem] mx-2 lg:mx-0 bg-secondary lg:bg-transparent border-b border-blue-700 lg:border-none rounded-md lg:rounded-none'>
+				<div className='flex items-center justify-between h-[4rem] mx-2 lg:mx-0 bg-secondary lg:bg-transparent border-b border-theme lg:border-none rounded-md lg:rounded-none'>
 					<SidebarProvider>
 						<MobileSidebar
 							communities={communities}
@@ -79,7 +81,7 @@ export const Header: React.FC<Props> = ({
 							<Link href='/'>
 								<div className='lg:flex lg:items-center lg:gap-4 lg:w-[250px]'>
 									<img
-										src={logoImage || ''}
+										src={logoImageUrl}
 										alt='Logo'
 										width={42}
 										height={42}
@@ -87,10 +89,10 @@ export const Header: React.FC<Props> = ({
 									/>
 									<div className='hidden lg:block'>
 										<h1 className='text-2xl uppercase font-black text-gray-700 dark:text-white'>
-											{stormicName}
+											{hostSettings.title || 'Stormic'}
 										</h1>
 										<p className='text-sm text-gray-700 dark:text-white leading-3 mb-1'>
-											{description}
+											{hostSettings.description || 'код, GitHub и ты'}
 										</p>
 									</div>
 								</div>
@@ -105,12 +107,9 @@ export const Header: React.FC<Props> = ({
 						{/* Правая часть */}
 						<div className='hidden lg:flex lg:items-center lg:gap-3 lg:w-1/4 lg:justify-end'>
 							<HeaderUserBar
-								session={session}
-								avatarImage={avatarImage || ''}
-								userUrl={userUrl}
-								logoImage={logoImage || ''}
-								authImage={authImage || ''}
-								stormicName={stormicName || ''}
+								currentUser={currentUser}
+								hostSettings={hostSettings}
+								communities={communities}
 							/>
 						</div>
 					</SidebarProvider>

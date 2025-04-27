@@ -10,6 +10,7 @@ import {
 } from '@/shared/components/ui/accordion'
 import { cn } from '@/shared/lib/utils'
 import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
+import { truncateText } from '@/shared/utils/textUtils'
 import {
 	Delete,
 	Gavel,
@@ -23,19 +24,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { OwnerNotFound } from '../info-blocks/owner-not-found'
+
 // import { useIntl } from 'react-intl'
 
 interface Props {
 	hostInfo: HostSetting
 	hasOwner?: boolean
 	className?: string
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const AboutPage: React.FC<Props> = ({

@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from '@/shared/lib/utils'
+import { truncateText } from '@/shared/utils/textUtils'
 import Link from 'next/link'
 import React from 'react'
 
@@ -9,13 +10,6 @@ interface Props {
 	fieldsValue: string
 	loading?: boolean
 	className?: string
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const ProfileCustomFieldItem: React.FC<Props> = ({

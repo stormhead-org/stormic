@@ -66,7 +66,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 	}
 
 	return (
-		<div className={cn('rounded-md p-2 w-full', className)}>
+		<div className={cn('rounded-xl p-2 w-full', className)}>
 			<CommentHeader
 				authorAvatar={authorAvatar}
 				authorUrl={`/u/${authorId}`}

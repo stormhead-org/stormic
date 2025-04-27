@@ -27,7 +27,7 @@ export const PostFullBody: React.FC<Props> = ({
 					alt={postTitle}
 				/>
 			)}
-			<RichText data={postContent} />
+			<RichText data={postContent} className='mt-4' />
 		</div>
 	)
 }

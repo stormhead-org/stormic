@@ -15,6 +15,7 @@ interface Props {
 	currentUser?: User
 	className?: string
 }
+
 export const NewPostButton: React.FC<Props> = ({
 	host,
 	communities,
@@ -57,12 +58,11 @@ export const NewPostButton: React.FC<Props> = ({
 					authImage={authImageUrl}
 					stormicName={host.title || 'Stormic'}
 				/>
-			
 			)}
-			
+
 			<Button
 				variant='blue'
-				className='h-12 w-full text-lg font-bold'
+				className='text-base font-bold rounded-2xl'
 				type='button'
 				onClick={
 					currentUser
@@ -71,7 +71,7 @@ export const NewPostButton: React.FC<Props> = ({
 				}
 			>
 				{/* {formatMessage({ id: 'newPostButton' })} */}
-				Новый пост
+				<span>Написать</span>
 			</Button>
 		</div>
 	)

@@ -3,51 +3,59 @@
 import { cn } from '@/shared/lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
-import { useIntl } from 'react-intl'
+// import { useIntl } from 'react-intl'
 import { Button } from './ui/button'
 
 interface Props {
 	className?: string
 }
 
-export const SortFeedButtons: React.FC<Props> = ({ className }) => {
-	const { formatMessage } = useIntl()
+export const SortFreshFeedButtons: React.FC<Props> = ({ className }) => {
+	// const { formatMessage } = useIntl()
 	const pathname = usePathname()
 	const router = useRouter()
-	
+
 	const feedButtons = [
 		{
 			id: 1,
-			text: formatMessage({ id: 'sortFeedButtons.day' }),
-			path: '/?day'
+			// text: formatMessage({ id: 'sortFeedButtons.day' }),
+			text: 'Все',
+			path: '/new',
+			disabled: false
 		},
 		{
 			id: 2,
-			text: formatMessage({ id: 'sortFeedButtons.weekly' }),
-			path: '/?weekly'
+			// text: formatMessage({ id: 'sortFeedButtons.weekly' }),
+			text: 'Новое',
+			path: '#',
+			disabled: true
 		},
 		{
 			id: 3,
-			text: formatMessage({ id: 'sortFeedButtons.month' }),
-			path: '/?month'
+			// text: formatMessage({ id: 'sortFeedButtons.month' }),
+			text: '5+',
+			path: '#',
+			disabled: true
 		},
 		{
 			id: 4,
-			text: formatMessage({ id: 'sortFeedButtons.year' }),
-			path: '/?year'
+			// text: formatMessage({ id: 'sortFeedButtons.year' }),
+			text: '10+',
+			path: '#',
+			disabled: true
 		}
 	]
-	
 	return (
-		<div className={cn('flex flex-1 bg-secondary rounded-md', className)}>
+		<div className={cn('flex gap-2', className)}>
 			{feedButtons.map(item => (
 				<Button
 					key={item.id}
 					variant='blue'
 					type='button'
+					disabled={item.disabled}
 					className={cn(
-						'h-12 flex-1 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white',
-						`${pathname === item.path ? 'bg-blue-800 hover:bg-blue-800 text-white' : ''}`
+						'w-full text-base font-bold bg-transparent hover:bg-secondary text-primary rounded-xl',
+						pathname === item.path && 'text-theme bg-secondary'
 					)}
 					onClick={() => router.push(item.path)}
 				>

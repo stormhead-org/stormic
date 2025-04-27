@@ -1,10 +1,10 @@
 'use client'
 
 import { Title } from '@/shared/components'
-import { SocketIndicator } from '@/shared/components/socket-indicator'
 import { cn } from '@/shared/lib/utils'
 import React from 'react'
 import { CommentForm } from './comments-items/comment-form'
+
 // import { useIntl } from 'react-intl'
 
 interface Props {
@@ -21,11 +21,11 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 					// text={formatMessage({ id: 'commentFeedGroup.discussingTitle' })}
 					text='Сейчас обсуждают'
 					size='sm'
-					className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-l-blue-700'
+					className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-theme rounded-xl'
 				/>
-				<div className='mt-2'>
-					<SocketIndicator />
-				</div>
+				{/* <div className='mt-2'> */}
+				{/* 	<SocketIndicator /> */}
+				{/* </div> */}
 			</div>
 
 			<div className='flex flex-col rounded-md'>

@@ -21,7 +21,7 @@ export const PostForm: React.FC<Props> = ({
 	post,
 	communities,
 	postPermissions,
-	limit = 5,
+	limit,
 	loading,
 	relatedPost,
 	className
@@ -43,7 +43,7 @@ export const PostForm: React.FC<Props> = ({
 					key={item.id}
 					post={item}
 					communities={communities}
-					permissions={postPermissions[item.id]} // Передаем права для конкретного поста
+					permissions={postPermissions[item.id]}
 					relatedPost={relatedPost}
 				/>
 			))}

@@ -2,6 +2,7 @@ import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
 import { useCommunityFollowStore } from '@/shared/stores/community-follow-store'
 import React, { useEffect } from 'react'
+
 // import { useIntl } from 'react-intl'
 
 interface FollowButtonProps {
@@ -44,12 +45,12 @@ const CommunityFollowButton: React.FC<FollowButtonProps> = ({
 				// <>
 				// 	{formatMessage({ id: 'profileHeader.profileUnsubscribeButton' })}
 				// </>
-				<>Отписаться</>
+				<>Покинуть</>
 			) : (
 				// <>
 				// 	{formatMessage({ id: 'profileHeader.profileSubscribeButton' })}
 				// </>
-				<>Подписаться</>
+				<>Присоединиться</>
 			)}
 		</Button>
 	)

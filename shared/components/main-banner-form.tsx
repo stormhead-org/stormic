@@ -23,7 +23,7 @@ export const MainBannerForm: React.FC<Props> = ({
 	return (
 		<div className={cn(className)}>
 			<div
-				className='rounded-md bg-cover bg-center bg-no-repeat w-full'
+				className='rounded-xl bg-cover bg-center bg-no-repeat w-full'
 				style={styling}
 			>
 				<div className='py-10 text-center'>

@@ -8,7 +8,6 @@ import {
 } from '@/shared/components/'
 import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
 import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
-import { NewPostButton } from '@/shared/components/new-post-button'
 import { getSession } from '@/shared/lib/auth'
 import config from '@payload-config'
 import type { Metadata } from 'next'
@@ -28,12 +27,6 @@ export default async function MainLayout({
 	const payload = await getPayload({ config })
 
 	const session = (await getSession()) as { user: User } | null
-	const currentUser = session && session.user
-
-	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings',
-		depth: 1
-	})
 
 	const globalSideBarNavigation = await payload.findGlobal({
 		slug: 'sidebar-navigation',
@@ -55,6 +48,7 @@ export default async function MainLayout({
 				equals: false
 			}
 		},
+		sort: 'id',
 		depth: 2,
 		pagination: false,
 		overrideAccess: false
@@ -67,34 +61,24 @@ export default async function MainLayout({
 			<Container className='lg:mt-4'>
 				<div className='lg:flex lg:gap-4'>
 					{/* Левая часть */}
-					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar'>
+					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)]'>
 						<FeedUserMenu />
-						<SocialMenu
-							socialNavigation={resultSocialNavigation}
-							className='my-2'
+
+						<CommunitiesForm
+							limit={10}
+							items={communities}
+							className='mt-1'
+							// loading={loading}
 						/>
 
-						<NewPostButton
-							host={resultGlobalHost}
-							communities={communities}
-							currentUser={currentUser !== null ? currentUser : undefined}
-							className='my-4'
+						<SocialMenu
+							socialNavigation={resultSocialNavigation}
+							className='mt-1'
 						/>
-						<NavigationMenuForm
-							className='mt-4'
-							data={globalSideBarNavigation}
-						/>
-						<CommunitiesForm
-							// title={formatMessage({ id: 'categoryGroup.communitiesPageLink' })}
-							title={'Сообщества'}
-							limit={5}
-							defaultItems={communities.slice(0, 5)}
-							items={communities}
-							// loading={loading}
-							className='mt-4'
-							hasPost={false}
-						/>
-						<SideFooter className='mt-4' />
+
+						<NavigationMenuForm data={globalSideBarNavigation} />
+
+						<SideFooter className='border-t border-theme pt-1 mt-1 rounded-xl' />
 					</div>
 					{/* Центральная часть */}
 					<div className='w-full lg:w-2/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-md'>

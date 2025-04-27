@@ -1,132 +1,80 @@
 'use client'
 
-import { CommunitiesItem } from '@/shared/components/communities/list-items/communities-item'
-import { Title } from '@/shared/components/title'
-import { cn } from '@/shared/lib/utils'
-import { getMediaUrl } from '@/shared/utils/payload/getTypes'
-import { ChevronDown, ChevronUp, Component } from 'lucide-react'
-import React from 'react'
-// import { useIntl } from 'react-intl'
 import { Community } from '@/payload-types'
-import { Input } from '../../ui/input'
+import { CommunitiesItem } from '@/shared/components/communities/list-items/communities-item'
+import { Button } from '@/shared/components/ui/button'
+import { cn } from '@/shared/lib/utils'
+import { Component } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import React from 'react'
 import { Skeleton } from '../../ui/skeleton'
 
 interface Props {
-	title: string
 	items: Community[]
-	defaultItems?: Community[]
-	limit?: number
 	loading?: boolean
-	searchInputPlaceholder?: string
-	name?: string
-	hasPost: boolean
+	limit?: number
 	className?: string
 }
 
 export const CommunitiesForm: React.FC<Props> = ({
-	title,
 	items,
-	defaultItems,
-	limit = 5,
-	searchInputPlaceholder = 'Поиск...',
-	name,
-	className,
-	hasPost,
-	loading
+	loading,
+	limit,
+	className
 }) => {
-	// const { formatMessage } = useIntl()
-	const [showAll, setShowAll] = React.useState(false)
-	const [searchValue, setSearchValue] = React.useState('')
-	const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(e.target.value)
-	}
+	const router = useRouter()
+	const pathname = usePathname()
+
+	const isActive = pathname === '/communities'
 
 	if (loading) {
 		return (
-			<div className={className}>
-				<div className='flex items-center gap-2'>
-					<Component size={22} />
-					<Title text={title} size='xs' className='' />
-				</div>
+			<div className={cn('', className)}>
+				<Button
+					variant='blue'
+					type='button'
+					className={cn(
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl',
+						pathname === `/communities` ? 'bg-secondary hover:bg-secondary' : ''
+					)}
+					onClick={() => router.push('/communities')}
+				>
+					<Component
+						size={22}
+						className={cn('text-primary', isActive && 'text-theme')}
+					/>
+					Сообщества
+				</Button>
 
-				{...Array(limit)
-					.fill(0)
-					.map((_, index) => (
-						<Skeleton key={index} className='h-6 mb-4 rounded-[8px]' />
-					))}
+				{[...Array(limit)].map((_, index) => (
+					<Skeleton key={index} className='h-6 mb-4 rounded-[8px]' />
+				))}
 
 				<Skeleton className='w-28 h-6 mb-4 rounded-[8px]' />
 			</div>
 		)
 	}
 
-	const list = showAll
-		? items.filter(item =>
-				item.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
-			)
-		: (defaultItems || items).slice(0, limit)
-
 	return (
-		<div className={cn(hasPost && 'max-w-[200px]', className)}>
-			{!hasPost && (
-				<div className='flex items-center gap-2'>
-					<Component size={22} />
-
-					<Title
-						text={title}
-						size='xs'
-						className='text-a-color hover:text-a-color-hover'
-					/>
-				</div>
-			)}
-			{showAll && (
-				<div className={cn(hasPost ? 'mb-2]' : 'mb-5', className)}>
-					<Input
-						onChange={onChangeSearchInput}
-						placeholder={searchInputPlaceholder}
-						className='bg-secondary'
-					/>
-				</div>
-			)}
-
-			<div className='flex flex-col mt-4 max-h-[415px] pr-2 overflow-auto scrollbar'>
-				{list.map((item, index) => (
-					<CommunitiesItem
-						key={index}
-						text={item.title}
-						image={getMediaUrl(item.logo, '/logo.png')}
-						url={`/c/${item.id}`}
-						name={item.title}
-					/>
-				))}
-			</div>
-
-			{items.length > limit && (
-				<div className='border-b border-b-secondary'>
-					<button
-						onClick={() => setShowAll(!showAll)}
-						className='text-primary mb-3 mt-3 w-full'
-					>
-						{showAll ? (
-							<div className='flex flex-1 items-center hover:text-a-color-hover'>
-								<ChevronUp className='mx-3' />
-								<p className='font-bold'>
-									{/* {formatMessage({ id: 'categoryGroup.communityListHide' })} */}
-									Скрыть
-								</p>
-							</div>
-						) : (
-							<div className='flex flex-1 items-center hover:text-a-color-hover'>
-								<ChevronDown className='mx-3' />
-								<p className='font-bold'>
-									{/* {formatMessage({ id: 'categoryGroup.communityListShow' })} */}
-									Показать
-								</p>
-							</div>
-						)}
-					</button>
-				</div>
-			)}
+		<div className={cn('', className)}>
+			<Button
+				variant='blue'
+				type='button'
+				className={cn(
+					'flex gap-2 justify-start w-full mb-1 h-12 text-base font-medium bg-transparent hover:bg-secondary text-primary rounded-xl',
+					pathname === `/communities` ? 'bg-secondary hover:bg-secondary' : ''
+				)}
+				onClick={() => router.push('/communities')}
+			>
+				<Component
+					size={22}
+					className={cn('text-primary', isActive && 'text-theme')}
+				/>
+				Сообщества
+			</Button>
+			{items.slice(0, limit).map((item, index) => (
+				<CommunitiesItem key={item.id} community={item} className='mb-1' />
+			))}
 		</div>
 	)
 }

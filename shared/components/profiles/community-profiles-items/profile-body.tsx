@@ -5,7 +5,9 @@ import { formatDateTime } from '@/shared/lib/formatDateTime'
 import { cn } from '@/shared/lib/utils'
 import { CommunityFollowersCounter } from '@/shared/stores/state-counters/community-followers-counter'
 import { UserFollowersCounter } from '@/shared/stores/state-counters/user-followers-counter'
+import { truncateText } from '@/shared/utils/textUtils'
 import React from 'react'
+
 // import { useIntl } from 'react-intl'
 
 interface Props {
@@ -13,13 +15,6 @@ interface Props {
 	setOpenTeamCommunityModal: (OpenTeamCommunityModal: boolean) => void
 	hasUser: boolean
 	className?: string
-}
-
-const truncateText = (text: string, maxLength: number | undefined) => {
-	if (maxLength && text.length > maxLength) {
-		return text.slice(0, maxLength) + '...'
-	}
-	return text
 }
 
 export const ProfileBody: React.FC<Props> = ({
