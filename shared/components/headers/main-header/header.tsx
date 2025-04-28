@@ -67,7 +67,7 @@ export const Header: React.FC<Props> = ({
 			)}
 		>
 			<Container>
-				<div className='flex items-center justify-between h-[4rem] mx-2 lg:mx-0 bg-secondary lg:bg-transparent border-b border-theme lg:border-none rounded-md lg:rounded-none'>
+				<div className='flex items-center justify-between h-[4rem] mx-2 lg:mx-0 bg-secondary lg:bg-transparent border-b border-theme lg:border-none rounded-xl lg:rounded-none'>
 					<SidebarProvider>
 						<MobileSidebar
 							communities={communities}

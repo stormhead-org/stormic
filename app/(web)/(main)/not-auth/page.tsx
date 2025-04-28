@@ -16,5 +16,5 @@ export default async function NotAuth() {
 		return redirect('/')
 	}
 
-	return <NotAuthLock />
+	return <NotAuthLock className='m-2 lg:m-0' />
 }

@@ -61,7 +61,7 @@ export default async function MainLayout({
 			<Container className='lg:mt-4'>
 				<div className='lg:flex lg:gap-4'>
 					{/* Левая часть */}
-					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)]'>
+					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar'>
 						<FeedUserMenu />
 
 						<CommunitiesForm
@@ -81,12 +81,12 @@ export default async function MainLayout({
 						<SideFooter className='border-t border-theme pt-1 mt-1 rounded-xl' />
 					</div>
 					{/* Центральная часть */}
-					<div className='w-full lg:w-2/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-md'>
+					<div className='w-full lg:w-2/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-xl'>
 						{children}
 					</div>
 
 					{/* Правая часть */}
-					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-md'>
+					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-xl'>
 						<CommentFeedGroup />
 					</div>
 				</div>

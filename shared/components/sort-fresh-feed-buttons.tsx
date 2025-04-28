@@ -46,7 +46,7 @@ export const SortFreshFeedButtons: React.FC<Props> = ({ className }) => {
 		}
 	]
 	return (
-		<div className={cn('flex gap-2', className)}>
+		<div className={cn('flex gap-2 justify-start', className)}>
 			{feedButtons.map(item => (
 				<Button
 					key={item.id}
@@ -54,7 +54,7 @@ export const SortFreshFeedButtons: React.FC<Props> = ({ className }) => {
 					type='button'
 					disabled={item.disabled}
 					className={cn(
-						'w-full text-base font-bold bg-transparent hover:bg-secondary text-primary rounded-xl',
+						'text-base font-bold bg-transparent hover:bg-secondary text-primary rounded-xl',
 						pathname === item.path && 'text-theme bg-secondary'
 					)}
 					onClick={() => router.push(item.path)}

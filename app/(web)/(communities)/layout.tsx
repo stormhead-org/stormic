@@ -1,4 +1,4 @@
-import { Community, User } from '@/payload-types'
+import { Community } from '@/payload-types'
 import {
 	Container,
 	FeedUserMenu,
@@ -7,7 +7,6 @@ import {
 	SocialMenu
 } from '@/shared/components'
 import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
-import { getSession } from '@/shared/lib/auth'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
@@ -18,14 +17,6 @@ export default async function CommunitiesLayout({
 	children: React.ReactNode
 }>) {
 	const payload = await getPayload({ config: configPromise })
-
-	const session = (await getSession()) as { user: User } | null
-	const currentUser = session && session.user
-
-	const resultGlobalHost = await payload.findGlobal({
-		slug: 'host-settings', // required
-		depth: 1
-	})
 
 	const globalSideBarNavigation = await payload.findGlobal({
 		slug: 'sidebar-navigation', // required
@@ -47,6 +38,7 @@ export default async function CommunitiesLayout({
 				equals: false
 			}
 		},
+		sort: 'id',
 		depth: 2,
 		pagination: false,
 		overrideAccess: false
@@ -59,7 +51,7 @@ export default async function CommunitiesLayout({
 			<Container className='mt-4'>
 				<div className='flex gap-4'>
 					{/* Левая часть */}
-					<div className='w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
+					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar'>
 						<div className='h-3/4'>
 							<FeedUserMenu />
 
@@ -82,7 +74,7 @@ export default async function CommunitiesLayout({
 					</div>
 
 					{/* Правая часть */}
-					<div className='w-3/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar rounded-md'>
+					<div className='w-full lg:w-3/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar rounded-xl'>
 						{children}
 					</div>
 				</div>

@@ -33,7 +33,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 	const truncatedName = truncateText(name, 26)
 	const truncatedDescription = truncateText(description || '', 26)
 	return (
-		<div className={cn('bg-secondary rounded-md', className)}>
+		<div className={cn('bg-secondary rounded-xl', className)}>
 			<div className='h-full flex'>
 				<div className='w-10/12 p-4'>
 					<Link href={String(url)}>

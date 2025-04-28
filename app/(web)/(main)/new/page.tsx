@@ -65,7 +65,7 @@ export default async function Home() {
 
 	return (
 		<>
-			<SortFreshFeedButtons />
+			<SortFreshFeedButtons className='m-2 lg:m-0' />
 			<PostForm
 				limit={5}
 				post={posts}

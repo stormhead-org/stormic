@@ -1,14 +1,16 @@
 'use client'
 
 import { Community, type HostSetting, Post, type User } from '@/payload-types'
-import { CommunitiesItem } from '@/shared/components/communities/list-items/communities-item'
 import { PostItem } from '@/shared/components/posts/post-items/post-item'
 import { Skeleton } from '@/shared/components/ui/skeleton'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { getMediaUrl } from '@/shared/utils/payload/getTypes'
-import Link from 'next/link'
+import { Component, Newspaper, Users2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { ExploreProfileItem } from '../profiles/community-profiles-items/explore-profile-item'
+import { Button } from '../ui/button'
 
 interface Props {
 	hostSettings: HostSetting
@@ -43,7 +45,7 @@ const InlineSearchInput: React.FC<{
 			onChange={handleChange}
 			placeholder='Поиск...'
 			className={cn(
-				'border rounded-md p-2 w-96 bg-secondary text-black dark:text-white outline-none',
+				'border rounded-xl p-2 w-96 bg-secondary text-black dark:text-white outline-none',
 				className
 			)}
 		/>
@@ -63,6 +65,7 @@ export const ExploreForm: React.FC<Props> = ({
 	className
 }) => {
 	const [searchQuery, setSearchQuery] = useState('')
+	const router = useRouter()
 
 	if (loading) {
 		return (
@@ -103,7 +106,7 @@ export const ExploreForm: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<div>
+			<div className='mx-2 mt-2 lg:mt-0 lg:mx-0'>
 				<div
 					className='rounded-xl bg-cover bg-center bg-no-repeat w-full'
 					style={styling}
@@ -114,68 +117,80 @@ export const ExploreForm: React.FC<Props> = ({
 						</span>
 					</div>
 				</div>
-				<InlineSearchInput
-					onSearchChange={setSearchQuery}
-					className='w-96 -mt-6 mx-auto'
-				/>
+				<div className='mt-1 lg:-mt-6 flex items-center justify-center'>
+					<InlineSearchInput onSearchChange={setSearchQuery} />
+				</div>
 			</div>
 
 			{/* Пользователи */}
-			<div className='mt-4'>
-				<h2 className='text-xl font-bold'>Пользователи</h2>
+			<div className='mt-1 mx-2 lg:mt-4 lg:mx-0'>
+				<Button
+					variant='blue'
+					type='button'
+					className={cn(
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl'
+					)}
+					onClick={() => router.push('/users')}
+				>
+					<Users2 size={22} className={cn('text-primary')} />
+					Пользователи
+				</Button>
 				{displayUsers.length > 0 ? (
 					displayUsers.map(user => (
-						<div key={user.id} className='py-1'>
-							<Link
-								href={`/u/${user.id}`}
-								className='text-blue-500 hover:underline'
-							>
-								{user.name}
-							</Link>
-						</div>
+						<ExploreProfileItem
+							key={user.id}
+							data={user}
+							currentUser={currentUser}
+							hasUser={true}
+							className='mb-1 w-full'
+						/>
 					))
 				) : (
 					<p className='text-gray-500'>Пользователи не найдены</p>
 				)}
-				{!searchQuery && users.length > 5 && (
-					<Link
-						href='/users'
-						className='text-blue-500 hover:underline mt-2 block'
-					>
-						Посмотреть больше
-					</Link>
-				)}
 			</div>
 
 			{/* Сообщества */}
-			<div className='mt-4'>
-				<h2 className='text-xl font-bold'>Сообщества</h2>
+			<div className='mt-1 mx-2 lg:mx-0'>
+				<Button
+					variant='blue'
+					type='button'
+					className={cn(
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl'
+					)}
+					onClick={() => router.push('/communities')}
+				>
+					<Component size={22} className={cn('text-primary')} />
+					Сообщества
+				</Button>
 				{displayCommunities.length > 0 ? (
 					displayCommunities.map(community => (
-						<CommunitiesItem
+						<ExploreProfileItem
 							key={community.id}
-							community={community}
+							data={community}
 							currentUser={currentUser}
-							joinButton={true}
+							hasUser={false}
 							className='mb-1 w-full'
 						/>
 					))
 				) : (
 					<p className='text-gray-500'>Сообщества не найдены</p>
 				)}
-				{!searchQuery && communities.length > 3 && (
-					<Link
-						href='/communities'
-						className='text-blue-500 hover:underline mt-2 block'
-					>
-						Посмотреть больше
-					</Link>
-				)}
 			</div>
 
 			{/* Посты */}
-			<div className='mt-4'>
-				<h2 className='text-xl font-bold'>Посты</h2>
+			<div className='mt-1 mx-2 lg:mx-0'>
+				<Button
+					variant='blue'
+					type='button'
+					className={cn(
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl'
+					)}
+					onClick={() => router.push('/')}
+				>
+					<Newspaper size={22} className={cn('text-primary')} />
+					Посты
+				</Button>
 				{displayPosts.length > 0 ? (
 					displayPosts.map(post => (
 						<PostItem
@@ -184,6 +199,7 @@ export const ExploreForm: React.FC<Props> = ({
 							communities={communities}
 							permissions={postPermissions[post.id]}
 							relatedPost={relatedPost}
+							className='m-0 mt-2 lg:mt-2 lg:mx-0'
 						/>
 					))
 				) : (

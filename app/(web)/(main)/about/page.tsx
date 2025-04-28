@@ -35,10 +35,12 @@ export default async function About() {
 			<MainBannerForm
 				stormicName={resultGlobalHost.title || 'Stormic'}
 				bannerUrl={bannerUrl}
+				className='m-2 lg:m-0'
 			/>
 			<AboutPage
 				hostInfo={resultGlobalHost}
 				hasOwner={currentUser && currentUser.id === ownerId}
+				className='m-2 lg:m-0'
 			/>
 		</>
 	)

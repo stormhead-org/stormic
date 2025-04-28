@@ -20,6 +20,7 @@ export default async function CommunitiesPage() {
 				equals: false
 			}
 		},
+		sort: 'id',
 		pagination: false,
 		overrideAccess: true
 	})
@@ -38,7 +39,7 @@ export default async function CommunitiesPage() {
 
 	return (
 		<>
-			<div className='flex w-full gap-4'>
+			<div className='hidden lg:flex lg:w-full lg:gap-4'>
 				<div className='w-8/12 bg-primary/10 rounded-md'></div>
 				<div className='w-4/12'>
 					<NewCommunityButton
@@ -48,7 +49,7 @@ export default async function CommunitiesPage() {
 					/>
 				</div>
 			</div>
-			<CommunitiesCardGroup data={communities || []} className='my-4' />
+			<CommunitiesCardGroup data={communities || []} className='my-0 lg:my-4' />
 		</>
 	)
 }

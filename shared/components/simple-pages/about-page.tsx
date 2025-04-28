@@ -63,12 +63,13 @@ export const AboutPage: React.FC<Props> = ({
 				<span className='flex text-2xl font-extrabold justify-center'>
 					{process.env.NEXT_PUBLIC_BASE_URL}
 				</span>
-				<p className='flex justify-center mt-4 text-xl'>
+
+				<p className='text-xl font-medium mt-2 text-center'>
 					{/* {formatMessage({ id: 'aboutPage.socialPlatform' })} */}
-					социальная платформа на базе{' '}
+					социальная платформа на базе
 					<Link
 						href='https://stormic.app/about/'
-						className='text-a-color hover:text-a-color-hover ml-1 font-extrabold'
+						className='text-theme hover:text-theme-hover ml-1 font-bold'
 					>
 						Stormic
 					</Link>
@@ -76,55 +77,55 @@ export const AboutPage: React.FC<Props> = ({
 			</div>
 
 			{hasOwner && (
-				<div className='flex w-full items-center justify-evenly bg-secondary p-1 mt-6 rounded-md'>
+				<div className='flex w-full items-center justify-evenly bg-secondary p-1 mt-6 rounded-xl'>
 					<div className='flex gap-2'>
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Settings
-								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/main/platform')}
 							/>
 						</div>
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<LinkIcon
-								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/main/navigation')}
 							/>
 						</div>
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Radio
-								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/main/social')}
 							/>
 						</div>
 					</div>
 
 					<div className='flex gap-2'>
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<ShieldCheck
-								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/permissions/roles')}
 							/>
 						</div>
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Delete
-								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() =>
 									router.push('/settings/host/permissions/deleted')
 								}
 							/>
 						</div>
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Gavel
-								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/permissions/bans')}
 							/>
 						</div>
 					</div>
 
 					<div className='flex gap-2'>
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<UserRoundCog
-								className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/administration')}
 							/>
 						</div>
@@ -132,8 +133,8 @@ export const AboutPage: React.FC<Props> = ({
 				</div>
 			)}
 
-			<div className='h-full w-full flex bg-secondary rounded-md p-4 mt-6'>
-				<div className='w-1/2'>
+			<div className='h-full w-full lg:flex bg-secondary rounded-xl p-4 mt-6'>
+				<div className='w-full lg:w-1/2'>
 					<p className='uppercase font-semibold'>
 						{/* {formatMessage({ id: 'aboutPage.managed' })} */}
 						Управляется
@@ -157,10 +158,8 @@ export const AboutPage: React.FC<Props> = ({
 							</div>
 						</div>
 					</Link>
-
-					<div className=''></div>
 				</div>
-				<div className='w-1/2 border-l-2 border-l-blue-700 pl-4'>
+				<div className='w-full lg:w-1/2  mt-2 lg:mt-0 lg:ml-1 pt-2 lg:pt-0 border-t-2 lg:border-t-0 lg:border-l-2 border-theme lg:pl-4'>
 					<p className='uppercase font-semibold'>
 						{/* {formatMessage({ id: 'aboutPage.contacts' })} */}
 						Контакты
@@ -172,14 +171,14 @@ export const AboutPage: React.FC<Props> = ({
 			</div>
 
 			<Accordion
-				className='mt-4 px-4 rounded-md bg-secondary'
+				className='mt-4 px-4 rounded-xl bg-secondary'
 				type='single'
 				defaultValue='about'
 				collapsible
 			>
 				<AccordionItem value='about'>
-					<AccordionTrigger className='text-lg -mb-4'>
-						{/* {formatMessage({ id: 'aboutPage.about' })} */}О Проекте
+					<AccordionTrigger className='text-lg font-medium -mb-4'>
+						{/* {formatMessage({ id: 'aboutPage.about' })} */}О проекте
 					</AccordionTrigger>
 					<AccordionContent className='text-base'>
 						{hostInfo.description}
@@ -188,15 +187,15 @@ export const AboutPage: React.FC<Props> = ({
 			</Accordion>
 
 			<Accordion
-				className='mt-7 px-4 rounded-md bg-secondary'
+				className='mt-7 px-4 rounded-xl bg-secondary'
 				type='single'
 				defaultValue='about'
 				collapsible
 			>
-				<p className='pt-4 text-lg'>Правила</p>
+				<p className='pt-4 text-lg font-medium'>Правила</p>
 				{hostInfo.rules?.map((item, index) => (
 					<AccordionItem className='-mt-4' key={index} value={`key-${index}`}>
-						<AccordionTrigger className='text-lg -my-2'>
+						<AccordionTrigger className='text-base -my-2'>
 							{/* {formatMessage({ id: 'aboutPage.rules' })} */}
 							{`${index + 1}. ${item.nameRule}`}
 						</AccordionTrigger>

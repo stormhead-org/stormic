@@ -61,6 +61,7 @@ export default async function HomeLayout({
 				equals: false
 			}
 		},
+		sort: 'id',
 		depth: 2,
 		pagination: false,
 		overrideAccess: false

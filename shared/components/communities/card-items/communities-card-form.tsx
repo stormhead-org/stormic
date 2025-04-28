@@ -35,7 +35,7 @@ export const CommunitiesCardForm: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<div className='grid grid-cols-2 gap-4'>
+			<div className='mx-2 lg:mx-0 grid grid-cols-1 lg:grid-cols-2 gap-1 lg:gap-4'>
 				{data.map((item, index) => (
 					<CommunitiesCardItem
 						key={index}

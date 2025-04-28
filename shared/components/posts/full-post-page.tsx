@@ -29,11 +29,11 @@ export const FullPostPage: React.FC<Props> = ({
 	const commentsCount = usePostLikesStore(
 		state => state.commentsCount[post.id] || 0
 	)
-	
+
 	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
-	
+
 	return (
-		<div ref={chatRef} className={cn('', className)}>
+		<div ref={chatRef} className={cn('m-2 lg:m-0', className)}>
 			<FullPostForm
 				post={post}
 				communities={communities}
