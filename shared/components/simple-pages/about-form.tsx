@@ -33,7 +33,7 @@ interface Props {
 	className?: string
 }
 
-export const AboutPage: React.FC<Props> = ({
+export const AboutForm: React.FC<Props> = ({
 	hostInfo,
 	hasOwner,
 	className

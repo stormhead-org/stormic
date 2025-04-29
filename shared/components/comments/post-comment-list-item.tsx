@@ -76,7 +76,7 @@ export const PostCommentListItem = ({
 
 	return (
 		<>
-			<div className={cn('rounded-md p-2 w-full', className)}>
+			<div className={cn('rounded-xl p-2 w-full', className)}>
 				<FullPostCommentHeader
 					author={author}
 					roleIconMap={roleIconMap}

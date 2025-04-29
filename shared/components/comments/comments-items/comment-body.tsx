@@ -38,7 +38,7 @@ export const CommentBody: React.FC<CommentItemProps> = ({
 							className={cn(
 								deleted
 									? 'italic text-zinc-500 dark:text-zinc-400'
-									: 'text-black dark:text-white'
+									: 'text-foreground'
 							)}
 						>
 							{truncatedContent}
@@ -55,7 +55,7 @@ export const CommentBody: React.FC<CommentItemProps> = ({
 										href={media.url}
 										target='_blank'
 										rel='noopener noreferrer'
-										className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer text-black dark:text-white'
+										className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer text-foreground'
 									>
 										<Link2 />
 									</Link>

@@ -5,7 +5,6 @@ import { CommentInput } from '@/shared/components/comments/comment-input-items/c
 import { PostCommentsList } from '@/shared/components/comments/post-comments-list'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
-import { ListFilter } from 'lucide-react'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 
@@ -47,13 +46,13 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 						Тут пока никого нет...
 					</p>
 				)}
-				<div className='flex items-center gap-2'>
+				{/* <div className='flex items-center gap-2'>
 					<div className='group'>
 						<p className='flex items-center group-hover:text-blue-600 font-bold'>
 							<ListFilter className='group-hover:bg-blue-600/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer' />
 						</p>
 					</div>
-				</div>
+				</div> */}
 			</div>
 
 			<CommentInput

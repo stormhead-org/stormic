@@ -6,7 +6,7 @@ import { Skeleton } from '@/shared/components/ui/skeleton'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { getMediaUrl } from '@/shared/utils/payload/getTypes'
-import { Component, Newspaper, Users2 } from 'lucide-react'
+import { Component, Newspaper, Search, Users2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { ExploreProfileItem } from '../profiles/community-profiles-items/explore-profile-item'
@@ -39,16 +39,16 @@ const InlineSearchInput: React.FC<{
 	}
 
 	return (
-		<input
-			type='text'
-			value={query}
-			onChange={handleChange}
-			placeholder='Поиск...'
-			className={cn(
-				'border rounded-xl p-2 w-96 bg-secondary text-black dark:text-white outline-none',
-				className
-			)}
-		/>
+		<div className='flex rounded-xl flex-1 justify-between relative h-11 z-30 mx-20'>
+			<Search className='absolute top-1/2 translate-y-[-50%] left-3 h-5 text-foreground' />
+			<input
+				className='rounded-xl outline-none w-full pl-11 bg-secondary text-foreground'
+				type='text'
+				value={query}
+				onChange={handleChange}
+				placeholder='Поиск...'
+			/>
+		</div>
 	)
 }
 
@@ -128,11 +128,11 @@ export const ExploreForm: React.FC<Props> = ({
 					variant='blue'
 					type='button'
 					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl'
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl'
 					)}
 					onClick={() => router.push('/users')}
 				>
-					<Users2 size={22} className={cn('text-primary')} />
+					<Users2 size={22} className={cn('text-foreground')} />
 					Пользователи
 				</Button>
 				{displayUsers.length > 0 ? (
@@ -156,11 +156,11 @@ export const ExploreForm: React.FC<Props> = ({
 					variant='blue'
 					type='button'
 					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl'
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl'
 					)}
 					onClick={() => router.push('/communities')}
 				>
-					<Component size={22} className={cn('text-primary')} />
+					<Component size={22} className={cn('text-foreground')} />
 					Сообщества
 				</Button>
 				{displayCommunities.length > 0 ? (
@@ -184,11 +184,11 @@ export const ExploreForm: React.FC<Props> = ({
 					variant='blue'
 					type='button'
 					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl'
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl'
 					)}
 					onClick={() => router.push('/')}
 				>
-					<Newspaper size={22} className={cn('text-primary')} />
+					<Newspaper size={22} className={cn('text-foreground')} />
 					Посты
 				</Button>
 				{displayPosts.length > 0 ? (

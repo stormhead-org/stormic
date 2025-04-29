@@ -42,7 +42,7 @@ export const HeaderButtons: React.FC<Props> = ({ className }) => {
 						type='button'
 						disabled={item.disabled}
 						className={cn(
-							'w-10 h-10 bg-transparent hover:bg-secondary text-primary rounded-xl p-0',
+							'w-10 h-10 bg-transparent hover:bg-secondary text-foreground rounded-xl p-0',
 							`${pathname === item.path ? 'bg-secondary hover:bg-secondary text-theme' : ''}`
 						)}
 						onClick={() => router.push(item.path)}

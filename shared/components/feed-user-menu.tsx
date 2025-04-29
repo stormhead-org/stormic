@@ -24,7 +24,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<Flame
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 			),
 			path: '/',
@@ -36,7 +36,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<Zap
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 			),
 			path: '/new',
@@ -48,7 +48,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<CheckCheck
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 			),
 			path: '/my',
@@ -60,7 +60,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<BookmarkCheck
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 			),
 			path: '/bookmarks',
@@ -72,7 +72,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<Compass
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 			),
 			path: '/explore',
@@ -91,7 +91,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 						type='button'
 						disabled={item.disabled}
 						className={cn(
-							'flex gap-2 justify-start w-full mb-1 h-12 text-base font-medium bg-transparent hover:bg-secondary text-primary rounded-xl',
+							'flex gap-2 justify-start w-full mb-1 h-12 text-base font-medium bg-transparent hover:bg-secondary text-foreground rounded-xl',
 							isActive && 'bg-secondary hover:bg-secondary'
 						)}
 						onClick={() => router.push(item.path)}

@@ -41,17 +41,22 @@ const renderCommentWithChildren = (
 	socketUrl: string,
 	socketQuery: Record<string, string>,
 	currentUser?: User,
-	level = 0,
+	level = 0
 ) => {
-	const children = Array.isArray(message.childrenComments) ? message.childrenComments : [];
-	
-	const author = typeof message.author === 'object' ? message.author : null;
+	const children = Array.isArray(message.childrenComments)
+		? message.childrenComments
+		: []
+
+	const author = typeof message.author === 'object' ? message.author : null
 	if (!author) {
-		return null;
+		return null
 	}
-	
-	const media = message.media && typeof message.media === 'object' ? message.media : undefined;
-	
+
+	const media =
+		message.media && typeof message.media === 'object'
+			? message.media
+			: undefined
+
 	return (
 		<div key={message.id} className={getIndentationClass(level)}>
 			<PostCommentListItem
@@ -68,7 +73,7 @@ const renderCommentWithChildren = (
 				isUpdated={message.hasUpdated ?? false}
 				socketUrl={socketUrl}
 				socketQuery={socketQuery}
-				className='mt-4 p-0 pl-4 cursor-default border-l-4 border-blue-600'
+				className='mt-4 p-0 pl-4 cursor-default border-l-2 border-theme'
 			/>
 			{children.length > 0 && (
 				<div className='ml-4'>
@@ -81,7 +86,7 @@ const renderCommentWithChildren = (
 							socketUrl,
 							socketQuery,
 							currentUser,
-							level + 1,
+							level + 1
 						)
 					)}
 				</div>

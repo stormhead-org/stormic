@@ -69,7 +69,7 @@ export default async function CommunitiesLayout({
 
 							<NavigationMenuForm data={globalSideBarNavigation} />
 
-							<SideFooter className='border-t border-theme pt-1 mt-1 rounded-xl' />
+							<SideFooter className='mt-1' />
 						</div>
 					</div>
 

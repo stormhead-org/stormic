@@ -29,8 +29,8 @@ export default async function CommunitiesPage() {
 
 	const authImage =
 		typeof resultGlobalHost.authBanner === 'object'
-			? getMediaUrl(resultGlobalHost.authBanner, '/logo.png')
-			: '/logo.png'
+			? getMediaUrl(resultGlobalHost.authBanner, '/defaultBanner.jpg')
+			: '/defaultBanner.jpg'
 
 	const logoImage =
 		typeof resultGlobalHost.logo === 'object'
@@ -40,7 +40,7 @@ export default async function CommunitiesPage() {
 	return (
 		<>
 			<div className='hidden lg:flex lg:w-full lg:gap-4'>
-				<div className='w-8/12 bg-primary/10 rounded-md'></div>
+				<div className='w-8/12 bg-secondary rounded-xl' />
 				<div className='w-4/12'>
 					<NewCommunityButton
 						authImage={authImage}
@@ -49,7 +49,10 @@ export default async function CommunitiesPage() {
 					/>
 				</div>
 			</div>
-			<CommunitiesCardGroup data={communities || []} className='my-0 lg:my-4' />
+			<CommunitiesCardGroup
+				data={communities || []}
+				className='mb-4 lg:mb-0 lg:mt-4'
+			/>
 		</>
 	)
 }

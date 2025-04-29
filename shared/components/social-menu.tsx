@@ -73,7 +73,7 @@ export const SocialMenu: React.FC<Props> = ({
 							key={item.id}
 							href={item.path}
 							target='_blank'
-							className='group text-black dark:text-white hover:text-black hover:dark:text-white hover:bg-secondary cursor-pointer rounded-xl items-center p-2 justify-center'
+							className='group text-foreground hover:text-foreground hover:bg-secondary cursor-pointer rounded-xl items-center p-2 justify-center'
 							title={item.name}
 						>
 							{item.icon}

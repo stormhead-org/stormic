@@ -50,7 +50,7 @@ export const NewCommunityButton: React.FC<Props> = ({
 
 			<Button
 				variant='blue'
-				className='h-12 w-full text-lg font-bold'
+				className='h-12 w-full text-lg font-medium rounded-xl text-background'
 				type='button'
 				onClick={
 					currentUser

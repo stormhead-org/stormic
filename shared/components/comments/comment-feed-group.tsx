@@ -20,7 +20,7 @@ export const CommentFeedGroup: React.FC<Props> = ({ className }) => {
 				// text={formatMessage({ id: 'commentFeedGroup.discussingTitle' })}
 				text='Сейчас обсуждают'
 				size='sm'
-				className='font-bold flex items-center w-full h-12 pl-3 border-l-2 border-theme mt-0 rounded-xl'
+				className='font-bold flex items-center w-full h-12 mt-0 text-foreground'
 			/>
 
 			<CommentForm

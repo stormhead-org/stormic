@@ -29,10 +29,9 @@ export const UsersCardItem: React.FC<Props> = ({
 	className
 }) => {
 	const router = useRouter()
-	const truncatedName = truncateText(name, 26)
-	const truncatedDescription = truncateText(description || '', 26)
+
 	return (
-		<div className={cn('bg-secondary rounded-md', className)}>
+		<div className={cn('bg-secondary rounded-xl', className)}>
 			<div className='h-full flex'>
 				<div className='w-10/12 p-4'>
 					<Link href={String(url)}>
@@ -45,18 +44,18 @@ export const UsersCardItem: React.FC<Props> = ({
 								/>
 								<div className='flex h-full my-auto'>
 									<div>
-										<p className='font-bold text-md text-black dark:text-white'>
-											{truncatedName}
+										<p className='font-bold text-md text-foreground'>
+											{truncateText(name, 14)}
 										</p>
-										<p className='mt-1 text-black dark:text-white'>
-											{truncatedDescription}
+										<p className='mt-1 text-foreground'>
+											{truncateText(description || '', 14)}
 										</p>
 									</div>
 								</div>
 							</div>
 						</div>
 					</Link>
-					<div className='flex items-center border-t-2 border-t-blue-700 mt-4 w-full pt-3'>
+					<div className='flex items-center border-t-2 border-t-primary/5 mt-4 w-full pt-3'>
 						<div className='flex gap-8 w-1/2'>
 							{/* <div className='flex gap-2 items-center'>
 								<CommunityPostsCounter communityId={userId || 0} />
@@ -72,16 +71,16 @@ export const UsersCardItem: React.FC<Props> = ({
 						</div>
 					</div>
 				</div>
-				<div className='w-2/12 h-full  bg-primary/5 rounded-r-md'>
-					<div className='flex h-full rounded-r-md bg-gray-200 dark:bg-gray-800 items-center'>
+				<div className='w-2/12 h-full  bg-primary/5 rounded-r-xl'>
+					<div className='flex h-full rounded-r-xl bg-primary/5 items-center'>
 						<Button
 							variant='secondary'
 							type='button'
 							disabled={false}
-							className='h-14 w-14 m-auto group hover:bg-secondary text-primary rounded-full'
+							className='h-12 m-auto group hover:bg-secondary text-primary rounded-xl'
 							onClick={() => router.push(String(url))}
 						>
-							<UsersRound className='group-hover:text-blue-700' />
+							<UsersRound className='group-hover:text-theme' />
 						</Button>
 					</div>
 					{/* <div className='flex group w-full h-1/2 rounded-r-md'>

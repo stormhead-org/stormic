@@ -4,7 +4,7 @@ import { CommentInputAnswer } from '@/shared/components/comments/comment-input-i
 import { Button } from '@/shared/components/ui/button'
 import { useModal } from '@/shared/hooks/use-modal-store'
 import { cn } from '@/shared/lib/utils'
-import { CircleX, Edit, Ellipsis } from 'lucide-react'
+import { CircleX, Edit } from 'lucide-react'
 import React, { useState } from 'react'
 // import { useIntl } from 'react-intl'
 
@@ -46,7 +46,7 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 					<CommentLikeButton commentId={Number(id)} />
 					<Button
 						variant='blue'
-						className='h-6 text-sm font-bold p-0 -mb-1 border-b-4 border-transparent bg-transparent hover:border-blue-700 hover:bg-transparent rounded-none text-primary'
+						className='h-7 w-22 text-base font-bold rounded-xl text-foreground hover:text-background bg-transparent'
 						type='button'
 						onClick={() => setIsReplying(prev => !prev)}
 					>
@@ -62,15 +62,15 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 									<div className='flex group cursor-pointer items-center'>
 										<div
 											className={cn(
-												'flex p-1 items-center group-hover:text-blue-700 font-bold',
-												isEditing && 'text-blue-700'
+												'flex p-1 items-center group-hover:text-theme font-bold',
+												isEditing && 'text-theme'
 											)}
 										>
 											<Edit
 												onClick={() => setIsEditing(true)}
 												className={cn(
-													'group-hover:bg-blue-800/20 rounded-full w-7 h-7 p-1 cursor-pointer',
-													isEditing && 'bg-blue-800/20'
+													'group-hover:bg-theme-hover/20 rounded-xl w-7 h-7 p-1 cursor-pointer',
+													isEditing && 'bg-theme-hover/20'
 												)}
 											/>
 										</div>
@@ -79,7 +79,7 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 							)}
 							<ActionTooltip label='Удалить'>
 								<div className='flex group cursor-pointer items-center'>
-									<div className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+									<div className='flex p-1 items-center group-hover:text-theme font-bold'>
 										<CircleX
 											onClick={() =>
 												onOpen('deleteComment', {
@@ -87,18 +87,18 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 													query: socketQuery
 												})
 											}
-											className='group-hover:bg-blue-800/20 rounded-full w-7 h-7 p-1'
+											className='group-hover:bg-theme-hover/20 rounded-xl w-7 h-7 p-1'
 										/>
 									</div>
 								</div>
 							</ActionTooltip>
 						</div>
 					)}
-					<div className='flex group cursor-pointer items-center'>
-						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
-							<Ellipsis className='group-hover:bg-blue-800/20 rounded-full w-7 h-7 p-1' />
+					{/* <div className='flex group cursor-pointer items-center'>
+						<p className='flex p-1 items-center group-hover:text-theme font-bold'>
+							<Ellipsis className='group-hover:bg-theme-hover/20 rounded-xl w-7 h-7 p-1' />
 						</p>
-					</div>
+					</div> */}
 				</div>
 			</div>
 			{isReplying && (

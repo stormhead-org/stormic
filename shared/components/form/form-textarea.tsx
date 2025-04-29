@@ -73,7 +73,7 @@ export const FormTextarea: React.FC<Props> = ({
 				{sideButton && (
 					<Button
 						variant={variant}
-						className='absolute bottom-2 right-2 h-10 w-26 text-sm font-bold'
+						className='absolute bottom-2 right-2 h-10 w-26 text-sm font-bold text-background'
 						loading={loading}
 						onClick={onClickValue}
 						type='button'

@@ -23,7 +23,7 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<Book
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 			),
 			path: '/about',
@@ -35,7 +35,7 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<CodeXml
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 			),
 			path: 'https://github.com/stormhead-org/stormic',
@@ -47,7 +47,7 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 			icon: (isActive: boolean) => (
 				<Gem
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 			),
 			path: 'https://stormic.app/about/',
@@ -74,7 +74,7 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 						type='button'
 						disabled={item.disabled}
 						className={cn(
-							'flex gap-2 justify-start w-full mb-1 h-12 text-base font-normal bg-transparent hover:bg-secondary text-primary rounded-xl',
+							'flex gap-2 justify-start w-full mb-1 h-12 text-base font-normal bg-transparent hover:bg-secondary text-foreground rounded-xl',
 							isActive && 'bg-secondary hover:bg-secondary'
 						)}
 						onClick={() => handleNavigation(item.path)}

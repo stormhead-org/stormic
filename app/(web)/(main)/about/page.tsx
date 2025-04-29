@@ -1,6 +1,6 @@
 import { User } from '@/payload-types'
 import { MainBannerForm } from '@/shared/components'
-import { AboutPage } from '@/shared/components/simple-pages/about-page'
+import { AboutForm } from '@/shared/components/simple-pages/about-form'
 import { getSession } from '@/shared/lib/auth'
 import { getMediaUrl, getRelationProp } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
@@ -37,7 +37,7 @@ export default async function About() {
 				bannerUrl={bannerUrl}
 				className='m-2 lg:m-0'
 			/>
-			<AboutPage
+			<AboutForm
 				hostInfo={resultGlobalHost}
 				hasOwner={currentUser && currentUser.id === ownerId}
 				className='m-2 lg:m-0'

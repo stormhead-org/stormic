@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 // import { useIntl } from 'react-intl'
 
 interface FollowButtonProps {
-	communityId: number // ID сообщества, на которого подписываются
+	communityId: number
 }
 
 const CommunityFollowButton: React.FC<FollowButtonProps> = ({
@@ -14,18 +14,15 @@ const CommunityFollowButton: React.FC<FollowButtonProps> = ({
 }) => {
 	// const { formatMessage } = useIntl()
 
-	// Использование Zustand-стора для работы с подписками
 	const { isFollowing, toggleFollow, initialize } = useCommunityFollowStore()
 
-	// Инициализация данных подписки при монтировании компонента
 	useEffect(() => {
-		initialize(communityId) // Подгрузка текущего статуса подписки и количества подписчиков
+		initialize(communityId)
 	}, [communityId, initialize])
 
-	// Обработка клика по кнопке для подписки/отписки
 	const handleFollow = async () => {
 		try {
-			await toggleFollow(communityId) // Тогглинг подписки (подписка или отписка)
+			await toggleFollow(communityId)
 		} catch (error) {
 			console.error('Failed to toggle follow:', error)
 		}
@@ -35,8 +32,8 @@ const CommunityFollowButton: React.FC<FollowButtonProps> = ({
 		<Button
 			variant='blue'
 			className={cn(
-				'h-6 w-26 text-sm font-bold mt-auto mb-[2px] my-0',
-				isFollowing[communityId] ? 'bg-blue-800' : ''
+				'h-6 w-26 font-medium mt-auto mb-[2px] my-0 rounded-xl text-background',
+				isFollowing[communityId] ? 'bg-theme' : ''
 			)}
 			type='button'
 			onClick={handleFollow}

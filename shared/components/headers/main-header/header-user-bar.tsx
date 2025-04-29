@@ -57,7 +57,7 @@ export const HeaderUserBar: React.FC<Props> = ({
 				variant='blue'
 				type='button'
 				className={cn(
-					'w-10 h-10 bg-transparent hover:bg-secondary text-primary rounded-xl p-0'
+					'w-10 h-10 bg-transparent hover:bg-secondary text-foreground rounded-xl p-0'
 				)}
 				onClick={() => router.push('/explore')}
 			>

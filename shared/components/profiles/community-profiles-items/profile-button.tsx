@@ -73,12 +73,12 @@ export const ProfileButton: React.FC<Props> = ({
 					<DropdownMenuTrigger asChild>
 						<CircleUser
 							size={40}
-							className='cursor-pointer hover:text-theme p-1 bg-transparent hover:bg-secondary rounded-full'
+							className='cursor-pointer text-foreground hover:text-theme p-1 bg-transparent hover:bg-secondary rounded-full'
 						/>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='bg-secondary'>
 						<DropdownMenuItem className='flex justify-between gap-2'>
-							<span>Оформление</span>
+							<span className='text-foreground text-base'>Оформление</span>
 							<ModeToggle />
 						</DropdownMenuItem>
 						<DropdownMenuItem
@@ -86,14 +86,14 @@ export const ProfileButton: React.FC<Props> = ({
 							onClick={handleSignInClick}
 						>
 							<LogIn size={22} />
-							<span>Войти</span>
+							<span className='text-foreground text-base'>Войти</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			) : (
 				<DropdownMenu key={dropdownKey}>
 					<DropdownMenuTrigger asChild>
-						<Avatar className='border-2 border-transparent rounded-full cursor-pointer hover:border-blue-800 hover:bg-blue-800'>
+						<Avatar className='border-2 border-transparent rounded-full cursor-pointer hover:border-theme'>
 							<AvatarImage
 								className='m-auto rounded-full'
 								src={avatarImageUrl}
@@ -105,29 +105,29 @@ export const ProfileButton: React.FC<Props> = ({
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='bg-secondary'>
 						<DropdownMenuItem
-							className='cursor-pointer'
+							className='cursor-pointer text-foreground text-base'
 							onClick={() => router.push(`/u/${currentUser.id}`)}
 						>
 							Профиль
 						</DropdownMenuItem>
 						<DropdownMenuItem
-							className='cursor-pointer'
+							className='cursor-pointer text-foreground text-base'
 							onClick={() => router.push(`/u/${currentUser.id}/drafts`)}
 						>
 							Черновики
 						</DropdownMenuItem>
 						<DropdownMenuItem
-							className='cursor-pointer'
+							className='cursor-pointer text-foreground text-base'
 							onClick={() => router.push('/settings/profile')}
 						>
 							Настройки
 						</DropdownMenuItem>
-						<DropdownMenuItem className='flex justify-between gap-2'>
+						<DropdownMenuItem className='flex justify-between gap-2 text-foreground text-base'>
 							<span>Оформление</span>
 							<ModeToggle />
 						</DropdownMenuItem>
 						<DropdownMenuItem
-							className='cursor-pointer'
+							className='cursor-pointer text-foreground text-base'
 							onClick={handleSignOut}
 						>
 							Выйти

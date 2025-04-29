@@ -34,7 +34,7 @@ export const MobileSidebar: React.FC<Props> = ({
 			collapsible='offcanvas'
 			className={className}
 		>
-			<SidebarContent>
+			<SidebarContent className='bg-background'>
 				<SidebarGroup>
 					<SidebarGroupContent>
 						<FeedUserMenu />
@@ -50,7 +50,7 @@ export const MobileSidebar: React.FC<Props> = ({
 
 						<NavigationMenuForm data={sideBarNavigation} />
 
-						<SideFooter className='border-t border-theme pt-1 mt-1 rounded-xl' />
+						<SideFooter className='mt-1' />
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>

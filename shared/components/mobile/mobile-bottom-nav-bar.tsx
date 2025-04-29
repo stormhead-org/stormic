@@ -37,7 +37,7 @@ export const MobileBottomNavBar: React.FC<Props> = ({ className }) => {
 	return (
 		<div className={cn('bg-background pb-2', className)}>
 			<Container>
-				<div className='flex justify-evenly items-center border-t border-theme py-1 mx-2 bg-gray-200 dark:bg-gray-800 rounded-xl'>
+				<div className='flex justify-evenly items-center border-t border-primary/5 py-1 mx-2 bg-secondary rounded-xl'>
 					{MobileBottomNavBarArray.map(item => (
 						<Button
 							key={item.id}
@@ -45,8 +45,8 @@ export const MobileBottomNavBar: React.FC<Props> = ({ className }) => {
 							type='button'
 							disabled={item.disabled}
 							className={cn(
-								'w-10 h-10 bg-transparent hover:bg-secondary text-primary dark:hover:text-white rounded-xl p-0',
-								`${pathname === item.path ? 'bg-secondary hover:bg-secondary text-theme hover:text-theme dark:hover:text-theme' : ''}`
+								'w-10 h-10 bg-transparent hover:bg-primary/5 text-foreground rounded-xl p-0',
+								`${pathname === item.path ? 'bg-secondary hover:bg-primary/5 text-theme hover:text-theme dark:hover:text-theme' : ''}`
 							)}
 							onClick={() => router.push(item.path)}
 						>

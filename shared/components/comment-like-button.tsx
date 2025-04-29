@@ -39,13 +39,13 @@ export const CommentLikeButton: React.FC<LikeButtonProps> = ({ commentId }) => {
 			<div className='flex group items-center cursor-pointer'>
 				{hasLiked ? (
 					<>
-						<Heart className='bg-blue-800/20 text-blue-700 rounded-full mr-1 w-7 h-7 p-1' />
-						<span className='text-blue-700 font-bold'>{likesCount}</span>
+						<Heart className='bg-theme-hover/20 text-theme rounded-xl mr-1 w-7 h-7 p-1' />
+						<span className='text-theme font-bold'>{likesCount}</span>
 					</>
 				) : (
 					<>
-						<Heart className='group-hover:bg-blue-800/20 group-hover:text-blue-700 rounded-full mr-1 w-7 h-7 p-1' />
-						<span className='group-hover:text-blue-700 font-bold'>
+						<Heart className='group-hover:bg-theme-hover/20 group-hover:text-theme rounded-xl mr-1 w-7 h-7 p-1' />
+						<span className='group-hover:text-theme font-bold'>
 							{likesCount}
 						</span>
 					</>

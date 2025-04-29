@@ -43,7 +43,7 @@ export const AuthModal: React.FC<Props> = ({
 					<DialogTitle />
 				</DialogHeader>
 				<div className='flex w-full h-full'>
-					<div className='w-[40%] h-full'>
+					<div className='w-2/5 h-full'>
 						<img
 							className='rounded-l-md h-full object-cover'
 							src={authImage}
@@ -57,16 +57,16 @@ export const AuthModal: React.FC<Props> = ({
 							width='54'
 						/>
 					</div>
-					<div className='w-[60%] flex h-[76vh] items-center justify-center overflow-auto'>
-						<div className='w-full px-20'>
+					<div className='w-3/5 h-full'>
+						<div className='w-full h-full'>
 							{type === 'login' && (
 								<LoginForm onClose={handleClose} setType={setType} />
 							)}
-							{type === 'register' && (
-								<RegisterForm onClose={handleClose} setType={setType} />
-							)}
 							{type === 'email' && (
 								<EmailForm onClose={handleClose} setType={setType} />
+							)}
+							{type === 'register' && (
+								<RegisterForm onClose={handleClose} setType={setType} />
 							)}
 						</div>
 					</div>

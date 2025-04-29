@@ -18,12 +18,12 @@ import { useState } from 'react'
 export const DeleteCommentModal = () => {
 	const { isOpen, onClose, type, data } = useModal()
 	const router = useRouter()
-	
+
 	const isModalOpen = isOpen && type === 'deleteComment'
 	const { apiUrl, query } = data
-	
+
 	const [isLoading, setIsLoading] = useState(false)
-	
+
 	const onClick = async () => {
 		try {
 			setIsLoading(true)
@@ -31,9 +31,9 @@ export const DeleteCommentModal = () => {
 				url: apiUrl || '',
 				query
 			})
-			
+
 			await axios.delete(url)
-			
+
 			onClose()
 		} catch (error) {
 			console.log(error)
@@ -41,7 +41,7 @@ export const DeleteCommentModal = () => {
 			setIsLoading(false)
 		}
 	}
-	
+
 	return (
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
 			<DialogContent className='p-0 overflow-hidden'>
@@ -55,10 +55,20 @@ export const DeleteCommentModal = () => {
 				</DialogHeader>
 				<DialogFooter className='bg-secondary px-6 py-4'>
 					<div className='flex items-center justify-between w-full dark:text-zinc-200'>
-						<Button disabled={isLoading} variant='secondary' onClick={onClick}>
+						<Button
+							disabled={isLoading}
+							variant='secondary'
+							onClick={onClick}
+							className='text-foreground'
+						>
 							Да
 						</Button>
-						<Button disabled={isLoading} onClick={onClose} variant='blue'>
+						<Button
+							disabled={isLoading}
+							onClick={onClose}
+							variant='blue'
+							className='text-background'
+						>
 							Нет
 						</Button>
 					</div>

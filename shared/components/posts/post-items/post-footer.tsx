@@ -43,7 +43,7 @@ export const PostFooter: React.FC<PostFooterProps> = ({
 						className='text-primary group mr-4 cursor-pointer'
 					>
 						<p className='flex p-1 items-center group-hover:text-theme font-bold'>
-							<MessageCircle className='group-hover:bg-blue-800/20 rounded-full mr-1 w-7 h-7 p-1' />{' '}
+							<MessageCircle className='group-hover:bg-theme-hover/20 rounded-xl mr-1 w-7 h-7 p-1' />{' '}
 							{commentsCount}
 						</p>
 					</Link>

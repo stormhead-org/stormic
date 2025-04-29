@@ -26,11 +26,6 @@ export const NewPostButton: React.FC<Props> = ({
 	const [openEditModal, setOpenEditModal] = React.useState(false)
 	const [openAuthModal, setOpenAuthModal] = React.useState(false)
 
-	const authorAvatarUrl =
-		typeof currentUser?.avatar === 'object'
-			? getMediaUrl(currentUser.avatar, '/logo.png')
-			: '/logo.png'
-
 	const logoImageUrl =
 		typeof host.logo === 'object'
 			? getMediaUrl(host.logo, '/logo.png')
@@ -62,7 +57,7 @@ export const NewPostButton: React.FC<Props> = ({
 
 			<Button
 				variant='blue'
-				className='text-base font-bold rounded-2xl'
+				className='text-base font-bold rounded-xl text-background'
 				type='button'
 				onClick={
 					currentUser

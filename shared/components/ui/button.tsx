@@ -19,13 +19,13 @@ const buttonVariants = cva(
 				secondary: 'bg-secondary text-white hover:bg-primary/5',
 				ghost: 'hover:bg-secondary hover:text-secondary-foreground',
 				link: 'text-primary underline-offset-4 hover:underline',
-				blue: 'bg-theme text-white hover:bg-theme-hover',
+				blue: 'bg-theme/80 text-foreground hover:bg-theme-hover',
 				yellow: 'text-white bg-theme hover:bg-theme-hover'
 			},
 			size: {
 				default: 'h-10 px-4 py-2',
-				sm: 'h-9 rounded-md px-3',
-				lg: 'h-11 rounded-md px-8',
+				sm: 'h-9 rounded-xl px-3',
+				lg: 'h-11 rounded-xl px-8',
 				icon: 'h-10 w-10'
 			}
 		},

@@ -85,7 +85,7 @@ export const PostHeader: React.FC<Props> = ({
 				<div className='ml-2'>
 					<div className='flex items-center'>
 						<Link
-							className='text-black dark:text-white font-bold'
+							className='text-foreground hover:text-foreground font-bold'
 							href={`/u/${authorId}` || '#'}
 						>
 							{authorName}
@@ -99,7 +99,7 @@ export const PostHeader: React.FC<Props> = ({
 							))}
 					</div>
 					<Link
-						className='text-sm text-black dark:text-white'
+						className='text-sm text-foreground hover:text-foreground'
 						href={post.community ? `/c/${communityId}` : '#'}
 					>
 						{communityTitle}
@@ -126,12 +126,15 @@ export const PostHeader: React.FC<Props> = ({
 					<DropdownMenu key={openEditModal ? 'open' : 'closed'}>
 						<DropdownMenuTrigger asChild>
 							<div className='group'>
-								<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
-									<GripHorizontal className='group-hover:bg-blue-800/20 rounded-full cursor-pointer ml-2 w-7 h-7 p-1' />
+								<p className='flex p-1 items-center group-hover:text-theme font-bold'>
+									<GripHorizontal className='group-hover:bg-theme-hover/20 rounded-xl cursor-pointer ml-2 w-7 h-7 p-1' />
 								</p>
 							</div>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent align='end' className='bg-secondary'>
+						<DropdownMenuContent
+							align='end'
+							className='bg-secondary text-foreground text-base'
+						>
 							{permissions?.HOST_OWNER ||
 							permissions?.COMMUNITY_OWNER ||
 							(currentUser != null && currentUser.id === authorId) ||

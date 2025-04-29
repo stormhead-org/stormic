@@ -1,5 +1,5 @@
 import { Community, Post, User } from '@/payload-types'
-import { ExploreForm } from '@/shared/components/posts/explore-form'
+import { ExploreForm } from '@/shared/components/simple-pages/explore-form'
 import { getSession } from '@/shared/lib/auth'
 import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import { Permissions } from '@/shared/lib/permissions'

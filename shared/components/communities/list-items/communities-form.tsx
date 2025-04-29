@@ -34,14 +34,14 @@ export const CommunitiesForm: React.FC<Props> = ({
 					variant='blue'
 					type='button'
 					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-primary rounded-xl',
+						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl',
 						pathname === `/communities` ? 'bg-secondary hover:bg-secondary' : ''
 					)}
 					onClick={() => router.push('/communities')}
 				>
 					<Component
 						size={22}
-						className={cn('text-primary', isActive && 'text-theme')}
+						className={cn('text-foreground', isActive && 'text-theme')}
 					/>
 					Сообщества
 				</Button>
@@ -61,14 +61,14 @@ export const CommunitiesForm: React.FC<Props> = ({
 				variant='blue'
 				type='button'
 				className={cn(
-					'flex gap-2 justify-start w-full mb-1 h-12 text-base font-medium bg-transparent hover:bg-secondary text-primary rounded-xl',
+					'flex gap-2 justify-start w-full mb-1 h-12 text-base font-medium bg-transparent hover:bg-secondary text-foreground rounded-xl',
 					pathname === `/communities` ? 'bg-secondary hover:bg-secondary' : ''
 				)}
 				onClick={() => router.push('/communities')}
 			>
 				<Component
 					size={22}
-					className={cn('text-primary', isActive && 'text-theme')}
+					className={cn('text-foreground', isActive && 'text-theme')}
 				/>
 				Сообщества
 			</Button>

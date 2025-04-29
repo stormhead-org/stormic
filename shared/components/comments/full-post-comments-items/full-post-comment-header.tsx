@@ -44,7 +44,7 @@ export const FullPostCommentHeader: React.FC<CommentHeaderProps> = ({
 				<div className='ml-2'>
 					<div className='flex items-center'>
 						<Link
-							className='text-black dark:text-white font-bold'
+							className='text-foreground hover:text-foreground font-bold'
 							href={`/u/${author.id}`}
 						>
 							{author.name}
@@ -57,7 +57,7 @@ export const FullPostCommentHeader: React.FC<CommentHeaderProps> = ({
 								</ActionTooltip>
 							))}
 					</div>
-					<p className='text-sm'>{publicationDate}</p>
+					<p className='text-sm text-foreground'>{publicationDate}</p>
 				</div>
 			</div>
 		</div>

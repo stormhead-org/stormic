@@ -29,12 +29,12 @@ export const PostBody: React.FC<Props> = ({
 					<Title
 						text={postTitle}
 						size='sm'
-						className='font-extrabold my-2 text-black dark:text-white'
+						className='font-extrabold my-2 text-foreground'
 					/>
 					<RichText
 						//data={truncateEditorState(postContent, maxLength)}
 						data={postContent}
-						className='text-black dark:text-white text-justify'
+						className='text-foreground text-justify'
 					/>
 				</div>
 				{heroImage && (

@@ -64,27 +64,22 @@ export const RegisterForm: React.FC<Props> = ({
 	return (
 		<FormProvider {...form}>
 			<form
-				className='flex flex-col gap-4'
+				className='h-[78vh] flex flex-col gap-4 px-10 overflow-auto pb-4'
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
-				<div className='flex justify-between items-center'>
-					<div className='mr-2'>
-						<Title
-							// text={formatMessage({ id: 'loginForm.title' })}
-							text='Регистрация'
-							size='md'
-							className='font-bold'
-						/>
-						{/* <p className='text-gray-400'> */}
-						{/* 	{formatMessage({ id: 'loginForm.loginDescription' })} */}
-						{/* </p> */}
-					</div>
-				</div>
+				<Title
+					// text={formatMessage({ id: 'loginForm.title' })}
+					text='Регистрация'
+					size='md'
+					className='font-bold text-foreground'
+				/>
+
 				<FormInput
 					name='email'
 					// label={formatMessage({ id: 'registerForm.formInputEmailLabel' })}
 					label='Почта'
 					placeholder='user@stormic.app'
+					className='bg-secondary text-foreground rounded-xl'
 					required
 				/>
 				<FormInput
@@ -92,6 +87,7 @@ export const RegisterForm: React.FC<Props> = ({
 					// label={formatMessage({ id: 'registerForm.formInputNameLabel' })}
 					label='Имя'
 					placeholder='Stormhead'
+					className='bg-secondary text-foreground rounded-xl'
 					required
 				/>
 				<FormInput
@@ -100,6 +96,7 @@ export const RegisterForm: React.FC<Props> = ({
 					label='Пароль'
 					type='password'
 					placeholder='********'
+					className='bg-secondary text-foreground rounded-xl'
 					required
 				/>
 				<FormInput
@@ -110,13 +107,14 @@ export const RegisterForm: React.FC<Props> = ({
 					label='Подтвердите пароль'
 					type='password'
 					placeholder='********'
+					className='bg-secondary text-foreground rounded-xl'
 					required
 				/>
 
 				<Button
 					variant='blue'
 					loading={form.formState.isSubmitting}
-					className='flex items-center gap-2 text-sm font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white'
+					className='flex items-center gap-2 text-sm font-bold bg-secondary hover:bg-theme text-foreground hover:text-background rounded-xl'
 					type='submit'
 				>
 					{/* {formatMessage({ id: 'registerForm.regButton' })} */}
@@ -125,7 +123,7 @@ export const RegisterForm: React.FC<Props> = ({
 				<p className='text-gray-400 text-center'>
 					Уже есть аккаунт?{' '}
 					<span
-						className='text-a-color hover:text-a-color-hover cursor-pointer'
+						className='text-theme cursor-pointer'
 						onClick={() => setType('login')}
 					>
 						Войти

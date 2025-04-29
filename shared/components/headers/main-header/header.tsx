@@ -62,12 +62,12 @@ export const Header: React.FC<Props> = ({
 	return (
 		<header
 			className={cn(
-				'sticky top-0 pt-2 z-10 bg-background lg:mx-0 lg:pt-0 lg:bg-transparent lg:border-b lg:border-theme',
+				'sticky top-0 pt-2 z-10 bg-background lg:mx-0 lg:pt-0 lg:bg-transparent lg:border-b lg:border-primary/5',
 				className
 			)}
 		>
 			<Container>
-				<div className='flex items-center justify-between h-[4rem] mx-2 lg:mx-0 bg-secondary lg:bg-transparent border-b border-theme lg:border-none rounded-xl lg:rounded-none'>
+				<div className='flex items-center justify-between h-[4rem] mx-2 lg:mx-0 bg-secondary lg:bg-transparent border-b border-primary/5 lg:border-none rounded-xl lg:rounded-none'>
 					<SidebarProvider>
 						<MobileSidebar
 							communities={communities}
@@ -77,7 +77,7 @@ export const Header: React.FC<Props> = ({
 						/>
 						{/* Левая часть */}
 						<div className='w-1/4 flex items-center'>
-							<SidebarTrigger className='block lg:hidden mx-2 -mt-1' />
+							<SidebarTrigger className='block lg:hidden mx-2 -mt-1 text-foreground' />
 							<Link href='/'>
 								<div className='lg:flex lg:items-center lg:gap-4 lg:w-[250px]'>
 									<img
@@ -88,10 +88,10 @@ export const Header: React.FC<Props> = ({
 										className=''
 									/>
 									<div className='hidden lg:block'>
-										<h1 className='text-2xl uppercase font-black text-gray-700 dark:text-white'>
+										<h1 className='text-2xl uppercase font-black text-foreground'>
 											{hostSettings.title || 'Stormic'}
 										</h1>
-										<p className='text-sm text-gray-700 dark:text-white leading-3 mb-1'>
+										<p className='text-sm text-foreground leading-3 mb-1'>
 											{hostSettings.description || 'код, GitHub и ты'}
 										</p>
 									</div>

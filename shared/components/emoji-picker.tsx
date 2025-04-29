@@ -1,6 +1,10 @@
 'use client'
 
-import { Popover, PopoverContent, PopoverTrigger } from '@/shared/components/ui/popover'
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger
+} from '@/shared/components/ui/popover'
 
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
@@ -14,14 +18,14 @@ interface EmojiPickerProps {
 
 export const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
 	const { resolvedTheme } = useTheme()
-	
+
 	return (
 		<>
 			<Popover>
 				<PopoverTrigger>
-					<Smile className='text-zinc-400 hover:text-blue-700 transition' />
+					<Smile className='text-zinc-400 hover:text-theme transition' />
 				</PopoverTrigger>
-				
+
 				<PopoverContent
 					side='right'
 					sideOffset={40}

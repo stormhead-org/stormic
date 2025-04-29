@@ -78,7 +78,7 @@ export default async function MainLayout({
 
 						<NavigationMenuForm data={globalSideBarNavigation} />
 
-						<SideFooter className='border-t border-theme pt-1 mt-1 rounded-xl' />
+						<SideFooter className='mt-1' />
 					</div>
 					{/* Центральная часть */}
 					<div className='w-full lg:w-2/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-xl'>

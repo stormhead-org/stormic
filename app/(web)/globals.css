@@ -16,7 +16,7 @@ html {
 @layer base {
 	:root {
 		--background: 0 0% 100%;
-		--foreground: 222.2 84% 4.9%;
+		--foreground: 240 10% 3.9%;
 
 		--card: 0 0% 100%;
 		--card-foreground: 222.2 84% 4.9%;
@@ -27,10 +27,8 @@ html {
 		--a-color: 218, 70%, 67%;
 		--a-color-hover: 218, 100%, 67%;
 		--notification-color-red: 0 100% 33.33%;
-		/*blue-700*/
-		--theme-color: 48.8% 0.243 264.376;
-		/*blue-800*/
-		--theme-color-hover: 42.4% 0.199 265.638;
+		--theme-color: 43.26 96.41% 56.27%;
+		--theme-color-hover: 43.26 96.41% 56.27%;
 
 		--popover: 0 0% 100%;
 		--popover-foreground: 222.2 84% 4.9%;
@@ -65,8 +63,8 @@ html {
 	}
 
 	.dark {
-		--background: 222.22, 47.37%, 11.18%;
-		--foreground: 210 40% 98%;
+		--background: 0 0% 6%;
+		--foreground: 210 6% 80%;
 
 		--card: 217.24, 32.58%, 17.45%;
 		--card-foreground: 210 40% 98%;
@@ -75,11 +73,9 @@ html {
 		--txt-color-headers: 210 5.88% 80%;
 		--a-color: 218, 70%, 67%;
 		--a-color-hover: 218, 100%, 67%;
-		--notification-color-red: 0 100% 33.33%;
-		/*blue-700*/
-		--theme-color: 48.8% 0.243 264.376;
-		/*blue-800*/
-		--theme-color-hover: 42.4% 0.199 265.638;
+		--notification-color: 0 100% 33.33%;
+		--theme-color: 43.26 96.41% 56.27%;
+		--theme-color-hover: 43.26 96.41% 56.27%;
 
 		--popover: 222.2 84% 4.9%;
 		--popover-foreground: 210 40% 98%;
@@ -87,7 +83,7 @@ html {
 		--primary: 210 40% 98%;
 		--primary-foreground: 222.2 47.4% 11.2%;
 
-		--secondary: 217.2 32.6% 15%;
+		--secondary: 0 0% 10%;
 		--secondary-foreground: 210 40% 98%;
 
 		--muted: 217.2 32.6% 17.5%;
@@ -112,7 +108,7 @@ html {
 		--sidebar-ring: 222.2 84% 4.9%;
 	}
 
-	.yellow {
+	.blue {
 		--background: 222.22, 47.37%, 11.18%;
 		--foreground: 210 40% 98%;
 
@@ -123,9 +119,11 @@ html {
 		--txt-color-headers: 210 5.88% 80%;
 		--a-color: 218, 70%, 67%;
 		--a-color-hover: 218, 100%, 67%;
-		--notification-color: 0 100% 33.33%;
+		--notification-color-red: 0 100% 33.33%;
+		/*blue-700*/
 		--theme-color: 48.8% 0.243 264.376;
-		--theme-color-hover: 43.26 96.41% 56.27%;
+		/*blue-800*/
+		--theme-color-hover: 42.4% 0.199 265.638;
 
 		--popover: 222.2 84% 4.9%;
 		--popover-foreground: 210 40% 98%;

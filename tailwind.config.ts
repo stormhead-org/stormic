@@ -41,8 +41,8 @@ export default {
 					foreground: 'hsl(var(--destructive-foreground))'
 				},
 				theme: {
-					DEFAULT: 'oklch(var(--theme-color))',
-					hover: 'oklch(var(--theme-color-hover))'
+					DEFAULT: 'hsl(var(--theme-color))',
+					hover: 'hsl(var(--theme-color-hover))'
 				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

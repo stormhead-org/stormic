@@ -42,14 +42,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 		<div>
 			<button
 				type='button'
-				className='group-hover:text-blue-700 font-bold transition rounded-full flex items-center justify-center'
+				className='group-hover:text-theme font-bold transition rounded-xl flex items-center justify-center'
 				onClick={e => {
 					e.stopPropagation()
 					inputRef.current?.click()
 				}}
 			>
 				<Plus
-					className='group-hover:bg-blue-800/20 rounded-full w-7 h-7 p-1'
+					className='group-hover:bg-theme-hover/20 rounded-xl w-7 h-7 p-1'
 					size={36}
 				/>
 			</button>

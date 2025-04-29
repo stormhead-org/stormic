@@ -137,7 +137,7 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 												</div>
 											</div>
 											<FormTextarea
-												className='px-14 py-6 rounded-md'
+												className='px-14 py-6 rounded-xl'
 												placeholder='Редактировать комментарий'
 												sideButton
 												onClickValue={form.handleSubmit(onSubmit)}
@@ -152,7 +152,7 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 						/>
 						{commentImage && (
 							<div
-								className='relative w-24 h-16 rounded-md flex items-center justify-center cursor-pointer px-2 ml-4 mb-4'
+								className='relative w-24 h-16 rounded-xl flex items-center justify-center cursor-pointer px-2 ml-4 mb-4'
 								style={{
 									backgroundImage: commentImage
 										? `url(${commentImage.url})`
@@ -162,7 +162,7 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 								}}
 							>
 								<button
-									className='bg-red-500 text-primary p-1 rounded-full'
+									className='bg-red-500 text-foreground p-1 rounded-xl'
 									onClick={e => {
 										e.stopPropagation()
 										handleRemove()
@@ -188,7 +188,7 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 									href={media.url}
 									target='_blank'
 									rel='noopener noreferrer'
-									className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer text-black dark:text-white'
+									className='absolute bottom-2 right-2 rounded-md bg-secondary p-1 cursor-pointer text-foreground'
 								>
 									<Link2 />
 								</Link>

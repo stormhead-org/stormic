@@ -34,7 +34,7 @@ export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 						variant='blue'
 						type='button'
 						className={cn(
-							'flex gap-2 justify-start w-full mt-1 h-12 text-base font-normal bg-transparent hover:bg-secondary text-primary rounded-xl',
+							'flex gap-2 justify-start w-full mt-1 h-12 text-base font-normal bg-transparent hover:bg-secondary text-foreground rounded-xl',
 							pathname === `/p/${postId}`
 								? 'bg-secondary hover:bg-secondary'
 								: ''
@@ -43,7 +43,7 @@ export const NavigationMenuForm: React.FC<Props> = ({ data, className }) => {
 					>
 						<Link2
 							size={22}
-							className={cn('text-primary', isActive && 'text-theme')}
+							className={cn('text-foreground', isActive && 'text-theme')}
 						/>
 						<span>
 							{truncateText(

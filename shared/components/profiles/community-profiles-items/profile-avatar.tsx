@@ -23,7 +23,7 @@ export const ProfileAvatar: React.FC<Props> = ({
 	return (
 		<Avatar
 			className={cn(
-				'border-[1px] border-transparent rounded-full hover:bg-blue-700',
+				'border-2 border-transparent rounded-full hover:border-theme',
 				className
 			)}
 		>
@@ -33,7 +33,7 @@ export const ProfileAvatar: React.FC<Props> = ({
 				style={{ width: avatarSize, height: avatarSize }}
 			/>
 			<AvatarFallback>
-				<CircleUser />
+				<CircleUser className='text-foreground' />
 			</AvatarFallback>
 		</Avatar>
 	)
