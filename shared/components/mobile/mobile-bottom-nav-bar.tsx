@@ -31,7 +31,7 @@ export const MobileBottomNavBar: React.FC<Props> = ({ className }) => {
 		},
 		// { id: 4, icon: <LibraryBig size={24} />, path: '/wiki', disabled: true },
 		{ id: 4, icon: <Bell size={24} />, path: '#', disabled: true },
-		{ id: 5, icon: <UserRound size={24} />, path: '/about', disabled: false }
+		{ id: 5, icon: <UserRound size={24} />, path: '/account', disabled: false }
 	]
 
 	return (
@@ -46,7 +46,7 @@ export const MobileBottomNavBar: React.FC<Props> = ({ className }) => {
 							disabled={item.disabled}
 							className={cn(
 								'w-10 h-10 bg-transparent hover:bg-primary/5 text-foreground rounded-xl p-0',
-								`${pathname === item.path ? 'bg-secondary hover:bg-primary/5 text-theme hover:text-theme dark:hover:text-theme' : ''}`
+								`${pathname === item.path ? 'bg-primary/5 text-theme hover:text-theme dark:hover:text-theme' : ''}`
 							)}
 							onClick={() => router.push(item.path)}
 						>

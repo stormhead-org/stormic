@@ -43,29 +43,35 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 					<Title
 						text='Управляющая команда'
 						size='sm'
-						className='font-bold mr-2'
+						className='font-bold mr-2 text-foreground'
 					/>
-					<Title text='Владелец' size='sm' className='font-bold mr-2 mt-4' />
+					<Title
+						text='Владелец'
+						size='sm'
+						className='font-bold mr-2 mt-4 text-foreground'
+					/>
 					<Link href={'/u/' + ownerId}>
 						<div className='flex gap-2 mt-2 items-center'>
 							<ProfileAvatar
-								className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
+								className='w-11 h-11'
 								avatarImage={avatarImageUrl}
 								avatarSize={Number(44)}
 							/>
 							<div className='flex h-full items-center'>
 								<div className='-mt-1'>
-									<p className='font-semibold text-md text-black dark:text-white'>
-										{truncatedName}
-									</p>
-									<p className='-mt-1 text-black dark:text-white text-sm font-semibold'>
+									<p className='font-bold text-foreground'>{truncatedName}</p>
+									<p className='-mt-1 text-foreground'>
 										{truncatedDescription}
 									</p>
 								</div>
 							</div>
 						</div>
 					</Link>
-					<Title text='Связаться' size='sm' className='font-bold mr-2 mt-4' />
+					<Title
+						text='Связаться'
+						size='sm'
+						className='font-bold mr-2 mt-4 text-foreground'
+					/>
 					<p className='text-md mt-1'>
 						{community.contacts ? (
 							community.contacts
@@ -73,7 +79,11 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 							<p>Контакты не указаны</p>
 						)}
 					</p>
-					<Title text='Модераторы' size='sm' className='font-bold mr-2 mt-4' />
+					<Title
+						text='Модераторы'
+						size='sm'
+						className='font-bold mr-2 mt-4 text-foreground'
+					/>
 					{!community.moderators || community.moderators.length === 0 ? (
 						<p className='text-md mt-1'>Модераторы не назначены</p>
 					) : (
@@ -90,7 +100,7 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 									>
 										<div className='flex gap-4 mt-1'>
 											<ProfileAvatar
-												className='w-11 h-11 border-none bg-secondary hover:bg-secondary'
+												className='w-11 h-11'
 												avatarImage={getMediaUrl(item.avatar, '')}
 												avatarSize={44}
 											/>
@@ -102,7 +112,7 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 															20
 														)}
 													</p>
-													<p className='-mt-1 text-black dark:text-white text-sm font-semibold'>
+													<p className='-mt-1 text-foreground font-semibold'>
 														{truncateText(
 															getRelationProp<User, 'description'>(
 																item,
@@ -122,11 +132,19 @@ export const TeamCommunityForm: React.FC<Props> = ({ community, onClose }) => {
 					)}
 				</div>
 				<div className='w-3/5 h-[70vh] overflow-auto no-scrollbar'>
-					<Title text='Описание' size='sm' className='font-bold mr-2' />
+					<Title
+						text='Описание'
+						size='sm'
+						className='font-bold mr-2 text-foreground'
+					/>
 					<p className='mt-1 text-justify'>{community.description}</p>
-					<Title text='Правила' size='sm' className='font-bold mr-2 mt-4' />
+					<Title
+						text='Правила'
+						size='sm'
+						className='font-bold mr-2 mt-4 text-foreground'
+					/>
 					<Accordion
-						className='rounded-md bg-secondary'
+						className='rounded-xl bg-secondary text-foreground'
 						type='single'
 						collapsible
 					>

@@ -39,7 +39,7 @@ const InlineSearchInput: React.FC<{
 	}
 
 	return (
-		<div className='flex rounded-xl flex-1 justify-between relative h-11 z-30 mx-20'>
+		<div className='flex rounded-xl flex-1 justify-between relative h-11 z-30 lg:mx-20'>
 			<Search className='absolute top-1/2 translate-y-[-50%] left-3 h-5 text-foreground' />
 			<input
 				className='rounded-xl outline-none w-full pl-11 bg-secondary text-foreground'
@@ -199,7 +199,7 @@ export const ExploreForm: React.FC<Props> = ({
 							communities={communities}
 							permissions={postPermissions[post.id]}
 							relatedPost={relatedPost}
-							className='m-0 mt-2 lg:mt-2 lg:mx-0'
+							className='m-0 mb-2 lg:mt-2 lg:mx-0'
 						/>
 					))
 				) : (

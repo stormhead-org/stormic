@@ -8,21 +8,20 @@ interface Props {
 }
 
 export const UserFollowersCounter: React.FC<Props> = ({
-	                                             userId,
-	                                             className
-                                             }) => {
-	const { initialize, followersCount } = useFollowStore();
-	
-	// Инициализация данных подписки при монтировании компонента
+	userId,
+	className
+}) => {
+	const { initialize, followersCount } = useFollowStore()
+
 	useEffect(() => {
 		if (userId !== undefined) {
-			initialize(userId); // Подгрузка текущего статуса подписки и количества подписчиков
+			initialize(userId)
 		}
-	}, [userId, initialize]);
-	
+	}, [userId, initialize])
+
 	return (
 		<div className={cn('', className)}>
-				<p className='text-md font-bold'>{userId !== undefined ? followersCount[userId] || 0 : 0}</p>
+			{userId !== undefined ? followersCount[userId] || 0 : 0}
 		</div>
 	)
 }

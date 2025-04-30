@@ -62,12 +62,12 @@ export default async function CommunitiesLayout({
 								// loading={loading}
 							/>
 
+							<NavigationMenuForm data={globalSideBarNavigation} />
+
 							<SocialMenu
 								socialNavigation={resultSocialNavigation}
 								className='mt-1'
 							/>
-
-							<NavigationMenuForm data={globalSideBarNavigation} />
 
 							<SideFooter className='mt-1' />
 						</div>

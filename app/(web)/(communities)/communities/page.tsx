@@ -39,13 +39,14 @@ export default async function CommunitiesPage() {
 
 	return (
 		<>
-			<div className='hidden lg:flex lg:w-full lg:gap-4'>
-				<div className='w-8/12 bg-secondary rounded-xl' />
-				<div className='w-4/12'>
+			<div className='lg:flex lg:w-full lg:gap-4'>
+				<div className='hidden lg:block w-3/4 bg-secondary rounded-xl' />
+				<div className='w-full lg:w-1/4 mb-4 lg:mb-0'>
 					<NewCommunityButton
 						authImage={authImage}
 						logoImage={logoImage}
 						stormicName={resultGlobalHost.title}
+						className='mx-2 lg:mx-0'
 					/>
 				</div>
 			</div>

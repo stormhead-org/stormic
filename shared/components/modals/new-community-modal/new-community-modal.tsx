@@ -26,15 +26,13 @@ export const NewCommunityModal: React.FC<Props> = ({
 
 	return (
 		<Dialog open={open} onOpenChange={onClose}>
-			<DialogContent className='bg-secondary transition-all duration-300-p-2'>
+			<DialogContent className='bg-secondary transition-all duration-300-p-2 rounded-xl'>
 				<DialogHeader className='hidden'>
 					<DialogTitle />
 				</DialogHeader>
 				<div className='flex mx-auto'>
-					<div className=''>
-						<div className='my-2'>
-							<NewCommunityForm userId={userId} onClose={handleClose} />
-						</div>
+					<div className='my-2'>
+						<NewCommunityForm userId={userId} onClose={handleClose} />
 					</div>
 				</div>
 			</DialogContent>

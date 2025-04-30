@@ -42,14 +42,12 @@ export const ProfileBody: React.FC<Props> = ({
 					Показать
 				</span>
 			)}
-			<div className='rounded-md bg-primary/5 p-4 mt-4'>
-				<p className='text-md font-bold'>
+			<div className='rounded-xl bg-primary/5 p-4 mt-4'>
+				<p className='text-medium'>
 					{/* {formatMessage({ id: 'profileBody.joined' })} */}
 					{hasUser ? 'Присоединился' : 'Создано'}
 				</p>
-				<p className='text-md font-bold mt-1'>
-					{formatDateTime(data.createdAt)} г.
-				</p>
+				<p className='mt-1'>{formatDateTime(data.createdAt)} г.</p>
 				<ProfileCustomFieldForm data={data} />
 			</div>
 
@@ -59,12 +57,12 @@ export const ProfileBody: React.FC<Props> = ({
 				) : (
 					<CommunityFollowersCounter communityId={data.id} />
 				)}
-				<p className='font-bold text-md'>
+				<p>
 					{/* {formatMessage({ id: 'profileBody.followersCount' })} */}
 					подписчиков
 				</p>
 				{hasUser && (
-					<p className='ml-4 text-md font-bold'>
+					<p className='ml-4'>
 						{0}
 						{/* {formatMessage({ id: 'profileBody.followingCount' })} */}{' '}
 						подписки
@@ -74,7 +72,7 @@ export const ProfileBody: React.FC<Props> = ({
 			<div className='flex mt-2'>
 				<Button
 					variant='blue'
-					className='h-10 w-26 text-md font-bold p-0 bg-transparent border-b-4 border-transparent border-blue-700 hover:bg-transparent rounded-none text-primary'
+					className='h-10 w-26 font-medium p-0 bg-transparent border-b-4 border-theme hover:bg-transparent rounded-none text-foreground'
 					type='button'
 					// onClick={() => router.push('/write')}
 				>

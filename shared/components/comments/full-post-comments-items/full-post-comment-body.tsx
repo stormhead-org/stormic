@@ -120,8 +120,8 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<div className='relative p-4 pb-2'>
-											<div className='absolute z-10 top-[3.2rem] left-8'>
+										<div className='relative p-1 lg:p-4 pb-2'>
+											<div className='absolute z-10 top-[3.2rem] left-4 lg:left-8'>
 												<div className='cursor-pointer'>
 													<EmojiPicker
 														onChange={(emoji: string) =>

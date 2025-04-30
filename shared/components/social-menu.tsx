@@ -66,7 +66,7 @@ export const SocialMenu: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<div className='flex flex-1 justify-evenly items-center'>
+			<div className='flex gap-2 items-center px-2'>
 				{socialMenu.length !== 0 &&
 					socialMenu.map(item => (
 						<Link

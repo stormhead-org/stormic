@@ -78,7 +78,7 @@ export const NewCommunityForm: React.FC<Props> = ({ userId, onClose }) => {
 				<Button
 					variant='blue'
 					loading={form.formState.isSubmitting}
-					className='flex items-center gap-2 text-sm font-bold'
+					className='flex items-center gap-2 font-bold text-background'
 					type='submit'
 				>
 					Создать

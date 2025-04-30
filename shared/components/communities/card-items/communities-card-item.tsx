@@ -56,7 +56,7 @@ export const CommunitiesCardItem: React.FC<CommunitiesCardItemProps> = ({
 							</div>
 						</div>
 					</Link>
-					<div className='flex items-center border-t-2 border-t-primary/5 mt-4 w-full pt-3'>
+					<div className='flex items-center border-t-2 border-t-primary/10 mt-4 w-full pt-3'>
 						<div className='flex gap-8 w-1/2'>
 							<div className='flex gap-2 items-center'>
 								<CommunityPostsCounter communityId={communityId || 0} />

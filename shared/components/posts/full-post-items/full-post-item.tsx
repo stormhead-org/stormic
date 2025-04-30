@@ -59,7 +59,7 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 	}
 
 	return (
-		<div className={cn('bg-secondary rounded-md mb-4 p-4', className)}>
+		<div className={cn('bg-secondary rounded-xl mb-4 p-4', className)}>
 			<PostHeader
 				post={post}
 				communities={communities}

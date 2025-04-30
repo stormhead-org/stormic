@@ -95,7 +95,7 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 									</div>
 									<FormTextarea
 										disabled={isLoading}
-										className='px-14 py-6 rounded-md'
+										className='px-14 py-6 rounded-xl'
 										placeholder='Оставить комментарий'
 										sideButton
 										onClickValue={form.handleSubmit(onSubmit)}

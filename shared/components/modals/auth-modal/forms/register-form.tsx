@@ -64,7 +64,7 @@ export const RegisterForm: React.FC<Props> = ({
 	return (
 		<FormProvider {...form}>
 			<form
-				className='h-[78vh] flex flex-col gap-4 px-10 overflow-auto pb-4'
+				className='lg:h-[78vh] flex flex-col gap-4 px-10 overflow-auto pb-4'
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
 				<Title

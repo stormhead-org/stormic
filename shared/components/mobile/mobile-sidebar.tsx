@@ -46,9 +46,9 @@ export const MobileSidebar: React.FC<Props> = ({
 							// loading={loading}
 						/>
 
-						<SocialMenu socialNavigation={socialNavigation} className='mt-1' />
-
 						<NavigationMenuForm data={sideBarNavigation} />
+
+						<SocialMenu socialNavigation={socialNavigation} className='mt-1' />
 
 						<SideFooter className='mt-1' />
 					</SidebarGroupContent>

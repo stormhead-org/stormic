@@ -71,12 +71,12 @@ export default async function MainLayout({
 							// loading={loading}
 						/>
 
+						<NavigationMenuForm data={globalSideBarNavigation} />
+
 						<SocialMenu
 							socialNavigation={resultSocialNavigation}
 							className='mt-1'
 						/>
-
-						<NavigationMenuForm data={globalSideBarNavigation} />
 
 						<SideFooter className='mt-1' />
 					</div>

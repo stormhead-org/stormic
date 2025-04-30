@@ -32,7 +32,7 @@ export const CommentFullPostGroup: React.FC<Props> = ({
 	// const { formatMessage } = useIntl()
 
 	return (
-		<div className={cn('bg-secondary rounded-md p-4', className)}>
+		<div className={cn('bg-secondary rounded-xl p-1 lg:p-4', className)}>
 			<div className='flex justify-between items-center'>
 				{commentsHeader > String(0) ? (
 					<p className='pl-4 text-lg cursor-default'>

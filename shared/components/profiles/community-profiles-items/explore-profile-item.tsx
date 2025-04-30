@@ -6,7 +6,6 @@ import CommunityFollowButton from '@/shared/components/community-follow-button'
 import UserFollowButton from '@/shared/components/user-follow-button'
 import { cn } from '@/shared/lib/utils'
 import { getMediaUrl } from '@/shared/utils/payload/getTypes'
-import { truncateText } from '@/shared/utils/textUtils'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -48,10 +47,8 @@ export const ExploreProfileItem: React.FC<Props> = ({
 						}
 						className='hover:bg-transparent'
 					/>
-					<span>
-						{hasUser
-							? truncateText((data as User).name, 24)
-							: truncateText((data as Community).title, 24)}
+					<span className='truncate max-w-[12ch] lg:max-w-[24ch]'>
+						{hasUser ? (data as User).name : (data as Community).title}
 					</span>
 				</div>
 

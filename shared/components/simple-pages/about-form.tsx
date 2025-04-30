@@ -81,19 +81,19 @@ export const AboutForm: React.FC<Props> = ({
 					<div className='flex gap-2'>
 						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Settings
-								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/main/platform')}
 							/>
 						</div>
 						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<LinkIcon
-								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/main/navigation')}
 							/>
 						</div>
 						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Radio
-								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/main/social')}
 							/>
 						</div>
@@ -102,13 +102,13 @@ export const AboutForm: React.FC<Props> = ({
 					<div className='flex gap-2'>
 						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<ShieldCheck
-								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/permissions/roles')}
 							/>
 						</div>
 						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Delete
-								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() =>
 									router.push('/settings/host/permissions/deleted')
 								}
@@ -116,7 +116,7 @@ export const AboutForm: React.FC<Props> = ({
 						</div>
 						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Gavel
-								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/permissions/bans')}
 							/>
 						</div>
@@ -125,7 +125,7 @@ export const AboutForm: React.FC<Props> = ({
 					<div className='flex gap-2'>
 						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<UserRoundCog
-								className='hover:bg-theme-hover rounded-xl ml-2 w-7 h-7 p-1'
+								className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 								onClick={() => router.push('/settings/host/administration')}
 							/>
 						</div>
@@ -135,7 +135,7 @@ export const AboutForm: React.FC<Props> = ({
 
 			<div className='h-full w-full lg:flex bg-secondary rounded-xl p-4 mt-6'>
 				<div className='w-full lg:w-1/2'>
-					<p className='uppercase font-semibold'>
+					<p className='uppercase font-bold'>
 						{/* {formatMessage({ id: 'aboutPage.managed' })} */}
 						Управляется
 					</p>
@@ -148,10 +148,8 @@ export const AboutForm: React.FC<Props> = ({
 							/>
 							<div className='flex h-full items-center'>
 								<div className='-mt-2'>
-									<p className='font-semibold text-md text-black dark:text-white'>
-										{truncatedName}
-									</p>
-									<p className='-mt-1 text-black dark:text-white text-sm font-semibold'>
+									<p className='font-bold text-foreground'>{truncatedName}</p>
+									<p className='-mt-1 font-medium text-foreground'>
 										{truncatedDescription}
 									</p>
 								</div>
@@ -160,12 +158,14 @@ export const AboutForm: React.FC<Props> = ({
 					</Link>
 				</div>
 				<div className='w-full lg:w-1/2  mt-2 lg:mt-0 lg:ml-1 pt-2 lg:pt-0 border-t-2 lg:border-t-0 lg:border-l-2 border-theme lg:pl-4'>
-					<p className='uppercase font-semibold'>
+					<p className='uppercase text-foreground font-bold'>
 						{/* {formatMessage({ id: 'aboutPage.contacts' })} */}
 						Контакты
 					</p>
 					<div className='h-full'>
-						<p className='font-semibold mt-4'>{hostInfo.contacts}</p>
+						<p className='text-foreground font-medium mt-2 lg:mt-3'>
+							{hostInfo.contacts}
+						</p>
 					</div>
 				</div>
 			</div>

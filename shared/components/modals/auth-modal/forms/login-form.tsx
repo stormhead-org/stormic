@@ -14,7 +14,7 @@ export const LoginForm: React.FC<Props> = ({ setType, onClose }) => {
 	// const { formatMessage } = useIntl()
 
 	return (
-		<div className='h-full flex gap-4 items-center justify-center'>
+		<div className='h-full flex gap-4 items-center justify-center py-40 lg:py-0'>
 			<div>
 				<p className='text-xl font-bold text-center '>Авторизация</p>
 

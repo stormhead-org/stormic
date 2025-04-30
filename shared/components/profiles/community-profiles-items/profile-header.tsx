@@ -46,7 +46,7 @@ export const ProfileHeader: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<img
-				className='rounded-t-md object-cover object-center w-full h-[120px]'
+				className='rounded-t-xl object-cover object-center w-full h-[120px]'
 				src={bannerImageUrl}
 				alt='Profile Banner'
 			/>
@@ -69,18 +69,18 @@ export const ProfileHeader: React.FC<Props> = ({
 								))}
 						</div>
 
-						<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							{currentUser &&
 								(hasUser
 									? currentUser.id === data.id && (
 											<Settings
-												className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+												className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 												onClick={() => router.push('/settings/profile')}
 											/>
 										)
 									: permissions?.COMMUNITY_OWNER && (
 											<Settings
-												className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+												className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 												onClick={() =>
 													router.push(`/settings/community/${data.id}/main`)
 												}
@@ -89,10 +89,10 @@ export const ProfileHeader: React.FC<Props> = ({
 						</div>
 
 						{!hasUser && (
-							<div className='flex items-center hover:text-blue-700 font-bold cursor-pointer mt-auto'>
+							<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 								<Info
 									onClick={() => setOpenTeamCommunityModal(true)}
-									className='hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+									className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 								/>
 							</div>
 						)}

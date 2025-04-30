@@ -38,8 +38,8 @@ const FollowButton: React.FC<FollowButtonProps> = ({ userId }) => {
 		<Button
 			variant='blue'
 			className={cn(
-				'h-6 w-26 font-medium mt-auto mb-[2px] my-0 rounded-xl text-background',
-				isFollowing[userId] ? 'bg-theme' : ''
+				'h-6 w-26 font-medium mt-auto mb-[2px] my-0 rounded-xl text-foreground hover:text-background bg-primary/10 hover:bg-theme-hover',
+				isFollowing[userId] ? 'bg-theme/80 text-background' : ''
 			)}
 			type='button'
 			onClick={handleFollow}

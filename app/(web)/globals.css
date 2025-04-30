@@ -284,7 +284,7 @@ html {
 	}
 
 	a {
-		@apply text-blue-700 hover:text-blue-800;
+		@apply text-theme hover:text-theme-hover;
 	}
 
 	/* Заголовки */
@@ -301,9 +301,9 @@ html {
 	}
 
 	/* Параграфы */
-	/* p {
-		@apply text-base leading-relaxed mb-4;
-	} */
+	p {
+		@apply text-base text-foreground;
+	}
 	/* Горизонтальная линия (ранее <br>) */
 	hr {
 		@apply my-6 border-t-2 border-white w-full;
