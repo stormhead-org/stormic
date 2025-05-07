@@ -2,7 +2,8 @@
 
 import { Community } from '@/payload-types'
 import { cn } from '@/shared/lib/utils'
-import { Check, ChevronsUpDown, Users } from 'lucide-react'
+import { truncateText } from '@/shared/utils/textUtils'
+import { Check, ChevronsUpDown, Component, Users } from 'lucide-react'
 import * as React from 'react'
 import {
 	Command,
@@ -48,8 +49,10 @@ export function SelectCommunity({
 								aria-expanded={open}
 								className='w-full justify-between bg-transparent text-primary hover:bg-secondary'
 							>
-								<Users size={16} />
-								{selectedCommunity ? selectedCommunity.title : 'Сообщество...'}
+								<Component size={16} />
+								{selectedCommunity
+									? truncateText(selectedCommunity.title, 18)
+									: 'Сообщество...'}
 								<ChevronsUpDown className='opacity-50' />
 							</SidebarMenuButton>
 						</PopoverTrigger>

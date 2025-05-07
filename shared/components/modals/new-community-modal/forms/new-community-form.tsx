@@ -1,5 +1,5 @@
 import { Title } from '@/shared/components'
-import { FormInput } from '@/shared/components/form/'
+import { FormInput, FormTextarea } from '@/shared/components/form/'
 import { Button } from '@/shared/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
@@ -68,17 +68,16 @@ export const NewCommunityForm: React.FC<Props> = ({ userId, onClose }) => {
 					required
 				/>
 
-				<FormInput
+				<FormTextarea
 					name='description'
 					label='Описание сообщества'
-					type='text'
 					placeholder='код, GitHub и ты'
 				/>
 
 				<Button
 					variant='blue'
 					loading={form.formState.isSubmitting}
-					className='flex items-center gap-2 font-bold text-background'
+					className='flex items-center gap-2 font-bold text-background rounded-xl'
 					type='submit'
 				>
 					Создать

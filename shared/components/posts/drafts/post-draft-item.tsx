@@ -3,6 +3,7 @@
 import { Community, Post, User } from '@/payload-types'
 import { PostEditModal } from '@/shared/components/modals/post-edit-modal/post-edit-modal'
 import { cn } from '@/shared/lib/utils'
+import { truncateText } from '@/shared/utils/textUtils'
 import { OutputData } from '@editorjs/editorjs'
 import React, { useState } from 'react'
 import { TableCell, TableRow } from '@/shared/components/ui/table'
@@ -31,36 +32,36 @@ export const PostDraftItem: React.FC<{
 			return 'Нет контента'
 		const firstBlock = content.blocks[0]
 		return firstBlock.type === 'paragraph' && firstBlock.data.text
-			? firstBlock.data.text.slice(0, 30) +
-					(firstBlock.data.text.length > 50 ? '...' : '')
+			? firstBlock.data.text.slice(0, 22) +
+					(firstBlock.data.text.length > 22 ? '...' : '')
 			: 'Контент без текста'
-	}
-
-	// Обрезаем название поста до 20 символов
-	const getTitleExcerpt = (title: string | undefined) => {
-		if (!title) return 'Без названия'
-		return title.length > 20 ? title.slice(0, 20) + '...' : title
 	}
 
 	return (
 		<>
-			<TableRow
-				className={cn('hover:bg-primary/5 cursor-pointer', className)}
-				onClick={() => setOpenEditModal(true)}
-			>
-				<TableCell>{getTitleExcerpt(post.title)}</TableCell>
-				<TableCell>
-					{getContentExcerpt(post.content as unknown as OutputData)}
-				</TableCell>
-				<TableCell>{communityName}</TableCell>
-			</TableRow>
-			<PostEditModal
-				open={openEditModal}
-				onClose={() => setOpenEditModal(false)}
-				communities={communities}
-				currentUser={currentUser}
-				post={post}
-			/>
+			<div className='flex items-center justify-between w-full h-12 text-base font-medium bg-transparent hover:bg-secondary text-foreground rounded-xl cursor-pointer px-4 mb-1'>
+				<PostEditModal
+					open={openEditModal}
+					onClose={() => setOpenEditModal(false)}
+					communities={communities}
+					currentUser={currentUser}
+					post={post}
+				/>
+				<div
+					onClick={() => setOpenEditModal(true)}
+					className='flex items-center w-full gap-4'
+				>
+					<span className='truncate max-w-[32ch] lg:w-[13ch] text-foreground'>
+						{post.title.length > 0 ? post.title : 'Название отсутствует'}
+					</span>
+					<span className='hidden lg:block w-2/4 text-foreground'>
+						{getContentExcerpt(post.content as unknown as OutputData)}
+					</span>
+					<span className='hidden lg:block w-1/4 text-foreground'>
+						{truncateText(communityName, 10)}
+					</span>
+				</div>
+			</div>
 		</>
 	)
 }

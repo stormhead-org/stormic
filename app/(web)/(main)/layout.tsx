@@ -1,4 +1,4 @@
-import { Community, User } from '@/payload-types'
+import { Community } from '@/payload-types'
 import {
 	Container,
 	FeedUserMenu,
@@ -8,7 +8,6 @@ import {
 } from '@/shared/components/'
 import { CommentFeedGroup } from '@/shared/components/comments/comment-feed-group'
 import { CommunitiesForm } from '@/shared/components/communities/list-items/communities-form'
-import { getSession } from '@/shared/lib/auth'
 import config from '@payload-config'
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
@@ -25,8 +24,6 @@ export default async function MainLayout({
 	modal: React.ReactNode
 }>) {
 	const payload = await getPayload({ config })
-
-	const session = (await getSession()) as { user: User } | null
 
 	const globalSideBarNavigation = await payload.findGlobal({
 		slug: 'sidebar-navigation',
@@ -59,7 +56,7 @@ export default async function MainLayout({
 	return (
 		<>
 			<Container className='lg:mt-4'>
-				<div className='lg:flex lg:gap-4'>
+				<div className='lg:flex lg:gap-2'>
 					{/* Левая часть */}
 					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar'>
 						<FeedUserMenu />
@@ -67,18 +64,14 @@ export default async function MainLayout({
 						<CommunitiesForm
 							limit={10}
 							items={communities}
-							className='mt-1'
 							// loading={loading}
 						/>
 
 						<NavigationMenuForm data={globalSideBarNavigation} />
 
-						<SocialMenu
-							socialNavigation={resultSocialNavigation}
-							className='mt-1'
-						/>
+						<SocialMenu socialNavigation={resultSocialNavigation} />
 
-						<SideFooter className='mt-1' />
+						<SideFooter />
 					</div>
 					{/* Центральная часть */}
 					<div className='w-full lg:w-2/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar lg:rounded-xl'>

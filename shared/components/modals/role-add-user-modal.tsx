@@ -142,7 +142,7 @@ export const RoleAddUserModal: React.FC<Props> = ({
 
 	return (
 		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className='p-2 w-[40vw]'>
+			<DialogContent className='p-2 w-full h-full lg:h-auto lg:w-[40vw] lg:rounded-lg'>
 				<DialogHeader className='pt-8'>
 					<DialogTitle className='text-2xl text-center font-bold'>
 						Добавить участников
@@ -168,7 +168,7 @@ export const RoleAddUserModal: React.FC<Props> = ({
 							<Input
 								type='text'
 								placeholder='Поиск участников...'
-								className='h-10 w-full px-2 rounded-md bg-secondary'
+								className='h-10 w-full px-2 rounded-xl bg-secondary'
 								value={searchTerm}
 								onChange={e => setSearchTerm(e.target.value)}
 							/>
@@ -187,7 +187,7 @@ export const RoleAddUserModal: React.FC<Props> = ({
 										return (
 											<div
 												key={item.id}
-												className='flex items-center gap-2 w-full px-2 py-1 cursor-pointer rounded-md bg-secondary hover:bg-gray-800'
+												className='flex items-center gap-2 w-full px-2 py-1 cursor-pointer rounded-xl bg-secondary hover:bg-primary/5'
 												onClick={() =>
 													handleCheckboxChange(
 														item.user.id,
@@ -209,7 +209,7 @@ export const RoleAddUserModal: React.FC<Props> = ({
 														!selectedUsers.includes(item.user.id)
 													}
 												/>
-												<div className='flex justify-items-start items-center gap-2 bg-transparent text-primary'>
+												<div className='flex justify-items-start items-center gap-2 bg-transparent text-foreground'>
 													<Avatar className='rounded-full'>
 														<AvatarImage
 															className='m-auto rounded-full'
@@ -230,15 +230,19 @@ export const RoleAddUserModal: React.FC<Props> = ({
 						</div>
 					</div>
 				</div>
-				<DialogFooter className='flex items-center gap-4 justify-items-end pb-2'>
-					<Button variant='blue' onClick={handleClose} className='px-10'>
+				<DialogFooter className='flex items-center gap-2 lg:gap-4 justify-items-end pb-2'>
+					<Button
+						variant='blue'
+						onClick={handleClose}
+						className='px-10 bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl w-full'
+					>
 						Отмена
 					</Button>
 					<Button
 						variant='blue'
 						onClick={handleAddSelectedUsers}
 						disabled={selectedUsers.length === 0}
-						className='px-6'
+						className='px-10 bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl w-full'
 					>
 						Добавить
 					</Button>

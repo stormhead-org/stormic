@@ -91,7 +91,7 @@ export const FeedUserMenu: React.FC<Props> = ({ className }) => {
 						type='button'
 						disabled={item.disabled}
 						className={cn(
-							'flex gap-2 justify-start w-full mb-1 h-12 text-base font-medium bg-transparent hover:bg-secondary text-foreground rounded-xl',
+							'flex gap-2 justify-start w-full mb-2 h-12 text-base font-medium bg-transparent hover:bg-secondary text-foreground rounded-xl',
 							isActive && 'bg-secondary hover:bg-secondary'
 						)}
 						onClick={() => router.push(item.path)}

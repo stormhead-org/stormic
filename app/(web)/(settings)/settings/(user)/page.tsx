@@ -30,7 +30,7 @@ export default async function SettingProfileRedirect() {
 	}
 
 	if (user) {
-		return redirect('/settings/profile/')
+		return redirect('/settings/user/profile/')
 	}
 
 	return

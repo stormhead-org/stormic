@@ -98,15 +98,17 @@ export const PostHeader: React.FC<Props> = ({
 								</ActionTooltip>
 							))}
 					</div>
-					<Link
-						className='text-sm text-foreground hover:text-foreground'
-						href={post.community ? `/c/${communityId}` : '#'}
-					>
-						{communityTitle}
-					</Link>
-					<span className='ml-2 text-sm cursor-default'>
-						{formatDateTime(post.publishedAt ? post.publishedAt : '#')}
-					</span>
+					<div className='flex items-center gap-2'>
+						<Link
+							className='block truncate max-w-[20ch] lg:max-w-[34ch] overflow-hidden text-sm text-foreground hover:text-foreground'
+							href={post.community ? `/c/${communityId}` : '#'}
+						>
+							{communityTitle}
+						</Link>
+						<span className='text-sm cursor-default'>
+							{formatDateTime(post.publishedAt ? post.publishedAt : '#')}
+						</span>
+					</div>
 				</div>
 			</div>
 			<div className='flex items-center'>

@@ -1,7 +1,9 @@
 import { ActionTooltip } from '@/shared/components/action-tooltip'
 import { CommentLikeButton } from '@/shared/components/comment-like-button'
 import { CommentInputAnswer } from '@/shared/components/comments/comment-input-items/comment-input-answer'
+import { MobileCommentAnswerDrawer } from '@/shared/components/modals/mobile-comment-answer-drawer'
 import { Button } from '@/shared/components/ui/button'
+import { useIsMobile } from '@/shared/hooks/use-mobile'
 import { useModal } from '@/shared/hooks/use-modal-store'
 import { cn } from '@/shared/lib/utils'
 import { CircleX, Edit } from 'lucide-react'
@@ -38,6 +40,7 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 	const { onOpen } = useModal()
 	// const { formatMessage } = useIntl()
 	const [isReplying, setIsReplying] = useState(false)
+	const isMobile = useIsMobile()
 
 	return (
 		<div className={cn('', className)}>
@@ -101,18 +104,32 @@ export const FullPostCommentFooter: React.FC<PostFooterProps> = ({
 					</div> */}
 				</div>
 			</div>
-			{isReplying && (
-				<CommentInputAnswer
-					apiUrl={'/api/socket/posts/comments'}
-					query={{
-						postId: postId,
-						parentCommentId: id,
-						communityId: communityId
-					}}
-					setIsReplying={setIsReplying}
-					parentCommentAuthorName={parentCommentAuthorName}
-				/>
-			)}
+			{isReplying &&
+				(!isMobile ? (
+					<CommentInputAnswer
+						apiUrl={'/api/socket/posts/comments'}
+						query={{
+							postId: postId,
+							parentCommentId: id,
+							communityId: communityId
+						}}
+						setIsReplying={setIsReplying}
+						parentCommentAuthorName={parentCommentAuthorName}
+					/>
+				) : (
+					<MobileCommentAnswerDrawer
+						apiUrl={'/api/socket/posts/comments'}
+						query={{
+							postId: postId,
+							parentCommentId: id,
+							communityId: communityId
+						}}
+						setIsReplying={setIsReplying}
+						parentCommentAuthorName={parentCommentAuthorName}
+						open={isReplying}
+						onClose={() => setIsReplying(false)}
+					/>
+				))}
 		</div>
 	)
 }

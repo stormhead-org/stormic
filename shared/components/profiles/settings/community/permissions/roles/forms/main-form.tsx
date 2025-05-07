@@ -92,16 +92,16 @@ export const MainForm: React.FC<Props> = ({
 	}
 
 	return (
-		<Container className='bg-secondary rounded-md mt-1 p-4 w-full'>
+		<Container className='bg-secondary rounded-xl my-2 lg:my-0 lg:mt-1 p-4 w-full text-foreground'>
 			<p className='text-justify'>
 				Используйте роли для создания групп с участниками сообщества и настройки
 				их прав.
 			</p>
-			<div className='w-full border-b-2 border-b-blue-600 pb-4'>
+			<div className='w-full border-b-2 border-b-theme pb-4'>
 				<Title text='Роли' size='sm' className='mt-2' />
 			</div>
 			<div
-				className='flex mt-4 py-3 bg-gray-700 hover:bg-gray-600 cursor-pointer items-center justify-around rounded-md w-full'
+				className='flex mt-4 py-3 bg-gray-700 hover:bg-gray-600 cursor-pointer items-center justify-around rounded-xl w-full px-4 lg:px-0'
 				onClick={() => {
 					if (everyoneRole) {
 						setSelectedRoleId(everyoneRole.id)
@@ -113,7 +113,7 @@ export const MainForm: React.FC<Props> = ({
 					<Users size={28} />
 					<div className='ml-4'>
 						<p className='font-bold text-lg'>@everyone</p>
-						<p className='text-gray-400 text-sm -mt-2'>
+						<p className='text-gray-400 text-sm lg:-mt-2'>
 							Стандартные права для всех участников сообщества
 						</p>
 					</div>
@@ -122,11 +122,11 @@ export const MainForm: React.FC<Props> = ({
 			</div>
 			<div className='mt-4'>
 				<div className='command-container'>
-					<div className='flex gap-2'>
+					<div className='lg:flex gap-2'>
 						<Input
 							type='text'
 							placeholder='Поиск роли...'
-							className='h-10 w-full px-2 rounded-md bg-gray-700'
+							className='h-10 w-full px-2 rounded-xl bg-gray-700'
 							value={searchTerm}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
@@ -142,17 +142,17 @@ export const MainForm: React.FC<Props> = ({
 									console.error('Ошибка при создании роли:', error)
 								}
 							}}
-							className='px-10'
+							className='px-10 mt-2 lg:mt-0 bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl w-full'
 						>
 							Новая роль
 						</Button>
 					</div>
 					<div className='flex w-full bg-secondary px-1 mt-2'>
 						<div className='flex w-11/12'>
-							<div className='w-1/2'>
+							<div className='w-full lg:w-1/2'>
 								<p>Роли - {communityRoles.length - 1}</p>
 							</div>
-							<div className='w-1/2'>
+							<div className='hidden lg:block w-1/2'>
 								<p>Участники</p>
 							</div>
 						</div>
@@ -171,29 +171,30 @@ export const MainForm: React.FC<Props> = ({
 										}`}
 									>
 										<div
-											className='flex w-11/12'
+											className='flex w-10/12 lg:w-11/12'
 											onClick={() => {
 												setSelectedRoleId(role.id)
 												setType('editor')
 											}}
 										>
-											<div className='w-1/2 flex items-center gap-2'>
+											<div className='w-full lg:w-1/2 flex items-center gap-2'>
 												<Shield
 													className='w-5 h-5'
 													style={{ color: role.color || '99AAB5' }}
 												/>
 												{role.name}
 											</div>
-											<div className='w-1/2 flex items-center justify-between'>
+											<div className='hidden lg:flex w-1/2 items-center justify-between'>
 												<div className='flex gap-1 items-center'>
 													{role.users?.length || 0} <User size={18} />
 												</div>
 											</div>
 										</div>
-										<div className='group -my-7 w-1/12'>
-											<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+										<div className='group -my-7 w-2/12 lg:w-1/12'>
+											<p className='flex p-1 items-center group-hover:text-theme font-bold'>
 												<Trash2
-													className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+													size={22}
+													className='group-hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 													onClick={async () => {
 														try {
 															await handleSubmitDeleteRole(role.id)

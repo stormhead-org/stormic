@@ -17,14 +17,14 @@ export default async function SettingsLayout({
 			<Container className='mt-4'>
 				<div className='flex gap-4'>
 					{/* Левая часть */}
-					<div className='w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
+					<div className='hidden lg:block lg:w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
 						<div className='h-3/4'>
 							<SettingsProfileSideMenu />
 						</div>
 					</div>
 
 					{/* Правая часть */}
-					<div className='w-3/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar rounded-md'>
+					<div className='w-full lg:w-3/4 mx-2 lg:mx-0 h-[calc(100vh-6rem)] overflow-auto no-scrollbar rounded-xl pb-4'>
 						{children}
 					</div>
 				</div>

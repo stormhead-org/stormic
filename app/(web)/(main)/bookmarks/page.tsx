@@ -2,6 +2,7 @@ import { Community, Post, type User } from '@/payload-types'
 import { BookmarksEmpty } from '@/shared/components/info-blocks/bookmarks-empty'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { getSession } from '@/shared/lib/auth'
+import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import { Permissions } from '@/shared/lib/permissions'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
@@ -31,19 +32,26 @@ export default async function Bookmarks() {
 		.filter((post): post is Post => typeof post === 'object')
 		.map(post => post.id)
 
-	if (!bookmarkIds || bookmarkIds.length === 0) {
-		return <BookmarksEmpty />
-	}
 	const resultPosts = await payload.find({
 		collection: 'posts',
 		where: {
 			id: {
 				in: bookmarkIds
+			},
+			_status: {
+				equals: 'published'
+			},
+			hasDeleted: {
+				equals: false
 			}
 		},
 		pagination: false,
 		overrideAccess: true
 	})
+
+	if (!resultPosts || resultPosts.docs.length === 0) {
+		return <BookmarksEmpty className='p-2 lg:p-0' />
+	}
 
 	const resultCommunities = await payload.find({
 		collection: 'communities',
@@ -61,6 +69,19 @@ export default async function Bookmarks() {
 
 	// Получаем права для каждого поста
 	const postPermissions: Record<number, Permissions | null> = {}
+	if (currentUser) {
+		await Promise.all(
+			posts.map(async post => {
+				const communityId =
+					post.community && typeof post.community === 'object'
+						? post.community.id
+						: null
+				postPermissions[post.id] = communityId
+					? await getUserPermissions(currentUser.id, communityId)
+					: null
+			})
+		)
+	}
 
 	return (
 		<>

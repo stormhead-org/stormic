@@ -29,12 +29,12 @@ export const CommunitiesForm: React.FC<Props> = ({
 
 	if (loading) {
 		return (
-			<div className={cn('', className)}>
+			<div className={cn('mt-2', className)}>
 				<Button
 					variant='blue'
 					type='button'
 					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl',
+						'flex gap-2 justify-start w-full mb-2 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl',
 						pathname === `/communities` ? 'bg-secondary hover:bg-secondary' : ''
 					)}
 					onClick={() => router.push('/communities')}
@@ -61,7 +61,7 @@ export const CommunitiesForm: React.FC<Props> = ({
 				variant='blue'
 				type='button'
 				className={cn(
-					'flex gap-2 justify-start w-full mb-1 h-12 text-base font-medium bg-transparent hover:bg-secondary text-foreground rounded-xl',
+					'flex gap-2 justify-start w-full mb-2 h-12 text-base font-medium bg-transparent hover:bg-secondary text-foreground rounded-xl',
 					pathname === `/communities` ? 'bg-secondary hover:bg-secondary' : ''
 				)}
 				onClick={() => router.push('/communities')}
@@ -73,7 +73,7 @@ export const CommunitiesForm: React.FC<Props> = ({
 				Сообщества
 			</Button>
 			{items.slice(0, limit).map((item, index) => (
-				<CommunitiesItem key={item.id} community={item} className='mb-1' />
+				<CommunitiesItem key={item.id} community={item} className='mb-2' />
 			))}
 		</div>
 	)

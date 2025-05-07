@@ -90,38 +90,40 @@ export const UsersForm: React.FC<Props> = ({
 
 	return (
 		<>
-			<p className='text-lg'>Редактировать роль - {selectedRole?.name}</p>
+			<p className='text-lg my-2 lg:my-0'>
+				Редактировать роль - {selectedRole?.name}
+			</p>
 			<div className='flex justify-between items-center gap-4'>
-				<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
+				<div className='border-b-2 border-b-secondary hover:border-b-theme-hover cursor-pointer'>
 					<p onClick={() => setTypeEditor('visual')}>Внешний вид</p>
 				</div>
-				<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
+				<div className='border-b-2 border-b-secondary hover:border-b-theme-hover cursor-pointer'>
 					<p onClick={() => setTypeEditor('permissions')}>Права доступа</p>
 				</div>
-				<div className='border-b-2 border-b-blue-600 cursor-pointer'>
+				<div className='border-b-2 border-b-theme cursor-pointer'>
 					<p>Участники ({selectedRole.users?.length})</p>
 				</div>
 			</div>
 			<div className='mt-4'>
 				<div className='command-container'>
-					<div className='flex gap-2'>
-						<Input
-							type='text'
-							placeholder='Поиск участников...'
-							className='h-10 w-full px-2 rounded-md bg-gray-700'
-							value={searchTerm}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
+					<div className='lg:flex gap-2'>
 						<RoleAddUserModal
 							open={openAddUserModal}
 							onClose={() => setOpenAddUserModal(false)}
 							communityUsers={communityUsers}
 							selectedRole={selectedRole}
 						/>
+						<Input
+							type='text'
+							placeholder='Поиск участников...'
+							className='h-10 w-full lg:w-8/12 px-2 rounded-xl bg-gray-700'
+							value={searchTerm}
+							onChange={e => setSearchTerm(e.target.value)}
+						/>
 						<Button
 							variant='blue'
 							onClick={() => setOpenAddUserModal(true)}
-							className='px-6'
+							className='w-full lg:w-4/12 bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background px-6 rounded-xl mt-2 lg:mt-0'
 						>
 							Добавить участников
 						</Button>
@@ -140,9 +142,9 @@ export const UsersForm: React.FC<Props> = ({
 									return (
 										<div
 											key={user.id}
-											className='flex w-full p-1 cursor-pointer hover:bg-gray-600 bg-gray-700 rounded-md mt-2 items-center justify-between'
+											className='flex w-full p-1 cursor-pointer hover:bg-gray-600 bg-gray-700 rounded-xl mt-2 items-center justify-between'
 										>
-											<div className='flex w-11/12'>
+											<div className='flex w-10/12 lg:w-11/12'>
 												<div className='w-full flex justify-items-start items-center gap-2 bg-transparent text-primary'>
 													<Avatar className='rounded-full'>
 														<AvatarImage
@@ -157,10 +159,11 @@ export const UsersForm: React.FC<Props> = ({
 													<span>{user.name}</span>
 												</div>
 											</div>
-											<div className='group -my-7 w-1/12'>
-												<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+											<div className='group -my-7 w-2/12 lg:w-1/12'>
+												<p className='flex p-1 items-center group-hover:text-theme font-bold'>
 													<X
-														className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1'
+														size={22}
+														className='group-hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
 														onClick={async () => {
 															try {
 																await handleSubmitDeleteUserRole(

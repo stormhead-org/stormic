@@ -235,7 +235,6 @@ export const SettingsHostMainPlatformGroup: React.FC<Props> = ({
 										// placeholder={formatMessage({ id: 'profilePageEditGroup.formInputAboutPlaceholder' })}
 										placeholder=''
 										className='mt-2'
-										sideButton={false}
 									/>
 								</div>
 							</div>

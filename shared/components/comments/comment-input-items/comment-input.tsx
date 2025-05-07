@@ -2,6 +2,7 @@
 
 import { Media } from '@/payload-types'
 import { EmojiPicker } from '@/shared/components/emoji-picker'
+import { Button } from '@/shared/components/ui/button'
 import {
 	Form,
 	FormControl,
@@ -14,7 +15,7 @@ import axios from 'axios'
 import { X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import qs from 'query-string'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { FormTextarea } from '../../form'
@@ -23,13 +24,14 @@ import { ImageUploader } from './image-uploader'
 interface ChatInputProps {
 	apiUrl: string
 	query: Record<string, any>
+	isMobile: boolean
 }
 
 const formSchema = z.object({
 	content: z.string().min(1)
 })
 
-export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
+export const CommentInput = ({ apiUrl, query, isMobile }: ChatInputProps) => {
 	const { onOpen } = useModal()
 	const router = useRouter()
 
@@ -77,8 +79,8 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<div className='relative p-4 pb-2'>
-									<div className='absolute z-10 top-[3.2rem] left-8'>
+								<div className='relative p-2 lg:p-4 lg:pb-2'>
+									<div className='flex pl-3 lg:pl-0 gap-4 lg:block lg:absolute lg:z-10 lg:top-[3.2rem] lg:left-8'>
 										<div className='cursor-pointer'>
 											<EmojiPicker
 												onChange={(emoji: string) =>
@@ -86,7 +88,7 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 												}
 											/>
 										</div>
-										<div className='group cursor-pointer'>
+										<div className='group cursor-pointer -mt-[0.1rem] lg:mt-0 lg:-ml-[0.1rem]'>
 											<ImageUploader
 												setCommentImage={setCommentImage}
 												setIsUploading={setIsUploading}
@@ -95,10 +97,8 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 									</div>
 									<FormTextarea
 										disabled={isLoading}
-										className='px-14 py-6 rounded-xl'
+										className='lg:px-14 py-6 rounded-xl bg-secondary lg:bg-background'
 										placeholder='Оставить комментарий'
-										sideButton
-										onClickValue={form.handleSubmit(onSubmit)}
 										loading={isLoading}
 										variant='blue'
 										{...field}
@@ -132,6 +132,17 @@ export const CommentInput = ({ apiUrl, query }: ChatInputProps) => {
 						)}
 					</div>
 				)}
+				<div className='mx-2 lg:mx-4'>
+					<Button
+						variant='blue'
+						className='w-full h-12 my-2 text-base font-bold rounded-xl text-background'
+						type='button'
+						onClick={form.handleSubmit(onSubmit)}
+					>
+						{/* {formatMessage({ id: 'newPostButton' })} */}
+						<span>Отправить</span>
+					</Button>
+				</div>
 			</form>
 		</Form>
 	)

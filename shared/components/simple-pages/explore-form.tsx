@@ -117,22 +117,20 @@ export const ExploreForm: React.FC<Props> = ({
 						</span>
 					</div>
 				</div>
-				<div className='mt-1 lg:-mt-6 flex items-center justify-center'>
+				<div className='mt-2 lg:-mt-6 flex items-center justify-center'>
 					<InlineSearchInput onSearchChange={setSearchQuery} />
 				</div>
 			</div>
 
 			{/* Пользователи */}
-			<div className='mt-1 mx-2 lg:mt-4 lg:mx-0'>
+			<div className='mt-2 mx-2 lg:mt-4 lg:mx-0'>
 				<Button
 					variant='blue'
 					type='button'
-					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl'
-					)}
+					className='flex gap-2 justify-start w-full mb-2 h-12 text-lg font-bold bg-secondary text-foreground hover:text-background rounded-xl'
 					onClick={() => router.push('/users')}
 				>
-					<Users2 size={22} className={cn('text-foreground')} />
+					<Users2 size={22} />
 					Пользователи
 				</Button>
 				{displayUsers.length > 0 ? (
@@ -151,16 +149,14 @@ export const ExploreForm: React.FC<Props> = ({
 			</div>
 
 			{/* Сообщества */}
-			<div className='mt-1 mx-2 lg:mx-0'>
+			<div className='mt-2 mx-2 lg:mx-0'>
 				<Button
 					variant='blue'
 					type='button'
-					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl'
-					)}
+					className='flex gap-2 justify-start w-full mb-2 h-12 text-lg font-bold bg-secondary text-foreground hover:text-background rounded-xl'
 					onClick={() => router.push('/communities')}
 				>
-					<Component size={22} className={cn('text-foreground')} />
+					<Component size={22} />
 					Сообщества
 				</Button>
 				{displayCommunities.length > 0 ? (
@@ -179,16 +175,14 @@ export const ExploreForm: React.FC<Props> = ({
 			</div>
 
 			{/* Посты */}
-			<div className='mt-1 mx-2 lg:mx-0'>
+			<div className='mt-2 mx-2 lg:mx-0'>
 				<Button
 					variant='blue'
 					type='button'
-					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-lg font-bold bg-transparent hover:bg-secondary text-foreground rounded-xl'
-					)}
+					className='flex gap-2 justify-start w-full mb-2 h-12 text-lg font-bold bg-secondary text-foreground hover:text-background rounded-xl'
 					onClick={() => router.push('/')}
 				>
-					<Newspaper size={22} className={cn('text-foreground')} />
+					<Newspaper size={22} />
 					Посты
 				</Button>
 				{displayPosts.length > 0 ? (

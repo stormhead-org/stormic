@@ -140,14 +140,14 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 				className='flex flex-col gap-4'
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
-				<Container className='bg-secondary rounded-md mt-1 p-4'>
+				<Container className='bg-secondary rounded-xl mt-1 p-4'>
 					<p className='text-justify'>
 						{/* {formatMessage({ id: 'profilePageEditGroup.tipForSocial' })} */}
 						Настройте то, что люди видят в вашем профиле. Другие люди с большей
 						вероятностью подпишутся на Вас и будут взаимодействовать с вами,
 						если у Вас заполнен профиль и добавлено изображение.
 					</p>
-					<div className='w-full border-b-2 border-b-blue-600 pb-4'>
+					<div className='w-full border-b-2 border-b-theme pb-4'>
 						<Title
 							// text={formatMessage({ id: 'profilePageEditGroup.titleBaseInfo' })}
 							text='Основная информация'
@@ -162,8 +162,8 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 							className='mt-4'
 							// onSubmit={handleSubmit(onSubmit)}
 						>
-							<div className='flex gap-4 w-full'>
-								<div className='w-1/2'>
+							<div className='lg:flex gap-4 w-full'>
+								<div className='w-full lg:w-1/2'>
 									<p className='mt-2'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.titleName' })} */}
 										Отображаемое имя
@@ -191,10 +191,9 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 										// placeholder={formatMessage({ id: 'profilePageEditGroup.formInputAboutPlaceholder' })}
 										placeholder='Я бы многое мог рассказать, но не хочу...'
 										className='mt-2'
-										sideButton={false}
 									/>
 								</div>
-								<div className='w-1/2'>
+								<div className='w-full lg:w-1/2 mt-2'>
 									{/* Таблица деталей */}
 									<p className='mt-2'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.extraFields' })} */}
@@ -206,7 +205,10 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 									</p>
 									<div className='mt-2'>
 										{tableFields.map((field, index) => (
-											<div key={field.id} className='border p-4 rounded-md'>
+											<div
+												key={field.id}
+												className='border-b border-theme pb-4'
+											>
 												<div>
 													<Label htmlFor={`tableInfo.${index}.label`}>
 														Название
@@ -251,7 +253,7 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 													variant='destructive'
 													type='button'
 													onClick={() => removeTable(index)}
-													className='mt-2'
+													className='mt-2 rounded-xl text-foreground w-full'
 												>
 													Удалить деталь
 												</Button>
@@ -259,10 +261,10 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 										))}
 										{tableFields.length < 2 && (
 											<Button
-												variant='blue'
+												variant='secondary'
 												type='button'
 												onClick={() => appendTable({ label: '', value: '' })}
-												className='mt-4'
+												className='mt-4 bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl w-full'
 											>
 												Добавить деталь
 											</Button>
@@ -271,8 +273,8 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 								</div>
 							</div>
 
-							<div className='flex w-full mt-4 gap-4'>
-								<div className='w-1/2'>
+							<div className='lg:flex w-full mt-4 gap-4'>
+								<div className='w-full lg:w-1/2'>
 									<p className='mt-2'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.extraFields' })} */}
 										Аватар
@@ -288,30 +290,30 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 												type='file'
 												accept='image/*'
 												ref={avatarInputRef}
-												className='rounded-md'
+												className='rounded-xl'
 											/>
 										</div>
 										<Button
 											variant='blue'
 											type='button'
 											onClick={handleUploadAvatar}
-											className='w-full'
+											className='w-full bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl'
 										>
 											Загрузить
 										</Button>
 									</div>
 								</div>
-								<div className='w-1/2'>
+								<div className='w-full lg:w-1/2'>
 									<ProfileAvatar
-										className='w-24 h-24 border-none bg-secondary hover:bg-secondary '
+										className='w-24 h-24 border-none bg-secondary hover:bg-secondary mt-2 lg:mt-0'
 										avatarImage={avatar?.url || ''}
 										avatarSize={Number(92)}
 									/>
 								</div>
 							</div>
 
-							<div className='flex w-full mt-6 gap-4'>
-								<div className='w-1/2'>
+							<div className='lg:flex w-full mt-6 gap-4'>
+								<div className='w-full lg:w-1/2'>
 									<p className='mt-2'>
 										{/* {formatMessage({ id: 'profilePageEditGroup.extraFields' })} */}
 										Шапка
@@ -327,22 +329,22 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 												type='file'
 												accept='image/*'
 												ref={bannerInputRef}
-												className='rounded-md'
+												className='rounded-xl'
 											/>
 										</div>
 										<Button
 											variant='blue'
 											type='button'
 											onClick={handleUploadBanner}
-											className='w-full'
+											className='w-full bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl'
 										>
 											Загрузить
 										</Button>
 									</div>
 								</div>
-								<div className='w-1/2'>
+								<div className='w-full lg:w-1/2'>
 									<ProfileAvatar
-										className='w-24 h-24 border-none bg-secondary hover:bg-secondary '
+										className='w-24 h-24 border-none bg-secondary hover:bg-secondary mt-2 lg:mt-0'
 										avatarImage={banner?.url || ''}
 										avatarSize={Number(92)}
 									/>
@@ -352,7 +354,7 @@ export const SettingsProfileEditGroup: React.FC<Props> = ({ user }) => {
 							<Button
 								variant='blue'
 								loading={form.formState.isSubmitting}
-								className='text-base mt-6 w-full'
+								className='mt-6 w-full bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl'
 								type='submit'
 							>
 								{/* {formatMessage({ id: 'profilePageEditGroup.saveButton' })} */}

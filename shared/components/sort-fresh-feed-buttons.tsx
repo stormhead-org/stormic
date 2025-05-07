@@ -23,22 +23,22 @@ export const SortFreshFeedButtons: React.FC<Props> = ({ className }) => {
 			path: '/new',
 			disabled: false
 		},
+		// {
+		// 	id: 2,
+		// 	// text: formatMessage({ id: 'sortFeedButtons.weekly' }),
+		// 	text: 'Новое',
+		// 	path: '#',
+		// 	disabled: true
+		// },
 		{
 			id: 2,
-			// text: formatMessage({ id: 'sortFeedButtons.weekly' }),
-			text: 'Новое',
-			path: '#',
-			disabled: true
-		},
-		{
-			id: 3,
 			// text: formatMessage({ id: 'sortFeedButtons.month' }),
 			text: '5+',
 			path: '#',
 			disabled: true
 		},
 		{
-			id: 4,
+			id: 3,
 			// text: formatMessage({ id: 'sortFeedButtons.year' }),
 			text: '10+',
 			path: '#',

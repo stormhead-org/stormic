@@ -1,6 +1,7 @@
 'use client'
 
 import { ClearButton } from '@/shared/components'
+import { AutoResizeTextarea } from '@/shared/components/form/AutoResizeTextarea'
 import { Button } from '@/shared/components/ui/button'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { cn } from '@/shared/lib/utils'
@@ -11,7 +12,6 @@ interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
 	name: string
 	label?: string
 	required?: boolean
-	sideButton?: boolean
 	loading?: boolean
 	variant?:
 		| 'link'
@@ -21,7 +21,6 @@ interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
 		| 'secondary'
 		| 'ghost'
 		| 'blue'
-	onClickValue?: () => void
 	className?: string
 }
 
@@ -29,8 +28,6 @@ export const FormTextarea: React.FC<Props> = ({
 	name,
 	label,
 	required,
-	sideButton,
-	onClickValue,
 	loading,
 	variant,
 	className,
@@ -57,30 +54,20 @@ export const FormTextarea: React.FC<Props> = ({
 			</p>
 
 			<div className='relative'>
-				<Textarea
+				<AutoResizeTextarea
 					className={cn(
 						className,
-						`${sideButton ? 'min-h-24 text-md pb-14' : 'min-h-24 text-md'} border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0`
+						`text-base border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0`
 					)}
 					{...register(name)}
 					{...props}
+					maxHeight={300}
 				/>
 
 				<ClearButton
 					className='absolute top-4 right-2'
 					onClick={onClickClear}
 				/>
-				{sideButton && (
-					<Button
-						variant={variant}
-						className='absolute bottom-2 right-2 h-10 w-26 text-sm font-bold text-background'
-						loading={loading}
-						onClick={onClickValue}
-						type='button'
-					>
-						Отправить
-					</Button>
-				)}
 			</div>
 
 			{errorText && <p className='text-red-500 text-sm mt-2'>{errorText}</p>}

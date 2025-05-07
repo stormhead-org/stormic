@@ -40,7 +40,7 @@ export default async function UsersPage() {
 					/>
 				</div>
 			</div> */}
-			<UsersCardGroup data={users || []} className='mb-4 lg:mb-0' />
+			<UsersCardGroup data={users || []} className='mb-2 lg:mb-0' />
 		</>
 	)
 }

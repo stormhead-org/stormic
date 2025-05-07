@@ -2,6 +2,7 @@ import { Community, FollowCommunity, Post, type User } from '@/payload-types'
 import { MyFeedEmpty } from '@/shared/components/info-blocks/my-feed-empty'
 import { PostForm } from '@/shared/components/posts/post-items/post-form'
 import { getSession } from '@/shared/lib/auth'
+import { getUserPermissions } from '@/shared/lib/getUserPermissions'
 import { Permissions } from '@/shared/lib/permissions'
 import { getRelationIds } from '@/shared/utils/payload/getTypes'
 import configPromise from '@payload-config'
@@ -25,7 +26,8 @@ export default async function Feed() {
 	const user = await payload.findByID({
 		collection: 'users',
 		id: currentUser.id,
-		depth: 1
+		overrideAccess: true,
+		depth: 2
 	})
 
 	// Извлекаем ID пользователей из follow
@@ -49,12 +51,14 @@ export default async function Feed() {
 					in: followedUserIds
 				}
 			},
-			depth: 1 // Разворачиваем relatedPosts
+			overrideAccess: true,
+			depth: 2 // Разворачиваем relatedPosts
 		})
 
 		const userPostIds = usersWithPosts.docs.flatMap(user =>
 			getRelationIds<Post>(user.posts?.docs)
 		)
+
 		feedIds = [...feedIds, ...userPostIds]
 	}
 
@@ -67,31 +71,40 @@ export default async function Feed() {
 					in: followedCommunityIds
 				}
 			},
-			depth: 1 // Разворачиваем posts
+			overrideAccess: true,
+			depth: 2 // Разворачиваем posts
 		})
 
 		const communityPostIds = communitiesWithPosts.docs.flatMap(community =>
 			getRelationIds<Post>(community.posts?.docs)
 		)
+
 		feedIds = [...feedIds, ...communityPostIds]
 	}
 
 	// Удаляем дубликаты из feedIds
 	feedIds = [...new Set(feedIds)]
 
-	if (!feedIds || feedIds.length === 0) {
-		return <MyFeedEmpty />
-	}
 	const resultPosts = await payload.find({
 		collection: 'posts',
 		where: {
 			id: {
 				in: feedIds
+			},
+			_status: {
+				equals: 'published'
+			},
+			hasDeleted: {
+				equals: false
 			}
 		},
 		pagination: false,
 		overrideAccess: true
 	})
+
+	if (!resultPosts || resultPosts.docs.length === 0) {
+		return <MyFeedEmpty className='p-2 lg:p-0' />
+	}
 
 	const resultCommunities = await payload.find({
 		collection: 'communities',
@@ -109,6 +122,19 @@ export default async function Feed() {
 
 	// Получаем права для каждого поста
 	const postPermissions: Record<number, Permissions | null> = {}
+	if (currentUser) {
+		await Promise.all(
+			posts.map(async post => {
+				const communityId =
+					post.community && typeof post.community === 'object'
+						? post.community.id
+						: null
+				postPermissions[post.id] = communityId
+					? await getUserPermissions(currentUser.id, communityId)
+					: null
+			})
+		)
+	}
 
 	return (
 		<>

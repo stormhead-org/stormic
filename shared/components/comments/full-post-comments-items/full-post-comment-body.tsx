@@ -1,12 +1,21 @@
 import { Media } from '@/payload-types'
 import CommentImageGallery from '@/shared/components/comments/comment-image-gallery'
+import { CommentInputAnswer } from '@/shared/components/comments/comment-input-items/comment-input-answer'
 import { EmojiPicker } from '@/shared/components/emoji-picker'
+import { Button } from '@/shared/components/ui/button'
+import {
+	Drawer,
+	DrawerContent,
+	DrawerHeader,
+	DrawerTitle
+} from '@/shared/components/ui/drawer'
 import {
 	Form,
 	FormControl,
 	FormField,
 	FormItem
 } from '@/shared/components/ui/form'
+import { useIsMobile } from '@/shared/hooks/use-mobile'
 import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
@@ -62,6 +71,8 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 
 	const isLoading = form.formState.isSubmitting || isUploading
 
+	const isMobile = useIsMobile()
+
 	useEffect(() => {
 		form.reset({ content })
 		setCommentImage(media || undefined)
@@ -111,73 +122,164 @@ export const FullPostCommentBody: React.FC<CommentItemProps> = ({
 					)}
 				</p>
 			)}
-			{isEditing && (
-				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)}>
-						<FormField
-							control={form.control}
-							name='content'
-							render={({ field }) => (
-								<FormItem>
-									<FormControl>
-										<div className='relative p-1 lg:p-4 pb-2'>
-											<div className='absolute z-10 top-[3.2rem] left-4 lg:left-8'>
-												<div className='cursor-pointer'>
-													<EmojiPicker
-														onChange={(emoji: string) =>
-															field.onChange(`${field.value} ${emoji}`)
-														}
-													/>
+			{isEditing &&
+				(!isMobile ? (
+					<Form {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)}>
+							<FormField
+								control={form.control}
+								name='content'
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<div className='relative p-2 lg:p-4 lg:pb-2'>
+												<div className='flex pl-3 lg:pl-0 gap-4 lg:block lg:absolute lg:z-10 lg:top-[3.2rem] lg:left-8'>
+													<div className='cursor-pointer'>
+														<EmojiPicker
+															onChange={(emoji: string) =>
+																field.onChange(`${field.value} ${emoji}`)
+															}
+														/>
+													</div>
+													<div className='group cursor-pointer -mt-[0.1rem] lg:mt-0 lg:-ml-[0.1rem]'>
+														<ImageUploader
+															setCommentImage={setCommentImage}
+															setIsUploading={setIsUploading}
+														/>
+													</div>
 												</div>
-												<div className='group cursor-pointer'>
-													<ImageUploader
-														setCommentImage={setCommentImage}
-														setIsUploading={setIsUploading}
-													/>
-												</div>
+												<FormTextarea
+													className='lg:px-14 py-6 rounded-xl bg-secondary lg:bg-background'
+													placeholder='Редактировать комментарий'
+													loading={isLoading}
+													variant='blue'
+													{...field}
+												/>
 											</div>
-											<FormTextarea
-												className='px-14 py-6 rounded-xl'
-												placeholder='Редактировать комментарий'
-												sideButton
-												onClickValue={form.handleSubmit(onSubmit)}
-												loading={isLoading}
-												variant='blue'
-												{...field}
-											/>
-										</div>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						{commentImage && (
-							<div
-								className='relative w-24 h-16 rounded-xl flex items-center justify-center cursor-pointer px-2 ml-4 mb-4'
-								style={{
-									backgroundImage: commentImage
-										? `url(${commentImage.url})`
-										: undefined,
-									backgroundSize: 'cover',
-									backgroundPosition: 'center'
-								}}
-							>
-								<button
-									className='bg-red-500 text-foreground p-1 rounded-xl'
-									onClick={e => {
-										e.stopPropagation()
-										handleRemove()
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+							{commentImage && (
+								<div
+									className='relative w-24 h-16 rounded-xl flex items-center justify-center cursor-pointer px-2 ml-4 mb-4'
+									style={{
+										backgroundImage: commentImage
+											? `url(${commentImage.url})`
+											: undefined,
+										backgroundSize: 'cover',
+										backgroundPosition: 'center'
 									}}
 								>
-									<X size={36} />
-								</button>
-							</div>
-						)}
-					</form>
-					<span className='text-[14px] mt-1 text-zinc-400'>
-						Нажмите Esc для отмены
-					</span>
-				</Form>
-			)}
+									<button
+										className='bg-red-500 text-foreground p-1 rounded-xl'
+										onClick={e => {
+											e.stopPropagation()
+											handleRemove()
+										}}
+									>
+										<X size={36} />
+									</button>
+								</div>
+							)}
+						</form>
+						<span className='text-[14px] mt-1 text-zinc-400'>
+							Нажмите Esc для отмены
+						</span>
+						<div className='mx-2 lg:mx-4'>
+							<Button
+								variant='blue'
+								className='w-full h-12 my-2 text-base font-bold rounded-xl text-background'
+								loading={isLoading}
+								type='button'
+								onClick={form.handleSubmit(onSubmit)}
+							>
+								{/* {formatMessage({ id: 'newPostButton' })} */}
+								<span>Сохранить</span>
+							</Button>
+						</div>
+					</Form>
+				) : (
+					<Drawer open={isEditing} onOpenChange={() => setIsEditing(false)}>
+						<DrawerContent className={cn(className, '')}>
+							<DrawerHeader className='hidden'>
+								<DrawerTitle />
+							</DrawerHeader>
+							<Form {...form}>
+								<form onSubmit={form.handleSubmit(onSubmit)}>
+									<FormField
+										control={form.control}
+										name='content'
+										render={({ field }) => (
+											<FormItem>
+												<FormControl>
+													<div className='relative p-2 lg:p-4 lg:pb-2'>
+														<div className='flex pl-3 lg:pl-0 gap-4 lg:block lg:absolute lg:z-10 lg:top-[3.2rem] lg:left-8'>
+															<div className='cursor-pointer'>
+																<EmojiPicker
+																	onChange={(emoji: string) =>
+																		field.onChange(`${field.value} ${emoji}`)
+																	}
+																/>
+															</div>
+															<div className='group cursor-pointer -mt-[0.1rem] lg:mt-0 lg:-ml-[0.1rem]'>
+																<ImageUploader
+																	setCommentImage={setCommentImage}
+																	setIsUploading={setIsUploading}
+																/>
+															</div>
+														</div>
+														<FormTextarea
+															className='lg:px-14 py-6 rounded-xl bg-secondary lg:bg-background'
+															placeholder='Редактировать комментарий'
+															loading={isLoading}
+															variant='blue'
+															{...field}
+														/>
+													</div>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+									{commentImage && (
+										<div
+											className='relative w-24 h-16 rounded-xl flex items-center justify-center cursor-pointer px-2 ml-4 mb-4'
+											style={{
+												backgroundImage: commentImage
+													? `url(${commentImage.url})`
+													: undefined,
+												backgroundSize: 'cover',
+												backgroundPosition: 'center'
+											}}
+										>
+											<button
+												className='bg-red-500 text-foreground p-1 rounded-xl'
+												onClick={e => {
+													e.stopPropagation()
+													handleRemove()
+												}}
+											>
+												<X size={36} />
+											</button>
+										</div>
+									)}
+								</form>
+								<div className='mx-2 lg:mx-4'>
+									<Button
+										variant='blue'
+										className='w-full h-12 my-2 text-base font-bold rounded-xl text-background'
+										type='button'
+										loading={isLoading}
+										onClick={form.handleSubmit(onSubmit)}
+									>
+										{/* {formatMessage({ id: 'newPostButton' })} */}
+										<span>Сохранить</span>
+									</Button>
+								</div>
+							</Form>
+						</DrawerContent>
+					</Drawer>
+				))}
 			{!isEditing && media && (
 				<div className=''>
 					<div className='relative rounded-md overflow-hidden flex items-center justify-center bg-primary/10 mb-1 mt-2 h-60 w-full'>

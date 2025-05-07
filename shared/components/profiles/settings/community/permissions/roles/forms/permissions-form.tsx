@@ -133,19 +133,21 @@ export const PermissionsForm: React.FC<Props> = ({
 
 	return (
 		<>
-			<p className='text-lg'>Редактировать роль - {selectedRole?.name}</p>
+			<p className='text-lg my-2 lg:my-0'>
+				Редактировать роль - {selectedRole?.name}
+			</p>
 			<div className='flex justify-between items-center gap-4'>
 				<div
-					className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'
+					className='border-b-2 border-b-secondary hover:border-b-theme-hover cursor-pointer'
 					onClick={() => setTypeEditor('visual')}
 				>
 					<p>Внешний вид</p>
 				</div>
-				<div className='border-b-2 border-b-blue-600 cursor-pointer'>
+				<div className='border-b-2 border-b-theme cursor-pointer'>
 					<p>Права доступа</p>
 				</div>
 				{!isEveryoneRole ? (
-					<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
+					<div className='border-b-2 border-b-secondary hover:border-b-theme-hover cursor-pointer'>
 						<p onClick={() => setTypeEditor('users')}>
 							Участники ({selectedRole.users?.length})
 						</p>
@@ -156,18 +158,18 @@ export const PermissionsForm: React.FC<Props> = ({
 			</div>
 			<div className='mt-4'>
 				<div className='command-container'>
-					<div className='flex gap-2'>
+					<div className='lg:flex gap-2'>
 						<Input
 							type='text'
 							placeholder='Поиск по правам...'
-							className='h-10 w-full px-2 rounded-md bg-gray-700'
+							className='h-10 w-full lg:w-8/12 px-2 rounded-xl bg-gray-700'
 							value={searchTerm}
 							onChange={e => setSearchTerm(e.target.value)}
 						/>
 						<Button
 							variant='blue'
 							onClick={handleSubmitPermissions}
-							className='px-6'
+							className='w-full lg:w-4/12 px-6 rounded-xl mt-2 lg:mt-0'
 							disabled={isLoading}
 							loading={isLoading}
 						>

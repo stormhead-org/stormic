@@ -25,7 +25,7 @@ export const PostBody: React.FC<Props> = ({
 	return (
 		<div className={cn('', className)}>
 			<Link href={postUrl}>
-				<div className='max-h-[18rem] overflow-hidden rounded-md'>
+				<div className='max-h-[18rem] overflow-hidden rounded-xl'>
 					<Title
 						text={postTitle}
 						size='sm'
@@ -39,7 +39,7 @@ export const PostBody: React.FC<Props> = ({
 				</div>
 				{heroImage && (
 					<img
-						className='rounded-md mt-4 object-cover h-80 w-full'
+						className='rounded-xl mt-4 object-cover h-80 w-full'
 						src={heroImage}
 						alt={postTitle}
 					/>

@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 
 export const metadata: Metadata = {
-	title: 'Stormic: Свежее'
+	title: 'Stormic: Черновики'
 }
 
 export default async function PostDrafts() {
@@ -41,7 +41,8 @@ export default async function PostDrafts() {
 	const resultCommunities = await payload.find({
 		collection: 'communities',
 		pagination: false,
-		overrideAccess: true
+		overrideAccess: true,
+		sort: 'id'
 	})
 
 	const posts = result.docs as Post[]
@@ -49,7 +50,12 @@ export default async function PostDrafts() {
 
 	return (
 		<>
-			<PostDraftForm post={posts} communities={communities} currentUser={currentUser} className='mt-4' />
+			<PostDraftForm
+				post={posts}
+				communities={communities}
+				currentUser={currentUser}
+				className='mt-4'
+			/>
 		</>
 	)
 }

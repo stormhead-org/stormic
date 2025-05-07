@@ -3,7 +3,14 @@
 import { Community, Post, type User } from '@/payload-types'
 import { Title } from '@/shared/components'
 import { PostDraftItem } from '@/shared/components/posts/drafts/post-draft-item'
+import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage
+} from '@/shared/components/ui/avatar'
 import { cn } from '@/shared/lib/utils'
+import { getMediaUrl } from '@/shared/utils/payload/getTypes'
+import { CircleUser } from 'lucide-react'
 import React from 'react'
 import { Skeleton } from '../../ui/skeleton'
 import {
@@ -41,27 +48,27 @@ export const PostDraftForm: React.FC<Props> = ({
 	}
 
 	return (
-		<div className={cn('overflow-x-auto', className)}>
-			<Title text='Ваши черновики' />
-			<Table className='mt-4'>
-				<TableHeader>
-					<TableRow>
-						<TableHead className='w-[200px]'>Название</TableHead>
-						<TableHead>Содержание</TableHead>
-						<TableHead>Сообщество</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{post.map(item => (
-						<PostDraftItem
-							key={item.id}
-							post={item}
-							communities={communities}
-							currentUser={currentUser}
-						/>
-					))}
-				</TableBody>
-			</Table>
+		<div className={cn('overflow-x-auto px-2', className)}>
+			<Title text='Черновики' className='text-foreground -mt-1 lg:-mt-0 ml-4' />
+			<div className='flex items-center justify-between w-full h-12 text-base font-medium bg-transparent text-foreground rounded-xl cursor-default px-4'>
+				<div className='flex items-center w-full'>
+					<span className='w-full lg:w-1/4 text-foreground'>Название</span>
+					<span className='hidden lg:block w-2/4 text-foreground'>
+						Содержание
+					</span>
+					<span className='hidden lg:block w-1/4 text-foreground'>
+						Сообщество
+					</span>
+				</div>
+			</div>
+			{post.map(item => (
+				<PostDraftItem
+					key={item.id}
+					post={item}
+					communities={communities}
+					currentUser={currentUser}
+				/>
+			))}
 		</div>
 	)
 }

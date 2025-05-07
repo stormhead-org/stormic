@@ -75,8 +75,8 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({
 					: pathname === item.path
 
 				const buttonStyles = isActive
-					? 'bg-blue-800 hover:bg-blue-800 text-white'
-					: 'bg-transparent hover:bg-blue-700 text-primary hover:text-white'
+					? 'bg-theme hover:bg-theme text-background'
+					: 'bg-transparent hover:bg-theme hover:text-background text-foreground'
 
 				return (
 					<Button
@@ -85,7 +85,7 @@ export const SettingsCommunitySideMenu: React.FC<Props> = ({
 						type='button'
 						disabled={item.disabled}
 						className={cn(
-							'flex gap-2 justify-start w-full mb-1 h-12 text-md font-bold',
+							'flex gap-2 justify-start w-full mb-1 h-12 text-md font-bold rounded-xl',
 							buttonStyles
 						)}
 						onClick={() => router.push(item.path)}

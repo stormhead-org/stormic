@@ -127,7 +127,10 @@ export const MetaSidebar: React.FC<Props> = ({
 											<div>
 												Должно быть от 50 до 60 символов. Для помощи в написании
 												качественных метазаголовков см.
-												<Link href='https://developers.google.com/search/docs/advanced/appearance/title-link#page-titles'>
+												<Link
+													target='_blank'
+													href='https://developers.google.com/search/docs/advanced/appearance/title-link#page-titles'
+												>
 													лучшие практики.
 												</Link>
 											</div>
@@ -145,7 +148,10 @@ export const MetaSidebar: React.FC<Props> = ({
 										<div>
 											Должно быть от 100 до 150 символов. Для помощи в написании
 											качественных метаописаний см.
-											<Link href='https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions'>
+											<Link
+												target='_blank'
+												href='https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions'
+											>
 												лучшие практики.
 											</Link>
 										</div>
@@ -165,7 +171,7 @@ export const MetaSidebar: React.FC<Props> = ({
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
-			<UserProfile authorName={authorName} authorAvatar={authorAvatar} />
+			{/* <UserProfile authorName={authorName} authorAvatar={authorAvatar} /> */}
 		</Sidebar>
 	)
 }

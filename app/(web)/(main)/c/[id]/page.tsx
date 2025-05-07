@@ -111,7 +111,7 @@ export default async function CommunityPage({
 					currentUser={currentUser}
 					communities={communities}
 					postPermissions={postPermissions}
-					className='mt-4'
+					className='mt-2'
 				/>
 			</>
 		)

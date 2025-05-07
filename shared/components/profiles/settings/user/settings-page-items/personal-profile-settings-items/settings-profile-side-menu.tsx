@@ -35,7 +35,7 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 			// text: formatMessage({ id: 'settingsProfileSideMenu.main' }),
 			text: 'Профиль',
 			icon: <UserCog />,
-			path: '/settings/profile',
+			path: '/settings/user/profile',
 			disabled: false
 		},
 		// {
@@ -109,10 +109,10 @@ export const SettingsProfileSideMenu: React.FC<Props> = ({ className }) => {
 					type='button'
 					disabled={item.disabled}
 					className={cn(
-						'flex gap-2 justify-start w-full mb-1 h-12 text-md font-bold bg-transparent hover:bg-blue-700 text-primary hover:text-white',
+						'flex gap-2 justify-start w-full mb-1 h-12 text-md font-bold bg-transparent hover:bg-theme text-foreground hover:text-background rounded-xl',
 						`${
 							pathname === item.path
-								? 'bg-blue-800 hover:bg-blue-800 text-white'
+								? 'bg-theme-hover hover:bg-theme-hover text-background'
 								: ''
 						}`
 					)}

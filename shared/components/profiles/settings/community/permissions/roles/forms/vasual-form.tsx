@@ -87,20 +87,23 @@ export const VisualForm: React.FC<Props> = ({
 	}
 	return (
 		<>
-			<p className='text-lg'>Редактировать роль - {selectedRole?.name}</p>
-			<div className='flex justify-between items-center gap-4'>
-				<div className='border-b-2 border-b-blue-600 cursor-pointer'>
-					<p>Внешний вид</p>
+			<p className='text-lg my-2 lg:my-0'>
+				Редактировать роль - {selectedRole?.name}
+			</p>
+			<div className='flex w-full justify-between items-center gap-4 overflow-x-auto'>
+				<div className='border-b-2 border-b-theme cursor-pointer'>
+					<span>Внешний вид</span>
 				</div>
-				<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
-					<p onClick={() => setTypeEditor('permissions')}>
-						Права доступа</p>
+				<div className='border-b-2 border-b-secondary hover:border-b-theme cursor-pointer'>
+					<span onClick={() => setTypeEditor('permissions')}>
+						Права доступа
+					</span>
 				</div>
 				{!isEveryoneRole ? (
-					<div className='border-b-2 border-b-secondary hover:border-b-blue-600 cursor-pointer'>
-						<p onClick={() => setTypeEditor('users')}>
+					<div className='border-b-2 border-b-secondary hover:border-b-theme cursor-pointer'>
+						<span onClick={() => setTypeEditor('users')}>
 							Участники ({selectedRole.users?.length})
-						</p>
+						</span>
 					</div>
 				) : (
 					<p className='text-gray-400'>Участники</p>
@@ -125,7 +128,9 @@ export const VisualForm: React.FC<Props> = ({
 									style={{ backgroundColor: '#99AAB5' }}
 									onClick={() => form.setValue('roleColor', '#99AAB5')}
 								>
-									{form.getValues('roleColor') === '#99AAB5' && <Check size={36} />}
+									{form.getValues('roleColor') === '#99AAB5' && (
+										<Check size={36} />
+									)}
 								</div>
 							</div>
 							<div>
@@ -148,7 +153,11 @@ export const VisualForm: React.FC<Props> = ({
 							))}
 						</div>
 					</div>
-					<Button type='submit' variant='blue' className='px-10 mt-4'>
+					<Button
+						type='submit'
+						variant='blue'
+						className='px-10 mt-4 bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl w-full'
+					>
 						Сохранить
 					</Button>
 				</form>

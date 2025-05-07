@@ -1,7 +1,7 @@
 import { Community, User } from '@/payload-types'
 import { Header } from '@/shared/components/headers/main-header/header'
 import { UserBanLogin } from '@/shared/components/info-blocks/user-ban-login'
-import { MobileBottomNavBar } from '@/shared/components/mobile/mobile-bottom-nav-bar'
+import { MobileButtonNavBar } from '@/shared/components/mobile/mobile-button-nav-bar'
 import YandexMetrika from '@/shared/components/yandex-metrika'
 import { getSession } from '@/shared/lib/auth'
 import { getServerSideURL } from '@/shared/lib/getURL'
@@ -121,9 +121,9 @@ export default async function HomeLayout({
 						socialNavigation={socialNavigation}
 					/>
 				</Suspense>
-				{children}
+				<div className='min-h-[calc(100vh-8rem)]'>{children}</div>
 				<div className='sticky bottom-0 lg:hidden'>
-					<MobileBottomNavBar />
+					<MobileButtonNavBar />
 				</div>
 			</>
 		)
@@ -163,9 +163,9 @@ export default async function HomeLayout({
 					currentUser={currentUser}
 				/>
 			</Suspense>
-			{children}
+			<div className='min-h-[calc(100vh-8rem)]'>{children}</div>
 			<div className='sticky bottom-0 lg:hidden'>
-				<MobileBottomNavBar />
+				<MobileButtonNavBar />
 			</div>
 		</>
 	)

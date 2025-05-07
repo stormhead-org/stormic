@@ -84,7 +84,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
 					comment={message}
 					maxLengthHeader={maxLengthHeader}
 					maxLengthBody={maxLengthBody}
-					className='bg-secondary/25 hover:bg-primary/5 mt-4'
+					className='bg-secondary/25 hover:bg-primary/5 mt-2'
 				/>
 			))}
 			{hasNextPage && (

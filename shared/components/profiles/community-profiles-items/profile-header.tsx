@@ -50,7 +50,7 @@ export const ProfileHeader: React.FC<Props> = ({
 				src={bannerImageUrl}
 				alt='Profile Banner'
 			/>
-			<div className='-mt-10 mx-6'>
+			<div className='-mt-10 mx-4 lg:mx-6'>
 				<div className='flex w-full justify-between mb-2'>
 					<ProfileAvatar
 						className='w-24 h-24 border-none bg-secondary hover:bg-secondary'
@@ -75,7 +75,7 @@ export const ProfileHeader: React.FC<Props> = ({
 									? currentUser.id === data.id && (
 											<Settings
 												className='hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1'
-												onClick={() => router.push('/settings/profile')}
+												onClick={() => router.push('/settings/user/profile')}
 											/>
 										)
 									: permissions?.COMMUNITY_OWNER && (

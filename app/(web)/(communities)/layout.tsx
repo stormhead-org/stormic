@@ -48,8 +48,8 @@ export default async function CommunitiesLayout({
 
 	return (
 		<>
-			<Container className='mt-4'>
-				<div className='flex gap-4'>
+			<Container className='mt-2'>
+				<div className='flex gap-2'>
 					{/* Левая часть */}
 					<div className='hidden lg:block lg:w-1/4 lg:h-[calc(100vh-6rem)] lg:overflow-auto lg:no-scrollbar'>
 						<div className='h-3/4'>
@@ -58,18 +58,14 @@ export default async function CommunitiesLayout({
 							<CommunitiesForm
 								limit={10}
 								items={communities}
-								className='mt-1'
 								// loading={loading}
 							/>
 
 							<NavigationMenuForm data={globalSideBarNavigation} />
 
-							<SocialMenu
-								socialNavigation={resultSocialNavigation}
-								className='mt-1'
-							/>
+							<SocialMenu socialNavigation={resultSocialNavigation} />
 
-							<SideFooter className='mt-1' />
+							<SideFooter />
 						</div>
 					</div>
 

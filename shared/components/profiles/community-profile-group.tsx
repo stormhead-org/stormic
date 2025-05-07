@@ -41,7 +41,7 @@ export const CommunityProfileGroup: React.FC<Props> = ({
 				post={posts}
 				communities={communities}
 				postPermissions={postPermissions}
-				className='mt-4'
+				className='mt-2'
 			/>
 		</div>
 	)

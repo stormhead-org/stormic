@@ -9,6 +9,13 @@ import {
 	DialogHeader,
 	DialogTitle
 } from '@/shared/components/ui/dialog'
+import {
+	Drawer,
+	DrawerContent,
+	DrawerHeader,
+	DrawerTitle
+} from '@/shared/components/ui/drawer'
+import { useIsMobile } from '@/shared/hooks/use-mobile'
 import React from 'react'
 // import { useIntl } from 'react-intl'
 
@@ -36,12 +43,54 @@ export const AuthModal: React.FC<Props> = ({
 		onClose()
 	}
 
+	const isMobile = useIsMobile()
+
+	if (!isMobile) {
+		return (
+			<Dialog open={open} onOpenChange={handleClose}>
+				<DialogContent className='lg:min-w-[43vw] lg:h-[78vh] p-0 rounded-xl'>
+					<DialogHeader className='hidden'>
+						<DialogTitle />
+					</DialogHeader>
+					<div className='flex w-full h-full'>
+						<div className='hidden lg:block lg:w-2/5 h-full'>
+							<img
+								className='rounded-l-md h-full object-cover'
+								src={authImage}
+								alt={stormicName}
+							/>
+							<img
+								className='absolute left-2 top-2 rounded-full'
+								src={logoImage}
+								alt={stormicName}
+								height='54'
+								width='54'
+							/>
+						</div>
+						<div className='w-full lg:w-3/5 h-full'>
+							<div className='w-full h-full'>
+								{type === 'login' && (
+									<LoginForm onClose={handleClose} setType={setType} />
+								)}
+								{type === 'email' && (
+									<EmailForm onClose={handleClose} setType={setType} />
+								)}
+								{type === 'register' && (
+									<RegisterForm onClose={handleClose} setType={setType} />
+								)}
+							</div>
+						</div>
+					</div>
+				</DialogContent>
+			</Dialog>
+		)
+	}
 	return (
-		<Dialog open={open} onOpenChange={handleClose}>
-			<DialogContent className='lg:min-w-[43vw] lg:h-[78vh] p-0 rounded-xl'>
-				<DialogHeader className='hidden'>
-					<DialogTitle />
-				</DialogHeader>
+		<Drawer open={open} onOpenChange={handleClose}>
+			<DrawerContent className='lg:min-w-[43vw] lg:h-[78vh] p-0 rounded-xl'>
+				<DrawerHeader className='hidden'>
+					<DrawerTitle />
+				</DrawerHeader>
 				<div className='flex w-full h-full'>
 					<div className='hidden lg:block lg:w-2/5 h-full'>
 						<img
@@ -71,7 +120,7 @@ export const AuthModal: React.FC<Props> = ({
 						</div>
 					</div>
 				</div>
-			</DialogContent>
-		</Dialog>
+			</DrawerContent>
+		</Drawer>
 	)
 }

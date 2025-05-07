@@ -40,7 +40,10 @@ export const HeaderUserBar: React.FC<Props> = ({
 
 	return (
 		<div
-			className={cn('flex items-center gap-3 w-[250px] justify-end', className)}
+			className={cn(
+				'flex items-center gap-3 lg:w-[250px] justify-end',
+				className
+			)}
 		>
 			<AuthModal
 				open={openAuthModal}
@@ -57,7 +60,7 @@ export const HeaderUserBar: React.FC<Props> = ({
 				variant='blue'
 				type='button'
 				className={cn(
-					'w-10 h-10 bg-transparent hover:bg-secondary text-foreground rounded-xl p-0'
+					'hidden lg:block w-10 h-10 bg-transparent hover:bg-secondary text-foreground rounded-xl p-0'
 				)}
 				onClick={() => router.push('/explore')}
 			>
@@ -73,6 +76,7 @@ export const HeaderUserBar: React.FC<Props> = ({
 			<ProfileButton
 				currentUser={currentUser}
 				onClickSignIn={() => setOpenAuthModal(true)}
+				className='hidden lg:block'
 			/>
 		</div>
 	)

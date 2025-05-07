@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 interface PageProps {
-	params: Promise<{ id: string }>;
+	params: Promise<{ id: string }>
 }
 
 export default async function SettingsLayout({
@@ -26,14 +26,14 @@ export default async function SettingsLayout({
 			<Container className='mt-4'>
 				<div className='flex gap-4'>
 					{/* Левая часть */}
-					<div className='w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
+					<div className='hidden lg:block w-1/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar'>
 						<div className='h-3/4'>
 							{id && <SettingsCommunitySideMenu communityId={id} />}
 						</div>
 					</div>
 
 					{/* Правая часть */}
-					<div className='w-3/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar rounded-md'>
+					<div className='w-full lg:w-3/4 h-[calc(100vh-6rem)] overflow-auto no-scrollbar rounded-xl mx-2 lg:mx-0'>
 						{children}
 					</div>
 				</div>

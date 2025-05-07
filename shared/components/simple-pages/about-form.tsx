@@ -59,7 +59,7 @@ export const AboutForm: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<div className='w-full mt-4'>
+			<div className='w-full mt-2'>
 				<span className='flex text-2xl font-extrabold justify-center'>
 					{process.env.NEXT_PUBLIC_BASE_URL}
 				</span>
@@ -77,7 +77,7 @@ export const AboutForm: React.FC<Props> = ({
 			</div>
 
 			{hasOwner && (
-				<div className='flex w-full items-center justify-evenly bg-secondary p-1 mt-6 rounded-xl'>
+				<div className='flex w-full items-center justify-evenly bg-secondary p-1 mt-2 rounded-xl'>
 					<div className='flex gap-2'>
 						<div className='flex items-center hover:text-theme font-bold cursor-pointer mt-auto'>
 							<Settings
@@ -133,7 +133,7 @@ export const AboutForm: React.FC<Props> = ({
 				</div>
 			)}
 
-			<div className='h-full w-full lg:flex bg-secondary rounded-xl p-4 mt-6'>
+			<div className='h-full w-full lg:flex bg-secondary rounded-xl p-4 mt-2'>
 				<div className='w-full lg:w-1/2'>
 					<p className='uppercase font-bold'>
 						{/* {formatMessage({ id: 'aboutPage.managed' })} */}
@@ -171,7 +171,7 @@ export const AboutForm: React.FC<Props> = ({
 			</div>
 
 			<Accordion
-				className='mt-4 px-4 rounded-xl bg-secondary'
+				className='-mt-4 px-4 rounded-xl bg-secondary'
 				type='single'
 				defaultValue='about'
 				collapsible
@@ -187,7 +187,7 @@ export const AboutForm: React.FC<Props> = ({
 			</Accordion>
 
 			<Accordion
-				className='mt-7 px-4 rounded-xl bg-secondary'
+				className='mt-2 px-4 rounded-xl bg-secondary'
 				type='single'
 				defaultValue='about'
 				collapsible

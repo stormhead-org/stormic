@@ -39,9 +39,9 @@ export default async function CommunitiesPage() {
 
 	return (
 		<>
-			<div className='lg:flex lg:w-full lg:gap-4'>
+			<div className='lg:flex lg:w-full lg:gap-2'>
 				<div className='hidden lg:block w-3/4 bg-secondary rounded-xl' />
-				<div className='w-full lg:w-1/4 mb-4 lg:mb-0'>
+				<div className='w-full lg:w-1/4 mb-2 lg:mb-0'>
 					<NewCommunityButton
 						authImage={authImage}
 						logoImage={logoImage}
@@ -52,7 +52,7 @@ export default async function CommunitiesPage() {
 			</div>
 			<CommunitiesCardGroup
 				data={communities || []}
-				className='mb-4 lg:mb-0 lg:mt-4'
+				className='mb-2 lg:mb-0 lg:mt-2'
 			/>
 		</>
 	)

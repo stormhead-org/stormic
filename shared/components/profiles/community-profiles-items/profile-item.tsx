@@ -28,7 +28,7 @@ export const ProfileItem: React.FC<Props> = ({
 
 	return (
 		<div className={cn('', className)}>
-			<div className='rounded-xl bg-secondary mx-2'>
+			<div className='rounded-xl bg-secondary mx-2 lg:mx-0'>
 				{!hasUser && (
 					<TeamCommunityModal
 						data={data as Community}

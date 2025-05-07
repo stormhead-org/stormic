@@ -53,10 +53,10 @@ export const SettingsCommunityAdministrationTopMenu: React.FC<Props> = ({
 					type='button'
 					disabled={item.disabled}
 					className={cn(
-						'h-12 flex-1 text-md font-bold bg-secondary hover:bg-blue-700 text-primary hover:text-white',
+						'h-12 flex-1 text-md font-bold bg-secondary hover:bg-theme-hover text-foreground hover:text-background rounded-xl',
 						`${
 							pathname === item.path
-								? 'bg-blue-800 hover:bg-blue-800 text-white'
+								? 'bg-theme/80 hover:bg-theme-hover text-background'
 								: ''
 						}`
 					)}

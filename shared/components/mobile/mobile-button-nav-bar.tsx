@@ -11,7 +11,7 @@ interface Props {
 	className?: string
 }
 
-export const MobileBottomNavBar: React.FC<Props> = ({ className }) => {
+export const MobileButtonNavBar: React.FC<Props> = ({ className }) => {
 	const router = useRouter()
 	const pathname = usePathname()
 

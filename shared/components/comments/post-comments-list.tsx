@@ -30,7 +30,7 @@ interface CommentItemsProps {
 }
 
 const getIndentationClass = (level: number) => {
-	return `pl-${(level + 1) * 4}`
+	return `pl-${level + 1}`
 }
 
 const renderCommentWithChildren = (

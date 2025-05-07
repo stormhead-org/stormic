@@ -1,6 +1,6 @@
 'use client'
 
-import { Community, Post, User } from '@/payload-types'
+import { Community, type HostSetting, Post, User } from '@/payload-types'
 import { Permissions } from '@/shared/lib/permissions'
 import { cn } from '@/shared/lib/utils'
 import { usePostLikesStore } from '@/shared/stores/post-likes-store'
@@ -12,6 +12,7 @@ import { FullPostForm } from './full-post-items/full-post-form'
 interface Props {
 	post: Post
 	communities: Community[]
+	host: HostSetting
 	permissions: Permissions | null
 	currentUser?: User | null
 	className?: string
@@ -20,6 +21,7 @@ interface Props {
 export const FullPostPage: React.FC<Props> = ({
 	post,
 	communities,
+	host,
 	permissions,
 	currentUser,
 	className
@@ -44,6 +46,7 @@ export const FullPostPage: React.FC<Props> = ({
 			<CommentFullPostGroup
 				postId={post.id}
 				communityId={communityId}
+				host={host}
 				permissions={permissions}
 				chatRef={chatRef}
 				bottomRef={bottomRef}

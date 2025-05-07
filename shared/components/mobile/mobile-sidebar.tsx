@@ -42,15 +42,14 @@ export const MobileSidebar: React.FC<Props> = ({
 						<CommunitiesForm
 							limit={10}
 							items={communities}
-							className='mt-1'
 							// loading={loading}
 						/>
 
 						<NavigationMenuForm data={sideBarNavigation} />
 
-						<SocialMenu socialNavigation={socialNavigation} className='mt-1' />
+						<SocialMenu socialNavigation={socialNavigation} />
 
-						<SideFooter className='mt-1' />
+						<SideFooter />
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>

@@ -118,7 +118,7 @@ export const ProfileButton: React.FC<Props> = ({
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							className='cursor-pointer text-foreground text-base'
-							onClick={() => router.push('/settings/profile')}
+							onClick={() => router.push('/settings/user/profile')}
 						>
 							Настройки
 						</DropdownMenuItem>

@@ -46,6 +46,11 @@ export default async function Post({ params: paramsPromise }: PageProps) {
 			overrideAccess: true
 		})
 
+		const hostSettings = await payload.findGlobal({
+			slug: 'host-settings',
+			depth: 1
+		})
+
 		const communities = resultCommunities.docs as Community[]
 
 		const communityId = getRelationProp<Community, 'id'>(
@@ -62,6 +67,7 @@ export default async function Post({ params: paramsPromise }: PageProps) {
 			<FullPostPage
 				post={post}
 				communities={communities}
+				host={hostSettings}
 				permissions={permissions}
 				currentUser={currentUser}
 			/>

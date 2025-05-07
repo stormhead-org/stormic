@@ -5,7 +5,7 @@ import { Container, Title } from '@/shared/components'
 import {
 	formSettingsRulesCommunitySchema,
 	TFormSettingsRulesCommunityValues
-} from '@/shared/components/modals/communities/settings/forms/schemas'
+} from '@/shared/components/profiles/settings/community/forms/schemas'
 import { Button } from '@/shared/components/ui/button'
 import { Label } from '@/shared/components/ui/label'
 // import { LocaleToggle } from '@/shared/components/ui/locale-toggle'
@@ -77,7 +77,7 @@ export const SettingsCommunityAdministrationGroup: React.FC<Props> = ({
 				className='flex flex-col gap-4'
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
-				<Container className='bg-secondary rounded-md mt-1 p-4'>
+				<Container className='bg-secondary rounded-xl mt-1 p-4 text-foreground'>
 					<p className='text-justify'>
 						{/* {formatMessage({ id: 'profilePageEditGroup.tipForSocial' })} */}
 						Хотя большинство утверждает, что прочитали и согласны с правилами,
@@ -87,7 +87,7 @@ export const SettingsCommunityAdministrationGroup: React.FC<Props> = ({
 						чтобы отдельные правила были краткими и простыми, но старайтесь не
 						разбивать их на множество отдельных элементов.
 					</p>
-					<div className='w-full border-b-2 border-b-blue-600 pb-4'>
+					<div className='w-full border-b-2 border-b-theme pb-4'>
 						<Title
 							// text={formatMessage({
 							// 	id: 'profilePagePreferencesGroup.titleBaseInfo'
@@ -102,7 +102,7 @@ export const SettingsCommunityAdministrationGroup: React.FC<Props> = ({
 						{/* Правила */}
 						<div className='space-y-4'>
 							{fields.map((field, index) => (
-								<div key={field.id} className='space-y-2 border p-4 rounded-md'>
+								<div key={field.id}>
 									<div>
 										<Label htmlFor={`rules.${index}.communityNameRule`}>
 											Правило
@@ -152,6 +152,7 @@ export const SettingsCommunityAdministrationGroup: React.FC<Props> = ({
 										variant='destructive'
 										type='button'
 										onClick={() => remove(index)}
+										className='mt-2 rounded-xl text-foreground w-full'
 									>
 										Удалить правило
 									</Button>
@@ -166,6 +167,7 @@ export const SettingsCommunityAdministrationGroup: React.FC<Props> = ({
 										communityDescriptionRule: ''
 									})
 								}
+								className='mt-4 bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl w-full'
 							>
 								Добавить правило
 							</Button>
@@ -175,7 +177,7 @@ export const SettingsCommunityAdministrationGroup: React.FC<Props> = ({
 					<Button
 						variant='blue'
 						loading={form.formState.isSubmitting}
-						className='text-base mt-6 w-full'
+						className='mt-6 w-full bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl'
 						type='submit'
 					>
 						{/* {formatMessage({ id: 'profilePagePreferencesGroup.saveButton' })} */}

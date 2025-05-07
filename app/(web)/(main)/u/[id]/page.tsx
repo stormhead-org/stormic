@@ -105,7 +105,7 @@ export default async function UserPage({ params: paramsPromise }: PageProps) {
 					posts={posts}
 					communities={communities}
 					postPermissions={postPermissions}
-					className='mt-4'
+					className='mt-2'
 				/>
 			</>
 		)

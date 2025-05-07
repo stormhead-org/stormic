@@ -22,7 +22,7 @@ export const PostFullBody: React.FC<Props> = ({
 			<Title text={postTitle} size='sm' className='font-extrabold my-2' />
 			{heroImage && (
 				<img
-					className='rounded-md mt-4 object-cover h-80 w-full'
+					className='rounded-xl mt-4 object-cover h-80 w-full'
 					src={heroImage}
 					alt={postTitle}
 				/>

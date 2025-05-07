@@ -1,6 +1,7 @@
 import { Community, FollowCommunity, Role } from '@/payload-types'
 import { Container } from '@/shared/components/container'
 import { PermissionsForm } from '@/shared/components/profiles/settings/community/permissions/roles/forms/permissions-form'
+import { Button } from '@/shared/components/ui/button'
 import { useRolesStore } from '@/shared/stores/roles-order-store'
 import {
 	DndContext,
@@ -61,7 +62,7 @@ const SortableRoleItem: React.FC<{
 			ref={setNodeRef}
 			style={style}
 			className={`flex w-full p-2 rounded-md gap-1 ${
-				selectedRoleId === role.id ? 'bg-blue-700' : 'bg-gray-700'
+				selectedRoleId === role.id ? 'bg-theme text-background' : 'bg-gray-700'
 			}`}
 		>
 			<div
@@ -84,9 +85,9 @@ const SortableRoleItem: React.FC<{
 				</div>
 				{role.name !== '@everyone' && (
 					<div className='group -my-7'>
-						<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+						<p className='flex p-1 items-center group-hover:text-theme font-bold'>
 							<Trash2
-								className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer'
+								className='group-hover:bg-theme-hover/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer'
 								onClick={async e => {
 									e.stopPropagation()
 									try {
@@ -244,21 +245,24 @@ export const EditorForm: React.FC<Props> = ({
 	}
 
 	return (
-		<Container className='bg-secondary rounded-md mt-1 p-4 w-full'>
+		<Container className='bg-secondary rounded-xl mt-1 p-4 w-full'>
 			<div className='flex w-full gap-4'>
-				<div className='w-1/3'>
+				<div className='hidden lg:block lg:w-1/3'>
 					<div className='flex justify-between items-center'>
 						<div
-							className='flex items-center gap-2 pr-2 hover:bg-gray-700 cursor-pointer rounded-md'
+							className='group flex items-center gap-2 pr-2 cursor-pointer rounded-xl'
 							onClick={() => setType('main')}
 						>
-							<ChevronLeft size={18} />
-							<p className='text-lg'>Назад</p>
+							<ChevronLeft
+								className='group-hover:bg-theme-hover/20 group-hover:text-theme rounded-xl ml-2 w-7 h-7 p-1 cursor-pointer font-bold'
+								size={18}
+							/>
+							<p className='text-lg hover:text-theme'>Назад</p>
 						</div>
 						<div className='group -my-7'>
-							<p className='flex p-1 items-center group-hover:text-blue-700 font-bold'>
+							<p className='flex p-1 items-center group-hover:text-theme font-bold'>
 								<Plus
-									className='group-hover:bg-blue-800/20 rounded-full ml-2 w-7 h-7 p-1 cursor-pointer font-bold'
+									className='group-hover:bg-theme-hover/20 rounded-xl ml-2 w-7 h-7 p-1 cursor-pointer font-bold'
 									onClick={handleSubmitNewRole}
 								/>
 							</p>
@@ -287,7 +291,29 @@ export const EditorForm: React.FC<Props> = ({
 						</SortableContext>
 					</DndContext>
 				</div>
-				<div className='w-2/3'>
+				<div className='w-full lg:w-2/3'>
+					<div className='flex justify-between items-center mb-2 w-full lg:hidden'>
+						<div
+							className='group flex items-center gap-2 cursor-pointer rounded-xl'
+							onClick={() => setType('main')}
+						>
+							<ChevronLeft
+								className='group-hover:bg-theme-hover/20 group-hover:text-theme rounded-xl w-7 h-7 p-1 cursor-pointer font-bold'
+								size={18}
+							/>
+							<p className='text-lg hover:text-theme'>Назад</p>
+						</div>
+						<div className='group -my-7'>
+							<Button
+								variant='blue'
+								type='button'
+								onClick={handleSubmitNewRole}
+								className='w-full bg-primary/5 hover:bg-theme-hover/80 text-foreground hover:text-background rounded-xl'
+							>
+								Новая роль
+							</Button>
+						</div>
+					</div>
 					{selectedRole && (
 						<>
 							{typeEditor === 'visual' && (

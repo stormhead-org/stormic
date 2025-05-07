@@ -71,7 +71,7 @@ export default async function Home() {
 				post={posts}
 				communities={communities}
 				postPermissions={postPermissions}
-				className='lg:mt-3'
+				className='lg:mt-2'
 			/>
 		</>
 	)

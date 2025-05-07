@@ -32,12 +32,12 @@ export const ProfileBody: React.FC<Props> = ({
 	const truncatedDescription = truncateText(description || '', 296)
 
 	return (
-		<div className={cn('mx-6', className)}>
+		<div className={cn('mx-4 lg:mx-6', className)}>
 			<p className='text-md mt-2 text-justify'>{truncatedDescription}</p>
 			{description && description?.length > 296 && (
 				<span
 					onClick={() => setOpenTeamCommunityModal(true)}
-					className='text-md font-bold text-blue-800 cursor-pointer hover:text-blue-600'
+					className='text-md font-bold text-theme/80 cursor-pointer hover:text-theme-hover'
 				>
 					Показать
 				</span>

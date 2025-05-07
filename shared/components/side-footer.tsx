@@ -64,7 +64,7 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 	}
 
 	return (
-		<div className={cn('', className)}>
+		<div className={cn('mt-2', className)}>
 			{platformFooter.map(item => {
 				const isActive = pathname === item.path
 				return (
@@ -74,7 +74,7 @@ export const SideFooter: React.FC<Props> = ({ className }) => {
 						type='button'
 						disabled={item.disabled}
 						className={cn(
-							'flex gap-2 justify-start w-full mb-1 h-12 text-base font-normal bg-transparent hover:bg-secondary text-foreground rounded-xl',
+							'flex gap-2 justify-start w-full mb-2 h-12 text-base font-normal bg-transparent hover:bg-secondary text-foreground rounded-xl',
 							isActive && 'bg-secondary hover:bg-secondary'
 						)}
 						onClick={() => handleNavigation(item.path)}
