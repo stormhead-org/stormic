@@ -61,7 +61,7 @@ export const AccountForm: React.FC<Props> = ({
 							<Avatar className='border-2 border-transparent rounded-full cursor-pointer hover:border-theme'>
 								<AvatarImage
 									className='m-auto rounded-full'
-									src={getMediaUrl(currentUser.avatar, '/logo.png')}
+									src={getMediaUrl(currentUser.avatar, 'square', '/logo.png')}
 								/>
 								<AvatarFallback>
 									<CircleUser
@@ -99,9 +99,10 @@ export const AccountForm: React.FC<Props> = ({
 					<AuthModal
 						open={openAuthModal}
 						onClose={() => setOpenAuthModal(false)}
-						logoImage={getMediaUrl(hostSettings.logo, '/logo.png')}
+						logoImage={getMediaUrl(hostSettings.logo, 'medium', '/logo.png')}
 						authImage={getMediaUrl(
 							hostSettings.authBanner,
+							'medium',
 							'/defaultBanner.jpg'
 						)}
 						stormicName={hostSettings.title || 'Stormic'}
