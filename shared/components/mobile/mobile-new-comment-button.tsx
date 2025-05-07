@@ -29,12 +29,12 @@ export const MobileNewCommentButton: React.FC<Props> = ({
 
 	const logoImageUrl =
 		typeof host.logo === 'object'
-			? getMediaUrl(host.logo, '/logo.png')
+			? getMediaUrl(host.logo, 'medium', '/logo.png')
 			: '/logo.png'
 
 	const authImageUrl =
 		typeof host.authBanner === 'object'
-			? getMediaUrl(host.authBanner, '/defaultBanner.jpg')
+			? getMediaUrl(host.authBanner, 'medium', '/defaultBanner.jpg')
 			: '/defaultBanner.jpg'
 
 	return (

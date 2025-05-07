@@ -67,7 +67,7 @@ export const PostHeader: React.FC<Props> = ({
 	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
 	const avatarImageUrl =
 		typeof post.author === 'object'
-			? getMediaUrl(post.author?.avatar, '/logo.png')
+			? getMediaUrl(post.author?.avatar, 'square', '/logo.png')
 			: '/logo.png'
 	const authorName = getRelationProp<User, 'name'>(post.author, 'name', '')
 	const communityTitle = getRelationProp<Community, 'title'>(
@@ -98,23 +98,24 @@ export const PostHeader: React.FC<Props> = ({
 								</ActionTooltip>
 							))}
 					</div>
-					<div className='flex items-center gap-2'>
-						<Link
-							className='block truncate max-w-[20ch] lg:max-w-[34ch] overflow-hidden text-sm text-foreground hover:text-foreground'
-							href={post.community ? `/c/${communityId}` : '#'}
-						>
-							{communityTitle}
-						</Link>
-						<span className='text-sm cursor-default'>
-							{formatDateTime(post.publishedAt ? post.publishedAt : '#')}
-						</span>
-					</div>
+					<Link
+						className='block truncate max-w-[16ch] lg:max-w-[34ch] overflow-hidden text-sm text-foreground hover:text-foreground'
+						href={post.community ? `/c/${communityId}` : '#'}
+					>
+						{communityTitle}
+					</Link>
 				</div>
 			</div>
-			<div className='flex items-center'>
-				{currentUser && currentUser.id !== authorId && (
-					<UserFollowButton userId={authorId} />
-				)}
+			<div className='flex items-center justify-end'>
+				<div className='flex flex-col'>
+					{currentUser && currentUser.id !== authorId && (
+						<UserFollowButton userId={authorId} />
+					)}
+					<span className='w-full text-sm cursor-default text-center'>
+						{formatDateTime(post.publishedAt ? post.publishedAt : '#')}
+					</span>
+				</div>
+
 				{currentUser && (
 					<PostEditModal
 						open={openEditModal}

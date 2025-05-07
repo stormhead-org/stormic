@@ -195,7 +195,7 @@ export const RoleAddUserHostModal: React.FC<Props> = ({
 												<Avatar className='rounded-full'>
 													<AvatarImage
 														className='m-auto rounded-full'
-														src={getMediaUrl(item.avatar, '')}
+														src={getMediaUrl(item.avatar, 'medium')}
 														style={{ width: 34, height: 34 }}
 													/>
 													<AvatarFallback>

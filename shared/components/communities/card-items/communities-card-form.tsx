@@ -40,7 +40,7 @@ export const CommunitiesCardForm: React.FC<Props> = ({
 					<CommunitiesCardItem
 						key={index}
 						communityId={item.id}
-						image={getMediaUrl(item.logo, '/logo.png')}
+						image={getMediaUrl(item.logo, 'medium', '/logo.png')}
 						name={item.title}
 						description={item.description}
 						url={`/c/${item.id}`}

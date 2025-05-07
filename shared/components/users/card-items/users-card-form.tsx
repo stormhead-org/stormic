@@ -40,7 +40,7 @@ export const UsersCardForm: React.FC<Props> = ({
 					<UsersCardItem
 						key={index}
 						userId={item.id}
-						avatarUrl={getMediaUrl(item.avatar, '/logo.png')}
+						avatarUrl={getMediaUrl(item.avatar, 'square', '/logo.png')}
 						name={item.name}
 						description={item.description}
 						url={`/u/${item.id}`}

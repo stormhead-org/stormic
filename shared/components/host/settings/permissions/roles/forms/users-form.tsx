@@ -128,7 +128,7 @@ export const UsersForm: React.FC<Props> = ({
 								{filteredUsers.map(user => {
 									const userAvatarUrl =
 										typeof user.avatar === 'object'
-											? getMediaUrl(user.avatar, '/logo.png')
+											? getMediaUrl(user.avatar, 'medium', '/logo.png')
 											: '/logo.png'
 									return (
 										<div

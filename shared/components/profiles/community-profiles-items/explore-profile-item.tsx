@@ -42,8 +42,8 @@ export const ExploreProfileItem: React.FC<Props> = ({
 					<ProfileAvatar
 						avatarImage={
 							hasUser
-								? getMediaUrl((data as User).avatar, '/logo.png')
-								: getMediaUrl((data as Community).logo, '/logo.png')
+								? getMediaUrl((data as User).avatar, 'square', '/logo.png')
+								: getMediaUrl((data as Community).logo, 'square', '/logo.png')
 						}
 						className='hover:bg-transparent'
 					/>

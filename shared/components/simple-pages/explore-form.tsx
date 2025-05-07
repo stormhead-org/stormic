@@ -79,7 +79,7 @@ export const ExploreForm: React.FC<Props> = ({
 
 	const bannerUrl =
 		typeof hostSettings.banner === 'object'
-			? getMediaUrl(hostSettings.banner, '/defaultBanner.jpg')
+			? getMediaUrl(hostSettings.banner, 'medium', '/defaultBanner.jpg')
 			: '/defaultBanner.jpg'
 
 	const styling = {

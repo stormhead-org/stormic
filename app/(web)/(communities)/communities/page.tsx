@@ -29,12 +29,12 @@ export default async function CommunitiesPage() {
 
 	const authImage =
 		typeof resultGlobalHost.authBanner === 'object'
-			? getMediaUrl(resultGlobalHost.authBanner, '/defaultBanner.jpg')
+			? getMediaUrl(resultGlobalHost.authBanner, 'medium', '/defaultBanner.jpg')
 			: '/defaultBanner.jpg'
 
 	const logoImage =
 		typeof resultGlobalHost.logo === 'object'
-			? getMediaUrl(resultGlobalHost.logo, '/logo.png')
+			? getMediaUrl(resultGlobalHost.logo, 'medium', '/logo.png')
 			: '/logo.png'
 
 	return (

@@ -24,7 +24,7 @@ export default async function About() {
 
 	const bannerUrl =
 		typeof resultGlobalHost.banner === 'object'
-			? getMediaUrl(resultGlobalHost.banner, '/defaultBanner.jpg')
+			? getMediaUrl(resultGlobalHost.banner, 'medium', '/defaultBanner.jpg')
 			: '/defaultBanner.jpg'
 
 	const ownerId = getRelationProp<User, 'id'>(resultGlobalHost.owner, 'id', 0)

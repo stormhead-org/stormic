@@ -160,7 +160,7 @@ export const HostCommunitiesBansModal: React.FC<Props> = ({
 										const community = item as Community
 										const communityLogoUrl =
 											typeof community.logo === 'object'
-												? getMediaUrl(community.logo, '/logo.png')
+												? getMediaUrl(community.logo, 'medium', '/logo.png')
 												: '/logo.png'
 										return (
 											<div

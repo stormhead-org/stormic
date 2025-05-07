@@ -101,7 +101,7 @@ export const Header: React.FC<Props> = ({
 
 	const logoImageUrl =
 		typeof hostSettings.logo === 'object'
-			? getMediaUrl(hostSettings.logo, '/logo.png')
+			? getMediaUrl(hostSettings.logo, 'medium', '/logo.png')
 			: '/logo.png'
 
 	return (
@@ -125,9 +125,9 @@ export const Header: React.FC<Props> = ({
 										<h1 className='text-2xl uppercase font-black text-foreground'>
 											{hostSettings.title || 'Stormic'}
 										</h1>
-										{hostSettings.description && (
+										{hostSettings.slogan && (
 											<p className='text-sm text-foreground leading-3 mb-1'>
-												{hostSettings.description}
+												{hostSettings.slogan}
 											</p>
 										)}
 									</div>

@@ -63,7 +63,7 @@ export const ProfileButton: React.FC<Props> = ({
 
 	const avatarImageUrl =
 		typeof currentUser?.avatar === 'object'
-			? getMediaUrl(currentUser.avatar, '/logo.png')
+			? getMediaUrl(currentUser.avatar, 'square', '/logo.png')
 			: '/logo.png'
 
 	return (

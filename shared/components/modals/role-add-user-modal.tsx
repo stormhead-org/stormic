@@ -181,7 +181,7 @@ export const RoleAddUserModal: React.FC<Props> = ({
 									{filteredUsers.map(item => {
 										const avatarImageUrl =
 											typeof item.user === 'object'
-												? getMediaUrl(item.user.avatar, '/logo.png')
+												? getMediaUrl(item.user.avatar, 'medium', '/logo.png')
 												: '/logo.png'
 
 										return (

@@ -30,12 +30,12 @@ export const HeaderUserBar: React.FC<Props> = ({
 
 	const logoImageUrl =
 		typeof hostSettings.logo === 'object'
-			? getMediaUrl(hostSettings.logo, '/logo.png')
+			? getMediaUrl(hostSettings.logo, 'medium', '/logo.png')
 			: '/logo.png'
 
 	const authImageUrl =
 		typeof hostSettings.authBanner === 'object'
-			? getMediaUrl(hostSettings.authBanner, '/defaultBanner.jpg')
+			? getMediaUrl(hostSettings.authBanner, 'medium', '/defaultBanner.jpg')
 			: '/defaultBanner.jpg'
 
 	return (

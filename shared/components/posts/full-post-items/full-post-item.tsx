@@ -32,7 +32,9 @@ export const FullPostItem: React.FC<FullPostItemProps> = ({
 	const currentUser = session && (session.user as User)
 
 	const heroImageUrl =
-		typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage, '') : ''
+		typeof post.heroImage === 'object'
+			? getMediaUrl(post.heroImage, 'medium')
+			: ''
 
 	const authorId = getRelationProp<User, 'id'>(post.author, 'id', 0)
 

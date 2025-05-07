@@ -83,7 +83,7 @@ export const SettingsHostMainNavigationGroup: React.FC<Props> = ({
 			return '/logo.png' // Запасной URL
 		}
 		const author = post.author as User
-		return getMediaUrl(author.avatar, '/logo.png')
+		return getMediaUrl(author.avatar, 'medium', '/logo.png')
 	}
 
 	// Сохранение изменений
@@ -110,7 +110,7 @@ export const SettingsHostMainNavigationGroup: React.FC<Props> = ({
 					Добавьте до 10 постов в левое меню навигации. Используйте поиск, чтобы
 					найти нужные посты.
 				</p>
-				
+
 				<div className='w-full border-b-2 border-b-blue-600 pb-4'>
 					<Title
 						// text={formatMessage({ id: 'profilePageEditGroup.titleBaseInfo' })}
@@ -122,9 +122,7 @@ export const SettingsHostMainNavigationGroup: React.FC<Props> = ({
 
 				{/* Поиск постов */}
 				<div className='mt-4'>
-					<p>
-						Поиск постов
-					</p>
+					<p>Поиск постов</p>
 					<Input
 						id='search'
 						type='text'

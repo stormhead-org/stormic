@@ -32,7 +32,7 @@ export const CommunitiesItem: React.FC<Props> = ({ community, className }) => {
 				onClick={() => router.push(`/c/${community.id}`)}
 			>
 				<ProfileAvatar
-					avatarImage={getMediaUrl(community.logo, '/logo.png')}
+					avatarImage={getMediaUrl(community.logo, 'medium', '/logo.png')}
 					className='hover:bg-transparent'
 				/>
 				{truncateText(community.title, 18)}

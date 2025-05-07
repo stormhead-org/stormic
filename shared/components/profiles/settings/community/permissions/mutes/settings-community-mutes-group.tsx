@@ -108,7 +108,7 @@ export const SettingsCommunityMutesGroup: React.FC<Props> = ({
 								const user = mute.user as User
 								const avatarImageUrl =
 									typeof user === 'object'
-										? getMediaUrl(user.avatar, '/logo.png')
+										? getMediaUrl(user.avatar, 'square', '/logo.png')
 										: '/logo.png'
 								return (
 									<div

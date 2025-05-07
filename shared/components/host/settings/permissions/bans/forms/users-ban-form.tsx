@@ -109,7 +109,7 @@ export const UsersBanForm: React.FC<Props> = ({
 								const user = ban.user as User
 								const userAvatarUrl =
 									typeof user.avatar === 'object'
-										? getMediaUrl(user.avatar, '/logo.png')
+										? getMediaUrl(user.avatar, 'medium', '/logo.png')
 										: '/logo.png'
 								return (
 									<div

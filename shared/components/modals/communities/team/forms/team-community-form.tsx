@@ -35,7 +35,7 @@ export const TeamCommunityForm: React.FC<Props> = ({
 	const ownerId = getRelationProp<User, 'id'>(community.owner, 'id', 0)
 	const avatarImageUrl =
 		typeof community.owner === 'object'
-			? getMediaUrl(community.owner.avatar, '/logo.png')
+			? getMediaUrl(community.owner.avatar, 'medium', '/logo.png')
 			: '/logo.png'
 
 	return (
@@ -96,7 +96,7 @@ export const TeamCommunityForm: React.FC<Props> = ({
 									<div className='flex gap-4 mt-1'>
 										<ProfileAvatar
 											className='w-11 h-11'
-											avatarImage={getMediaUrl(item.avatar, '')}
+											avatarImage={getMediaUrl(item.avatar, 'medium')}
 											avatarSize={44}
 										/>
 										<div className='flex h-full my-auto'>

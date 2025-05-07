@@ -45,9 +45,6 @@ export const PostItem: React.FC<{
 		}
 	}, [post.id])
 
-	const heroImageUrl =
-		typeof post.heroImage === 'object' ? getMediaUrl(post.heroImage, '') : ''
-
 	const authorId = getRelationProp<User, 'id'>(post.author, 'id', 0)
 
 	const communityId = getRelationProp<Community, 'id'>(post.community, 'id', 0)
@@ -90,7 +87,7 @@ export const PostItem: React.FC<{
 				<PostBody
 					postTitle={post.title}
 					postContent={post.content as unknown as OutputData}
-					heroImage={heroImageUrl}
+					heroImage={getMediaUrl(post.heroImage, 'medium')}
 					maxLength={300}
 					postUrl={`/p/${post.id}`}
 				/>

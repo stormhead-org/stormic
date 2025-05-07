@@ -24,7 +24,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 }) => {
 	const authorAvatar =
 		typeof comment.author === 'object'
-			? getMediaUrl(comment.author.avatar, '/logo.png')
+			? getMediaUrl(comment.author.avatar, 'medium', '/logo.png')
 			: '/logo.png'
 
 	const authorId = getRelationProp<User, 'id'>(comment.author, 'id', 0)

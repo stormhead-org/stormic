@@ -39,7 +39,7 @@ export const SearchInput: React.FC<Props> = ({ posts, className }) => {
 		authorName: getRelationProp<User, 'name'>(item.author, 'name', '#'),
 		authorAvatar:
 			typeof item.author === 'object'
-				? getMediaUrl(item.author?.avatar, '/logo.png')
+				? getMediaUrl(item.author?.avatar, 'square', '/logo.png')
 				: '/logo.png'
 	}))
 

@@ -144,7 +144,7 @@ export const HostUsersBansModal: React.FC<Props> = ({
 										const user = item as User
 										const avatarImageUrl =
 											typeof user === 'object'
-												? getMediaUrl(user.avatar, '/logo.png')
+												? getMediaUrl(user.avatar, 'medium', '/logo.png')
 												: '/logo.png'
 										return (
 											<div

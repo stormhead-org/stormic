@@ -33,11 +33,15 @@ export const ProfileHeader: React.FC<Props> = ({
 	// Определяем avatarImageUrl
 	const avatarImageUrl =
 		'avatar' in data
-			? getMediaUrl(data.avatar, '/logo.png')
-			: 'logo' in data && getMediaUrl(data.logo, '/logo.png')
+			? getMediaUrl(data.avatar, 'square', '/logo.png')
+			: 'logo' in data && getMediaUrl(data.logo, 'square', '/logo.png')
 
 	// Определяем bannerImageUrl
-	const bannerImageUrl = getMediaUrl(data.banner, '/defaultBanner.jpg')
+	const bannerImageUrl = getMediaUrl(
+		data.banner,
+		'medium',
+		'/defaultBanner.jpg'
+	)
 
 	// Определяем имя или название
 	const displayName =

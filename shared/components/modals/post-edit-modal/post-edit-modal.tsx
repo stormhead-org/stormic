@@ -170,7 +170,7 @@ export const PostEditModal: React.FC<Props> = ({
 
 	const authorAvatar =
 		typeof currentUser.avatar === 'object'
-			? getMediaUrl(currentUser.avatar, '/logo.png')
+			? getMediaUrl(currentUser.avatar, 'medium', '/logo.png')
 			: '/logo.png'
 
 	if (!isMobile) {

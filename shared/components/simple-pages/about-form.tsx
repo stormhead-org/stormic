@@ -54,7 +54,7 @@ export const AboutForm: React.FC<Props> = ({
 	const ownerId = getRelationProp<User, 'id'>(hostInfo.owner, 'id', 0)
 	const avatarImage =
 		typeof hostInfo.owner === 'object'
-			? getMediaUrl(hostInfo.owner.avatar, '/logo.png')
+			? getMediaUrl(hostInfo.owner.avatar, 'square', '/logo.png')
 			: '/logo.png'
 
 	return (

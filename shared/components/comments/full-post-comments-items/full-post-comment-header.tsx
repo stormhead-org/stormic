@@ -33,7 +33,7 @@ export const FullPostCommentHeader: React.FC<CommentHeaderProps> = ({
 }) => {
 	const avatarImageUrl =
 		typeof author.avatar === 'object'
-			? getMediaUrl(author.avatar, '/logo.png')
+			? getMediaUrl(author.avatar, 'medium', '/logo.png')
 			: '/logo.png'
 	return (
 		<div className={cn('flex justify-between w-full', className)}>
